@@ -3,42 +3,273 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@(ViewBag.Title == "" ? "" : ViewBag.Title + " - ")MRO FINDER @ViewBag.ExtraTitle</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/dist/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/dist/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/dist/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="format-detection" content="telephone=no">
 
+    @RenderSection("header", required: false)
+    @RenderSection("styles", required: false)
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
+<body class="@ViewBag.BodyClass">
+    <header>
+        @Html.Partial("_Header")
+    </header>
+    <div id="body">
+        
+        @RenderSection("featured_content", required: false)
+        <div id="divAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+        <section class="main-content clear-fix">
+            @RenderBody()
+        </section>
+        
+    </div>
+    <footer>
+        @Html.Partial("_Footer")
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        function SuccessMessage(text, useHtml) {
+            var $divAlert = $('#divAlert').removeClass('alert-danger').addClass('alert-success');
+            if (useHtml) {
+                $divAlert.html(text).show();
+            } else {
+                $divAlert.text(text).show();
+            }
+            window.scrollTo(0, 0);
+        }
+        function FailureMessage(text) {
+            $('#divAlert').removeClass('alert-success').addClass('alert-danger').text(text).show();
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+    <div id="divDisabledFeature" style="display:none;">
+        MRO FINDER Opens for Paid Search Subscribers Q4 2018<br /><br />
+        <input class="form-control input-lg" placeholder="Enter Email" type="email" id="txtDisabledFeatureEmail" />
+    </div>
+    <script type="text/javascript">
+        function ShowModal(title, bodySelector, extraButton, extraButtonClick) {
+            var modalHtml = '<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'+
+								'<div class="modal-dialog" role="document">'+
+								'<div class="modal-content">'+
+									'<div class="modal-header">'+
+									'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+									'<h4 class="modal-title" id="myModalLabel">' + title + '</h4>'+
+									'</div>'+
+									'<div class="modal-body">' +
+									'</div>'+
+									'<div class="modal-footer">' +
+									(extraButton != undefined ?
+										'<button type="button" class="btn btn-primary extra-button">' + extraButton + '</button><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+										: '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+									) +
+									'</div>'+
+								'</div>'+
+								'</div>'+
+							'</div>';
+            var $modal = $(modalHtml).find('.modal-body').append($(bodySelector).show()).end().modal();
+            if (extraButtonClick != undefined) {
+            	$modal.find('.extra-button').click(extraButtonClick);
+            }
+        }
+        function HideModal() {
+			$('.modal').modal('hide');
+        }
+        function ShowDisabledFeatureModal() {
+			ShowModal('PRE REGISTER with your e-mail address | Q4 2018', '#divDisabledFeature', 'Notify Me', function () {
+				var email = $('#txtDisabledFeatureEmail').val();
+				if (email.match(/^[^@@\s]+@@[^@@\s]+\.[^@@\s]+$/)) {
+					$.get("/Default.aspx?DisabledFeatureEmail=" + encodeURIComponent(email), function (data) {
+					});
+				}
+				HideModal();
+			});
+		}
+		function VendorDetails(partNumber, vendorID) {
+			var url = "/?PartNumberDetail=" + partNumber + '&VendorCerts=' + vendorID;
+			@if(User.IsInRole("Admin")) {
+				<text>
+				var vendorMatch = location.search.match(/[?&]VendorID=(\d+)/);
+				if (vendorMatch != null && vendorMatch.length > 1) {
+					url += "&VendorID=" + vendorMatch[1];
+				}
+				</text>
+			} 
+			$.get(url, function (data) {
+				var text = [];
+				var vendorListItem = null;
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].VendorID == vendorID) {
+						vendorListItem = data[i];
+					}
+				}
+				if (vendorListItem) {
+					text.push('Part #: ' + partNumber);
+					if (vendorListItem.Description) {
+						text.push('Description: ' + vendorListItem.Description);
+					}
+					if (vendorListItem.AlternatePartNumber) {
+						text.push('Alt Part #: ' + vendorListItem.AlternatePartNumber);
+					}
+					if (vendorListItem.AlternatePartNumber2) {
+						text.push('Alt Part #: ' + vendorListItem.AlternatePartNumber2);
+					}
+					if (vendorListItem.ModelNumber) {
+						text.push('Model #: ' + vendorListItem.ModelNumber);
+					}
+					if (vendorListItem.NSN) {
+						text.push('NSN: ' + vendorListItem.NSN);
+					}
+					if (vendorListItem.Manufacturer) {
+						text.push('Manufacturer: ' + vendorListItem.Manufacturer);
+					}
+					if (vendorListItem.ATAChapter) {
+						text.push('ATA Chapter: ' + vendorListItem.ATAChapter);
+					}
+					if (vendorListItem.Aircraft) {
+						text.push('Aircraft Application: ' + vendorListItem.Aircraft);
+					}
+					if (vendorListItem.Engine) {
+						text.push('Engine Application: ' + vendorListItem.Engine);
+					}
+					if (vendorListItem.Cage) {
+						text.push('Cage: ' + vendorListItem.Cage);
+					}
+					text.push('<br>' + vendorListItem.VendorName + '<br>');
+					if (vendorListItem.Address1) {
+						text.push(vendorListItem.Address1);
+					}
+					if (vendorListItem.Address2) {
+						text.push(vendorListItem.Address2);
+					}
+					if (vendorListItem.Address3) {
+						text.push(vendorListItem.Address3);
+					}
+					if (vendorListItem.City) {
+						if (vendorListItem.State && vendorListItem.Zipcode) {
+							text.push(vendorListItem.City + ', ' + vendorListItem.State + ' ' + vendorListItem.Zipcode);
+						} else if (vendorListItem.State) {
+							text.push(vendorListItem.City + ', ' + vendorListItem.State);
+						} else if (vendorListItem.Zipcode) {
+							text.push(vendorListItem.City + ', ' + vendorListItem.Zipcode);
+						} else {
+							text.push(vendorListItem.City);
+						}
+					}
+					if (vendorListItem.Country) {
+						text.push(vendorListItem.Country);
+					}
+					if (vendorListItem.WebsiteURL) {
+						text.push('Website: ' + vendorListItem.WebsiteURL);
+					}
+					if (vendorListItem.CertifyingAgenciesCerts) {
+						text.push('<br>Certs:<br> ' + vendorListItem.CertifyingAgenciesCerts);
+					}
+					//text.push('<span class="glyphicon glyphicon-ban-circle"></span> Block MRO');
+					document.getElementById('spanVendorDetails').innerHTML = text.join('<br>');
+					ShowModal('Vendor Info', '#divVendorDetails');
+				}
+			});
+			return false;
+		}
+    	function GetCurrencySymbol(currency) {
+    		switch (currency) {
+    			case 'EUR':
+    				return '€';
+    			case 'GBP':
+    				return '£';
+    			case 'USD':
+    			default:
+    				return '$';
+    		}
+    	}
+        $(function () {
+        	$('.chosen').chosen({
+				placeholder_text_multiple: 'Select Workscope Icons &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+        		width: '100%'
+        	});
+        	$('[data-toggle="tooltip"]').tooltip({
+				placement: 'auto bottom'
+        	});
+			$.fn.popover.Constructor.DEFAULTS.placement = 'auto top';
+			$('[data-toggle="popover"]').popover({
+				//placement: 'auto top',
+				trigger: 'hover focus'
+			});
+
+			var cache = {};
+			$('#txtSearch').autocomplete({
+				minLength: 3,
+				search: function (event, ui) {
+					var cleaned = event.target.value.replace(/[^a-zA-Z0-9]/g, '');
+					if (cleaned.length < 3) {
+						return false;
+					}
+				},
+				source: function (request, response) {
+					var term = request.term.replace(/[^a-zA-Z0-9]/g, '');
+					if (term in cache) {
+						response(cache[term]);
+					} else {
+						$.getJSON("<%=BasePage.GetLink(BasePage.SSLModes.Required, "/") %>", request, function (data, status, xhr) {
+							cache[term] = data;
+							response(data);
+						});
+					}
+				},
+
+				select: function (event, ui) {
+					event.target.value = ui.item.value;
+					$("#btnSearch").click();
+				}
+			});
+    		$("#txtSearch").keypress(function (event) {
+				if (event.keyCode == 13) {
+					event.preventDefault();
+					$("#btnSearch").click();
+				}
+    		});
+        	@if (ViewBag.BodyClass == "home-page")
+            {
+				<text>$("#txtSearch").focus();</text>
+            }
+			
+
+        	@if(!Request.Url.Host.Contains("localhost") && !Request.Path.StartsWith("/dev/")) {
+				
+				<text>
+				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+				ga('create', 'UA-101910506-1', 'auto');
+				ga('send', 'pageview');
+
+				@{/* LinkedIN Insight Tracking Pixel */}
+				_linkedin_data_partner_id = "212580";
+				(function(){var s=document.getElementsByTagName("script")[0],b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="https://snap.licdn.com/li.lms-analytics/insight.min.js";s.parentNode.insertBefore(b,s);})();
+
+				@{/*// Facebook Pixel %>*/}
+				!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+				fbq('init', '1889176141395803');
+				fbq('track', 'PageView');
+				
+				(function(w,d,t,r,u){w[u]=w[u]||[];w[u].push({'projectId':'10000','properties':{'pixelId':'10054435'}});var s=d.createElement(t);s.src=r;s.async=true;s.onload=s.onreadystatechange=function(){var y,rs=this.readyState,c=w[u];if(rs&&rs!="complete"&&rs!="loaded"){return}try{y=YAHOO.ywa.I13N.fireBeacon;w[u]=[];w[u].push=function(p){y([p])};y(c)}catch(e){}};var scr=d.getElementsByTagName(t)[0],par=scr.parentNode;par.insertBefore(s,scr)})(window,document,"script","https://s.yimg.com/wi/ytc.js","dotq");
+
+				</text>
+			}
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNet.Identity
+<div class=" @(ViewBag.BodyClass == "home-page" ? "container" : "")">
+    <div class="row">
+        <div class="col-xs-12 text-right @(ViewBag.BodyClass == "home-page" ? "" : "col-md-3 col-md-push-9 col-lg-4 col-lg-push-8")">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <section class="user-links">
+                    <a class="btn btn-primary" id="registerLink" href="@Url.Action("Signup", "Account")">Sign Up Free</a>
+                    <a class="btn btn-default" id="loginLink" href="@Url.Action("Login", "Account")"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
+                </section>
+            }
+            else
+            {
+                <div class="user-links">
+                    <div class="btn-group" title="@User.Identity.Name">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Account
+                            <span class="caret"></span>
+                        </button>
+                        @if (User.IsInRole("Vendor"))
+                        {
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">@User.Identity.Name</li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Repair Station Settings</span></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List & Upload Workscope Icons</span></a></li>
+                                <li><a href="@Url.Action("Manage", "Account")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                <li><a href="#" onclick="document.getElementsByClassName('Logout')[0].click();"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a><asp:LoginStatus ID="LoginStatus3" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggedOut="Unnamed_LoggedOut" CssClass="Logout" /></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">@User.Identity.Name</li>
+                                <li role="separator" class="divider"></li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a href="@Url.Action("Vendors", "Admin")">Vendors</a></li>
+                                    <li><a href="@Url.Action("Subscribers", "Admin")">Subscribers</a></li>
+                                    <li role="separator" class="divider"></li>
+                                }
+                                @if (Context.User.IsInRole("Subscriber"))
+                                {
+                                    <li><a href="@Url.Action("Index", "Subscribers")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
+
+                                    <li role="separator" class="divider"></li>
+                                }
+                                <li><a href="@Url.Action("Manage", "Account")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                <li><a href="#" onclick="document.getElementsByClassName('Logout')[0].click();"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggedOut="Unnamed_LoggedOut" CssClass="Logout" /></li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-xs-12 @(ViewBag.BodyClass == "home-page" ? "" : "col-md-5 col-md-pull-3 col-lg-4 col-lg-pull-4")">
+            <p class="site-title">
+                <a href="/"></a>
+            </p>
+        </div>
+        <div class="col-xs-12 @(ViewBag.BodyClass == "home-page" ? "col-md-8 col-md-offset-2" : "col-md-4 col-md-pull-3 col-lg-4 col-lg-pull-4")">
+            <div class="input-group">
+                <input type="text" id="txtSearch" class="form-control input-lg" placeholder="@(ViewBag.BodyClass == "home-page" ? "Search by Part Number" : "Enter Part Number")" value="@Request.QueryString["Search"]" />
+                <span class="input-group-btn">
+                    <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/?Search=' + document.getElementById('txtSearch').value;" >
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </a>
+                </span>
+            </div>
+            <h1 class="description">
+
+            </h1>
+        </div>
+    </div>
+    
+</div>

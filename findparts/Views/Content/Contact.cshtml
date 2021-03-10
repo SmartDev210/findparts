@@ -1,0 +1,208 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Contact";
+}
+
+@section featured_content {
+
+    <h1>Contact MRO FINDER</h1>
+}
+<div class="contact-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6" style="font-size:18px;">
+                        <div itemscope itemtype="http://schema.org/Organization">
+                            @{ /*
+    //<address>
+        //	<strong itemprop="legalName">MRO FINDER</strong><br>
+        //	<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+            //		<span itemprop="streetAddress">234 East 17th Street, STE 117</span><br />
+            //		<span itemprop="addressLocality">Costa Mesa</span>,
+            //		<span itemprop="addressRegion">California</span>
+            //		<span itemprop="postalCode">92627</span><br />
+            //		<span itemprop="addressCountry">USA</span>
+            //
+        </div>
+        //
+    </address>
+    //<address>
+        //	<strong>Fax</strong><br>
+        //	<span itemprop="faxNumber">+1-949-335-0325</span>
+        //
+    </address>
+    */
+                            }
+                            <address>
+                                <strong>Email</strong><br>
+                                <a itemprop="email" href="mailto:support@MROFINDER.aero">support@MROFINDER.aero</a>
+                            </address>
+                            <address>
+                                <strong>Phone</strong><br>
+                                <span itemprop="telephone">+1-949-335-3555</span>
+                            </address>
+                        </div>
+                        <a href="javascript:ShowMessageUsModal();">Message Us</a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mapouter"><div class="gmap_canvas"><iframe width="300" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=234%20E%2017th%20St%20%23117%2C%20Costa%20Mesa%2C%20CA%2092627&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>by <a href="http://www.embedgooglemap.net">http://www.embedgooglemap.net</a></div>
+                        <style>
+                            .mapouter {
+                                overflow: hidden;
+                                height: 300px;
+                                width: 300px;
+                            }
+
+                            .gmap_canvas {
+                                background: none !important;
+                                height: 300px;
+                                width: 300px;
+                            }
+                        </style></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <br>
+                        <table>
+                            <tr>
+                                <td>Bryan Goldsmith</td>
+                                <td><a href="mailto:bryan@mrofinder.aero" title="email bryan@mrofinder.aero"><img src="~/Content/dist/images/contact/email-btn.jpg" alt="email"></a></td>
+                                <td><a href="https://www.linkedin.com/in/mrofinder/" target="_blank"><img src="~/Content/dist/images/contact/linkedin-btn.png" alt="linkedin"></a></td>
+                                @{ /*
+                                  <td>| CEO (Skype: bryan-goldsmith)</td> */
+                                }
+                            </tr>
+                            <tr>
+                                <td>Josh Hollingsworth</td>
+                                <td><a href="mailto:josh@mrofinder.aero"><img src="~/Content/dist/images/contact/email-btn.jpg" alt="email"></a></td>
+                                <td><a href="https://www.linkedin.com/in/josh-hollingsworth-3298aa16/" target="_blank"><img src="~/Content/dist/images/contact/linkedin-btn.png" alt="linkedin"></a></td>
+                                @{ /*
+                                <td>| President (Skype: josh.aero)</td> */}
+                            </tr>
+                            @if( false ) {
+                                <tr>
+                                    <td>Samer Bordcosh</td>
+                                    <td><a href="mailto:samer@mrofinder.aero"><img src="~/Content/dist/images/contact/email-btn.jpg" alt="email"></a></td>
+                                    <td><a href="https://www.linkedin.com/company/18206376/" target="_blank"><img src="~/Content/dist/images/contact/linkedin-btn.png" alt="linkedin"></a></td>
+                                    <td>| CFO</td>
+                                </tr>
+                                <tr>
+                                    <td>Paolo De Boni</td>
+                                    <td><a href="mailto:paolo@mrofinder.aero"><img src="~/Content/dist/images/contact/email-btn.jpg" alt="email"></a></td>
+                                    <td><a href="https://www.linkedin.com/in/paolodeboni/" target="_blank"><img src="~/Content/dist/images/contact/linkedin-btn.png" alt="linkedin"></a></td>
+                                    <td>| VP - Italy Office</td>
+                                </tr>
+                                <tr>
+                                    <td>Patrick Groat</td>
+                                    <td><a href="mailto:patrick@mrofinder.aero"><img src="~/Content/dist/images/contact/email-btn.jpg" alt="email"></a></td>
+                                    <td><a href="https://www.linkedin.com/in/groat-patrick-116640139/" target="_blank"><img src="~/Content/dist/images/contact/linkedin-btn.png" alt="linkedin"></a></td>
+                                    <td>| COO</td>
+                                </tr>
+                            }
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="curator-feed-default"><a href="https://curator.io" target="_blank" class="crt-logo crt-tag">Powered by Curator.io</a></div>
+            </div>
+        </div>
+        <br>
+        <div class="row text-center">
+            <div class="col-md-3"><a href="https://www.linkedin.com/company/mrofinder-repair-capability-search-engine-for-avionics-instruments-accessories-airframe-components?trk=extra_biz_viewers_viewed" target="_blank"><img src="~/Content/dist/images/contact/linkedin.jpg" alt="LinkedIn" height="38"></a></div>
+            <div class="col-md-3"><a href="https://twitter.com/MROfinder_aero" target="_blank"><img src="~/Content/dist/images/contact/twitter.png" alt="twitter" height="38"></a></div>
+            <div class="col-md-3"><a href="https://www.facebook.com/mrofinder.aero/" target="_blank"><img src="~/Content/dist/images/contact/facebook.jpg" alt="facebook" height="38"></a></div>
+            <div class="col-md-3"><a href="https://www.instagram.com/mrofinder.aero/" target="_blank"><img src="~/Content/dist/images/contact/instagram.png" alt="Instagram" height="38"></a></div>
+        </div>
+    </div>
+    <div id="divMessageUs" style="display:none;">
+        <div class="form-group">
+            <label for="txtName">Name / Company</label>
+            <input type="text" id="txtName" class="form-control" placeholder="" />
+        </div>
+        <div class="form-group">
+            <label for="txtContact">Email / Phone:</label>
+            <input type="text" id="txtContact" class="form-control" placeholder="" />
+        </div>
+        <div class="form-group">
+            <label for="txtBody">Write to us:</label>
+            <textarea type="text" id="txtBody" class="form-control" placeholder=""></textarea>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function () {
+            var i, e, d = document, s = "script"; i = d.createElement("script"); i.async = 1;
+            i.src = "https://cdn.curator.io/published/7a4ce4b2-2ba2-4a05-b51e-64a1e3ca.js";
+            e = d.getElementsByTagName(s)[0]; e.parentNode.insertBefore(i, e);
+        })();
+    </script>
+
+    @if (false)
+    {
+    <address>
+        <strong>MRO FINDER</strong><br />
+        234 East 17th Street, STE 117<br />
+        Costa Mesa, CA 92627
+    </address>
+    <address>
+        <strong>Email</strong><br />
+        <a href="mailto:info@MROfinder.aero">info@MROfinder.aero</a>
+    </address>
+    <address>
+        <strong>Phone</strong><br />
+        +1-949-335-3555
+    </address>
+    <address>
+        <strong>Fax</strong><br />
+        +1-949-335-0325
+    </address>
+    <address>
+        <strong>LinkedIn Group</strong><br />
+        <a href="https://www.linkedin.com/groups/13542901" target="_blank">https://www.linkedin.com/groups/13542901</a>
+    </address>
+    <address>
+        <strong>LinkedIn Profile</strong><br />
+        <a href="https://www.linkedin.com/in/mrofinder" target="_blank">https://www.linkedin.com/in/mrofinder</a>
+    </address>
+    <address>
+        <strong>Facebook Group</strong><br />
+        <a href="https://www.facebook.com/groups/mrofinder/" target="_blank">https://www.facebook.com/groups/mrofinder/</a>
+    </address>
+    <address>
+        <strong>Facebook Profile</strong><br />
+        <a href="https://www.facebook.com/mrofinderbryan" target="_blank">https://www.facebook.com/mrofinderbryan</a>
+    </address>
+    <address>
+        <strong>Twitter</strong><br />
+        <a href="https://twitter.com/MROfinder_aero" target="_blank">https://twitter.com/MROfinder_aero</a>
+    </address>
+    }
+</div>
+<script type="text/javascript">
+    function ShowMessageUsModal() {
+        ShowModal('Message Us', '#divMessageUs', 'Message Us', function () {
+            var messageName = $('#txtName').val();
+            var messageContact = $('#txtContact').val();
+            var messageBody = $('#txtBody').val();
+            if (messageName != '' && messageContact != '' && messageBody != '') {
+                $.post(
+                    'Contact.aspx?MessageUs=1',
+                    {
+                        MessageName: messageName,
+                        MessageContact: messageContact,
+                        MessageBody: messageBody
+                    },
+                    function (data) {
+                    }
+                );
+                HideModal();
+            }
+            else {
+                alert('Please fill in the required fields');
+            }
+        });
+    }
+</script>

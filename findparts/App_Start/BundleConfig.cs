@@ -23,8 +23,8 @@ namespace findparts
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/dist/css/bootstrap.css",
+                      "~/Content/dist/css/site.css"));
         }
     }
 }
