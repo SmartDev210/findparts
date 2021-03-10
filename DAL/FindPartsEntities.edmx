@@ -1542,15 +1542,15 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="StatusGetAll" ReturnType="Collection(DomainModel.StatusGetAll_Result)" />
-          <FunctionImport Name="StatusGetByID" ReturnType="Collection(DomainModel.StatusGetByID_Result)">
+          <FunctionImport Name="StatusGetByID" EntitySet="Status" ReturnType="Collection(DomainModel.Status)">
           <Parameter Name="StatusID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SubscriberGetAll" ReturnType="Collection(DomainModel.SubscriberGetAll_Result)" />
           <FunctionImport Name="SubscriberGetAll2" ReturnType="Collection(DomainModel.SubscriberGetAll2_Result)" />
-          <FunctionImport Name="SubscriberGetByID" ReturnType="Collection(DomainModel.SubscriberGetByID_Result)">
+          <FunctionImport Name="SubscriberGetByID" EntitySet="Subscribers" ReturnType="Collection(DomainModel.Subscriber)">
           <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SubscriberGetByStripeCustomerID" ReturnType="Collection(DomainModel.SubscriberGetByStripeCustomerID_Result)">
+          <FunctionImport Name="SubscriberGetByStripeCustomerID" EntitySet="Subscribers" ReturnType="Collection(DomainModel.Subscriber)">
           <Parameter Name="StripeCustomerID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SubscriberGetStatsByID" ReturnType="Collection(DomainModel.SubscriberGetStatsByID_Result)">
@@ -1567,13 +1567,13 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="Phone" Mode="In" Type="String" />
             <Parameter Name="SignupSubscriberTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SubscriberInvoiceGetByID" ReturnType="Collection(DomainModel.SubscriberInvoiceGetByID_Result)">
+          <FunctionImport Name="SubscriberInvoiceGetByID" EntitySet="SubscriberInvoices" ReturnType="Collection(DomainModel.SubscriberInvoice)">
           <Parameter Name="SubscriberInvoiceID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SubscriberInvoiceGetByStripeInvoiceID" ReturnType="Collection(DomainModel.SubscriberInvoiceGetByStripeInvoiceID_Result)">
+          <FunctionImport Name="SubscriberInvoiceGetByStripeInvoiceID" EntitySet="SubscriberInvoices" ReturnType="Collection(DomainModel.SubscriberInvoice)">
           <Parameter Name="StripeInvoiceID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SubscriberInvoiceGetBySubscriberID" ReturnType="Collection(DomainModel.SubscriberInvoiceGetBySubscriberID_Result)">
+          <FunctionImport Name="SubscriberInvoiceGetBySubscriberID" EntitySet="SubscriberInvoices" ReturnType="Collection(DomainModel.SubscriberInvoice)">
           <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SubscriberInvoiceInsert" ReturnType="Collection(Decimal)">
@@ -1586,9 +1586,9 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="SubscriberInvoiceUpdatePaid">
           <Parameter Name="SubscriberInvoiceID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SubscriberTypeGetAll" ReturnType="Collection(DomainModel.SubscriberTypeGetAll_Result)" />
-          <FunctionImport Name="SubscriberTypeGetAllStandard" ReturnType="Collection(DomainModel.SubscriberTypeGetAllStandard_Result)" />
-          <FunctionImport Name="SubscriberTypeGetByID" ReturnType="Collection(DomainModel.SubscriberTypeGetByID_Result)">
+          <FunctionImport Name="SubscriberTypeGetAll" EntitySet="SubscriberTypes" ReturnType="Collection(DomainModel.SubscriberType)" />
+          <FunctionImport Name="SubscriberTypeGetAllStandard" EntitySet="SubscriberTypes" ReturnType="Collection(DomainModel.SubscriberType)" />
+          <FunctionImport Name="SubscriberTypeGetByID" EntitySet="SubscriberTypes" ReturnType="Collection(DomainModel.SubscriberType)">
           <Parameter Name="SubscriberTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SubscriberUpdate4">
@@ -1643,22 +1643,22 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UserGetByID" ReturnType="Collection(DomainModel.UserGetByID_Result)">
+          <FunctionImport Name="UserGetByID" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UserGetByProviderUserKey2" ReturnType="Collection(DomainModel.UserGetByProviderUserKey2_Result)">
           <Parameter Name="ProviderUserKey" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="UserGetByResetPasswordToken" ReturnType="Collection(DomainModel.UserGetByResetPasswordToken_Result)">
+          <FunctionImport Name="UserGetByResetPasswordToken" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
           <Parameter Name="ResetPasswordToken" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UserGetBySubscriberID" ReturnType="Collection(DomainModel.UserGetBySubscriberID_Result)">
+          <FunctionImport Name="UserGetBySubscriberID" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
           <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UserGetByVendorID" ReturnType="Collection(DomainModel.UserGetByVendorID_Result)">
+          <FunctionImport Name="UserGetByVendorID" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
           <Parameter Name="VendorID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UserGetFirstBySubscriberID" ReturnType="Collection(DomainModel.UserGetFirstBySubscriberID_Result)">
+          <FunctionImport Name="UserGetFirstBySubscriberID" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
           <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UserInsert" ReturnType="Collection(Decimal)">
@@ -1675,7 +1675,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="UserSearchGetBySubscriberID" ReturnType="Collection(DomainModel.UserSearchGetBySubscriberID_Result)">
           <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UserSearchGetByUserID" ReturnType="Collection(DomainModel.UserSearchGetByUserID_Result)">
+          <FunctionImport Name="UserSearchGetByUserID" EntitySet="UserSearches" ReturnType="Collection(DomainModel.UserSearch)">
           <Parameter Name="UserID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UserSearchGetRecent2" ReturnType="Collection(String)" />
@@ -1707,7 +1707,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="VendorAchievementListDeleteByID">
           <Parameter Name="VendorAchievementListID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="VendorAchievementListGetByID" ReturnType="Collection(DomainModel.VendorAchievementListGetByID_Result)">
+          <FunctionImport Name="VendorAchievementListGetByID" EntitySet="VendorAchievementLists" ReturnType="Collection(DomainModel.VendorAchievementList)">
           <Parameter Name="VendorAchievementListID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorAchievementListGetByVendorID" ReturnType="Collection(DomainModel.VendorAchievementListGetByVendorID_Result)">
@@ -1727,12 +1727,12 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="VendorAchievementListUpdateDateApproved">
           <Parameter Name="VendorAchievementListID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="VendorAchievementTypeGetAll" ReturnType="Collection(DomainModel.VendorAchievementTypeGetAll_Result)" />
-          <FunctionImport Name="VendorAchievementTypeGetAllQuoteSelectable" ReturnType="Collection(DomainModel.VendorAchievementTypeGetAllQuoteSelectable_Result)" />
+          <FunctionImport Name="VendorAchievementTypeGetAll" EntitySet="VendorAchievementTypes" ReturnType="Collection(DomainModel.VendorAchievementType)" />
+          <FunctionImport Name="VendorAchievementTypeGetAllQuoteSelectable" EntitySet="VendorAchievementTypes" ReturnType="Collection(DomainModel.VendorAchievementType)" />
           <FunctionImport Name="VendorCertDelete">
           <Parameter Name="VendorCertID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="VendorCertGetByVendorID" ReturnType="Collection(DomainModel.VendorCertGetByVendorID_Result)">
+          <FunctionImport Name="VendorCertGetByVendorID" EntitySet="VendorCerts" ReturnType="Collection(DomainModel.VendorCert)">
           <Parameter Name="VendorID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorCertInsert">
@@ -1741,10 +1741,10 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="Number" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="VendorGetAll" ReturnType="Collection(DomainModel.VendorGetAll_Result)" />
-          <FunctionImport Name="VendorGetByID" ReturnType="Collection(DomainModel.VendorGetByID_Result)">
+          <FunctionImport Name="VendorGetByID" EntitySet="Vendors" ReturnType="Collection(DomainModel.Vendor)">
           <Parameter Name="VendorID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="VendorGetByVendorName" ReturnType="Collection(DomainModel.VendorGetByVendorName_Result)">
+          <FunctionImport Name="VendorGetByVendorName" EntitySet="Vendors" ReturnType="Collection(DomainModel.Vendor)">
           <Parameter Name="VendorName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="VendorInsert4" ReturnType="Collection(Decimal)">
@@ -3219,17 +3219,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="StatusGetByID" FunctionName="DomainModel.Store.StatusGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.StatusGetByID_Result">
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="CanLogin" ColumnName="CanLogin" />
-                <ScalarProperty Name="CanSearch" ColumnName="CanSearch" />
-                <ScalarProperty Name="IsSuspended" ColumnName="IsSuspended" />
-                <ScalarProperty Name="IncludeInStats" ColumnName="IncludeInStats" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberGetAll" FunctionName="DomainModel.Store.SubscriberGetAll">
             <ResultMapping>
@@ -3283,66 +3272,8 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberGetByID" FunctionName="DomainModel.Store.SubscriberGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberGetByID_Result">
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="SubscriberTypeID" ColumnName="SubscriberTypeID" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateTrialStart" ColumnName="DateTrialStart" />
-                <ScalarProperty Name="SubscriberName" ColumnName="SubscriberName" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address3" ColumnName="Address3" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PatronType" ColumnName="PatronType" />
-                <ScalarProperty Name="AccountingFirstName" ColumnName="AccountingFirstName" />
-                <ScalarProperty Name="AccountingLastName" ColumnName="AccountingLastName" />
-                <ScalarProperty Name="AccountingPhone" ColumnName="AccountingPhone" />
-                <ScalarProperty Name="AccountingEmail" ColumnName="AccountingEmail" />
-                <ScalarProperty Name="ProfileFieldsCompleted" ColumnName="ProfileFieldsCompleted" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="StripeCustomerID" ColumnName="StripeCustomerID" />
-                <ScalarProperty Name="PendingSubscriberTypeID" ColumnName="PendingSubscriberTypeID" />
-                <ScalarProperty Name="SignupSubscriberTypeID" ColumnName="SignupSubscriberTypeID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberGetByStripeCustomerID" FunctionName="DomainModel.Store.SubscriberGetByStripeCustomerID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberGetByStripeCustomerID_Result">
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="SubscriberTypeID" ColumnName="SubscriberTypeID" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateTrialStart" ColumnName="DateTrialStart" />
-                <ScalarProperty Name="SubscriberName" ColumnName="SubscriberName" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address3" ColumnName="Address3" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PatronType" ColumnName="PatronType" />
-                <ScalarProperty Name="AccountingFirstName" ColumnName="AccountingFirstName" />
-                <ScalarProperty Name="AccountingLastName" ColumnName="AccountingLastName" />
-                <ScalarProperty Name="AccountingPhone" ColumnName="AccountingPhone" />
-                <ScalarProperty Name="AccountingEmail" ColumnName="AccountingEmail" />
-                <ScalarProperty Name="ProfileFieldsCompleted" ColumnName="ProfileFieldsCompleted" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="StripeCustomerID" ColumnName="StripeCustomerID" />
-                <ScalarProperty Name="PendingSubscriberTypeID" ColumnName="PendingSubscriberTypeID" />
-                <ScalarProperty Name="SignupSubscriberTypeID" ColumnName="SignupSubscriberTypeID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberGetStatsByID" FunctionName="DomainModel.Store.SubscriberGetStatsByID">
             <ResultMapping>
@@ -3383,99 +3314,18 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="SubscriberInsert" FunctionName="DomainModel.Store.SubscriberInsert" />
           <FunctionImportMapping FunctionImportName="SubscriberInsert2" FunctionName="DomainModel.Store.SubscriberInsert2" />
           <FunctionImportMapping FunctionImportName="SubscriberInvoiceGetByID" FunctionName="DomainModel.Store.SubscriberInvoiceGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberInvoiceGetByID_Result">
-                <ScalarProperty Name="SubscriberInvoiceID" ColumnName="SubscriberInvoiceID" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="StripeInvoiceID" ColumnName="StripeInvoiceID" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DatePaid" ColumnName="DatePaid" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberInvoiceGetByStripeInvoiceID" FunctionName="DomainModel.Store.SubscriberInvoiceGetByStripeInvoiceID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberInvoiceGetByStripeInvoiceID_Result">
-                <ScalarProperty Name="SubscriberInvoiceID" ColumnName="SubscriberInvoiceID" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="StripeInvoiceID" ColumnName="StripeInvoiceID" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DatePaid" ColumnName="DatePaid" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberInvoiceGetBySubscriberID" FunctionName="DomainModel.Store.SubscriberInvoiceGetBySubscriberID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberInvoiceGetBySubscriberID_Result">
-                <ScalarProperty Name="SubscriberInvoiceID" ColumnName="SubscriberInvoiceID" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="StripeInvoiceID" ColumnName="StripeInvoiceID" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DatePaid" ColumnName="DatePaid" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberInvoiceInsert" FunctionName="DomainModel.Store.SubscriberInvoiceInsert" />
           <FunctionImportMapping FunctionImportName="SubscriberInvoiceUpdatePaid" FunctionName="DomainModel.Store.SubscriberInvoiceUpdatePaid" />
           <FunctionImportMapping FunctionImportName="SubscriberTypeGetAll" FunctionName="DomainModel.Store.SubscriberTypeGetAll">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberTypeGetAll_Result">
-                <ScalarProperty Name="SubscriberTypeID" ColumnName="SubscriberTypeID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="SearchQuota" ColumnName="SearchQuota" />
-                <ScalarProperty Name="UserQuota" ColumnName="UserQuota" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="StripePlanID" ColumnName="StripePlanID" />
-                <ScalarProperty Name="Annual" ColumnName="Annual" />
-                <ScalarProperty Name="Standard" ColumnName="Standard" />
-                <ScalarProperty Name="InstantAccess" ColumnName="InstantAccess" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberTypeGetAllStandard" FunctionName="DomainModel.Store.SubscriberTypeGetAllStandard">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberTypeGetAllStandard_Result">
-                <ScalarProperty Name="SubscriberTypeID" ColumnName="SubscriberTypeID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="SearchQuota" ColumnName="SearchQuota" />
-                <ScalarProperty Name="UserQuota" ColumnName="UserQuota" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="StripePlanID" ColumnName="StripePlanID" />
-                <ScalarProperty Name="Annual" ColumnName="Annual" />
-                <ScalarProperty Name="Standard" ColumnName="Standard" />
-                <ScalarProperty Name="InstantAccess" ColumnName="InstantAccess" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberTypeGetByID" FunctionName="DomainModel.Store.SubscriberTypeGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.SubscriberTypeGetByID_Result">
-                <ScalarProperty Name="SubscriberTypeID" ColumnName="SubscriberTypeID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="SearchQuota" ColumnName="SearchQuota" />
-                <ScalarProperty Name="UserQuota" ColumnName="UserQuota" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="StripePlanID" ColumnName="StripePlanID" />
-                <ScalarProperty Name="Annual" ColumnName="Annual" />
-                <ScalarProperty Name="Standard" ColumnName="Standard" />
-                <ScalarProperty Name="InstantAccess" ColumnName="InstantAccess" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberUpdate4" FunctionName="DomainModel.Store.SubscriberUpdate4" />
           <FunctionImportMapping FunctionImportName="SubscriberUpdatePendingSubscriberType" FunctionName="DomainModel.Store.SubscriberUpdatePendingSubscriberType" />
@@ -3488,28 +3338,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="UserDelete" FunctionName="DomainModel.Store.UserDelete" />
           <FunctionImportMapping FunctionImportName="UserGetByEmailPassword" FunctionName="DomainModel.Store.UserGetByEmailPassword" />
           <FunctionImportMapping FunctionImportName="UserGetByID" FunctionName="DomainModel.Store.UserGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.UserGetByID_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProviderUserKey" ColumnName="ProviderUserKey" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateActivated" ColumnName="DateActivated" />
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
-                <ScalarProperty Name="SkypeName" ColumnName="SkypeName" />
-                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
-                <ScalarProperty Name="ResetPasswordTime" ColumnName="ResetPasswordTime" />
-                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetByProviderUserKey2" FunctionName="DomainModel.Store.UserGetByProviderUserKey2">
             <ResultMapping>
@@ -3539,101 +3367,12 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetByResetPasswordToken" FunctionName="DomainModel.Store.UserGetByResetPasswordToken">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.UserGetByResetPasswordToken_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProviderUserKey" ColumnName="ProviderUserKey" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateActivated" ColumnName="DateActivated" />
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
-                <ScalarProperty Name="SkypeName" ColumnName="SkypeName" />
-                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
-                <ScalarProperty Name="ResetPasswordTime" ColumnName="ResetPasswordTime" />
-                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetBySubscriberID" FunctionName="DomainModel.Store.UserGetBySubscriberID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.UserGetBySubscriberID_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProviderUserKey" ColumnName="ProviderUserKey" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateActivated" ColumnName="DateActivated" />
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
-                <ScalarProperty Name="SkypeName" ColumnName="SkypeName" />
-                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
-                <ScalarProperty Name="ResetPasswordTime" ColumnName="ResetPasswordTime" />
-                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
-                <ScalarProperty Name="SearchCount" ColumnName="SearchCount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetByVendorID" FunctionName="DomainModel.Store.UserGetByVendorID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.UserGetByVendorID_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProviderUserKey" ColumnName="ProviderUserKey" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateActivated" ColumnName="DateActivated" />
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
-                <ScalarProperty Name="SkypeName" ColumnName="SkypeName" />
-                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
-                <ScalarProperty Name="ResetPasswordTime" ColumnName="ResetPasswordTime" />
-                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetFirstBySubscriberID" FunctionName="DomainModel.Store.UserGetFirstBySubscriberID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.UserGetFirstBySubscriberID_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProviderUserKey" ColumnName="ProviderUserKey" />
-                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateActivated" ColumnName="DateActivated" />
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
-                <ScalarProperty Name="SkypeName" ColumnName="SkypeName" />
-                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
-                <ScalarProperty Name="ResetPasswordTime" ColumnName="ResetPasswordTime" />
-                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserInsert" FunctionName="DomainModel.Store.UserInsert" />
           <FunctionImportMapping FunctionImportName="UserInsert2" FunctionName="DomainModel.Store.UserInsert2" />
@@ -3653,18 +3392,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserSearchGetByUserID" FunctionName="DomainModel.Store.UserSearchGetByUserID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.UserSearchGetByUserID_Result">
-                <ScalarProperty Name="UserSearchID" ColumnName="UserSearchID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="SearchTerm" ColumnName="SearchTerm" />
-                <ScalarProperty Name="PartPage" ColumnName="PartPage" />
-                <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
-                <ScalarProperty Name="ExactMatch" ColumnName="ExactMatch" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="RepeatCount" ColumnName="RepeatCount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserSearchGetRecent2" FunctionName="DomainModel.Store.UserSearchGetRecent2" />
           <FunctionImportMapping FunctionImportName="UserSearchGetRecent3" FunctionName="DomainModel.Store.UserSearchGetRecent3" />
@@ -3676,18 +3403,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="UserUpdateResetPassword" FunctionName="DomainModel.Store.UserUpdateResetPassword" />
           <FunctionImportMapping FunctionImportName="VendorAchievementListDeleteByID" FunctionName="DomainModel.Store.VendorAchievementListDeleteByID" />
           <FunctionImportMapping FunctionImportName="VendorAchievementListGetByID" FunctionName="DomainModel.Store.VendorAchievementListGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorAchievementListGetByID_Result">
-                <ScalarProperty Name="VendorAchievementListID" ColumnName="VendorAchievementListID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="VendorAchievementTypeID" ColumnName="VendorAchievementTypeID" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Filetype" ColumnName="Filetype" />
-                <ScalarProperty Name="ReplaceList" ColumnName="ReplaceList" />
-                <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorAchievementListGetByVendorID" FunctionName="DomainModel.Store.VendorAchievementListGetByVendorID">
             <ResultMapping>
@@ -3722,37 +3437,11 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="VendorAchievementListUpdate" FunctionName="DomainModel.Store.VendorAchievementListUpdate" />
           <FunctionImportMapping FunctionImportName="VendorAchievementListUpdateDateApproved" FunctionName="DomainModel.Store.VendorAchievementListUpdateDateApproved" />
           <FunctionImportMapping FunctionImportName="VendorAchievementTypeGetAll" FunctionName="DomainModel.Store.VendorAchievementTypeGetAll">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorAchievementTypeGetAll_Result">
-                <ScalarProperty Name="VendorAchievementTypeID" ColumnName="VendorAchievementTypeID" />
-                <ScalarProperty Name="VendorAchievementTypeName" ColumnName="VendorAchievementTypeName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="QuoteSelectable" ColumnName="QuoteSelectable" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorAchievementTypeGetAllQuoteSelectable" FunctionName="DomainModel.Store.VendorAchievementTypeGetAllQuoteSelectable">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorAchievementTypeGetAllQuoteSelectable_Result">
-                <ScalarProperty Name="VendorAchievementTypeID" ColumnName="VendorAchievementTypeID" />
-                <ScalarProperty Name="VendorAchievementTypeName" ColumnName="VendorAchievementTypeName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="QuoteSelectable" ColumnName="QuoteSelectable" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorCertDelete" FunctionName="DomainModel.Store.VendorCertDelete" />
           <FunctionImportMapping FunctionImportName="VendorCertGetByVendorID" FunctionName="DomainModel.Store.VendorCertGetByVendorID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorCertGetByVendorID_Result">
-                <ScalarProperty Name="VendorCertID" ColumnName="VendorCertID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Cert" ColumnName="Cert" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorCertInsert" FunctionName="DomainModel.Store.VendorCertInsert" />
           <FunctionImportMapping FunctionImportName="VendorGetAll" FunctionName="DomainModel.Store.VendorGetAll">
@@ -3784,90 +3473,8 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorGetByID" FunctionName="DomainModel.Store.VendorGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorGetByID_Result">
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="Muted" ColumnName="Muted" />
-                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address3" ColumnName="Address3" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="RFQEmails" ColumnName="RFQEmails" />
-                <ScalarProperty Name="RFQPreferredMethod" ColumnName="RFQPreferredMethod" />
-                <ScalarProperty Name="DefaultCurrency" ColumnName="DefaultCurrency" />
-                <ScalarProperty Name="CompanyLogoSmall" ColumnName="CompanyLogoSmall" />
-                <ScalarProperty Name="CompanyLogoLarge" ColumnName="CompanyLogoLarge" />
-                <ScalarProperty Name="WebsiteURL" ColumnName="WebsiteURL" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="AOGPhone" ColumnName="AOGPhone" />
-                <ScalarProperty Name="AOGEmail" ColumnName="AOGEmail" />
-                <ScalarProperty Name="CertifyingAgenciesCerts" ColumnName="CertifyingAgenciesCerts" />
-                <ScalarProperty Name="LanguagesSupported" ColumnName="LanguagesSupported" />
-                <ScalarProperty Name="ProfileFieldsCompleted" ColumnName="ProfileFieldsCompleted" />
-                <ScalarProperty Name="RFQPhone" ColumnName="RFQPhone" />
-                <ScalarProperty Name="RFQEmail" ColumnName="RFQEmail" />
-                <ScalarProperty Name="RFQWebEmails" ColumnName="RFQWebEmails" />
-                <ScalarProperty Name="RFQFax" ColumnName="RFQFax" />
-                <ScalarProperty Name="OEM" ColumnName="OEM" />
-                <ScalarProperty Name="OEMExclusive" ColumnName="OEMExclusive" />
-                <ScalarProperty Name="OEMRequiresRMA" ColumnName="OEMRequiresRMA" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="PartsCount" ColumnName="PartsCount" />
-                <ScalarProperty Name="AchievementsCount" ColumnName="AchievementsCount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorGetByVendorName" FunctionName="DomainModel.Store.VendorGetByVendorName">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorGetByVendorName_Result">
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
-                <ScalarProperty Name="Muted" ColumnName="Muted" />
-                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address3" ColumnName="Address3" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="RFQEmails" ColumnName="RFQEmails" />
-                <ScalarProperty Name="RFQPreferredMethod" ColumnName="RFQPreferredMethod" />
-                <ScalarProperty Name="DefaultCurrency" ColumnName="DefaultCurrency" />
-                <ScalarProperty Name="CompanyLogoSmall" ColumnName="CompanyLogoSmall" />
-                <ScalarProperty Name="CompanyLogoLarge" ColumnName="CompanyLogoLarge" />
-                <ScalarProperty Name="WebsiteURL" ColumnName="WebsiteURL" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="AOGPhone" ColumnName="AOGPhone" />
-                <ScalarProperty Name="AOGEmail" ColumnName="AOGEmail" />
-                <ScalarProperty Name="CertifyingAgenciesCerts" ColumnName="CertifyingAgenciesCerts" />
-                <ScalarProperty Name="LanguagesSupported" ColumnName="LanguagesSupported" />
-                <ScalarProperty Name="ProfileFieldsCompleted" ColumnName="ProfileFieldsCompleted" />
-                <ScalarProperty Name="RFQPhone" ColumnName="RFQPhone" />
-                <ScalarProperty Name="RFQEmail" ColumnName="RFQEmail" />
-                <ScalarProperty Name="RFQWebEmails" ColumnName="RFQWebEmails" />
-                <ScalarProperty Name="RFQFax" ColumnName="RFQFax" />
-                <ScalarProperty Name="OEM" ColumnName="OEM" />
-                <ScalarProperty Name="OEMExclusive" ColumnName="OEMExclusive" />
-                <ScalarProperty Name="OEMRequiresRMA" ColumnName="OEMRequiresRMA" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="PartsCount" ColumnName="PartsCount" />
-                <ScalarProperty Name="AchievementsCount" ColumnName="AchievementsCount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorInsert4" FunctionName="DomainModel.Store.VendorInsert4" />
           <FunctionImportMapping FunctionImportName="VendorListDeleteByID" FunctionName="DomainModel.Store.VendorListDeleteByID" />
