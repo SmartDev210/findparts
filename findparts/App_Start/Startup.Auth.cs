@@ -26,6 +26,7 @@ namespace findparts
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                ExpireTimeSpan = TimeSpan.FromHours(24 * 7 * 4 * 6),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
