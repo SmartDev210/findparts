@@ -1,4 +1,6 @@
+using AutoMapper;
 using DAL;
+using findparts.App_Start;
 using findparts.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -67,6 +69,16 @@ namespace findparts
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
                 new InjectionConstructor(typeof(ApplicationDbContext))
             );
+
+            // add automapper
+            var config = new MapperConfiguration(cfg =>
+            {   
+                cfg.AddProfile<MappingProfile>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
+            container.RegisterInstance(mapper);
         }
     }
 }
