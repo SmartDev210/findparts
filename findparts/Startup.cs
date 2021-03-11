@@ -1,12 +1,12 @@
 ﻿using DAL;
-using findparts.Models;
+using Findparts.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(findparts.Startup))]
-namespace findparts
+[assembly: OwinStartupAttribute(typeof(Findparts.Startup))]
+namespace Findparts
 {
     public partial class Startup
     {

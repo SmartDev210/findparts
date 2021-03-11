@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "findparts", "findparts\findparts.csproj", "{26FC4FE8-E8FA-466A-B43A-1AE40346E914}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Findparts", "findparts\Findparts.csproj", "{26FC4FE8-E8FA-466A-B43A-1AE40346E914}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{6E7C20F4-4F30-4744-A490-D6FFF2210E62}"
 EndProject

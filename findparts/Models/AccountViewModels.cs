@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace findparts.Models
+namespace Findparts.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

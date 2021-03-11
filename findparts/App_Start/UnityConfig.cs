@@ -1,7 +1,9 @@
 using AutoMapper;
 using DAL;
-using findparts.App_Start;
-using findparts.Models;
+using Findparts.App_Start;
+using Findparts.Models;
+using Findparts.Services.Interfaces;
+using Findparts.Services.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -12,7 +14,7 @@ using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
 
-namespace findparts
+namespace Findparts
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.
@@ -65,7 +67,6 @@ namespace findparts
 
             container.RegisterType<FindPartsEntities>(new HierarchicalLifetimeManager());
 
-
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
                 new InjectionConstructor(typeof(ApplicationDbContext))
             );
@@ -79,6 +80,11 @@ namespace findparts
             IMapper mapper = config.CreateMapper();
 
             container.RegisterInstance(mapper);
+
+
+            // add our self defined services
+
+            container.RegisterType<IPartsSearchService, PartsSearchService>();
         }
     }
 }

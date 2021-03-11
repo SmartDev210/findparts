@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace findparts
+namespace Findparts
 {
     public class BundleConfig
     {

@@ -3,10 +3,10 @@ using System.Web.Mvc;
 
 using Unity.AspNet.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(findparts.UnityMvcActivator), nameof(findparts.UnityMvcActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(findparts.UnityMvcActivator), nameof(findparts.UnityMvcActivator.Shutdown))]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Findparts.UnityMvcActivator), nameof(Findparts.UnityMvcActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Findparts.UnityMvcActivator), nameof(Findparts.UnityMvcActivator.Shutdown))]
 
-namespace findparts
+namespace Findparts
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with ASP.NET MVC.

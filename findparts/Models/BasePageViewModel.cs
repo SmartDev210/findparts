@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace findparts.Models
+namespace Findparts.Models
 {
     public class BasePageViewModel
     {

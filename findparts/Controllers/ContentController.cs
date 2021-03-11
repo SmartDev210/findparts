@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace findparts.Controllers
+namespace Findparts.Controllers
 {
     public class ContentController : Controller
     {   

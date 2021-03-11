@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using findparts.Models;
+using Findparts.Models;
 
-namespace findparts
+namespace Findparts
 {
     public class EmailService : IIdentityMessageService
     {
