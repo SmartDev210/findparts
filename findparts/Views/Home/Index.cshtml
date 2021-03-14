@@ -9,7 +9,7 @@
 }
 
 <div id="divMerits" class="merits">
-    <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount</span> MROs Are Listing <span style="font-size:34px;">@Model.SpanPartCount</span> Capabilities</h3>
+    <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount</span> MROs Are Listing <span style="font-size:34px;">@string.Format("{0}", Model.SpanPartCount)</span> Capabilities</h3>
     <br /><br />
     <div class="wrapper">
         @foreach (var item in Model.Merits)

@@ -1,4 +1,5 @@
-﻿using Findparts.Models;
+﻿using DAL;
+using Findparts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,8 @@ namespace Findparts.Services.Interfaces
     public interface IPartsSearchService
     {
         void PopulateHomePageViewModel(HomePageViewModel viewModel);
+        List<VendorListItemSearchDetail9_Result> GetDetails(PartsSearchQueryParams queryParams, bool isAdmin);
+        void PopulatePartsPageViewModel(PartsPageViewModel viewModel, string text, bool partPage);
+        List<PartAutoComplete> GetPartAutoCompletes(string text);
     }
 }

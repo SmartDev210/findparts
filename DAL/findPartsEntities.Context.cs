@@ -243,13 +243,22 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StatusGetAll_Result>("StatusGetAll");
         }
     
-        public virtual ObjectResult<StatusGetByID_Result> StatusGetByID(Nullable<int> statusID)
+        public virtual ObjectResult<Status> StatusGetByID(Nullable<int> statusID)
         {
             var statusIDParameter = statusID.HasValue ?
                 new ObjectParameter("StatusID", statusID) :
                 new ObjectParameter("StatusID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StatusGetByID_Result>("StatusGetByID", statusIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Status>("StatusGetByID", statusIDParameter);
+        }
+    
+        public virtual ObjectResult<Status> StatusGetByID(Nullable<int> statusID, MergeOption mergeOption)
+        {
+            var statusIDParameter = statusID.HasValue ?
+                new ObjectParameter("StatusID", statusID) :
+                new ObjectParameter("StatusID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Status>("StatusGetByID", mergeOption, statusIDParameter);
         }
     
         public virtual ObjectResult<SubscriberGetAll_Result> SubscriberGetAll()
@@ -262,22 +271,40 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberGetAll2_Result>("SubscriberGetAll2");
         }
     
-        public virtual ObjectResult<SubscriberGetByID_Result> SubscriberGetByID(Nullable<int> subscriberID)
+        public virtual ObjectResult<Subscriber> SubscriberGetByID(Nullable<int> subscriberID)
         {
             var subscriberIDParameter = subscriberID.HasValue ?
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberGetByID_Result>("SubscriberGetByID", subscriberIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subscriber>("SubscriberGetByID", subscriberIDParameter);
         }
     
-        public virtual ObjectResult<SubscriberGetByStripeCustomerID_Result> SubscriberGetByStripeCustomerID(string stripeCustomerID)
+        public virtual ObjectResult<Subscriber> SubscriberGetByID(Nullable<int> subscriberID, MergeOption mergeOption)
+        {
+            var subscriberIDParameter = subscriberID.HasValue ?
+                new ObjectParameter("SubscriberID", subscriberID) :
+                new ObjectParameter("SubscriberID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subscriber>("SubscriberGetByID", mergeOption, subscriberIDParameter);
+        }
+    
+        public virtual ObjectResult<Subscriber> SubscriberGetByStripeCustomerID(string stripeCustomerID)
         {
             var stripeCustomerIDParameter = stripeCustomerID != null ?
                 new ObjectParameter("StripeCustomerID", stripeCustomerID) :
                 new ObjectParameter("StripeCustomerID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberGetByStripeCustomerID_Result>("SubscriberGetByStripeCustomerID", stripeCustomerIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subscriber>("SubscriberGetByStripeCustomerID", stripeCustomerIDParameter);
+        }
+    
+        public virtual ObjectResult<Subscriber> SubscriberGetByStripeCustomerID(string stripeCustomerID, MergeOption mergeOption)
+        {
+            var stripeCustomerIDParameter = stripeCustomerID != null ?
+                new ObjectParameter("StripeCustomerID", stripeCustomerID) :
+                new ObjectParameter("StripeCustomerID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Subscriber>("SubscriberGetByStripeCustomerID", mergeOption, stripeCustomerIDParameter);
         }
     
         public virtual ObjectResult<SubscriberGetStatsByID_Result> SubscriberGetStatsByID(Nullable<int> subscriberID)
@@ -327,31 +354,58 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("SubscriberInsert2", subscriberNameParameter, countryParameter, phoneParameter, signupSubscriberTypeIDParameter);
         }
     
-        public virtual ObjectResult<SubscriberInvoiceGetByID_Result> SubscriberInvoiceGetByID(Nullable<int> subscriberInvoiceID)
+        public virtual ObjectResult<SubscriberInvoice> SubscriberInvoiceGetByID(Nullable<int> subscriberInvoiceID)
         {
             var subscriberInvoiceIDParameter = subscriberInvoiceID.HasValue ?
                 new ObjectParameter("SubscriberInvoiceID", subscriberInvoiceID) :
                 new ObjectParameter("SubscriberInvoiceID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoiceGetByID_Result>("SubscriberInvoiceGetByID", subscriberInvoiceIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoice>("SubscriberInvoiceGetByID", subscriberInvoiceIDParameter);
         }
     
-        public virtual ObjectResult<SubscriberInvoiceGetByStripeInvoiceID_Result> SubscriberInvoiceGetByStripeInvoiceID(string stripeInvoiceID)
+        public virtual ObjectResult<SubscriberInvoice> SubscriberInvoiceGetByID(Nullable<int> subscriberInvoiceID, MergeOption mergeOption)
+        {
+            var subscriberInvoiceIDParameter = subscriberInvoiceID.HasValue ?
+                new ObjectParameter("SubscriberInvoiceID", subscriberInvoiceID) :
+                new ObjectParameter("SubscriberInvoiceID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoice>("SubscriberInvoiceGetByID", mergeOption, subscriberInvoiceIDParameter);
+        }
+    
+        public virtual ObjectResult<SubscriberInvoice> SubscriberInvoiceGetByStripeInvoiceID(string stripeInvoiceID)
         {
             var stripeInvoiceIDParameter = stripeInvoiceID != null ?
                 new ObjectParameter("StripeInvoiceID", stripeInvoiceID) :
                 new ObjectParameter("StripeInvoiceID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoiceGetByStripeInvoiceID_Result>("SubscriberInvoiceGetByStripeInvoiceID", stripeInvoiceIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoice>("SubscriberInvoiceGetByStripeInvoiceID", stripeInvoiceIDParameter);
         }
     
-        public virtual ObjectResult<SubscriberInvoiceGetBySubscriberID_Result> SubscriberInvoiceGetBySubscriberID(Nullable<int> subscriberID)
+        public virtual ObjectResult<SubscriberInvoice> SubscriberInvoiceGetByStripeInvoiceID(string stripeInvoiceID, MergeOption mergeOption)
+        {
+            var stripeInvoiceIDParameter = stripeInvoiceID != null ?
+                new ObjectParameter("StripeInvoiceID", stripeInvoiceID) :
+                new ObjectParameter("StripeInvoiceID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoice>("SubscriberInvoiceGetByStripeInvoiceID", mergeOption, stripeInvoiceIDParameter);
+        }
+    
+        public virtual ObjectResult<SubscriberInvoice> SubscriberInvoiceGetBySubscriberID(Nullable<int> subscriberID)
         {
             var subscriberIDParameter = subscriberID.HasValue ?
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoiceGetBySubscriberID_Result>("SubscriberInvoiceGetBySubscriberID", subscriberIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoice>("SubscriberInvoiceGetBySubscriberID", subscriberIDParameter);
+        }
+    
+        public virtual ObjectResult<SubscriberInvoice> SubscriberInvoiceGetBySubscriberID(Nullable<int> subscriberID, MergeOption mergeOption)
+        {
+            var subscriberIDParameter = subscriberID.HasValue ?
+                new ObjectParameter("SubscriberID", subscriberID) :
+                new ObjectParameter("SubscriberID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberInvoice>("SubscriberInvoiceGetBySubscriberID", mergeOption, subscriberIDParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> SubscriberInvoiceInsert(Nullable<int> subscriberID, string stripeInvoiceID, Nullable<int> amount, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
@@ -388,23 +442,42 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SubscriberInvoiceUpdatePaid", subscriberInvoiceIDParameter);
         }
     
-        public virtual ObjectResult<SubscriberTypeGetAll_Result> SubscriberTypeGetAll()
+        public virtual ObjectResult<SubscriberType> SubscriberTypeGetAll()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberTypeGetAll_Result>("SubscriberTypeGetAll");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberType>("SubscriberTypeGetAll");
         }
     
-        public virtual ObjectResult<SubscriberTypeGetAllStandard_Result> SubscriberTypeGetAllStandard()
+        public virtual ObjectResult<SubscriberType> SubscriberTypeGetAll(MergeOption mergeOption)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberTypeGetAllStandard_Result>("SubscriberTypeGetAllStandard");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberType>("SubscriberTypeGetAll", mergeOption);
         }
     
-        public virtual ObjectResult<SubscriberTypeGetByID_Result> SubscriberTypeGetByID(Nullable<int> subscriberTypeID)
+        public virtual ObjectResult<SubscriberType> SubscriberTypeGetAllStandard()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberType>("SubscriberTypeGetAllStandard");
+        }
+    
+        public virtual ObjectResult<SubscriberType> SubscriberTypeGetAllStandard(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberType>("SubscriberTypeGetAllStandard", mergeOption);
+        }
+    
+        public virtual ObjectResult<SubscriberType> SubscriberTypeGetByID(Nullable<int> subscriberTypeID)
         {
             var subscriberTypeIDParameter = subscriberTypeID.HasValue ?
                 new ObjectParameter("SubscriberTypeID", subscriberTypeID) :
                 new ObjectParameter("SubscriberTypeID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberTypeGetByID_Result>("SubscriberTypeGetByID", subscriberTypeIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberType>("SubscriberTypeGetByID", subscriberTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<SubscriberType> SubscriberTypeGetByID(Nullable<int> subscriberTypeID, MergeOption mergeOption)
+        {
+            var subscriberTypeIDParameter = subscriberTypeID.HasValue ?
+                new ObjectParameter("SubscriberTypeID", subscriberTypeID) :
+                new ObjectParameter("SubscriberTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubscriberType>("SubscriberTypeGetByID", mergeOption, subscriberTypeIDParameter);
         }
     
         public virtual int SubscriberUpdate4(Nullable<int> subscriberID, string address1, string address2, string address3, string city, string state, string zipcode, string country, string phone)
@@ -585,13 +658,22 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UserGetByEmailPassword", emailParameter, passwordParameter);
         }
     
-        public virtual ObjectResult<UserGetByID_Result> UserGetByID(Nullable<int> userID)
+        public virtual ObjectResult<User> UserGetByID(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetByID_Result>("UserGetByID", userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByID", userIDParameter);
+        }
+    
+        public virtual ObjectResult<User> UserGetByID(Nullable<int> userID, MergeOption mergeOption)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByID", mergeOption, userIDParameter);
         }
     
         public virtual ObjectResult<UserGetByProviderUserKey2_Result> UserGetByProviderUserKey2(Nullable<System.Guid> providerUserKey)
@@ -603,40 +685,76 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetByProviderUserKey2_Result>("UserGetByProviderUserKey2", providerUserKeyParameter);
         }
     
-        public virtual ObjectResult<UserGetByResetPasswordToken_Result> UserGetByResetPasswordToken(string resetPasswordToken)
+        public virtual ObjectResult<User> UserGetByResetPasswordToken(string resetPasswordToken)
         {
             var resetPasswordTokenParameter = resetPasswordToken != null ?
                 new ObjectParameter("ResetPasswordToken", resetPasswordToken) :
                 new ObjectParameter("ResetPasswordToken", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetByResetPasswordToken_Result>("UserGetByResetPasswordToken", resetPasswordTokenParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByResetPasswordToken", resetPasswordTokenParameter);
         }
     
-        public virtual ObjectResult<UserGetBySubscriberID_Result> UserGetBySubscriberID(Nullable<int> subscriberID)
+        public virtual ObjectResult<User> UserGetByResetPasswordToken(string resetPasswordToken, MergeOption mergeOption)
+        {
+            var resetPasswordTokenParameter = resetPasswordToken != null ?
+                new ObjectParameter("ResetPasswordToken", resetPasswordToken) :
+                new ObjectParameter("ResetPasswordToken", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByResetPasswordToken", mergeOption, resetPasswordTokenParameter);
+        }
+    
+        public virtual ObjectResult<User> UserGetBySubscriberID(Nullable<int> subscriberID)
         {
             var subscriberIDParameter = subscriberID.HasValue ?
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetBySubscriberID_Result>("UserGetBySubscriberID", subscriberIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetBySubscriberID", subscriberIDParameter);
         }
     
-        public virtual ObjectResult<UserGetByVendorID_Result> UserGetByVendorID(Nullable<int> vendorID)
+        public virtual ObjectResult<User> UserGetBySubscriberID(Nullable<int> subscriberID, MergeOption mergeOption)
+        {
+            var subscriberIDParameter = subscriberID.HasValue ?
+                new ObjectParameter("SubscriberID", subscriberID) :
+                new ObjectParameter("SubscriberID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetBySubscriberID", mergeOption, subscriberIDParameter);
+        }
+    
+        public virtual ObjectResult<User> UserGetByVendorID(Nullable<int> vendorID)
         {
             var vendorIDParameter = vendorID.HasValue ?
                 new ObjectParameter("VendorID", vendorID) :
                 new ObjectParameter("VendorID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetByVendorID_Result>("UserGetByVendorID", vendorIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByVendorID", vendorIDParameter);
         }
     
-        public virtual ObjectResult<UserGetFirstBySubscriberID_Result> UserGetFirstBySubscriberID(Nullable<int> subscriberID)
+        public virtual ObjectResult<User> UserGetByVendorID(Nullable<int> vendorID, MergeOption mergeOption)
+        {
+            var vendorIDParameter = vendorID.HasValue ?
+                new ObjectParameter("VendorID", vendorID) :
+                new ObjectParameter("VendorID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByVendorID", mergeOption, vendorIDParameter);
+        }
+    
+        public virtual ObjectResult<User> UserGetFirstBySubscriberID(Nullable<int> subscriberID)
         {
             var subscriberIDParameter = subscriberID.HasValue ?
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetFirstBySubscriberID_Result>("UserGetFirstBySubscriberID", subscriberIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetFirstBySubscriberID", subscriberIDParameter);
+        }
+    
+        public virtual ObjectResult<User> UserGetFirstBySubscriberID(Nullable<int> subscriberID, MergeOption mergeOption)
+        {
+            var subscriberIDParameter = subscriberID.HasValue ?
+                new ObjectParameter("SubscriberID", subscriberID) :
+                new ObjectParameter("SubscriberID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetFirstBySubscriberID", mergeOption, subscriberIDParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> UserInsert(Nullable<System.Guid> providerUserKey, Nullable<int> subscriberID, Nullable<int> vendorID)
@@ -686,13 +804,22 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserSearchGetBySubscriberID_Result>("UserSearchGetBySubscriberID", subscriberIDParameter);
         }
     
-        public virtual ObjectResult<UserSearchGetByUserID_Result> UserSearchGetByUserID(Nullable<int> userID)
+        public virtual ObjectResult<UserSearch> UserSearchGetByUserID(Nullable<int> userID)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserSearchGetByUserID_Result>("UserSearchGetByUserID", userIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserSearch>("UserSearchGetByUserID", userIDParameter);
+        }
+    
+        public virtual ObjectResult<UserSearch> UserSearchGetByUserID(Nullable<int> userID, MergeOption mergeOption)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserSearch>("UserSearchGetByUserID", mergeOption, userIDParameter);
         }
     
         public virtual ObjectResult<string> UserSearchGetRecent2()
@@ -800,13 +927,22 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorAchievementListDeleteByID", vendorAchievementListIDParameter);
         }
     
-        public virtual ObjectResult<VendorAchievementListGetByID_Result> VendorAchievementListGetByID(Nullable<int> vendorAchievementListID)
+        public virtual ObjectResult<VendorAchievementList> VendorAchievementListGetByID(Nullable<int> vendorAchievementListID)
         {
             var vendorAchievementListIDParameter = vendorAchievementListID.HasValue ?
                 new ObjectParameter("VendorAchievementListID", vendorAchievementListID) :
                 new ObjectParameter("VendorAchievementListID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementListGetByID_Result>("VendorAchievementListGetByID", vendorAchievementListIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementList>("VendorAchievementListGetByID", vendorAchievementListIDParameter);
+        }
+    
+        public virtual ObjectResult<VendorAchievementList> VendorAchievementListGetByID(Nullable<int> vendorAchievementListID, MergeOption mergeOption)
+        {
+            var vendorAchievementListIDParameter = vendorAchievementListID.HasValue ?
+                new ObjectParameter("VendorAchievementListID", vendorAchievementListID) :
+                new ObjectParameter("VendorAchievementListID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementList>("VendorAchievementListGetByID", mergeOption, vendorAchievementListIDParameter);
         }
     
         public virtual ObjectResult<VendorAchievementListGetByVendorID_Result> VendorAchievementListGetByVendorID(Nullable<int> vendorID)
@@ -865,14 +1001,24 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorAchievementListUpdateDateApproved", vendorAchievementListIDParameter);
         }
     
-        public virtual ObjectResult<VendorAchievementTypeGetAll_Result> VendorAchievementTypeGetAll()
+        public virtual ObjectResult<VendorAchievementType> VendorAchievementTypeGetAll()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementTypeGetAll_Result>("VendorAchievementTypeGetAll");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementType>("VendorAchievementTypeGetAll");
         }
     
-        public virtual ObjectResult<VendorAchievementTypeGetAllQuoteSelectable_Result> VendorAchievementTypeGetAllQuoteSelectable()
+        public virtual ObjectResult<VendorAchievementType> VendorAchievementTypeGetAll(MergeOption mergeOption)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementTypeGetAllQuoteSelectable_Result>("VendorAchievementTypeGetAllQuoteSelectable");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementType>("VendorAchievementTypeGetAll", mergeOption);
+        }
+    
+        public virtual ObjectResult<VendorAchievementType> VendorAchievementTypeGetAllQuoteSelectable()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementType>("VendorAchievementTypeGetAllQuoteSelectable");
+        }
+    
+        public virtual ObjectResult<VendorAchievementType> VendorAchievementTypeGetAllQuoteSelectable(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorAchievementType>("VendorAchievementTypeGetAllQuoteSelectable", mergeOption);
         }
     
         public virtual int VendorCertDelete(Nullable<int> vendorCertID)
@@ -884,13 +1030,22 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorCertDelete", vendorCertIDParameter);
         }
     
-        public virtual ObjectResult<VendorCertGetByVendorID_Result> VendorCertGetByVendorID(Nullable<int> vendorID)
+        public virtual ObjectResult<VendorCert> VendorCertGetByVendorID(Nullable<int> vendorID)
         {
             var vendorIDParameter = vendorID.HasValue ?
                 new ObjectParameter("VendorID", vendorID) :
                 new ObjectParameter("VendorID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorCertGetByVendorID_Result>("VendorCertGetByVendorID", vendorIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorCert>("VendorCertGetByVendorID", vendorIDParameter);
+        }
+    
+        public virtual ObjectResult<VendorCert> VendorCertGetByVendorID(Nullable<int> vendorID, MergeOption mergeOption)
+        {
+            var vendorIDParameter = vendorID.HasValue ?
+                new ObjectParameter("VendorID", vendorID) :
+                new ObjectParameter("VendorID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorCert>("VendorCertGetByVendorID", mergeOption, vendorIDParameter);
         }
     
         public virtual int VendorCertInsert(Nullable<int> vendorID, string cert, string number)
@@ -915,22 +1070,40 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorGetAll_Result>("VendorGetAll");
         }
     
-        public virtual ObjectResult<VendorGetByID_Result> VendorGetByID(Nullable<int> vendorID)
+        public virtual ObjectResult<Vendor> VendorGetByID(Nullable<int> vendorID)
         {
             var vendorIDParameter = vendorID.HasValue ?
                 new ObjectParameter("VendorID", vendorID) :
                 new ObjectParameter("VendorID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorGetByID_Result>("VendorGetByID", vendorIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vendor>("VendorGetByID", vendorIDParameter);
         }
     
-        public virtual ObjectResult<VendorGetByVendorName_Result> VendorGetByVendorName(string vendorName)
+        public virtual ObjectResult<Vendor> VendorGetByID(Nullable<int> vendorID, MergeOption mergeOption)
+        {
+            var vendorIDParameter = vendorID.HasValue ?
+                new ObjectParameter("VendorID", vendorID) :
+                new ObjectParameter("VendorID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vendor>("VendorGetByID", mergeOption, vendorIDParameter);
+        }
+    
+        public virtual ObjectResult<Vendor> VendorGetByVendorName(string vendorName)
         {
             var vendorNameParameter = vendorName != null ?
                 new ObjectParameter("VendorName", vendorName) :
                 new ObjectParameter("VendorName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorGetByVendorName_Result>("VendorGetByVendorName", vendorNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vendor>("VendorGetByVendorName", vendorNameParameter);
+        }
+    
+        public virtual ObjectResult<Vendor> VendorGetByVendorName(string vendorName, MergeOption mergeOption)
+        {
+            var vendorNameParameter = vendorName != null ?
+                new ObjectParameter("VendorName", vendorName) :
+                new ObjectParameter("VendorName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Vendor>("VendorGetByVendorName", mergeOption, vendorNameParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> VendorInsert4(string vendorName, string country, string phone, string rFQPhone, string rFQEmail, string rFQWebEmails)

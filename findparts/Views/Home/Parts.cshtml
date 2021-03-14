@@ -1,0 +1,454 @@
+﻿@using Findparts.Core
+@model Findparts.Models.PartsPageViewModel
+
+@section header {
+    <meta name="keywords" content="MRO FINDER @ViewBag.ExtraMetaKeywords" />
+}
+
+<div id="divSearchResultsBlock">
+    <div id="divSearchResults" class="SearchResults">Search Results: @Model.Text</div>
+    <div id="divSearchResultsCount" class="SearchResultsCount">@Model.SearchResults.Count  Parts found</div>
+</div>
+
+@if (Model.HasMoreRow)
+{
+    <span>Only the first @Model.SearchResults.Count results were returned. Add more characters to your search term to narrow your search</span>
+}
+
+<div class="search-results-list">
+    @{
+        for (var i = 0; i < Model.SearchResults.Count; i++)
+        {
+            <div class="row hover @(i % 2 == 0 ? "even" :"")" onclick="ExpandDetails(@i);">
+                <div class="col-xs-12 col-sm-3">
+                    <span id="expand_@i" class="glyphicon glyphicon-triangle-right expander" aria-hidden="true"></span>
+                    <span id="link_@i" class="PartNumber" style="display:inline-block; text-overflow:ellipsis; max-width:21ch; overflow:hidden; white-space:nowrap;">@Model.SearchResults[i].PartNumber</span>
+                </div>
+                <div class="col-xs-12 col-sm-7">
+                    <span class="PartDescription" style="display:inline-block; text-overflow:ellipsis; max-width:35ch; overflow:hidden; white-space:nowrap;">@Model.SearchResults[i].Description</span> <a href="#" class="noexpand" onclick="return AlternateDetails('@Model.SearchResults[i].PartNumber');"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    @if (!string.IsNullOrEmpty(Model.SearchResults[i].Match))
+                    {
+                        <span style="display:inline-block; text-overflow:ellipsis; max-width:27ch; overflow:hidden; white-space:nowrap;">@Model.SearchResults[i].Match</span>
+                    }
+                    @if (string.IsNullOrEmpty(Model.SearchResults[i].Match) && !string.IsNullOrEmpty(Model.SearchResults[i].Alternate))
+                    {
+                        <span style="display: inline-block; text-overflow: ellipsis; max-width: 27ch;overflow:hidden; white-space:nowrap;">@Model.SearchResults[i].Alternate</span>
+                    }
+                    <div style="display:none"></div>
+                </div>
+                <div class="col-xs-10 col-sm-1 VendorCount">
+                    <span class="text">@Model.SearchResults[i].VendorCount</span> <img src="~/Content/dist/images/glyphicons-620-industrial-zone.png" />
+                </div>
+                <div class="col-xs-2 col-sm-1">
+                    <a target="_blank" class="popout" href="?PartNumber=@HttpUtility.UrlEncode(Model.SearchResults[i].PartNumber)" title="Part Page"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+                </div>
+            </div>
+            <div class="row vendors hidden @(i % 2 == 0 ? "even" : "")"></div>
+        }
+    }
+</div>
+<div id="divAlternateDetails" style="display:none;">
+    <span id="spanAlternateDetails"></span>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        var viewRepairStationGuestHref = '@(SessionVariables.SubscriberID != "" ? "/Subscriber/Charge" : "/Account/Signup")';
+        
+        var rfqButtonNumber = 0;
+        function ExpandDetails(index) {
+            var element = document.getElementById('link_' + index);
+            var expand = element.className != 'PartNumberExpanded';
+            element.className = expand ? 'PartNumberExpanded' : 'PartNumber';
+            document.getElementById('expand_' + index).className = 'glyphicon ' + (expand ? 'glyphicon-triangle-bottom' : 'glyphicon-triangle-right');
+
+            var divRow = element.parentNode.parentNode;
+            var nextDivRow = divRow.nextElementSibling;
+
+            if (expand) {
+                if (nextDivRow.childNodes.length > 0) {
+                    nextDivRow.className = nextDivRow.className.replace('hidden', '') + ' expandable';
+                } else {
+                    var partNumber = element.innerHTML;
+                    $.get("parts?PartNumberDetail=" + partNumber, function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            var templateRow = document.createElement('div');
+                            templateRow.className = 'vendor';
+                            var templateCell;
+
+                            if (data[i].VendorID) {
+                                templateCell = document.createElement('div');
+                                templateCell.style.lineHeight = '5em';
+                                templateCell.innerHTML = '<label class="styled-checkbox"><input type="checkbox" class="rfq-selected' + index + '"' + (data[i].WebEmails ? ' value="' + data[i].VendorID + '-' + data[i].VendorListItemID + '"' : ' disabled') + '><span></span><i></i></label>&nbsp;';
+                                templateRow.appendChild(templateCell);
+                            }
+
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorStar';
+                            if (data[i].VendorID) {
+                                templateCell.innerHTML = '<a class="vendor_' + data[i].VendorID + '" href="#" onclick="return PreferVendor(' + data[i].VendorID + ', this.firstChild.className.indexOf(\'-empty\') > -1 ? 1 : 0);"><span class="glyphicon glyphicon-star' + (data[i].Preferred ? '' : '-empty') + '" aria-hidden="true"></span></a>';
+                                // + ' / <a href="#" onclick="return BlockVendor(' + data[i].VendorID + ');">-Block</a>';
+                            }
+                            templateRow.appendChild(templateCell);
+
+                            var vendorNameBlock = document.createElement('div');
+                            vendorNameBlock.className = 'vendorNameBlock';
+
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorName';
+                            if (data[i].VendorName == '***') {
+                                templateCell.innerHTML = '<a href="' + viewRepairStationGuestHref + '">View Repair Station<a>';
+                            } else {
+                                templateCell.innerHTML = '<a href="#" onclick="return VendorDetails(\'' + partNumber + '\', ' + data[i].VendorID + ')"> <span class="vendorName"><span style="display:inline-block; text-overflow:ellipsis; max-width:40ch; overflow:hidden; white-space:nowrap;">' + data[i].VendorName + '</span></span><span class="glyphicon glyphicon-info-sign"></span></a>';
+                            }
+                            vendorNameBlock.appendChild(templateCell);
+
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorAchievements';
+                            var innerHTML = '';
+                            if (data[i].RepairsFrequently) {
+                                innerHTML += '<img src="/Content/dist/Images/REPAIRS_FREQUENTLY-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="Repairs Frequently" />';
+                            }
+                            if (data[i].PMA) {
+                                innerHTML += '<img src="/Content/dist/Images/PMA-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="PMA" />';
+                            }
+                            if (data[i].DER) {
+                                innerHTML += '<img src="/Content/dist/Images/DER-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="DER" />';
+                            }
+                            if (data[i].FreeEval) {
+                                innerHTML += '<img src="/Content/dist/Images/FREE_EVAL-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="Free Eval" />';
+                            }
+                            if (data[i].Modified) {
+                                innerHTML += '<img src="/Content/dist/Images/MODIFIED-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="Modified" />';
+                            }
+                            if (data[i].FlatRate) {
+                                innerHTML += '<img src="/Content/dist/Images/FLAT_RATE-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="Flat Rate" />';
+                            }
+                            if (data[i].Range) {
+                                innerHTML += '<img src="/Content/dist/Images/RANGE-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="Range" />';
+                            }
+                            if (data[i].NotToExceed) {
+                                innerHTML += '<img src="/Content/dist/Images/NTE-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="NTE" />';
+                            }
+                            if (data[i].FunctionTestOnly) {
+                                innerHTML += '<img src="/Content/dist/Images/TEST-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="FunctionTest" />';
+                            }
+                            if (data[i].NoOverhaulWorkscope) {
+                                innerHTML += '<img src="/Content/dist/Images/NO_OH-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="No Overhaul Workscope" />';
+                            }
+                            if (data[i].CAAC) {
+                                innerHTML += '<img src="/Content/dist/Images/CAAC-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="CAAC" />';
+                            }
+                            if (data[i].ExtendedWarranty) {
+                                innerHTML += '<img src="/Content/dist/Images/EX-WAR-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="Extended Warranty" />';
+                            }
+                            if (data[i].OEM) {
+                                innerHTML += '<img src="/Content/dist/Images/OEM-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="OEM" />';
+                            }
+                            if (data[i].OEMExclusive) {
+                                innerHTML += '<img src="/Content/dist/Images/OEM_EX-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="OEM Authorized" />';
+                            }
+                            if (data[i].OEMRequiresRMA) {
+                                innerHTML += '<img src="/Content/dist/Images/OEM_RMA-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="OEM RMA" />';
+                            }
+
+                            templateCell.innerHTML = innerHTML;
+                            vendorNameBlock.appendChild(templateCell);
+
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorCountry';
+                            //templateCell.innerHTML = '<span class="glyphicon glyphicon-flag" aria-hidden="true"></span> ' + (data[i].Country ? data[i].Country : '');
+                            templateCell.innerHTML = (data[i].State ? data[i].State + ', ' : '') + (data[i].Country ? data[i].Country : '');
+                            vendorNameBlock.appendChild(templateCell);
+
+                            templateRow.appendChild(vendorNameBlock);
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorContact';
+                            templateCell.innerHTML = (data[i].Phone ? '<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> ' + (data[i].Phone == '***' ? '<a href="' + viewRepairStationGuestHref + '">View Phone</a>' : '<span style="display:inline-block; text-overflow:ellipsis; max-width:27ch; overflow:hidden; white-space:nowrap;">' + data[i].Phone + '</span>') + '<br>' : '')
+                                + (data[i].Email ? '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> ' + (data[i].Email == '***' ? '<a href="' + viewRepairStationGuestHref + '">View Email</a>' : '<span style="display:inline-block; text-overflow:ellipsis; max-width:35ch; overflow:hidden; white-space:nowrap;">' + data[i].Email + '</span>') + '<br>' : '')
+                                + (data[i].Fax ? '<span class="glyphicon glyphicon-print" aria-hidden="true" data-toggle="popover" data-content="Fax"></span> ' + (data[i].Fax == '***' ? '<a href="' + viewRepairStationGuestHref + '">View Fax</a>' : '<span style="display:inline-block; text-overflow:ellipsis; max-width:27ch; overflow:hidden; white-space:nowrap;">' + data[i].Fax + '</span>') : '');
+                            templateRow.appendChild(templateCell);
+
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorQuote';
+                            templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;
+                            templateCell.innerHTML = data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
+                            templateRow.appendChild(templateCell);
+
+                            nextDivRow.appendChild(templateRow);
+                        }
+                        var showRfqSelected = false;
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].WebEmails && data[i].VendorID) {
+                                showRfqSelected = true;
+                                break;
+                            }
+                        }
+
+                        if (showRfqSelected) {
+                            var arrowIcon = document.createElement('span');
+                            arrowIcon.className = 'glyphicon glyphicon-arrow-up rfq-selected-arrow';
+                            nextDivRow.appendChild(arrowIcon);
+
+                            //document.getElementById('rfqSelected' + index).style.display = '';
+                            var rfqSelectedButton = document.createElement('a');
+                            //rfqSelectedButton.href = 'javascript:RfqSelected(' + index + ');';
+                            rfqSelectedButton.href = 'javascript:VendorQuoteSoon(0,0,0);';
+                            rfqSelectedButton.innerHTML = 'RFQ Selected';
+                            //rfqSelectedButton.style.display = 'none';
+                            rfqSelectedButton.id = 'rfqSelected' + index;
+                            rfqSelectedButton.className = 'btn btn-primary noexpand';
+                            nextDivRow.appendChild(rfqSelectedButton);
+                        }
+                        attachMenuButtonClicks();
+                        nextDivRow.className = nextDivRow.className.replace('hidden', '') + ' expandable';
+                    });
+                }
+            } else {
+                nextDivRow.className = nextDivRow.className.replace('expandable', '') + ' hidden';
+            }
+            return false;
+        }
+        function getRFQSentHtml(vendorID, vendorListItemID, rfqButtonID, date, vendorItem) {
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var className = 'menuButton ';
+            var text = 'Send RFQ';
+            var dropdown = true;
+            var href = '#';
+            if (vendorID) {
+                if (vendorItem.DateResponded) {
+                    className = 'menuButton rfqResponded';
+                    text = 'Quoted';
+                } else if (date) {
+                    className = 'menuButton rfqSent';
+                    text = 'RFQ Sent';
+                } else {
+                    className = '';
+                    dropdown = false;
+                    href = "javascript:VendorQuoteSoon(" + vendorItem.VendorID + "," + vendorItem.VendorListItemID + ", '" + rfqButtonID + "');";
+                }
+            }
+            var builder = ['<a href="' + href + '" class="btn btn-primary ' + className + '"><span class="text">' + text + '</span>' + (dropdown ? '<span class="glyphicon glyphicon-triangle-bottom"></span>' : '') + '</a>'];
+            if (dropdown) {
+                builder.push('<ul class="quoteLinks">');
+                if (!vendorID) {
+                    @if (SessionVariables.SubscriberID == "")
+                    {
+                        <text>
+                            builder.push('<li><a href="' + viewRepairStationGuestHref + '">Sign Up to Send RFQ</a></li>');
+                            builder.push('<li><a href="/Account/Login">Log In to Send RFQ</a></li>');
+                        </text>
+
+                    } else
+                    { 
+                        <text>
+                            builder.push('<li><a href="' + viewRepairStationGuestHref + '">Add Subscription</a></li>');
+                        </text>
+                    }
+                        
+                } else if (vendorItem.DateResponded) {
+                    date = new Date(vendorItem.DateResponded.replace('T', ' '));
+                    builder.push('<li><a>Quoted ' + monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</a></li>');
+                    var currencySymbol = GetCurrencySymbol(vendorItem.Currency);
+                    if (vendorItem.TestPrice) {
+                        builder.push('<li><a>Test ' + currencySymbol + vendorItem.TestPrice + ' (' + vendorItem.TestTAT + ' days)</a>');
+                    }
+                    if (vendorItem.RepairPrice) {
+                        builder.push('<li><a>Repair ' + currencySymbol + vendorItem.RepairPrice + ' (' + vendorItem.RepairTAT + ' days)');
+                    }
+                    if (vendorItem.OverhaulPrice) {
+                        builder.push('<li><a>Overhaul ' + currencySymbol + vendorItem.OverhaulPrice + ' (' + vendorItem.OverhaulTAT + ' days)');
+                    }
+                } else if (date) {
+                    if (!(date instanceof Date)) {
+                        date = new Date(date.replace('T', ' '));
+                    }
+                    builder.push('<li><a>RFQ Sent ' + monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</a></li>',
+                        '<li><a href="javascript:VendorQuoteSoon(' + vendorID + ',' + vendorListItemID + ', \'' + rfqButtonID + '\');">Resend RFQ</a></li>');
+                }
+                builder.push('</ul>');
+            }
+
+            return builder.join('');
+            //return '<a href="#" class="btn btn-primary menuButton rfqSent"><span class="text">RFQ Sent</span><span class="glyphicon glyphicon-triangle-bottom"></span></a><ul class="quoteLinks"><li><a href="#">RFQ Sent ' + dateText + '</a></li><li><a href="javascript:VendorQuoteSoon(' + vendorID + ',' + vendorListItemID + ', \'' + rfqButtonID + '\');">Resend RFQ</a></li></ul>';
+        }
+        function attachMenuButtonClicks() {
+            $('.vendor .vendorQuote .menuButton').click(function () {
+                var navLinks = $(this).next();
+                var nstyle = navLinks.css("display");
+                if (nstyle == "none") {
+                    $('.vendor .vendorQuote .quoteLinks').not(navLinks).fadeOut('fast');
+                    navLinks.fadeIn('fast', function () {
+                        $("html").bind("click", function () {
+                            navLinks.fadeOut('fast');
+                            $("html").unbind("click");
+                            return false;
+                        });
+                    });
+                    return false;
+                }
+            });
+            $('.vendor .vendorQuote .quoteLinks a').click(function (e) {
+                e.stopPropagation();
+                $('.vendor .vendorQuote .quoteLinks').fadeOut('fast');
+            });
+        }
+        function AlternateDetails(partNumber) {
+            $.get("parts?PartNumberDetail=" + partNumber, function (data) {
+                var manufacturers = [],
+                    descriptions = [],
+                    alternates = [],
+                    ataChapters = [],
+                    aircrafts = [],
+                    engines = [],
+                    cages = [];
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].Manufacturer && manufacturers.indexOf(data[i].Manufacturer) == -1) {
+                        manufacturers.push(data[i].Manufacturer);
+                    }
+                    if (data[i].ATAChapter && ataChapters.indexOf(data[i].ATAChapter) == -1) {
+                        ataChapters.push(data[i].ATAChapter);
+                    }
+                    if (data[i].Aircraft && aircrafts.indexOf(data[i].Aircraft) == -1) {
+                        aircrafts.push(data[i].Aircraft);
+                    }
+                    if (data[i].Engine && engines.indexOf(data[i].Engine) == -1) {
+                        engines.push(data[i].Engine);
+                    }
+                    if (data[i].Cage && cages.indexOf(data[i].Cage) == -1) {
+                        cages.push(data[i].Cage);
+                    }
+                    if (data[i].Description && descriptions.indexOf(data[i].Description) == -1) {
+                        descriptions.push(data[i].Description);
+                    }
+                    if (data[i].AlternatePartNumber && alternates.indexOf(data[i].AlternatePartNumber) == -1) {
+                        alternates.push(data[i].AlternatePartNumber);
+                    }
+                    if (data[i].AlternatePartNumber2 && alternates.indexOf(data[i].AlternatePartNumber2) == -1) {
+                        alternates.push(data[i].AlternatePartNumber2);
+                    }
+                    if (data[i].ModelNumber && alternates.indexOf('Model # ' + data[i].ModelNumber) == -1) {
+                        alternates.push('Model # ' + data[i].ModelNumber);
+                    }
+                }
+                document.getElementById('spanAlternateDetails').innerHTML =
+                    (manufacturers.length == 0 ? '' : "Manufacturers: <br />" + manufacturers.join('<br />') + '<br /><br />') +
+                    (descriptions.length == 0 ? '' : "Descriptions: <br />" + descriptions.join('<br />') + '<br /><br />') +
+                    (alternates.length == 0 ? '' : "Alternate Part Numbers: <br />" + alternates.join('<br />') + '<br /><br />') +
+                    (ataChapters.length == 0 ? '' : "ATA Chapters: <br />" + ataChapters.join('<br />') + '<br /><br />') +
+                    (aircrafts.length == 0 ? '' : "Aircraft Application: <br />" + aircrafts.join('<br />') + '<br /><br />') +
+                    (engines.length == 0 ? '' : "Engine Application: <br />" + engines.join('<br />') + '<br /><br />') +
+                    (cages.length == 0 ? '' : "Cage: <br />" + cages.join('<br />'));
+                ShowModal('Alternate Info', '#divAlternateDetails');
+            });
+            return false;
+        }
+        function RfqSelected(index) {
+            var $checked = $('input.rfq-selected' + index + ':checked');
+            var selected = $checked.map(function () { return this.value }).get();
+            var rfqButtonIDs = $checked.closest('.vendor').children('.vendorQuote').map(function () { return this.id }).get();
+            if (selected.length == 0 || rfqButtonIDs.length == 0) {
+                alert('Please select at least 1 Repair Station to Send RFQ');
+            } else {
+                var txtComments = document.getElementById('txtComments');
+                var txtRFQID = document.getElementById('txtRFQID');
+                txtComments.value = '';
+                txtRFQID.value = '';
+                ShowModal('Send RFQ', '#divVendorQuote', 'Send RFQ', function () {
+                    for (var i = 0; i < selected.length && i < rfqButtonIDs.length; i++) {
+                        var pair = selected[i].split('-');
+                        VendorQuoteSend(pair[0], pair[1], txtComments.value, txtRFQID.value, rfqButtonIDs[i]);
+                    }
+                    HideModal();
+                });
+            }
+        }
+        function VendorQuoteSoon(vendorID, vendorListItemID, rfqButtonID) {
+            ShowModal('Send RFQ Button Unavailable', '#divVendorQuoteSoon');
+        }
+        function VendorQuoteOptions(vendorID, vendorListItemID, rfqButtonID) {
+            var txtComments = document.getElementById('txtComments');
+            var txtRFQID = document.getElementById('txtRFQID');
+            txtComments.value = '';
+            txtRFQID.value = '';
+            ShowModal('Send RFQ', '#divVendorQuote', 'Send RFQ', function () {
+                VendorQuoteSend(vendorID, vendorListItemID, txtComments.value, txtRFQID.value, rfqButtonID);
+                HideModal();
+            });
+            //return false;
+        }
+        function VendorQuoteSend(vendorID, vendorListItemID, comments, rfqID, rfqButtonID) {
+            $.post(
+                'parts?VendorID=' + vendorID + '&VendorListItemID=' + vendorListItemID,
+                {
+                    Comments: comments,
+                    RFQID: rfqID
+                },
+                function (data) {
+                    console.log(JSON.stringify(data));
+                    //alert('request sent');
+
+                    var rfqButton = document.getElementById(rfqButtonID);
+                    var date = new Date();
+                    rfqButton.innerHTML = getRFQSentHtml(vendorID, vendorListItemID, rfqButtonID, date, {});
+                    attachMenuButtonClicks();
+                }
+            );
+        }
+        function PreferVendor(vendorID, state) {
+            $('a.vendor_' + vendorID).html('<span class="glyphicon glyphicon-star' + (state == 1 ? '' : '-empty') + '" aria-hidden="true"></span>');
+            $.get("parts?PreferVendor=" + vendorID + '&State=' + state, function (data) {
+            });
+            return false;
+        }
+        function BlockVendor(vendorID) {
+            if (confirm('Are you sure you\'d like to block the vendor? You can view and edit blocked vendors at...')) {
+                $('tr.vendor_' + vendorID).css({
+                    textDecoration: 'line-through',
+                    backgroundColor: 'red'
+                });
+                $.get("parts?BlockVendor=" + vendorID, function (data) {
+                });
+            }
+            return false;
+        }
+        $(function () {
+            var parts = $('.PartNumber');
+            if (parts.length > 0) {
+                var txtSearch = $('#txtSearch').first().val();
+                if (parts.length == 1 || parts[0].innerHTML == txtSearch.value) {
+                    ExpandDetails(0);
+                    if (window.location.search.indexOf('PartNumber=') > -1) {
+                        $('a.popout').hide();
+                    }
+                }
+            }
+
+            $('a.popout, a.noexpand').click(function (e) {
+                e.stopPropagation()
+            });
+
+            $('body').popover({
+                selector: '[data-toggle="popover-merit"]',
+                content: function (a) {
+                    var title = this.getAttribute('data-original-title');
+                    for (var i = 0; i < MERITS.length; i++) {
+                        if (MERITS[i][0] == title) {
+                            return '<img src="Images/' + MERITS[i][1] + '-sm.png" style="width:70;height:70;" /> <span class="merit-text">' + MERITS[i][2] + '</span>';
+                        }
+                    }
+                    return title;
+                },
+                html: true,
+                delay: { "show": 350, "hide": 100 },
+                placement: 'auto top',
+                trigger: 'hover focus'
+            });
+            $('.search-results-list').popover({
+                selector: '[data-toggle="popover"]',
+                placement: 'auto top',
+                trigger: 'hover focus'
+            });
+        });
+    </script>
+}

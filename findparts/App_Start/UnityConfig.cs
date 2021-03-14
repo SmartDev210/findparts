@@ -85,6 +85,7 @@ namespace Findparts
             // add our self defined services
 
             container.RegisterType<IPartsSearchService, PartsSearchService>();
+            container.RegisterType<IMembershipService, MembershipService>();
         }
     }
 }

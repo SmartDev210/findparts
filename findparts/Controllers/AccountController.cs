@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Findparts.Models;
+using Findparts.Core;
+using Findparts.Services.Interfaces;
+using DAL;
 
 namespace Findparts.Controllers
 {
@@ -17,15 +20,17 @@ namespace Findparts.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IMembershipService _membershipService;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IMembershipService membershipService )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _membershipService = membershipService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -79,6 +84,21 @@ namespace Findparts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
+                    SessionVariables.Populate(User.Identity.GetUserName());
+
+                    if (SessionVariables.VendorID == "" && SessionVariables.SubscriberID != "")
+                    {
+                        var subscriber = _membershipService.GetSubscriberById(SessionVariables.SubscriberID);
+                        if (subscriber != null)
+                        {
+                            if (subscriber.SignupSubscriberTypeID != (int)(SubscriberTypeID.NoCreditCard) && subscriber.SubscriberTypeID == (int)(SubscriberTypeID.NoCreditCard))
+                            {
+                                RedirectToAction("Charge", "Subscriber");
+                            }
+                        }
+                    }
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

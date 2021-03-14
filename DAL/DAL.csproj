@@ -65,6 +65,7 @@
     <Compile Include="ELMAH_Error.cs">
       <DependentUpon>findPartsEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Enums.cs" />
     <Compile Include="findPartsEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
