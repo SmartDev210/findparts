@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,8 @@ namespace Findparts.Models
     }
 
     public class PartAutoComplete
-    {
-        public string Label { get; set; }
-        public string Value { get; set; }
+    {  
+        public string label { get; set; }
+        public string value { get; set; }
     }
 }

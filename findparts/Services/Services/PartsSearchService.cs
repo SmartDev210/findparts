@@ -139,11 +139,10 @@ namespace Findparts.Services.Services
             if (cleanText.Length < Constants.MIN_SEARCH_LENGTH)
                 return new List<PartAutoComplete>();
 
-            return _context.VendorListItemSearch7(text, SessionVariables.SubscriberID.ToNullableInt(), false)
-                .Take(50)
+            return _context.VendorListItemSearch7(text, SessionVariables.SubscriberID.ToNullableInt(), false)                
                 .Select(x => new PartAutoComplete {
-                    Value = x.PartNumber,
-                    Label = x.Match == "" ? x.PartNumber : $"{x.PartNumber} ({x.Match})"
+                    value = x.PartNumber,
+                    label = string.IsNullOrEmpty(x.Match) ? x.PartNumber : $"{x.PartNumber} ({x.Match})"
                 })
                 .ToList();
         }

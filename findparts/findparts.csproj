@@ -49,14 +49,57 @@
       <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -64,6 +107,15 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -191,6 +243,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -222,16 +275,125 @@
     <Content Include="Content\dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\dist\css\bootstrap.css" />
     <Content Include="Content\dist\css\bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\buttons.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\ColReorder\css\colReorder.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedColumns\css\fixedColumns.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\FixedHeader\css\fixedHeader.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\KeyTable\css\keyTable.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Responsive\css\responsive.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\rowReorder.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Scroller\css\scroller.semanticui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.bootstrap.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.bootstrap.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.bootstrap4.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.dataTables.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.dataTables.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.foundation.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.foundation.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.jqueryui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.jqueryui.min.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.semanticui.css" />
+    <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.semanticui.min.css" />
     <Content Include="Content\dist\css\Site.css" />
-    <Content Include="Content\dist\css\themes\base\accordion.css" />
-    <Content Include="Content\dist\css\themes\base\all.css" />
-    <Content Include="Content\dist\css\themes\base\autocomplete.css" />
-    <Content Include="Content\dist\css\themes\base\base.css" />
-    <Content Include="Content\dist\css\themes\base\button.css" />
-    <Content Include="Content\dist\css\themes\base\core.css" />
-    <Content Include="Content\dist\css\themes\base\datepicker.css" />
-    <Content Include="Content\dist\css\themes\base\dialog.css" />
-    <Content Include="Content\dist\css\themes\base\draggable.css" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -253,17 +415,7 @@
     <Content Include="Content\dist\css\themes\base\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\dist\css\themes\base\jquery-ui.css" />
     <Content Include="Content\dist\css\themes\base\jquery-ui.min.css" />
-    <Content Include="Content\dist\css\themes\base\menu.css" />
-    <Content Include="Content\dist\css\themes\base\progressbar.css" />
-    <Content Include="Content\dist\css\themes\base\resizable.css" />
-    <Content Include="Content\dist\css\themes\base\selectable.css" />
-    <Content Include="Content\dist\css\themes\base\selectmenu.css" />
-    <Content Include="Content\dist\css\themes\base\slider.css" />
-    <Content Include="Content\dist\css\themes\base\sortable.css" />
-    <Content Include="Content\dist\css\themes\base\spinner.css" />
-    <Content Include="Content\dist\css\themes\base\tabs.css" />
     <Content Include="Content\dist\css\themes\base\theme.css" />
-    <Content Include="Content\dist\css\themes\base\tooltip.css" />
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\dist\images\about\email-btn.jpg" />
     <Content Include="Content\dist\images\about\facebook.jpg" />
@@ -378,10 +530,6 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\dist\css\bootstrap-theme.css.map" />
-    <Content Include="Content\dist\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\dist\css\bootstrap.css.map" />
-    <Content Include="Content\dist\css\bootstrap.min.css.map" />
     <Content Include="Content\dist\images\literature\HowtoUpload-HighlightCapabilities.pdf" />
     <Content Include="Content\dist\images\literature\Meritocratic Repair Capability Search Engine.pdf" />
     <Content Include="Content\dist\images\literature\MROfinder.aero Letter to MROs - 145 Repair Stations.pdf" />
@@ -390,19 +538,16 @@
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.woff2" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-ui-1.12.1.js" />
-    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="manifest.json" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\common.scss" />
+    <Content Include="Content\dist\css\DataTables\extensions\Buttons\css\mixins.scss" />
+    <Content Include="Content\dist\css\DataTables\extensions\RowReorder\css\semanticui.scss" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.tagsinput.js" />
+    <Content Include="Scripts\jquery.tagsinput.min.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -448,8 +593,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

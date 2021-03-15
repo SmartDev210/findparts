@@ -16,8 +16,6 @@ namespace Findparts.Controllers
     {
         private readonly IPartsSearchService _partsSearchService;
         
-        
-
         public HomeController(IPartsSearchService service)
         {
             _partsSearchService = service;
@@ -77,7 +75,7 @@ namespace Findparts.Controllers
                 }
 
             }
-            else if (string.IsNullOrEmpty(queryParams.Term)) // auto complete
+            else if (!string.IsNullOrEmpty(queryParams.Term)) // auto complete
             {
                 var result = _partsSearchService.GetPartAutoCompletes(queryParams.Term);
                 return Json(result, JsonRequestBehavior.AllowGet);

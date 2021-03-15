@@ -11,8 +11,16 @@ namespace Findparts
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                        "~/Scripts/jquery-ui-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/PluginsJs").Include(
+                "~/Scripts/jquery.tagsinput.js",
+                "~/Scripts/chosen.jquery.js",
+                "~/Scripts/Site.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -23,8 +31,9 @@ namespace Findparts
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/dist/css/bootstrap.css",
+                      "~/Content/dist/css/themes/base/*.css",
                       "~/Content/dist/css/site.css"));
+
         }
     }
 }

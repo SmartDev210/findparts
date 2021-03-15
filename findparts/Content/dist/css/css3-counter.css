@@ -1,0 +1,291 @@
+﻿.counter {
+	display:inline-block;
+	padding:6px;
+	border:solid 1px #3799d2;
+	border-radius:5px;
+	background:#0e6ca1;
+	background:linear-gradient(#3799d2,#0e6ca1);
+	background:-moz-linear-gradient(#3799d2,#0e6ca1);
+	background:-webkit-linear-gradient(#3799d2,#0e6ca1);
+	background:-ms-linear-gradient(#3799d2,#0e6ca1);
+	box-shadow:0 2px 4px rgba(0,0,0,0.4);
+}
+.counter span {
+	float:left;
+	width:22px;
+	height:30px;
+	margin:0;
+	padding:0;
+	text-indent:-9999px;
+	font-size:0.0001em;
+	background-image:url(data:image/png;base64,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);
+}
+
+/* Set all the background positions, and hook up all the animations */
+.counter .digit-0 {
+	background-position:0 -300px;
+	animation-name: digitSpin0;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin0;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin0;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-1 {
+	background-position:0 -30px;
+	animation-name: digitSpin1;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin1;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin0;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-2 {
+	background-position:0 -60px;
+	animation-name: digitSpin2;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin2;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin2;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-3 {
+	background-position:0 -90px;
+	animation-name: digitSpin3;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin3;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin3;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count:1;
+}
+.counter .digit-4 {
+	background-position:0 -120px;
+	animation-name: digitSpin4;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin4;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin4;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-5 {
+	background-position:0 -150px;
+	animation-name: digitSpin5;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin5;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin5;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-6 {
+	background-position:0 -180px;
+	animation-name: digitSpin6;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin6;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin6;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-7 {
+	background-position:0 -210px;
+	animation-name: digitSpin7;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin7;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin7;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-8 {
+	background-position:0 -240px;
+	animation-name: digitSpin8;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin8;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin8;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+.counter .digit-9 {
+	background-position:0 -270px;
+			
+	animation-name: digitSpin9;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+			
+	-webkit-animation-name: digitSpin9;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: 1;
+			
+	-moz-animation-name: digitSpin9;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: 1;
+}
+			
+/* Animation */
+@keyframes digitSpin0 {
+	from { background-position:0 0; }
+	to { background-position:0 -300px; }
+}
+@keyframes digitSpin1 {
+	from { background-position:0 0; }
+	to { background-position:0 -30px; }
+}
+@keyframes digitSpin2 {
+	from { background-position:0 0; }
+	to { background-position:0 -60px; }
+}
+@keyframes digitSpin3 {
+	from { background-position:0 0; }
+	to { background-position:0 -90px; }
+}
+@keyframes digitSpin4 {
+	from { background-position:0 0; }
+	to { background-position:0 -120px; }
+}
+@keyframes digitSpin5 {
+	from { background-position:0 0; }
+	to { background-position:0 -150px; }
+}
+@keyframes digitSpin6 {
+	from { background-position:0 0; }
+	to { background-position:0 -180px; }
+}
+@keyframes digitSpin7 {
+	from { background-position:0 0; }
+	to { background-position:0 -210px; }
+}
+@keyframes digitSpin8 {
+	from { background-position:0 0; }
+	to { background-position:0 -240px; }
+}
+@keyframes digitSpin9 {
+	from { background-position:0 0; }
+	to { background-position:0 -270px; }
+}
+			
+/* Animation for Webkit */
+@-webkit-keyframes digitSpin0 {
+	from { background-position:0 0; }
+	to { background-position:0 -300px; }
+}
+@-webkit-keyframes digitSpin1 {
+	from { background-position:0 0; }
+	to { background-position:0 -30px; }
+}
+@-webkit-keyframes digitSpin2 {
+	from { background-position:0 0; }
+	to { background-position:0 -60px; }
+}
+@-webkit-keyframes digitSpin3 {
+	from { background-position:0 0; }
+	to { background-position:0 -90px; }
+}
+@-webkit-keyframes digitSpin4 {
+	from { background-position:0 0; }
+	to { background-position:0 -120px; }
+}
+@-webkit-keyframes digitSpin5 {
+	from { background-position:0 0; }
+	to { background-position:0 -150px; }
+}
+@-webkit-keyframes digitSpin6 {
+	from { background-position:0 0; }
+	to { background-position:0 -180px; }
+}
+@-webkit-keyframes digitSpin7 {
+	from { background-position:0 0; }
+	to { background-position:0 -210px; }
+}
+@-webkit-keyframes digitSpin8 {
+	from { background-position:0 0; }
+	to { background-position:0 -240px; }
+}
+@-webkit-keyframes digitSpin9 {
+	from { background-position:0 0; }
+	to { background-position:0 -270px; }
+}
+			
+/* Animation for Gecko (Firefox) */
+@-moz-keyframes digitSpin0 {
+	from { background-position:0 0; }
+	to { background-position:0 -300px; }
+}
+@-moz-keyframes digitSpin1 {
+	from { background-position:0 0; }
+	to { background-position:0 -30px; }
+}
+@-moz-keyframes digitSpin2 {
+	from { background-position:0 0; }
+	to { background-position:0 -60px; }
+}
+@-moz-keyframes digitSpin3 {
+	from { background-position:0 0; }
+	to { background-position:0 -90px; }
+}
+@-moz-keyframes digitSpin4 {
+	from { background-position:0 0; }
+	to { background-position:0 -120px; }
+}
+@-moz-keyframes digitSpin5 {
+	from { background-position:0 0; }
+	to { background-position:0 -150px; }
+}
+@-moz-keyframes digitSpin6 {
+	from { background-position:0 0; }
+	to { background-position:0 -180px; }
+}
+@-moz-keyframes digitSpin7 {
+	from { background-position:0 0; }
+	to { background-position:0 -210px; }
+}
+@-moz-keyframes digitSpin8 {
+	from { background-position:0 0; }
+	to { background-position:0 -240px; }
+}
+@-moz-keyframes digitSpin9 {
+	from { background-position:0 0; }
+	to { background-position:0 -270px; }
+}
