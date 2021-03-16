@@ -18,5 +18,7 @@ namespace Findparts.Models
         public string DisabledFeatureEmail { get; set; }
         public string VendorID { get; set; }
         public string State { get; set; }
+        public string Comments { get; set; }
+        public string RFQID { get; set; }
     }
 }

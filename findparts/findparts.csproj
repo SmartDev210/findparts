@@ -264,17 +264,25 @@
     <Compile Include="Models\PartsPageViewModel.cs" />
     <Compile Include="Models\PartsSearchQueryParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMembershipService.cs" />
     <Compile Include="Services\Interfaces\IPartsSearchService.cs" />
+    <Compile Include="Services\Services\EmailService.cs" />
     <Compile Include="Services\Services\MembershipService.cs" />
     <Compile Include="Services\Services\PartsSearchService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\dist\css\bootstrap-chosen.css" />
     <Content Include="Content\dist\css\bootstrap-theme.css" />
     <Content Include="Content\dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\dist\css\bootstrap.css" />
     <Content Include="Content\dist\css\bootstrap.min.css" />
+    <Content Include="Content\dist\css\chosen-sprite%402x.png" />
+    <Content Include="Content\dist\css\chosen-sprite.png" />
+    <Content Include="Content\dist\css\css3-counter.css" />
+    <Content Include="Content\dist\css\dataTables.bootstrap.css" />
+    <Content Include="Content\dist\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap.css" />
     <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\dist\css\DataTables\extensions\AutoFill\css\autoFill.bootstrap4.css" />
@@ -393,6 +401,14 @@
     <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.jqueryui.min.css" />
     <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.semanticui.css" />
     <Content Include="Content\dist\css\DataTables\extensions\Select\css\select.semanticui.min.css" />
+    <Content Include="Content\dist\css\fixedHeader.bootstrap.css" />
+    <Content Include="Content\dist\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Content\dist\css\Images\asc.gif" />
+    <Content Include="Content\dist\css\Images\bg.gif" />
+    <Content Include="Content\dist\css\Images\desc.gif" />
+    <Content Include="Content\dist\css\jquery.tagsinput.css" />
+    <Content Include="Content\dist\css\jquery.tagsinput.min.css" />
+    <Content Include="Content\dist\css\rowGroup.bootstrap.css" />
     <Content Include="Content\dist\css\Site.css" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -593,6 +609,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Views\Account\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

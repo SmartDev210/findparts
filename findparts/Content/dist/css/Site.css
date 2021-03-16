@@ -159,7 +159,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 	.site-title a {
-		background: url(../Images/logo_335x50.png);
+		background: url(/Content/dist/images/logo_335x50.png);
 		color: #c8c8c8;
 		outline: none;
 		text-decoration: none;
@@ -177,7 +177,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .home-page .site-title a {
-	background: url(../Images/logo_588x72.png);
+	background: url(/Content/dist/images/logo_588x72.png);
 	color: #c8c8c8;
 	outline: none;
 	text-decoration: none;

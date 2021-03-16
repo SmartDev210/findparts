@@ -12,6 +12,7 @@ using Findparts.Models;
 using Findparts.Core;
 using Findparts.Services.Interfaces;
 using DAL;
+using Findparts.Extensions;
 
 namespace Findparts.Controllers
 {
@@ -154,12 +155,33 @@ namespace Findparts.Controllers
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Signup()
+        {   
+            return View();
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string Vendor, string SubscriberTypeID)
         {
-            return View();
+            RegisterViewModel viewModel = new RegisterViewModel();
+
+            if (Vendor.ToNullableInt() == null && SubscriberTypeID.ToNullableInt() == null)
+                return RedirectToAction("Signup");
+
+            if (Vendor == "1") viewModel.VendorSignup = true;
+            viewModel.SubscriberTypeId = SubscriberTypeID.ToNullableInt();
+
+            viewModel.CountryList.Add(new SelectListItem
+            {
+                Text = "USA",
+                Value = "USA"
+            });
+
+            return View(viewModel);
         }
 
         //
@@ -175,6 +197,14 @@ namespace Findparts.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRole(user.Id, "Subscriber");
+                    if (model.VendorSignup)
+                        _userManager.AddToRole(user.Id, "Vendor");
+
+                    var vendorId = _membershipService.RegisterNewUser(model, user);
+
+                    Session["RegisterVendorID"] = vendorId;
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

@@ -15,11 +15,13 @@ namespace Findparts.Services.Services
     public class PartsSearchService : IPartsSearchService
     {
         private readonly FindPartsEntities _context;
+        private readonly IMailService _mailService;
         
 
-        public PartsSearchService(FindPartsEntities context)
+        public PartsSearchService(FindPartsEntities context, IMailService mailService)
         {
             _context = context;
+            _mailService = mailService;
         }
 
         public void PopulateHomePageViewModel(HomePageViewModel viewModel)
@@ -145,6 +147,36 @@ namespace Findparts.Services.Services
                     label = string.IsNullOrEmpty(x.Match) ? x.PartNumber : $"{x.PartNumber} ({x.Match})"
                 })
                 .ToList();
+        }
+
+        public void PreferBlockVendor(string vendorId, bool prefer, string state)
+        {
+            if (prefer)
+            {
+                if (state == "1")
+                {
+                    _context.VendorSubscriberPreferredInsert(vendorId.ToNullableInt(), SessionVariables.SubscriberID.ToNullableInt());
+                } else
+                {
+                    _context.VendorSubscriberPreferredDelete(vendorId.ToNullableInt(), SessionVariables.SubscriberID.ToNullableInt());
+                }
+            } else
+            {
+                _context.VendorSubscriberBlockedInsert(vendorId.ToNullableInt(), SessionVariables.SubscriberID.ToNullableInt());
+            }
+        }
+
+        public void SendRFQ(string vendorID, string vendorListItemID, string comments, string rFQID)
+        {
+            var userId = SessionVariables.UserID;
+            var vendorQuoteId = _context.VendorQuoteInsert3(vendorID.ToNullableInt(), vendorListItemID.ToNullableInt(), userId.ToNullableInt(), comments, rFQID).FirstOrDefault();
+
+            _mailService.SendVendorRFQEmail(vendorQuoteId.ToString());
+        }
+
+        public void SendDisabledFeatureEmail(string disabledFeatureEmail)
+        {
+            _mailService.SendDisabledFeatureEmail(disabledFeatureEmail);
         }
     }
 }

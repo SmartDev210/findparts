@@ -14,5 +14,10 @@ namespace Findparts.Extensions
             if (Int32.TryParse(str, out t)) return t;
             return null;
         }
+        public static int? ToNullableInt(this decimal? d)
+        {
+            if (d == null) return null;
+            return (int)d.Value;
+        }
     }
 }

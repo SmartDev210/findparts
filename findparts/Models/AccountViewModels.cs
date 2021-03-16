@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
 namespace Findparts.Models
 {
@@ -60,10 +62,15 @@ namespace Findparts.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
     }
 
     public class RegisterViewModel
     {
+        public RegisterViewModel()
+        {
+            CountryList = new List<SelectListItem>();
+        }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -79,6 +86,19 @@ namespace Findparts.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool VendorSignup { get; set; }
+        public int? SubscriberTypeId { get; set; }
+
+        [Required]
+        public string CompanyName { get; set; }
+
+        [Required]
+        [Display(Name ="Phone number")]
+        public string PhoneNumber { get; set; }
+
+        public List<SelectListItem> CountryList { get; set; }
+        public string Country { get; set; }
     }
 
     public class ResetPasswordViewModel

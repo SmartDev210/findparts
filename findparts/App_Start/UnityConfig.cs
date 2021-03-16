@@ -86,6 +86,7 @@ namespace Findparts
 
             container.RegisterType<IPartsSearchService, PartsSearchService>();
             container.RegisterType<IMembershipService, MembershipService>();
+            container.RegisterType<IMailService, MailService>();
         }
     }
 }

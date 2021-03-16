@@ -14,5 +14,8 @@ namespace Findparts.Services.Interfaces
         List<VendorListItemSearchDetail9_Result> GetDetails(PartsSearchQueryParams queryParams, bool isAdmin);
         void PopulatePartsPageViewModel(PartsPageViewModel viewModel, string text, bool partPage);
         List<PartAutoComplete> GetPartAutoCompletes(string text);
+        void PreferBlockVendor(string vendorId, bool prefer, string state);
+        void SendRFQ(string vendorID, string vendorListItemID, string comments, string rFQID);
+        void SendDisabledFeatureEmail(string disabledFeatureEmail);
     }
 }

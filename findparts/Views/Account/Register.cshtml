@@ -1,39 +1,114 @@
 ﻿@model Findparts.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = Model.VendorSignup ? "Repair Station Registration" : "Customer Registration";
 }
 
-<h2>@ViewBag.Title.</h2>
+@section featured_content
+{
+    <h1>@ViewBag.Title.</h1>
+    @if (Model.VendorSignup)
+    {
+        <h4>Always Free to List</h4>
+    }
+}
+
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.SubscriberTypeId)
+    @Html.HiddenFor(m => m.VendorSignup)
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="form-group">
+                <label for="@Model.CompanyName">@(Model.VendorSignup ? "Repair Station Name" : "Company Name")</label>
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="@Model.Email">
+                    Email address
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-content="Once Logged In, You can edit your RFQ Preferences. Customize Email Addresses to Receive RFQs in your Repair Station Settings."></span>
+                </label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "Email address is required.", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Country)
+                @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control chosen" })
+                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="@Model.Password">Password (minimum 6 characters)</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.CheckBox("cbTerms")
+                <label for="cbfTerms"><i>I have read, understand, and agree to MRO FINDER Terms of Service and Privacy Policy.</i></label>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Register" />
+            </div>
+
+            @if (Model.VendorSignup)
+            {
+                <div class="form-group">
+                    <script src="https://fast.wistia.com/embed/medias/xg3o6ut456.jsonp" async></script>
+                    <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+                    <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+                        <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                            <div class="wistia_embed wistia_async_xg3o6ut456 videoFoam=true" style="height:100%;position:relative;width:100%">
+                                <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;">
+                                    <img src="https://fast.wistia.com/embed/medias/xg3o6ut456/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <img src="/Content/dist/Images/MROfinder-Mission-Statement.jpg" style="width:100%;" />
+                </div>
+                <div class="form-group">
+                    <img src="/Content/dist/Images/ListCapabilities.jpg" style="width:100%;" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <script src="https://fast.wistia.com/embed/medias/xg3o6ut456.jsonp" async></script>
+                    <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+                    <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+                        <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                            <div class="wistia_embed wistia_async_xg3o6ut456 videoFoam=true" style="height:100%;position:relative;width:100%">
+                                <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;">
+                                    <img src="https://fast.wistia.com/embed/medias/xg3o6ut456/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <img src="/Content/dist/Images/MRO-Finder-find-component-mros.jpg" style="width:100%;" />
+                </div>
+            }
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
+
+    
 }
 
 @section Scripts {

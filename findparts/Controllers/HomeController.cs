@@ -16,6 +16,7 @@ namespace Findparts.Controllers
     {
         private readonly IPartsSearchService _partsSearchService;
         
+        
         public HomeController(IPartsSearchService service)
         {
             _partsSearchService = service;
@@ -81,19 +82,18 @@ namespace Findparts.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
             } else if (!string.IsNullOrEmpty(queryParams.PreferVendor) && !string.IsNullOrEmpty(queryParams.State))
             {
-
+                _partsSearchService.PreferBlockVendor(queryParams.PreferVendor, true, queryParams.State);
+                return new EmptyResult();
             } else if (!string.IsNullOrEmpty(queryParams.BlockVendor))
             {
+                _partsSearchService.PreferBlockVendor(queryParams.BlockVendor, false, queryParams.State);
 
             } else if (!string.IsNullOrEmpty(queryParams.VendorListItemID) && !string.IsNullOrEmpty(queryParams.VendorID))
             {
-
-            } else if (!string.IsNullOrEmpty(queryParams.VendorID) && !string.IsNullOrEmpty(queryParams.VendorListItemID))
+                _partsSearchService.SendRFQ(queryParams.VendorID, queryParams.VendorListItemID, queryParams.Comments, queryParams.RFQID);
+            }  else if (!string.IsNullOrEmpty(queryParams.DisabledFeatureEmail))
             {
-
-            } else if (!string.IsNullOrEmpty(queryParams.DisabledFeatureEmail))
-            {
-
+                _partsSearchService.SendDisabledFeatureEmail(queryParams.DisabledFeatureEmail);
             }
 
             return RedirectToAction("Index");

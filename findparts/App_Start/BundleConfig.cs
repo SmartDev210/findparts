@@ -31,8 +31,14 @@ namespace Findparts
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/dist/css/themes/base/*.css",
-                      "~/Content/dist/css/site.css"));
+                "~/Content/dist/css/site.css",
+                "~/Content/dist/css/css3-counter.css",
+                "~/Content/dist/css/bootstrap-chosen.css",
+                "~/Content/dist/css/jquery.tagsinput.css"
+                ));
+            bundles.Add(new StyleBundle("~/Content/theme/css").Include(
+                      "~/Content/dist/css/themes/base/jquery-ui.css"
+                      ));
 
         }
     }
