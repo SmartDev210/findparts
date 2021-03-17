@@ -249,6 +249,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Core\AppCache.cs" />
+    <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Global.cs" />
     <Compile Include="Core\SessionVariables.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Currency.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BasePageViewModel.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
@@ -610,6 +612,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\Account\Signup.cshtml" />
+    <Content Include="Views\Account\ConfirmEmailSent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

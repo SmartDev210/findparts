@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Findparts.Core;
 using Findparts.Extensions;
 using Findparts.Models;
 using Findparts.Services.Interfaces;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Findparts.Services.Services
 {
@@ -33,6 +35,14 @@ namespace Findparts.Services.Services
                 }
             }
             return null;
+        }
+
+        public void PopulateRegisterViewModel(RegisterViewModel viewmModel)
+        {
+            viewmModel.CountryList = Constants.Countries.Select(x => new SelectListItem {
+                Value = x,
+                Text = x
+            }).ToList();
         }
 
         public string RegisterNewUser(RegisterViewModel model, ApplicationUser user)

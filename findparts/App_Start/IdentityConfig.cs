@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Findparts.Models;
+using System.Security.Principal;
 
 namespace Findparts
 {
@@ -104,6 +105,46 @@ namespace Findparts
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+        }
+    }
+    public static class IdentityExtensions
+    {  
+        public static string GetDisplayName(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("DisplayName");
+
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+        public static string GetEmail(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("Email");
+
+            // Test for null to avoid issues during local testing
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+
+        public static string GetMasqueradingAsId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("MasqueradeAsClientId");
+            // Test for null to avoid issues during local testing
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+        public static bool IsVerified(this IIdentity identity)
+        {
+            Claim claim = ((ClaimsIdentity)identity).FindFirst("EmailConfirmed");
+            if (string.IsNullOrEmpty(claim?.Value))
+            {
+                claim = ((ClaimsIdentity)identity).FindFirst("EmailConfirmed");
+            }
+            if (string.IsNullOrEmpty(claim?.Value))
+            {
+                return false;
+            }
+
+            return claim.Value == "True";
         }
     }
 }

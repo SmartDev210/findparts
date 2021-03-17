@@ -99,6 +99,9 @@ namespace Findparts.Models
 
         public List<SelectListItem> CountryList { get; set; }
         public string Country { get; set; }
+
+        [Required]
+        public bool AcceptTerm { get; set; }
     }
 
     public class ResetPasswordViewModel

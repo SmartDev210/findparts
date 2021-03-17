@@ -2,6 +2,7 @@
 using Findparts;
 using Findparts.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +100,8 @@ namespace Findparts.Core
         public static void Populate(string userName)
         {
             ApplicationUser user;
-            var userManager = UnityConfig.Container.Resolve<UserManager<ApplicationUser>>();
+            var userManager = System.Web.HttpContext.Current.Request.GetOwinContext()
+                                .GetUserManager<ApplicationUserManager>();
             if (userName == "")
             {
                 user = userManager.FindById(HttpContext.Current.User.Identity.GetUserId());

@@ -57,9 +57,9 @@ namespace Findparts
 
 
 
-            container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());            
-            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<DbContext, ApplicationDbContext>(new HierarchicalLifetimeManager());                        
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new HierarchicalLifetimeManager());
+            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
 
             container.RegisterFactory<HttpContext>(c => HttpContext.Current);
             container.RegisterFactory<IAuthenticationManager>(c =>
