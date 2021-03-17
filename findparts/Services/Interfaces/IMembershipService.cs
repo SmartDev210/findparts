@@ -13,5 +13,6 @@ namespace Findparts.Services.Interfaces
         Subscriber GetSubscriberById(string subscriberId);
         string RegisterNewUser(RegisterViewModel model, ApplicationUser user);
         void PopulateRegisterViewModel(RegisterViewModel viewModel);
+        void ApproveUser(ApplicationUser user, bool primaryUser);
     }
 }

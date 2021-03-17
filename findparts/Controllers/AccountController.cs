@@ -66,6 +66,11 @@ namespace Findparts.Controllers
 
                     SessionVariables.Populate(User.Identity.GetUserName());
 
+                    if (!User.Identity.IsVerified())
+                    {
+                        return RedirectToAction("VerifyEmail");
+                    }
+
                     if (SessionVariables.VendorID == "" && SessionVariables.SubscriberID != "")
                     {
                         var subscriber = _membershipService.GetSubscriberById(SessionVariables.SubscriberID);
@@ -73,11 +78,11 @@ namespace Findparts.Controllers
                         {
                             if (subscriber.SignupSubscriberTypeID != (int)(SubscriberTypeID.NoCreditCard) && subscriber.SubscriberTypeID == (int)(SubscriberTypeID.NoCreditCard))
                             {
-                                RedirectToAction("Charge", "Subscriber");
+                                return RedirectToAction("Charge", "Subscriber");
                             }
                         }
                     }
-
+                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -189,7 +194,7 @@ namespace Findparts.Controllers
                     _mailService.SendConfirmationEmail(user.Email, user.Email, callbackUrl);
                     //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return View("ConfirmEmailSent");
+                    return RedirectToAction("VerifyEmail");
                 }
                 AddErrors(result);
             }
@@ -197,7 +202,12 @@ namespace Findparts.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        [HttpGet]
+        [Authorize]
+        public ActionResult VerifyEmail()
+        {
+            return View("ConfirmEmailSent");
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -208,7 +218,43 @@ namespace Findparts.Controllers
                 return View("Error");
             }
             var result = await _userManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                ApplicationUser user = await _userManager.FindByIdAsync(userId);
+                await _signInManager.SignInAsync(user, true, true);
+
+                _membershipService.ApproveUser(user, true);
+
+                if (SessionVariables.VendorID != "")
+                {
+                    return RedirectToAction("UploadList", "Vendor");
+                }
+                if (SessionVariables.SubscriberID != "")
+                {
+                    // forward to ADD PLAN page. forever forward to ADD Plan page until CC added
+
+                    var subscriber = _membershipService.GetSubscriberById(SessionVariables.SubscriberID);
+                    if (subscriber != null)
+                    {
+                        if (subscriber.SignupSubscriberTypeID == (int)SubscriberTypeID.NoCreditCard)
+                        {
+                            // Check or wire, dont bug them
+                            return Redirect("/");
+                        }
+                        if (subscriber.SubscriberTypeID == (int)SubscriberTypeID.NoCreditCard)
+                        {
+                            // no credit card on file, bug them
+                            return RedirectToAction("Charge", "Subscriber");
+                        }
+                    }
+                }
+
+                return Redirect("~/");
+            } else
+            {
+                return View("Error");
+            }
         }
 
         //

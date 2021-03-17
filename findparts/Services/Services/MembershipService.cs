@@ -24,17 +24,36 @@ namespace Findparts.Services.Services
             _mailService = mailService;
         }
 
+        public void ApproveUser(ApplicationUser user, bool primaryUser)
+        {
+            var userProfile = _context.UserGetByProviderUserKey2(new Guid(user.Id)).FirstOrDefault();
+            if (userProfile != null)
+            {
+                int? vendorID = userProfile.VendorID;
+                int? subscriberID = userProfile.SubscriberID;
+                string name = userProfile.Name;
+                bool vendor = vendorID.HasValue;
+                _context.UserUpdateDateActivated(new Guid(user.Id));
+
+                if (primaryUser)
+                {
+                    _mailService.SendAccountActivated(user.Email, name, vendor);
+                    _mailService.SendAdminAccountActivatedEmail(name, vendor);
+                }
+                else
+                {
+                    // TODO: send different version 
+                    _mailService.SendAccountActivated(user.Email, name, vendor);
+                    _mailService.SendAdminAccountActivatedEmail(name, vendor);
+                }
+
+                SessionVariables.Populate(user.UserName);
+            }
+        }
+
         public Subscriber GetSubscriberById(string subscriberId)
         {
-            int id = 0;
-            if (Int32.TryParse(subscriberId, out id)) {
-                var result = _context.SubscriberGetByID(id).ToList();
-                if (result.Count > 0)
-                {
-                    return result[0];
-                }
-            }
-            return null;
+            return _context.SubscriberGetByID(subscriberId.ToNullableInt()).FirstOrDefault();
         }
 
         public void PopulateRegisterViewModel(RegisterViewModel viewmModel)
