@@ -8,6 +8,7 @@ namespace Findparts.Core
 {
     public static class Config
     {
+        public static string Environment => ConfigurationManager.AppSettings["Environment"];
         public static string InvoicePath => ConfigurationManager.AppSettings["InvoicePath"];
         public static string UploadPath => ConfigurationManager.AppSettings["UploadPath"];
         public static string LogoPath => ConfigurationManager.AppSettings["LogoPath"];

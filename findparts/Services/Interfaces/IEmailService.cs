@@ -15,7 +15,7 @@ namespace Findparts.Services.Interfaces
         void SendAdminDuplicateSignupEmail(string name, bool vendor);
         void SendAdminProfileEditedEmail(string name, bool vendor);
         void SendAdminSubscriptionCancelledEmail(string name);
-        void SendConfirmationEmail(string email, string userName, string callbackUrl, bool passwordSet = true, string createdBy = "The Admin");
+        bool SendConfirmationEmail(string email, string userName, string callbackUrl, bool passwordSet = true, string createdBy = "The Admin");
         void SendAccountActivated(string email, string name, bool vendor);
         void SendFreeTrialActivated(string email, string name);
         void SendAccountApproved(string email, string vendorName, string vendorID);

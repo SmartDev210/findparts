@@ -2,6 +2,8 @@
 using Findparts.Core;
 using Findparts.Extensions;
 using Findparts.Services.Interfaces;
+using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,35 +38,47 @@ namespace Findparts.Services.Services
 
         private bool SendEmail(string from, string to, string subject, string body, string bcc = null)
         {
-            using (SmtpClient client = new SmtpClient(Config.SMTPHost, Config.SMTPPort.ToInt()))
+			MailMessage message = new MailMessage(from, to, subject, body);
+			if (!string.IsNullOrEmpty(bcc))
+			{
+				message.Bcc.Add(bcc);
+			}
+			if (!string.IsNullOrEmpty(Config.BccEmail))
+			{
+				message.Bcc.Add(Config.BccEmail);
+			}
+
+			if (Config.Environment == "live")
             {
-                // Create a network credential with your SMTP user name and password.
-                client.Credentials = new NetworkCredential(Config.SMTPUsername, Config.SMTPPassword);
+				using (SmtpClient client = new SmtpClient(Config.SMTPHost, Config.SMTPPort.ToInt()))
+				{
+					// Create a network credential with your SMTP user name and password.
+					client.Credentials = new NetworkCredential(Config.SMTPUsername, Config.SMTPPassword);
 
-                // Use SSL when accessing Amazon SES. The SMTP session will begin on an unencrypted connection, and then 
-                // the client will issue a STARTTLS command to upgrade to an encrypted connection using SSL.
-                client.EnableSsl = true;
+					// Use SSL when accessing Amazon SES. The SMTP session will begin on an unencrypted connection, and then 
+					// the client will issue a STARTTLS command to upgrade to an encrypted connection using SSL.
+					client.EnableSsl = true;
 
-                // Send the email. 
-                try
-                {
-                    MailMessage message = new MailMessage(from, to, subject, body);
-                    if (!string.IsNullOrEmpty(bcc))
-                    {
-                        message.Bcc.Add(bcc);
-                    }
-                    if (!string.IsNullOrEmpty(Config.BccEmail))
-                    {
-                        message.Bcc.Add(Config.BccEmail);
-                    }
-                    client.Send(message);
-                }
-                catch (Exception ex)
-                {
-                    //Console.WriteLine("Error message: " + ex.Message);
-                    return false;
-                }
-            }
+					// Send the email. 
+					try
+					{
+						client.Send(message);
+					}
+					catch (Exception ex)
+					{
+						//Console.WriteLine("Error message: " + ex.Message);
+						return false;
+					}
+				}
+			} 
+
+			var logger = LogManager.GetLogger("emailLogs");
+			logger.Log(LogLevel.Info, $"==============================================================================================================================");
+			logger.Log(LogLevel.Info, $"");
+			logger.Log(LogLevel.Info, $"Send Email through ses smtp server");
+			logger.Log(LogLevel.Info, $"Date sent: {DateTime.Now.ToString()}");
+			logger.Log(LogLevel.Info, JsonConvert.SerializeObject(message));
+			logger.Log(LogLevel.Info, $"");
 
             return true;
         }
@@ -146,7 +160,7 @@ namespace Findparts.Services.Services
 
         #region account/user
 
-        public void SendConfirmationEmail(string email, string userName, string callbackUrl, bool passwordSet = true, string createdBy = "The Admin")
+        public bool SendConfirmationEmail(string email, string userName, string callbackUrl, bool passwordSet = true, string createdBy = "The Admin")
         {
             string message = (passwordSet ? userName + "," + Environment.NewLine + Environment.NewLine : "")
                 + "Welcome to MRO FINDER!" + Environment.NewLine
@@ -158,7 +172,7 @@ namespace Findparts.Services.Services
                 + (passwordSet ? "" : "Your Username is " + email + Environment.NewLine + Environment.NewLine)
                 + (passwordSet ? "Thank you for creating an account with MRO FINDER" : "MRO FINDER");
 
-            SendEmail(Config.FromEmail, email, "MRO FINDER " + (passwordSet ? "Account" : "New User") + " Confirmation", message);
+            return SendEmail(Config.FromEmail, email, "MRO FINDER " + (passwordSet ? "Account" : "New User") + " Confirmation", message);
         }
 
         public void SendAccountActivated(string email, string name, bool vendor)

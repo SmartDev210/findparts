@@ -13,7 +13,7 @@
         We sent your confirm email to @User.Identity.GetEmail()
     </p>
     <br/>
-    <button class="btn btn-primary" onclick="btnResendEmail_Click">Resend Email</button>    
+    <button class="btn btn-primary" onclick="ReSendVerificationEmail()">Resend Email</button>    
 
     
     <p>
@@ -22,3 +22,25 @@
     </p>
     
 </div>
+
+@section scripts
+{
+    <script>
+        function ReSendVerificationEmail() {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SendVerificationEmail", "Account")",
+                success: function (res) {
+                    if (res.success) {
+                        alert("Email sent");
+                    } else {
+                        alert(res.errorMessage);
+                    }
+                },
+                fail: function () {
+                    alert("Failed to send email")
+                }
+            });
+        }
+    </script>
+}

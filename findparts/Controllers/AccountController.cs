@@ -206,7 +206,34 @@ namespace Findparts.Controllers
         [Authorize]
         public ActionResult VerifyEmail()
         {
+            if (User.Identity.IsVerified())
+            {
+                return Redirect("~/");
+            }
             return View("ConfirmEmailSent");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> SendVerificationEmail()
+        {
+            if (User.Identity.IsVerified())
+            {
+                return Json(new { success = false, errorMessage = "Already verified" });
+            }
+
+            var user = _userManager.FindById(User.Identity.GetUserId());
+
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+            if (_mailService.SendConfirmationEmail(user.Email, user.Email, callbackUrl))
+            {
+                return Json(new { success = true });
+            } else
+            {
+                return Json(new { success = false, errorMessage = "Failed to send email" });
+            }
         }
         //
         // GET: /Account/ConfirmEmail
