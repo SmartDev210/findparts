@@ -1,0 +1,26 @@
+﻿@model Findparts.Models.Subscriber.SubscriberIndexPageViewModel
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label>Subscriber Name (Company Name)</label>
+            <span class="form-control" readonly>@Model.SubscriberName</span>
+        </div>
+        <div class="form-group">
+            <label>Subsription Level</label>
+            <span class="form-control" readonly>@Model.SubscriberType</span>
+        </div>
+        <div class="form-group">
+            <label>Users</label>
+            <span class="form-control" readonly>@Model.UserCount / @(Model.UserQuota == -1 ? "Unlimited" : Model.UserQuota.ToString())</span>
+        </div>
+        <div class="form-group">
+            <label>Searches</label>
+            <span class="form-control" readonly>@Model.SearchCount / @(Model.SearchQuota == -1 ? "Unlimited" : Model.SearchQuota.ToString())</span>
+        </div>
+        <div class="form-group">
+            <label>Country</label>
+            <span class="form-control" readonly>@Model.Country</span>
+        </div>
+    </div>
+</div>

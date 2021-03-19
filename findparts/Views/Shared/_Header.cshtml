@@ -28,7 +28,7 @@
                                 <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List & Upload Workscope Icons</span></a></li>
-                                <li><a href="@Url.Action("Manage", "Account")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
                                 <li><a href="#" onclick="document.getElementsByClassName('Logout')[0].click();"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a><asp:LoginStatus ID="LoginStatus3" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggedOut="Unnamed_LoggedOut" CssClass="Logout" /></li>
                             </ul>
                         }
@@ -45,11 +45,11 @@
                                 }
                                 @if (Context.User.IsInRole("Subscriber"))
                                 {
-                                    <li><a href="@Url.Action("Index", "Subscribers")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
+                                    <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
 
                                     <li role="separator" class="divider"></li>
                                 }
-                                <li><a href="@Url.Action("Manage", "Account")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
                                 <li><a href="#" onclick="document.getElementsByClassName('Logout')[0].click();"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggedOut="Unnamed_LoggedOut" CssClass="Logout" /></li>
                             </ul>
                         }

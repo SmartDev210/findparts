@@ -1,0 +1,28 @@
+﻿@using Findparts.Core
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>@ViewBag.Title</h1>
+<!--< asp: ContentPlaceHolder run at="server" ID="FeaturedContent" /> -->
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" @(Request.Url.LocalPath.ToLower().Contains("/Index") ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-stats"></span> General</a></li>
+        <li role="presentation" @(Request.Url.PathAndQuery.Contains("/Users") ? "class=\"active\"" : "")><a href="@Url.Action("Users", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+        <li role="presentation" @(Request.Url.PathAndQuery.Contains("/Charge") ? " class=\"active\"" : "")><a href="@Url.Action("Charge", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-piggy-bank"></span> Invoices</a></li>
+        
+        @if (SessionVariables.VendorID == "")
+        {
+            <li role="presentation" @(Request.Url.PathAndQuery.Contains("/Address") ? " class=\"active\"" : "")><a href="@Url.Action("Address", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" aria-controls="address" role="tab"><span class="glyphicon glyphicon-globe"></span> Address</a></li>
+        }
+        <li role="presentation" @(Request.Url.PathAndQuery.Contains("/PreferredBlocked?Prefer=1") ? " class=\"active\"" : "")><a href="@Url.Action("PreferredBlocked", "Subscriber", new { Prefer = 1, SubscriberID = Request.QueryString["SubscriberID"] })" aria-controls="favorites" role="tab"><span class="glyphicon glyphicon-star"></span> Favorites</a></li>
+        <li role="presentation" @(Request.Url.PathAndQuery.Contains("/PreferredBlocked?Block=1") ? " class=\"active\"" : "")><a href="@Url.Action("PreferredBlocked", "Subscriber", new { Block = 1, SubscriberID = Request.QueryString["SubscriberID"] })" aria-controls="blocked" role="tab"><span class="glyphicon glyphicon-ban-circle"></span> Blocked MROs</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="general">
+            @RenderBody()
+        </div>
+    </div>
+</div>

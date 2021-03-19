@@ -255,6 +255,7 @@
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SubscriberController.cs" />
     <Compile Include="Core\AppCache.cs" />
     <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Constants.cs" />
@@ -272,13 +273,16 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PartsPageViewModel.cs" />
     <Compile Include="Models\PartsSearchQueryParams.cs" />
+    <Compile Include="Models\Subscriber\SubscriberIndexPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMembershipService.cs" />
     <Compile Include="Services\Interfaces\IPartsSearchService.cs" />
+    <Compile Include="Services\Interfaces\ISubscriberService.cs" />
     <Compile Include="Services\Services\EmailService.cs" />
     <Compile Include="Services\Services\MembershipService.cs" />
     <Compile Include="Services\Services\PartsSearchService.cs" />
+    <Compile Include="Services\Services\SubscriberService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -621,6 +625,9 @@
     <None Include="packages.config" />
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Account\ConfirmEmailSent.cshtml" />
+    <Content Include="Views\Subscriber\Shared\_SubscriberLayout.cshtml" />
+    <Content Include="Views\Subscriber\_ViewStart.cshtml" />
+    <Content Include="Views\Subscriber\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">
