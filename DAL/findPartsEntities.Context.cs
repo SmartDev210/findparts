@@ -703,22 +703,13 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetByResetPasswordToken", mergeOption, resetPasswordTokenParameter);
         }
     
-        public virtual ObjectResult<User> UserGetBySubscriberID(Nullable<int> subscriberID)
+        public virtual ObjectResult<UserGetBySubscriberID_Result> UserGetBySubscriberID(Nullable<int> subscriberID)
         {
             var subscriberIDParameter = subscriberID.HasValue ?
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetBySubscriberID", subscriberIDParameter);
-        }
-    
-        public virtual ObjectResult<User> UserGetBySubscriberID(Nullable<int> subscriberID, MergeOption mergeOption)
-        {
-            var subscriberIDParameter = subscriberID.HasValue ?
-                new ObjectParameter("SubscriberID", subscriberID) :
-                new ObjectParameter("SubscriberID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<User>("UserGetBySubscriberID", mergeOption, subscriberIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserGetBySubscriberID_Result>("UserGetBySubscriberID", subscriberIDParameter);
         }
     
         public virtual ObjectResult<User> UserGetByVendorID(Nullable<int> vendorID)

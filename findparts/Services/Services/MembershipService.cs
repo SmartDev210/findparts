@@ -3,9 +3,11 @@ using Findparts.Core;
 using Findparts.Extensions;
 using Findparts.Models;
 using Findparts.Services.Interfaces;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,24 +16,25 @@ namespace Findparts.Services.Services
     public class MembershipService : IMembershipService
     {
         private readonly FindPartsEntities _context;
-        private readonly FindPartsIdentityEntities _identityContext;
         private readonly IMailService _mailService;
+        private readonly ApplicationUserManager _userManager;
 
-        public MembershipService(FindPartsEntities context, FindPartsIdentityEntities identityContext, IMailService mailService)
+        public MembershipService(FindPartsEntities context, IMailService mailService)
         {
             _context = context;
-            _identityContext = identityContext;
             _mailService = mailService;
+            _userManager = System.Web.HttpContext.Current.Request.GetOwinContext()
+                                .GetUserManager<ApplicationUserManager>();
         }
 
         public void ApproveUser(ApplicationUser user, bool primaryUser)
         {
-            var userProfile = _context.UserGetByProviderUserKey2(new Guid(user.Id)).FirstOrDefault();
-            if (userProfile != null)
+            var userProfiles = _context.UserGetByProviderUserKey2(new Guid(user.Id)).ToList();
+            if (userProfiles.Count > 0)
             {
-                int? vendorID = userProfile.VendorID;
-                int? subscriberID = userProfile.SubscriberID;
-                string name = userProfile.Name;
+                int? vendorID = userProfiles[0].VendorID;
+                int? subscriberID = userProfiles[0].SubscriberID;
+                string name = userProfiles[0].Name;
                 bool vendor = vendorID.HasValue;
                 _context.UserUpdateDateActivated(new Guid(user.Id));
 
@@ -47,8 +50,21 @@ namespace Findparts.Services.Services
                     _mailService.SendAdminAccountActivatedEmail(name, vendor);
                 }
 
-                SessionVariables.Populate(user.UserName);
+                SessionVariables.Populate(user.Email);
             }
+        }
+
+        public async Task<int> DeleteUser(string userId)
+        {
+            var user = _context.UserGetByID(userId.ToNullableInt()).FirstOrDefault();
+            if (user != null)
+            {
+                var appUser = await _userManager.FindByEmailAsync(user.Email);
+                await _userManager.DeleteAsync(appUser);
+
+                return _context.UserDelete(user.UserID);
+            }
+            return 0;
         }
 
         public Subscriber GetSubscriberById(string subscriberId)
@@ -86,9 +102,19 @@ namespace Findparts.Services.Services
                 _mailService.SendAdminNewAccountEmail(model.CompanyName, false, planSelected);
             }
 
-            _context.UserUpdate3(0, new Guid(user.Id), subscriberID.ToNullableInt(), vendorId.ToNullableInt(), user.Email, null);
+            UpdateUser(0, new Guid(user.Id), subscriberID.ToNullableInt(), vendorId.ToNullableInt(), user.Email, null);
 
             return vendorId.HasValue ? vendorId.ToNullableInt().ToString() : null;
+        }
+
+        public User GetUserById(string userId)
+        {
+            return _context.UserGetByID(userId.ToNullableInt()).FirstOrDefault();
+        }
+
+        public void UpdateUser(Nullable<int> userID, Nullable<System.Guid> providerUserKey, Nullable<int> subscriberID, Nullable<int> vendorID, string email, Nullable<int> createdByUserID)
+        {
+            _context.UserUpdate3(userID, providerUserKey, subscriberID, vendorID, email, createdByUserID);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Findparts.Extensions;
 using Findparts.Models.Subscriber;
 using Findparts.Services.Interfaces;
 using System;
@@ -34,6 +35,33 @@ namespace Findparts.Services.Services
                 viewModel.SearchQuota = result.SearchQuota;
             }
             return viewModel;
+        }
+
+        public SubscriberNewUserViewModel GetSubscriberNewUserViewModel(string subscriberId)
+        {
+            SubscriberNewUserViewModel viewModel = new SubscriberNewUserViewModel();
+            
+            viewModel.VendorID = GetVendorIdFromSubscriberId(subscriberId);
+
+            return viewModel;
+        }
+
+        public int? GetVendorIdFromSubscriberId(string subscriberId)
+        {
+           
+            var subscriber = _context.UserGetFirstBySubscriberID(subscriberId.ToNullableInt()).FirstOrDefault();
+            if (subscriber != null)
+            {
+                return subscriber.VendorID;
+            }
+
+            return null;
+        }
+
+        public List<UserGetBySubscriberID_Result> GetUsersViewModel(string subscriberId)
+        {
+            var list = _context.UserGetBySubscriberID(subscriberId.ToNullableInt()).ToList();
+            return list;
         }
     }
 }

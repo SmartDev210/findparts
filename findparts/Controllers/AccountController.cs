@@ -63,8 +63,8 @@ namespace Findparts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
-                    SessionVariables.Populate(User.Identity.GetUserName());
+                    
+                    SessionVariables.Populate(model.Email);
 
                     if (!User.Identity.IsVerified())
                     {
@@ -310,10 +310,10 @@ namespace Findparts.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 await _userManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -580,5 +580,35 @@ namespace Findparts.Controllers
             }
         }
         #endregion
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> DeleteUser(string userId)
+        {
+            var cnt = await _membershipService.DeleteUser(userId);
+
+            return Json(new { success = (cnt > 0) });
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult SendResetPasswordLink(string userId)
+        {
+            var user = _membershipService.GetUserById(userId);
+            if (user != null)
+            {
+                var appUser = _userManager.FindByEmail(user.Email);
+                if (appUser != null)
+                {
+                    var code = _userManager.GeneratePasswordResetToken(appUser.Id);
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = appUser.Id, code = code }, protocol: Request.Url.Scheme);
+                    _mailService.SendConfirmationEmail(user.Email, user.Email, callbackUrl, true);
+                    return Json(new { success = true });
+                }
+                    
+            }
+            
+
+            return Json(new { success = false });
+        }
     }
 }

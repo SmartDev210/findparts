@@ -1,0 +1,71 @@
+﻿@using Findparts.Models.Subscriber
+@model List<DAL.UserGetBySubscriberID_Result>
+
+@{ 
+    ViewBag.Title = "Users";
+    ViewBag.ActiveTab = SubscriberActiveTab.UsersTab;
+}
+
+<a id="btnUsersAdd" class="btn btn-primary" href="@Url.Action("NewUser")"><span class="glyphicon glyphicon-plus"></span> Add New User</a>
+<br/>
+<table class="table table-condensed" style="border-collapse: collapse;">
+    <caption>
+        @Model.Count Users found
+    </caption>
+    <tbody>
+        <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Search Count</th>
+            <th scope="col">Repair Station Admin</th>
+            <th scope="col">&nbsp;</th>
+
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@if (user.DateDeleted != null) {<text><s>@user.Email</s></text> } else { <text>@user.Email</text> }</td>
+                <td>@user.SearchCount</td>
+                <td>@if (user.VendorID != null) { <text><span class="glyphicon glyphicon-ok"></span></text> }</td>
+                <td>
+                    @if (user.DateDeleted == null)
+                    {
+                        <a class="btn btn-primary" href="javascript:void(0);" onclick="ResetPassword(@user.UserID)"><span class='glyphicon glyphicon-lock'></span> Reset Password</a>
+                    }
+                    @if (user.DateDeleted == null && user.CreatedByUserID != null)
+                    {
+                        <a class="btn btn-danger" href="javascript:void(0);" onclick="DeleteUser(@user.UserID)"><span class='glyphicon glyphicon-ban-circle'></span> Delete User</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        function DeleteUser(userId) {
+            var t = confirm("Do you want to delete user?");
+            if (t == true) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteUser", "Account")",
+                    data: { userId },
+                    success: function (e) {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+        function ResetPassword(userId) {
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("SendResetPasswordLink", "Account")",
+                    data: { userId },
+                    success: function (e) {
+                        alert("Reset password link sent");
+                    }
+                });
+        }
+    </script>
+}

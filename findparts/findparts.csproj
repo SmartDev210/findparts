@@ -274,6 +274,7 @@
     <Compile Include="Models\PartsPageViewModel.cs" />
     <Compile Include="Models\PartsSearchQueryParams.cs" />
     <Compile Include="Models\Subscriber\SubscriberIndexPageViewModel.cs" />
+    <Compile Include="Models\Subscriber\SubscriberNewUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMembershipService.cs" />
@@ -628,6 +629,8 @@
     <Content Include="Views\Subscriber\Shared\_SubscriberLayout.cshtml" />
     <Content Include="Views\Subscriber\_ViewStart.cshtml" />
     <Content Include="Views\Subscriber\Index.cshtml" />
+    <Content Include="Views\Subscriber\Users.cshtml" />
+    <Content Include="Views\Subscriber\NewUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

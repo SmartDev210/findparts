@@ -1,5 +1,10 @@
-﻿@model Findparts.Models.Subscriber.SubscriberIndexPageViewModel
+﻿@using Findparts.Models.Subscriber
+@model Findparts.Models.Subscriber.SubscriberIndexPageViewModel
 
+@{ 
+    ViewBag.Title = "Subscriber Settings";
+    ViewBag.ActiveTab = SubscriberActiveTab.GeneralTab;
+}
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">

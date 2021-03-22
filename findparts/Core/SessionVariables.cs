@@ -24,7 +24,7 @@ namespace Findparts.Core
             {
                 if (HttpContext.Current.Session["_UserID"] == null)
                 {
-                    Populate("");
+                    Populate();
                 }
                 return HttpContext.Current.Session["_UserID"].ToString();
             }
@@ -37,7 +37,7 @@ namespace Findparts.Core
             {
                 if (HttpContext.Current.Session["_SubscriberID"] == null)
                 {
-                    Populate("");
+                    Populate();
                 }
                 return HttpContext.Current.Session["_SubscriberID"].ToString();
             }
@@ -50,7 +50,7 @@ namespace Findparts.Core
             {
                 if (HttpContext.Current.Session["_VendorID"] == null)
                 {
-                    Populate("");
+                    Populate();
                 }
                 return HttpContext.Current.Session["_VendorID"].ToString();
             }
@@ -63,7 +63,7 @@ namespace Findparts.Core
             {
                 if (HttpContext.Current.Session["_Email"] == null)
                 {
-                    Populate("");
+                    Populate();
                     //return "";
                 }
                 return HttpContext.Current.Session["_Email"].ToString();
@@ -76,7 +76,7 @@ namespace Findparts.Core
             {
                 if (HttpContext.Current.Session["_CompanyName"] == null)
                 {
-                    Populate("");
+                    Populate();
                     //return "";
                 }
                 return HttpContext.Current.Session["_CompanyName"].ToString();
@@ -89,7 +89,7 @@ namespace Findparts.Core
             {
                 if (HttpContext.Current.Session["_CanSearch"] == null)
                 {
-                    Populate("");
+                    Populate();
                     //return "";
                 }
                 return (bool)HttpContext.Current.Session["_CanSearch"];
@@ -97,18 +97,18 @@ namespace Findparts.Core
             set { HttpContext.Current.Session["_CanSearch"] = value; }
         }
 
-        public static void Populate(string userName)
+        public static void Populate(string email = null)
         {
             ApplicationUser user;
             var userManager = System.Web.HttpContext.Current.Request.GetOwinContext()
                                 .GetUserManager<ApplicationUserManager>();
-            if (userName == "")
+            if (string.IsNullOrEmpty(email))
             {
                 user = userManager.FindById(HttpContext.Current.User.Identity.GetUserId());
             }
             else
             {
-                user = userManager.FindByName(userName);
+                user = userManager.FindByEmail(email);
             }
             if (user != null)
             {

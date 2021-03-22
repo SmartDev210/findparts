@@ -65,7 +65,6 @@ namespace Findparts
             container.RegisterFactory<IAuthenticationManager>(c =>
                 System.Web.HttpContext.Current.GetOwinContext().Authentication);
 
-            container.RegisterType<FindPartsEntities>(new HierarchicalLifetimeManager());
 
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(
                 new InjectionConstructor(typeof(ApplicationDbContext))

@@ -1,4 +1,5 @@
-﻿using Findparts.Models.Subscriber;
+﻿using DAL;
+using Findparts.Models.Subscriber;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,8 @@ namespace Findparts.Services.Interfaces
     public interface ISubscriberService
     {
         SubscriberIndexPageViewModel GetSubscriberIndexPageViewModel(int? subscriberId);
+        List<UserGetBySubscriberID_Result> GetUsersViewModel(string subscriberId);
+        SubscriberNewUserViewModel GetSubscriberNewUserViewModel(string subscriberId);
+        int? GetVendorIdFromSubscriberId(string subscriberId);
     }
 }

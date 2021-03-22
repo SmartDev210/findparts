@@ -1652,7 +1652,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="UserGetByResetPasswordToken" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
           <Parameter Name="ResetPasswordToken" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="UserGetBySubscriberID" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
+          <FunctionImport Name="UserGetBySubscriberID" ReturnType="Collection(DomainModel.UserGetBySubscriberID_Result)">
           <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UserGetByVendorID" EntitySet="Users" ReturnType="Collection(DomainModel.User)">
@@ -3369,6 +3369,29 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="UserGetByResetPasswordToken" FunctionName="DomainModel.Store.UserGetByResetPasswordToken">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetBySubscriberID" FunctionName="DomainModel.Store.UserGetBySubscriberID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DomainModel.UserGetBySubscriberID_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProviderUserKey" ColumnName="ProviderUserKey" />
+                <ScalarProperty Name="SubscriberID" ColumnName="SubscriberID" />
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateActivated" ColumnName="DateActivated" />
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="PersonalEmail" ColumnName="PersonalEmail" />
+                <ScalarProperty Name="SkypeName" ColumnName="SkypeName" />
+                <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
+                <ScalarProperty Name="ResetPasswordTime" ColumnName="ResetPasswordTime" />
+                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="SearchCount" ColumnName="SearchCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UserGetByVendorID" FunctionName="DomainModel.Store.UserGetByVendorID">
           </FunctionImportMapping>
