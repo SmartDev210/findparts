@@ -34,5 +34,6 @@ namespace Findparts.Services.Interfaces
         void SendDisabledFeatureEmail(string email);
         void SendMessageUsEmail(string name, string contact, string body);
         void SendWebhookEmail(string eventType, string json);
+        void SendPasswordResetEmail(string email, string callbackUrl);
     }
 }

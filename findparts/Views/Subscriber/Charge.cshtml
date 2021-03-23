@@ -1,0 +1,151 @@
+﻿@using Findparts.Models.Subscriber
+@using Findparts.Core
+
+@model SubscriberChargeViewModel
+@{
+
+    ViewBag.Title = "Invoices";
+    ViewBag.ActiveTab = SubscriberActiveTab.InvoicesTab;
+}
+
+@if (Model.SubscriptionUpdateMode == SubscriptionUpdateMode.Create)
+{
+    <h1 id="planTitle">Add Plan</h1>
+}
+else if (Model.SubscriptionUpdateMode == SubscriptionUpdateMode.UpdatePaymentInfo)
+{
+    <h1 id="planTitle">Add New Payment Method</h1>
+}
+else
+{
+    <h1 id="planTitle">Change Plans</h1>
+}
+
+@using (Html.BeginForm(Model.SubscriptionUpdateMode == SubscriptionUpdateMode.UpdatePlan ? "UpdatePlan" : "Charge", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] }, FormMethod.Post, new { role = "form", id = "charge-form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-sm-6">
+
+            @if (Model.SubscriptionUpdateMode != SubscriptionUpdateMode.UpdatePaymentInfo)
+            {
+                <div id="panPlan">
+                    <div class="form-group">
+                        <label for="@Model.SubscriberTypeId">Plan</label>
+                        @Html.DropDownListFor(m => m.SubscriberTypeId, Model.PlanSelectList, new { @class = "form-control", onchange = "UpdatePlanText()" })
+                        @Html.ValidationMessageFor(m => m.SubscriberTypeId)
+                    </div>
+                    <br />
+                </div>
+            }
+            @if (Model.SubscriptionUpdateMode != SubscriptionUpdateMode.UpdatePlan)
+            {
+                <div id="panCardInfo">
+                    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+                    <div class="form-group">
+                        <label>Cardholder's Name</label>
+                        <input type="text" class="form-control card-name stripe-sensitive required" />
+                    </div>
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" maxlength="20" autocomplete="off" class="form-control card-number stripe-sensitive required" />
+                    </div>
+                    <div class="form-group">
+                        <label>Expiration</label>
+                        <div class="expiry-wrapper">
+                            <select class="form-control input-inline card-expiry-month stripe-sensitive required"></select>
+                            <span> / </span>
+                            <select class="form-control input-inline card-expiry-year stripe-sensitive required"></select>
+                            &nbsp;&nbsp;<img src="/Content/dist/Images/powered_by_stripe.png" alt="Powered by Stripe" />
+                            <span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-content="Stripe is PCI compliant and your credit card information is sent directly to them."></span>
+
+                        </div>
+                    </div>
+                    <button type="submit" name="submit-button" class="btn btn-primary">Submit</button>
+                    <span class="payment-errors"></span>
+                </div>
+            }
+            @if (Model.SubscriptionUpdateMode == SubscriptionUpdateMode.UpdatePlan)
+            {
+                <button type="submit" name="submit-button" class="btn btn-primary">Update Plan</button>
+            }
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+    $(function () {
+        
+        var select = $(".card-expiry-month"),
+            month = new Date().getMonth() + 1;
+        for (var i = 1; i <= 12; i++) {
+            select.append($("<option value='" + i + "' " + (month === i ? "selected" : "") + ">" + i + "</option>"));
+        }
+        var select = $(".card-expiry-year"),
+            year = new Date().getFullYear();
+        for (var i = 0; i < 12; i++) {
+            select.append($("<option value='" + (i + year) + "' " + (i === 0 ? "selected" : "") + ">" + (i + year) + "</option>"));
+        }
+    });
+    @if (Model.SubscriptionUpdateMode != SubscriptionUpdateMode.UpdatePlan)
+    {
+        <text>
+            $(function () {
+                UpdatePlanText();
+            });
+            function UpdatePlanText() {
+                var text;
+                if ($('#SubscriberTypeId option:selected').text() == 'Starter - Monthly') {
+                    text = 'Add Plan - First 2 weeks free';
+                } else {
+                    text = 'Add Plan';
+                }
+                $('#planTitle').text(text);
+            }
+        </text>
+    }
+    
+    window.onbeforeunload = function () {
+        document.getElementById("<%=btnUpdatePlan.ClientID %>").disabled = true;
+    };
+
+    Stripe.setPublishableKey('@Config.StripePublishableApiKey');
+
+    $('#charge-form').submit(function () {
+        var cardName = $('.card-name').val();
+        if (cardName == '') {
+            ShowModal('Name Required', $('<div>').text('Cardholder\'s Name is a required field.'));
+        } else {
+            Stripe.card.createToken({
+                name: cardName,
+                number: $('.card-number').val(),
+                //cvc: $('.card-cvc').val(),
+                exp_month: $('.card-expiry-month').val(),
+                exp_year: $('.card-expiry-year').val()
+            }, stripeResponseHandler);
+            $('button[name="submit-button"]').attr('disabled', true);
+        }
+
+        return false;
+    });
+
+    function stripeResponseHandler(status, response) {
+        var $form = $('form');
+
+        if (response.error) {
+            // Show the errors on the form
+            $form.find('.payment-errors').text(response.error.message);
+            $('button[name="submit-button"]').attr('disabled', false);
+        } else {
+            // response contains id and card, which contains additional card details
+            var token = response.id;
+            // Insert the token into the form so it gets subConfigonfigitted to the server
+            $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+            // and submit
+            $form.get(0).submit();
+        }
+    }
+    </script>
+}

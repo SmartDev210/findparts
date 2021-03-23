@@ -1,0 +1,65 @@
+﻿@using Findparts.Models.Subscriber
+@model SubscriberChargeInfoViewModel
+@{ 
+    ViewBag.Title = "Invoices";
+    ViewBag.ActiveTab = SubscriberActiveTab.InvoicesTab;
+}
+
+<h1>Edit Plan</h1>
+<div class="row">
+    <div class="col-sm-6">
+        <div id="panExisting">
+            Existing Card: @Model.CardLastFour<br />
+            Plan: @Model.PlanText<br />
+            Subscription Status: @Model.SubscriptionStatus<br />
+            Subscription Period: @Model.SubscriptionPeriod<br />
+            @Model.ListSubscriptionPendingActionText <br />
+
+            @if (Model.Invoices.Count > 0)
+            {
+                <div>
+                    Invoices: <ul>
+                        @foreach (var invoice in Model.Invoices)
+                        {
+                            <li><a target="_blank" href="?Invoice=1&Id=@invoice.StripeInvoiceID">@invoice.StartDate - @invoice.EndDate</a> - @(invoice.Amount != 0 ? (((int)invoice.Amount) / 100m).ToString("c") : "$0.00")@(invoice.DatePaid != null ? "- PAID" + invoice.DatePaid.Value.ToString("0:MMM d, yyyy") : "- UNPAID" )</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <a href="@Url.Action("UpdateCharge", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" class="btn btn-primary btn-spacer">Update Payment Info (new Credit Card)</a><br/>
+            <a href="@Url.Action("UpdatePlan", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" class="btn btn-primary btn-spacer">Change Plans</a><br/>
+            @if (Model.HasSubscription)
+            {
+                <a href="javascript:void(0)" class="btn btn-danger btn-spacer" onclick="CancelSubscription()">Cancel Subscription</a><br/>
+            }
+        </div>
+    </div>
+</div>
+<input hidden value="@Model.StripeSubscriptionId" name="StripeSubscriptionId"/>
+@section scripts
+{
+    <script type="text/javascript">
+        function CancelSubscription() {
+            var t = confirm("Are you sure to cancel");
+            if (t) {
+                var stripeSubscriptionId = $('input[name=StripeSubscriptionId]').val();
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("CancelCharge", "Subscriber")",
+                    data: { stripeSubscriptionId },
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.reload();
+                        } else {
+                            alert("Failed to cancel");
+                        }
+                    },
+                    error: function () {
+                        alert("Failed to cancel");
+                    }
+                })
+            }
+        }
+    </script>
+
+}

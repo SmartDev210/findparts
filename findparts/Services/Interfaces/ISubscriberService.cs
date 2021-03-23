@@ -14,5 +14,8 @@ namespace Findparts.Services.Interfaces
         List<UserGetBySubscriberID_Result> GetUsersViewModel(string subscriberId);
         SubscriberNewUserViewModel GetSubscriberNewUserViewModel(string subscriberId);
         int? GetVendorIdFromSubscriberId(string subscriberId);
+        string GetInvoice(string stripeInvoiceID, string subscriberID);
+        void PopulatePlanSelectList(SubscriberChargeViewModel viewModel);
+        void PopulateSubscriberChargeInfoViewModel(SubscriberChargeInfoViewModel viewModel, Subscriber subscriber);
     }
 }

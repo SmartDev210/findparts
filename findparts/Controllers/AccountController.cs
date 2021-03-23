@@ -311,8 +311,9 @@ namespace Findparts.Controllers
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                  string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                 await _userManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                 _mailService.SendPasswordResetEmail(user.Email, callbackUrl);
+                 
                  return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -601,7 +602,8 @@ namespace Findparts.Controllers
                 {
                     var code = _userManager.GeneratePasswordResetToken(appUser.Id);
                     var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = appUser.Id, code = code }, protocol: Request.Url.Scheme);
-                    _mailService.SendConfirmationEmail(user.Email, user.Email, callbackUrl, true);
+                    
+                    _mailService.SendPasswordResetEmail(user.Email, callbackUrl);
                     return Json(new { success = true });
                 }
                     

@@ -248,10 +248,12 @@ namespace Findparts.Services.Services
             SendEmail(Config.FromEmail, email, "MRO FINDER Account Approved for Searched", message);
         }
 
-        public void SendPasswordResetEmail(string email, string token)
+        public void SendPasswordResetEmail(string email, string callbackUrl)
         {
-           
-        }
+			string message = "A password reset has been requested. To reset your password, click below:" + Environment.NewLine
+			 + callbackUrl;
+			SendEmail(Config.FromEmail, email, "MRO FINDER Password Reset", message);
+		}
         #endregion
 
         #region vendor

@@ -17,5 +17,9 @@ namespace Findparts.Services.Interfaces
         void UpdateUser(Nullable<int> userID, Nullable<System.Guid> providerUserKey, Nullable<int> subscriberID, Nullable<int> vendorID, string email, Nullable<int> createdByUserID);
         Task<int> DeleteUser(string userId);
         User GetUserById(string userId);
+        bool SubscribeWithStripe(int subscriberTypeId, string stripeToken, Subscriber subscriber);
+        bool UpdateSubscribeWithStripe(string stripeToken, Subscriber subscriber);
+        bool UpdateSubscriptionPlan(Subscriber subscriber, int subscriberTypeId);
+        bool CancelSubscription(Subscriber subscriber, string stripeSubscriptionId);
     }
 }

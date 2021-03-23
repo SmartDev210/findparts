@@ -49,7 +49,7 @@
     <div id="body">
 
         @RenderSection("featured_content", required: false)
-        <div id="divAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+        @Html.Partial("_Messages")
         <section class="main-content clear-fix">
             @RenderBody()
         </section>
