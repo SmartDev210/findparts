@@ -176,6 +176,8 @@ namespace Findparts.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    Session.Abandon();
+
                     _userManager.AddToRole(user.Id, "Subscriber");
                     if (model.VendorSignup)
                         _userManager.AddToRole(user.Id, "Vendor");
@@ -183,7 +185,7 @@ namespace Findparts.Controllers
                     var vendorId = _membershipService.RegisterNewUser(model, user);
 
                     Session["RegisterVendorID"] = vendorId;
-
+                    
                     await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -491,7 +493,8 @@ namespace Findparts.Controllers
         // [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Abandon();
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);            
             return RedirectToAction("Index", "Home");
         }
 

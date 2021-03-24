@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using Findparts.ActionFilters;
 using Findparts.Core;
 using Findparts.Extensions;
 using Findparts.Models.Subscriber;
@@ -13,6 +14,8 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Findparts.Controllers
 {
+    [Authorize]
+    [RequireEmailConfirmed]
     public class SubscriberController : Controller
     {
         private readonly ISubscriberService _service;
@@ -28,7 +31,7 @@ namespace Findparts.Controllers
             _mailService = mailService;
             _membershipService = membershipService;
         }
-        [Authorize]
+        
         // GET: Subscriber
         public ActionResult Index()
         {
@@ -45,7 +48,7 @@ namespace Findparts.Controllers
             var viewModel = _service.GetSubscriberIndexPageViewModel(subscriberId.ToNullableInt());
             return View(viewModel);
         }
-        [Authorize]
+        
         public ActionResult Users()
         {
             string subscriberId; 
@@ -62,7 +65,7 @@ namespace Findparts.Controllers
             return View(userList);
         }
 
-        [Authorize]
+        
         public ActionResult NewUser()
         {
             var subscriberId = (string)Session["subscriberID"];
@@ -72,7 +75,7 @@ namespace Findparts.Controllers
             return View(viewModel);
         }
 
-        [Authorize]
+        
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<ActionResult> NewUser(SubscriberNewUserViewModel viewModel)
@@ -121,7 +124,7 @@ namespace Findparts.Controllers
             return RedirectToAction("Users");
         }
 
-        [Authorize]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Subscriber/Charge/UpdatePlan")]
@@ -147,7 +150,7 @@ namespace Findparts.Controllers
             return RedirectToAction("Charge");
         }
 
-        [Authorize]
+        
         [HttpGet]
         [Route("Subscriber/Charge/UpdatePaymentInfo")]
         public ActionResult UpdateCharge()
@@ -175,7 +178,7 @@ namespace Findparts.Controllers
             };
             return View("~/Views/Subscriber/Charge.cshtml", viewModel);
         }
-        [Authorize]
+        
         [HttpGet]
         [Route("Subscriber/Charge/UpdatePlan")]
         public ActionResult UpdatePlan()
@@ -208,7 +211,7 @@ namespace Findparts.Controllers
 
             return View("~/Views/Subscriber/Charge.cshtml", viewModel);
         }
-        [Authorize]
+        
         [HttpGet]
         public ActionResult Charge()
         {
@@ -266,7 +269,7 @@ namespace Findparts.Controllers
                 return View("~/Views/Subscriber/ChargeInfo.cshtml", viewModel);
             }
         }
-        [Authorize]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Charge(int? SubscriberTypeId, string stripeToken)
@@ -307,7 +310,7 @@ namespace Findparts.Controllers
             }
         }
         [HttpPost]
-        [Authorize]
+        
         public ActionResult CancelCharge(string stripeSubscriptionId)
         {
             var subscriberId = (string)Session["subscriberID"];
@@ -336,7 +339,7 @@ namespace Findparts.Controllers
             return Json(new { success = true });
         }
 
-        [Authorize]
+        
         [HttpGet]        
         public ActionResult Address()
         {
@@ -354,7 +357,7 @@ namespace Findparts.Controllers
             SubscriberAddressPageViewModel viewModel = _service.GetAddressPageViewModel(subscriberID);
             return View(viewModel);
         }
-        [Authorize]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UpdateAddress(SubscriberAddressPageViewModel viewModel)
@@ -384,7 +387,7 @@ namespace Findparts.Controllers
         }
         
         [HttpGet]
-        [Authorize]
+        
         public ActionResult PreferredBlocked()
         {
             string subscriberID;
@@ -404,7 +407,7 @@ namespace Findparts.Controllers
 
             return View("~/Views/Subscriber/Vendors.cshtml", viewModel);
         }
-        [Authorize]
+        
         [HttpPost]
         public ActionResult UndoPreferBlock(VendorsPageMode Mode, int VendorId)
         {

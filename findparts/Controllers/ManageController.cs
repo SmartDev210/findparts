@@ -7,10 +7,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Findparts.Models;
+using Findparts.ActionFilters;
 
 namespace Findparts.Controllers
 {
     [Authorize]
+    [RequireEmailConfirmed]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
