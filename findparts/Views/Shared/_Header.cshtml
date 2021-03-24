@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-<div class=" @(ViewBag.BodyClass == "home-page" ? "container" : "")">
+<div class=" @(ViewBag.BodyClass == "home-page" ? "container" : "container-fluid")">
     <div class="row">
         <div class="col-xs-12 text-right @(ViewBag.BodyClass == "home-page" ? "" : "col-md-3 col-md-push-9 col-lg-4 col-lg-push-8")">
             @if (!User.Identity.IsAuthenticated)

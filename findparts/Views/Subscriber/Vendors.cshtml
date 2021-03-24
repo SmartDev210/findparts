@@ -1,0 +1,45 @@
+﻿@using Findparts.Models.Subscriber
+@model SubscriberVendorsPageViewModel
+@{
+    ViewBag.Title = Model.VendorsPageMode == VendorsPageMode.Blocked ? "Blocked MROs" : "Favorites";
+    ViewBag.ActiveTab = Model.VendorsPageMode == VendorsPageMode.Blocked ? SubscriberActiveTab.BlockedMROsTab : SubscriberActiveTab.FavoritesTab;
+}
+
+<table id="vendors-table" class="table table-condensed" cellspacing="0" rules="all" border="1" style="border-collapse: collapse;">
+    <caption><span id="vendor-count">@Model.Vendors.Count</span> @(Model.VendorsPageMode == VendorsPageMode.Blocked ? "Blocked" : "Favorite") Vendors found</caption>
+    <tbody>
+        <tr>
+            <th scope="col">Vendor Name</th>
+            <th scope="col">Date @(Model.VendorsPageMode == VendorsPageMode.Blocked ? "Blocked" : "Favorited")</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+        @foreach (var vendor in Model.Vendors)
+        {
+            <tr>
+                <td>@vendor.VendorName</td>
+                <td>@vendor.DateCreated.ToString("MMMM dd, yyyy")</td>
+                <td><button class="btn btn-danger" onclick="UndoPreferBlock(@vendor.VendorID, this)">Undo @(Model.VendorsPageMode == VendorsPageMode.Blocked ? "Blocked" : "Favorite")</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+
+    <script>
+        function UndoPreferBlock(vendorId, e) {
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UndoPreferBlock", "Subscriber")",
+                data: { Mode: "@Model.VendorsPageMode", vendorId: vendorId },
+                success: function (res) {
+                    if (res.success) {
+                        $(e).closest('tr').remove();
+                        $("#vendor-count").text($("#vendors-table tr").length - 1);
+                    }
+                }
+            });
+        }
+    </script>
+} 

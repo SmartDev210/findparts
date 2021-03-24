@@ -275,6 +275,12 @@ namespace Findparts.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (string.IsNullOrEmpty((string)Session["subscriberID"]))
+            {
+                TempData["Error"] = "Something went wrong! Please try again";
+                return RedirectToAction("Charge");
+            }
             var subscriber = _membershipService.GetSubscriberById((string)Session["subscriberID"]);
 
             if (string.IsNullOrEmpty(subscriber.StripeCustomerID) && SubscriberTypeId != null)
@@ -305,6 +311,13 @@ namespace Findparts.Controllers
         public ActionResult CancelCharge(string stripeSubscriptionId)
         {
             var subscriberId = (string)Session["subscriberID"];
+
+            if (string.IsNullOrEmpty(subscriberId))
+            {
+                TempData["Error"] = "Someting went wrong! Plese try again";
+                return RedirectToAction("Charge");
+            }
+
             var subscriber = _membershipService.GetSubscriberById(subscriberId);
             if (subscriber == null) return Json(new { success = false});
 
@@ -321,6 +334,89 @@ namespace Findparts.Controllers
                 }
             }
             return Json(new { success = true });
+        }
+
+        [Authorize]
+        [HttpGet]        
+        public ActionResult Address()
+        {
+            string subscriberID;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberID = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberID = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberID;
+
+            SubscriberAddressPageViewModel viewModel = _service.GetAddressPageViewModel(subscriberID);
+            return View(viewModel);
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateAddress(SubscriberAddressPageViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("~/Views/Subscriber/Address.cshtml", viewModel);
+            }
+
+            var subscriberId = (string)Session["subscriberID"];
+            if (string.IsNullOrEmpty(subscriberId))
+            {
+                TempData["Error"] = "Something went wrong! Please try again";
+                return RedirectToAction("Address");
+            }
+            if (_service.UpdateSubscriberAddress(subscriberId, viewModel))
+            {
+                TempData["Success"] = "Address updated";
+                if (User.IsInRole("Admin"))
+                    return RedirectToAction("Subscribers", "Admin", new { SubscriberID = subscriberId });
+                return RedirectToAction("Address");
+            } else
+            {
+                ModelState.AddModelError("", "Failed to update address");                
+            }
+            return View("~/Views/Subscriber/Address.cshtml", viewModel);
+        }
+        
+        [HttpGet]
+        [Authorize]
+        public ActionResult PreferredBlocked()
+        {
+            string subscriberID;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberID = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberID = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberID;
+            bool blocked = false;
+            if (Request.QueryString["Block"] != null)
+                blocked = true;
+            SubscriberVendorsPageViewModel viewModel = _service.GetSubscriberVendorsPageViewModel(subscriberID, blocked);
+
+            return View("~/Views/Subscriber/Vendors.cshtml", viewModel);
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult UndoPreferBlock(VendorsPageMode Mode, int VendorId)
+        {
+            if (string.IsNullOrEmpty((string)Session["subscriberID"]))
+            {
+                return Json(new { success = false });
+            }
+            if (_service.UndoPreferBlock(Mode, VendorId, (string)Session["subscriberID"]))
+            {
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
         }
     }
 }

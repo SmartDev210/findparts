@@ -469,6 +469,90 @@ namespace Findparts.Services.Services
 			viewModel.Invoices = _context.SubscriberInvoiceGetBySubscriberID(subscriber.SubscriberID).ToList();
         }
 
-        
+        public SubscriberAddressPageViewModel GetAddressPageViewModel(string subscriberID)
+        {
+			SubscriberAddressPageViewModel viewModel = new SubscriberAddressPageViewModel();
+			
+			viewModel.CountryList = Constants.Countries.Select(x => new SelectListItem
+			{
+				Value = x,
+				Text = x
+			}).ToList();
+
+			var addressInfo = _context.SubscriberGetStatsByID(subscriberID.ToNullableInt()).FirstOrDefault();
+			if (addressInfo != null)
+            {
+				viewModel.Address1 = addressInfo.Address1;
+				viewModel.Address2 = addressInfo.Address2;
+				viewModel.Address3 = addressInfo.Address3;
+				viewModel.City = addressInfo.City;
+				viewModel.State = addressInfo.State;
+				viewModel.Zipcode = addressInfo.Zipcode;
+				viewModel.Country = addressInfo.Country;
+				viewModel.Phone = addressInfo.Phone;
+
+				
+				if (!viewModel.CountryList.Any(x => x.Value == viewModel.Country))
+                {
+					viewModel.CountryList.Insert(1, new SelectListItem { Value = viewModel.Country, Text = viewModel.Country });
+                }
+
+			}
+			return viewModel;
+		}
+
+        public bool UpdateSubscriberAddress(string subscriberId, SubscriberAddressPageViewModel viewModel)
+        {
+			return _context.SubscriberUpdate4(subscriberId.ToNullableInt(),
+				viewModel.Address1,
+				viewModel.Address2,
+				viewModel.Address3,
+				viewModel.City,
+				viewModel.State,
+				viewModel.Zipcode,
+				viewModel.Country,
+				viewModel.Phone) > 0;
+		}
+
+        public SubscriberVendorsPageViewModel GetSubscriberVendorsPageViewModel(string subscriberID, bool blocked)
+        {
+			SubscriberVendorsPageViewModel viewModel = new SubscriberVendorsPageViewModel();
+			if (blocked)
+            {
+				viewModel.VendorsPageMode = VendorsPageMode.Blocked;
+				viewModel.Vendors = _context.VendorSubscriberBlockedGetBySubscriberID(subscriberID.ToNullableInt())
+					.Select(x => new VendorInfo { 
+						VendorID = x.VendorID,
+						VendorName = x.VendorName,
+						Country = x.Country,
+						DateCreated = x.DateCreated
+					})
+					.ToList();
+			} else
+            {
+				viewModel.VendorsPageMode = VendorsPageMode.Preferred;
+				viewModel.Vendors = _context.VendorSubscriberPreferredGetBySubscriberID(subscriberID.ToNullableInt())
+					.Select(x => new VendorInfo
+					{
+						VendorID = x.VendorID,
+						VendorName = x.VendorName,
+						Country = x.Country,
+						DateCreated = x.DateCreated
+					})
+					.ToList();
+			}
+			return viewModel;
+        }
+
+        public bool UndoPreferBlock(VendorsPageMode mode, int vendorId, string subscriberID)
+        {
+            if (mode == VendorsPageMode.Blocked)
+            {
+				return _context.VendorSubscriberBlockedDelete(vendorId, subscriberID.ToNullableInt()) > 0;
+			} else
+            {
+				return _context.VendorSubscriberPreferredDelete(vendorId, subscriberID.ToNullableInt()) > 0;
+			}
+        }
     }
 }

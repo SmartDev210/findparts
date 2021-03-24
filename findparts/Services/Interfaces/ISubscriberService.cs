@@ -17,5 +17,9 @@ namespace Findparts.Services.Interfaces
         string GetInvoice(string stripeInvoiceID, string subscriberID);
         void PopulatePlanSelectList(SubscriberChargeViewModel viewModel);
         void PopulateSubscriberChargeInfoViewModel(SubscriberChargeInfoViewModel viewModel, Subscriber subscriber);
+        SubscriberAddressPageViewModel GetAddressPageViewModel(string subscriberID);
+        bool UpdateSubscriberAddress(string subscriberId, SubscriberAddressPageViewModel viewModel);
+        SubscriberVendorsPageViewModel GetSubscriberVendorsPageViewModel(string subscriberID, bool blocked);
+        bool UndoPreferBlock(VendorsPageMode mode, int vendorId, string v);
     }
 }
