@@ -8,6 +8,7 @@ using DAL;
 using Findparts.ActionFilters;
 using Findparts.Core;
 using Findparts.Extensions;
+using Findparts.Models;
 using Findparts.Models.Subscriber;
 using Findparts.Services.Interfaces;
 using Microsoft.AspNet.Identity.Owin;
@@ -354,13 +355,13 @@ namespace Findparts.Controllers
             }
             Session["subscriberID"] = subscriberID;
 
-            SubscriberAddressPageViewModel viewModel = _service.GetAddressPageViewModel(subscriberID);
+            AddressViewModel viewModel = _service.GetAddressPageViewModel(subscriberID);
             return View(viewModel);
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateAddress(SubscriberAddressPageViewModel viewModel)
+        public ActionResult UpdateAddress(AddressViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {

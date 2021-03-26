@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Findparts.Models;
 using Findparts.Models.Subscriber;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace Findparts.Services.Interfaces
         string GetInvoice(string stripeInvoiceID, string subscriberID);
         void PopulatePlanSelectList(SubscriberChargeViewModel viewModel);
         void PopulateSubscriberChargeInfoViewModel(SubscriberChargeInfoViewModel viewModel, Subscriber subscriber);
-        SubscriberAddressPageViewModel GetAddressPageViewModel(string subscriberID);
-        bool UpdateSubscriberAddress(string subscriberId, SubscriberAddressPageViewModel viewModel);
+        AddressViewModel GetAddressPageViewModel(string subscriberID);
+        bool UpdateSubscriberAddress(string subscriberId, AddressViewModel viewModel);
         SubscriberVendorsPageViewModel GetSubscriberVendorsPageViewModel(string subscriberID, bool blocked);
         bool UndoPreferBlock(VendorsPageMode mode, int vendorId, string v);
     }

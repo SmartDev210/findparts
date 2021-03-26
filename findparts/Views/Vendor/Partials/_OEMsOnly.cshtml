@@ -1,0 +1,29 @@
+﻿@using Findparts.Models.Vendor
+@model OEMsViewModel
+
+@using (Html.BeginForm("UpdateOEM", "Vendor", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.VendorId)
+    <div class="row">
+        <div class="col-sm-12">
+            <div>
+                <label class="styled-checkbox">                    
+                    <input type="checkbox" runat="server" id="IsOEM" name="IsOEM" @if (Model.IsOEM) {<text>checked</text>} /><span></span><i>Are you an OEM?</i>
+                </label>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Check this box to have the OEM Workscope Icon displayed on all your capability listings"></span>
+            </div>
+            <div>
+                <label class="styled-checkbox"><input type="checkbox" runat="server" id="OEMExclusive" name="OEMExclusive" @if (Model.OEMExclusive) {<text>checked</text>} /><span></span><i>Do you hold any OEM Authorizations?</i></label>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Check this box to have the OEM AUTHORIZED Workscope Icon displayed on all your capability listings"></span>
+            </div>
+            <div>
+                <label class="styled-checkbox"><input type="checkbox" runat="server" id="OEMRequiresRMA" name="OEMRequiresRMA" @if (Model.OEMRequiresRMA) {<text>checked</text>}/><span></span><i>Do you require RMA?</i></label>
+                <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Check this box to have the OEM REQUIRES RMA Workscope Icon displayed on all your capability listings"></span>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </div>
+        </div>
+    </div>
+}

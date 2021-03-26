@@ -1,0 +1,55 @@
+﻿@model Findparts.Models.AddressViewModel
+
+@using (Html.BeginForm("UpdateAddress", "Vendor", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.VendorId)
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(x => x.Address1)
+                @Html.TextBoxFor(x => x.Address1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address1, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.Address2)
+                @Html.TextBoxFor(m => m.Address2, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Address2, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.Address3)
+                @Html.TextBoxFor(m => m.Address3, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Address3, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.City)
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.State)
+                @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.State, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.Zipcode)
+                @Html.TextBoxFor(m => m.Zipcode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Zipcode, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.Country)
+                @Html.DropDownListFor(m => m.Country, Model.CountryList, new { @class = "form-control chosen" })
+                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(m => m.Phone)
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-12">
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </div>
+        </div>
+    </div>
+
+}

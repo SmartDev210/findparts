@@ -1,6 +1,7 @@
 ﻿using DAL;
 using Findparts.Core;
 using Findparts.Extensions;
+using Findparts.Models;
 using Findparts.Models.Subscriber;
 using Findparts.Services.Interfaces;
 using NReco.PdfGenerator;
@@ -469,9 +470,9 @@ namespace Findparts.Services.Services
 			viewModel.Invoices = _context.SubscriberInvoiceGetBySubscriberID(subscriber.SubscriberID).ToList();
         }
 
-        public SubscriberAddressPageViewModel GetAddressPageViewModel(string subscriberID)
+        public AddressViewModel GetAddressPageViewModel(string subscriberID)
         {
-			SubscriberAddressPageViewModel viewModel = new SubscriberAddressPageViewModel();
+			AddressViewModel viewModel = new AddressViewModel();
 			
 			viewModel.CountryList = Constants.Countries.Select(x => new SelectListItem
 			{
@@ -501,7 +502,7 @@ namespace Findparts.Services.Services
 			return viewModel;
 		}
 
-        public bool UpdateSubscriberAddress(string subscriberId, SubscriberAddressPageViewModel viewModel)
+        public bool UpdateSubscriberAddress(string subscriberId, AddressViewModel viewModel)
         {
 			return _context.SubscriberUpdate4(subscriberId.ToNullableInt(),
 				viewModel.Address1,

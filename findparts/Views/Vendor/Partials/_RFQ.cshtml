@@ -1,0 +1,65 @@
+﻿@model Findparts.Models.Vendor.RFQPreferencesViewModel
+
+<h2>Preferred Method to Receive RFQs <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="The info entered below will be displayed in search results only to paid members & operators. Leave any field blank to not display that option."></span></h2>
+@using (Html.BeginForm("RFQUpdate", "Vendor", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.VendorId)
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <div>
+                    <label>Phone <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Enter your phone number to be displayed on search results. Leave blank to have no phone number displayed on search results."></span></label>
+                    @Html.TextBoxFor(x => x.RFQPhone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.RFQPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label>Email <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Enter only one email address to be displayed on search results. Leave blank to have no email address displayed on search results."></span></label>
+                    @Html.TextBoxFor(x => x.RFQEmail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.RFQEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label>Send RFQ button <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Enter 1 or multiple email addresses to be notified each time a MRO FINDER RFQ is received. If left blank, the 'Send RFQ' button will not appear at your listings. **Email addresses listed here are not displayed to search users."></span></label>
+                    @Html.TextBoxFor(x => x.RFQWebEmails, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.RFQWebEmails, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!--
+            Frequency of RFQ Emails:
+            <select>
+            <option value="">Every time an RFQ is Received</option>
+            <option value="">1 time per day</option>
+            </select><br />
+            -->
+            <div class="form-group">
+                <div>
+                    <label>Fax <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Enter your fax number to be displayed on search results. Leave blank to have no fax number displayed on search results."></span></label>
+                    @Html.TextBoxFor(x => x.RFQFax, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.RFQFax, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#RFQWebEmails').tagsInput({
+                'defaultText': 'Add an Email',
+                'delimiter': [',', ';', ' '],
+                'height': 'unset',
+                'width': '100%'
+                //'placeholderColor': '#ff0000'
+            });
+        });
+    </script>
+}

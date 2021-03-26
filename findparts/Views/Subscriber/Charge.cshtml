@@ -31,7 +31,7 @@ else
             {
                 <div id="panPlan">
                     <div class="form-group">
-                        <label for="@Model.SubscriberTypeId">Plan</label>
+                        <label for="@Model.SubscriberTypeId">Plan <span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-html="true" data-content="Pricing<br><br>Starter:<br>$100 - if paid monthly<br>$900 - if paid annual<br><br>Standard:<br>$150 - if paid monthly<br>$1500 - if paid annual<br><br>Enterprise:<br>$900 - if paid monthly<br>$10200 - if paid annual"></span></label>
                         @Html.DropDownListFor(m => m.SubscriberTypeId, Model.PlanSelectList, new { @class = "form-control", onchange = "UpdatePlanText()" })
                         @Html.ValidationMessageFor(m => m.SubscriberTypeId)
                     </div>

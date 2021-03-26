@@ -1,0 +1,55 @@
+﻿@using Findparts.Models.Vendor
+@model CertsViewModel
+
+@using (Html.BeginForm("AddCert", "Vendor", FormMethod.Post, new {role="form"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.VendorId)
+    <table class="table table-condensed" cellpadding="0" rules="all" border="1" id="dgCerts" style="border-collapse:collapse;">
+        <caption>@Model.CertList.Count Certs found</caption>
+        <tbody>
+            <tr>
+                <th scope="col">Cert</th>
+                <th scope="col">#</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            @foreach (var item in Model.CertList)
+            {
+                <tr>
+                    <th>@item.Cert</th>
+                    <th>@item.Number</th>
+                    <th>
+                        <button class="btn btn-danger" onclick="DeleteCert(@item.VendorCertID)">Delete</button>
+                    </th>
+                </tr>
+            }
+            <tr>
+                <th>
+                    @Html.DropDownListFor(x => x.Cert, Model.CertSelectList, "Select Cert", new { @class = "form-control", onchange = "ToggleCertOther(this)", required = true })
+                    <input type="text" id="txtCert" runat="server" class="form-control" style="display:none; width:50px;" onchange="UpdateOtherValue();" />
+                </th>
+                <th>
+                    @Html.TextBoxFor(x => x.Number,  new {@class="form-control", required = true})
+                    @Html.ValidationMessageFor(x => x.Number, "", new { @class="text-danger" })
+                </th>
+                <th>
+                    <input type="submit" value="Add" class="btn btn-primary"/>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+}
+<script type="text/javascript">
+    var ddlCert;
+    function ToggleCertOther(ddl) {
+        ddlCert = ddl;
+        var txtCert = document.getElementById('txtCert');
+        txtCert = ddl.nextElementSibling;
+        txtCert.style.display = (ddlCert.selectedIndex == ddlCert.options.length - 1 ? '' : 'none');
+    }
+    function UpdateOtherValue() {
+        var txtCert = document.getElementById('txtCert');
+        ddlCert.options[ddlCert.options.length - 1].value = txtCert.value;
+    }
+</script>
+

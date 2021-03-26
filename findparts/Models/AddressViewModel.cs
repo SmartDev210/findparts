@@ -5,14 +5,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Findparts.Models.Subscriber
+namespace Findparts.Models
 {
-    public class SubscriberAddressPageViewModel
+    public class AddressViewModel
     {
-        public SubscriberAddressPageViewModel()
+        public AddressViewModel()
         {
             CountryList = new List<SelectListItem>();
         }
+        public string VendorId { get; set; }
+        public string SubscriberId { get; set; }
+
         [Display(Name = "Address1")]
         public string Address1 { get; set; }
         [Display(Name = "Address2")]
