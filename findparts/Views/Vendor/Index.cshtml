@@ -17,31 +17,46 @@
 
 <div>
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" @if(activeTab == VendorActiveTab.GeneralTab){ <text>class="active"</text> }><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-stats"></span> General</a></li>
-        <li role="presentation" @if(activeTab == VendorActiveTab.RFQTab){ <text>class="active"</text> }><a href="#prefs" aria-controls="prefs" role="tab" data-toggle="tab">RFQ Preferences</a></li>
-        <li role="presentation" @if(activeTab == VendorActiveTab.CertsTab){ <text>class="active"</text> }><a href="#certs" aria-controls="certs" role="tab" data-toggle="tab">Certs</a></li>
-        <li role="presentation" @if(activeTab == VendorActiveTab.AddressTab){ <text>class="active"</text> }><a href="#address" aria-controls="address" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Address</a></li>
-        <li role="presentation" @if(activeTab == VendorActiveTab.OEMsOnlyTab){ <text>class="active"</text> }><a href="#oem" aria-controls="oem" role="tab" data-toggle="tab">OEMs Only</a></li>
-        <li role="presentation" @if(activeTab == VendorActiveTab.BlockedSubscribersTab){ <text>class="active"</text> }><a href="#blocked" aria-controls="blocked" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-ban-circle"></span> Manage Blocked Subscribers</a></li>
+        <li role="presentation" @if (activeTab == VendorActiveTab.GeneralTab) { <text> class="active" </text> }><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-stats"></span> General</a></li>
+        <li role="presentation" @if (activeTab == VendorActiveTab.RFQTab) { <text> class="active" </text> }><a href="#prefs" aria-controls="prefs" role="tab" data-toggle="tab">RFQ Preferences</a></li>
+        <li role="presentation" @if (activeTab == VendorActiveTab.CertsTab) { <text> class="active" </text> }><a href="#certs" aria-controls="certs" role="tab" data-toggle="tab">Certs</a></li>
+        <li role="presentation" @if (activeTab == VendorActiveTab.AddressTab) { <text> class="active" </text> }><a href="#address" aria-controls="address" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Address</a></li>
+        <li role="presentation" @if (activeTab == VendorActiveTab.OEMsOnlyTab) { <text> class="active" </text> }><a href="#oem" aria-controls="oem" role="tab" data-toggle="tab">OEMs Only</a></li>
+        <li role="presentation" @if (activeTab == VendorActiveTab.BlockedSubscribersTab) { <text> class="active" </text> }><a href="#blocked" aria-controls="blocked" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-ban-circle"></span> Manage Blocked Subscribers</a></li>
     </ul>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="general">
+        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.GeneralTab){ <text>active</text> }" id="general">
             @Html.Partial("~/Views/Vendor/Partials/_GeneralTab.cshtml", Model.VendorGeneralTabViewModel)
         </div>
-        <div role="tabpanel" class="tab-pane" id="prefs">
-            @Html.Partial("~/Views/Vendor/Partials/_RFQ.cshtml", Model.RFQPreferencesViewModel)            
+        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.RFQTab){ <text>active</text> }" id="prefs">
+            @Html.Partial("~/Views/Vendor/Partials/_RFQ.cshtml", Model.RFQPreferencesViewModel)
         </div>
-        <div role="tabpanel" class="tab-pane" id="certs">
+        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.CertsTab){ <text>active</text> }" id="certs">
             @Html.Partial("~/Views/Vendor/Partials/_Certs.cshtml", Model.CertsViewModel)
         </div>
-        <div role="tabpanel" class="tab-pane" id="address">
-            @Html.Partial("~/Views/Vendor/Partials/_Address.cshtml", Model.AddressViewModel)            
+        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.AddressTab){ <text>active</text> }" id="address">
+            @Html.Partial("~/Views/Vendor/Partials/_Address.cshtml", Model.AddressViewModel)
         </div>
-        <div role="tabpanel" class="tab-pane" id="oem">
+        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.OEMsOnlyTab){ <text>active</text> }" id="oem">
             @Html.Partial("~/Views/Vendor/Partials/_OEMsOnly.cshtml", Model.OEMsViewModel)
         </div>
-        <div role="tabpanel" class="tab-pane" id="blocked">
+        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.BlockedSubscribersTab){ <text>active</text> }" id="blocked">
         </div>
     </div>
 </div>
 
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#RFQWebEmails').tagsInput({
+                'defaultText': 'Add an Email',
+                'delimiter': [',', ';', ' '],
+                'height': 'unset',
+                'width': '100%'
+                //'placeholderColor': '#ff0000'
+            });
+        });
+    </script>
+}

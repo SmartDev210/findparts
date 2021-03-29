@@ -19,6 +19,17 @@ namespace Findparts.Services.Services
         {
             _context = context;
         }
+
+        public void AddVendorCert(CertsViewModel input)
+        {
+            _context.VendorCertInsert(input.VendorId.ToNullableInt(), input.Cert, input.Number);
+        }
+
+        public void DeleteVendorCert(int certId)
+        {
+            _context.VendorCertDelete(certId);
+        }
+
         public VendorIndexPageViewModel GetVendorIndexPageViewModel(string vendorID)
         {
 
@@ -76,8 +87,8 @@ namespace Findparts.Services.Services
 
                 rfqViewModel.RFQPhone = vendor.RFQPhone;
                 rfqViewModel.RFQEmail = vendor.RFQEmail;
-                rfqViewModel.RFQWebEmails = vendor.RFQEmails;
-                rfqViewModel.RFQPhone = vendor.RFQPhone;
+                rfqViewModel.RFQWebEmails = vendor.RFQWebEmails;
+                rfqViewModel.RFQFax = vendor.RFQFax;
 
                 // OEM
                 oemViewModel.IsOEM = vendor.OEM ?? false;
@@ -102,6 +113,26 @@ namespace Findparts.Services.Services
                 new SelectListItem() { Value = "", Text = "Other" }
             };
             return viewModel;
+        }
+
+        public void UpdateVendorAddress(AddressViewModel input)
+        {
+            _context.VendorUpdateAddress2(input.VendorId.ToNullableInt(), input.Address1, input.Address2, input.Address3, input.City, input.State, input.Zipcode, input.Country, input.Phone);
+        }
+
+        public void UpdateVendorGeneral(VendorGeneralTabViewModel input)
+        {
+            _context.VendorUpdateGeneral(input.VendorId.ToNullableInt(), input.WebsiteUrl, input.DefaultCurrency);
+        }
+
+        public void UpdateVendorOEM(OEMsViewModel input)
+        {
+            _context.VendorUpdateOEM(input.VendorId.ToNullableInt(), input.IsOEM, input.OEMExclusive, input.OEMRequiresRMA);
+        }
+
+        public void UpdateVendorRFQPrefs(RFQPreferencesViewModel input)
+        {
+            _context.VendorUpdateRFQPrefs(input.VendorId.ToNullableInt(), input.RFQPhone, input.RFQEmail, input.RFQWebEmails, input.RFQFax);
         }
     }
 }

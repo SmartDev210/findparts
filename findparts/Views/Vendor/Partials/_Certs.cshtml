@@ -1,12 +1,12 @@
 ﻿@using Findparts.Models.Vendor
 @model CertsViewModel
 
-@using (Html.BeginForm("AddCert", "Vendor", FormMethod.Post, new {role="form"}))
+@using (Html.BeginForm("AddCert", "Vendor", FormMethod.Post, new { role="form", id="vendor-certs-table" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.VendorId)
     <table class="table table-condensed" cellpadding="0" rules="all" border="1" id="dgCerts" style="border-collapse:collapse;">
-        <caption>@Model.CertList.Count Certs found</caption>
+        <caption><span id="vendor-certs-count">@Model.CertList.Count</span> Certs found</caption>
         <tbody>
             <tr>
                 <th scope="col">Cert</th>
@@ -16,25 +16,25 @@
             @foreach (var item in Model.CertList)
             {
                 <tr>
-                    <th>@item.Cert</th>
-                    <th>@item.Number</th>
-                    <th>
-                        <button class="btn btn-danger" onclick="DeleteCert(@item.VendorCertID)">Delete</button>
-                    </th>
+                    <td>@item.Cert</td>
+                    <td>@item.Number</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="DeleteCert(this, @item.VendorCertID); return false;">Delete</button>
+                    </td>
                 </tr>
             }
             <tr>
-                <th>
+                <td>
                     @Html.DropDownListFor(x => x.Cert, Model.CertSelectList, "Select Cert", new { @class = "form-control", onchange = "ToggleCertOther(this)", required = true })
                     <input type="text" id="txtCert" runat="server" class="form-control" style="display:none; width:50px;" onchange="UpdateOtherValue();" />
-                </th>
-                <th>
+                </td>
+                <td>
                     @Html.TextBoxFor(x => x.Number,  new {@class="form-control", required = true})
                     @Html.ValidationMessageFor(x => x.Number, "", new { @class="text-danger" })
-                </th>
-                <th>
+                </td>
+                <td>
                     <input type="submit" value="Add" class="btn btn-primary"/>
-                </th>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -50,6 +50,19 @@
     function UpdateOtherValue() {
         var txtCert = document.getElementById('txtCert');
         ddlCert.options[ddlCert.options.length - 1].value = txtCert.value;
+    }
+    function DeleteCert(e, certId) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DeleteCert", "Vendor")",
+            data: { certId },
+            success: function (res) {
+               if (res.success) {
+                   $(e).closest('tr').remove();
+                   $("#vendor-certs-count").text($("#vendor-certs-table tr").length - 1);
+               }
+            }
+        });
     }
 </script>
 
