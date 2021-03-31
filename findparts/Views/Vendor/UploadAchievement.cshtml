@@ -1,0 +1,52 @@
+﻿@model Findparts.Models.Vendor.UploadVendorFileViewModel
+
+@{
+    ViewBag.Title = "Upload List";
+}
+
+@section featured_content
+{
+    <h1>@ViewBag.Title.</h1>
+}
+
+<br/>
+@using (Html.BeginForm("UploadAchievement", "Vendor", FormMethod.Post, new { role="form", enctype = "multipart/form-data" }))
+{ 
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.VendorId)
+    @Html.HiddenFor(m => m.IsFirst)
+    @Html.HiddenFor(m => m.Id)
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="VendorAchievementTypeId">Workscope Icon Type <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Range, NTE & Flat Rate Workscope Icons get values entered during the quoting process"></span></label>
+                @Html.DropDownListFor(x => x.VendorAchievementTypeId, Model.VendorAchievementTypeSelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.VendorAchievementTypeId, "", new { @class="text-danger" })
+            </div>
+            <div class="form-group">
+                <label>
+                    <span>Workscope Icon List</span>
+                </label>
+                <input type="file" name="Upload" class="form-control" />
+                @Html.ValidationMessageFor(x => x.Upload, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="Comment">Comments</label>
+                @Html.TextBoxFor(x => x.Comment, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Comment, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary btn-spacer" value="Upload" />
+                <a href="@(User.IsInRole("Admin") ? Url.Action("Vendors", "Admin", new { VendorID = Model.VendorId }) : Url.Action("UploadList", "Vendor"))" class="btn btn-default btn-spacer">Cancel</a>
+            </div>
+            <br />
+            <div class="well">
+                <h3>CSV & Excel Import Options</h3>
+                You can select one workscope icon at a time from the dropdown & upload a 1 column list of part numbers reflective to the workscope icon selected,<br /><br />
+                alternatively you can upload all your workscope icons at once using the <a href="../MROfinderCapabilityUploadTemplate.xlsx">import_example.xlsx</a> at <a href="@Url.Action("UploadCapability", "Vendor")" class="btn btn-primary" >Upload Capability List</a><br /><br />
+                <strong>Questions? Need Help?</strong> <a href="/Contact">Contact Us</a>
+            </div>
+            <br />
+        </div>
+    </div>
+}

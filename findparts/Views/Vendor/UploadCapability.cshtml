@@ -1,0 +1,62 @@
+﻿@model Findparts.Models.Vendor.UploadVendorFileViewModel
+
+@{
+    ViewBag.Title = "Upload List.";
+}
+
+@section featured_content
+{
+    <h1>@ViewBag.Title</h1>
+}
+
+<br/>
+@using (Html.BeginForm("UploadCapability", "Vendor", FormMethod.Post, new { role="form", enctype = "multipart/form-data" }))
+{ 
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.VendorId)
+    @Html.HiddenFor(m => m.IsFirst)
+    @Html.HiddenFor(m => m.Id)
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>
+                    <span>Capability List</span>
+                </label>
+                <input type="file" name="Upload" class="form-control" />
+                @Html.ValidationMessageFor(x => x.Upload, "", new { @class = "text-danger" })
+            </div>
+            @if (!Model.IsFirst)
+            {
+                <div class="form-group">
+                    <label>Replace or Add</label> <br /><br />
+                    <input type="radio" name="ReplaceList" value="True" id="type-replace" @if (Model.ReplaceList) {<text>checked</text>}/>
+                    <label for="type-replace">Replace Existing List</label>
+                    <br />
+                    <input type="radio" name="ReplaceList" value="False" id="type-add" @if (!Model.ReplaceList) {<text>checked</text>}/>
+                    <label for="type-add">Add to Existing List</label>
+                </div>
+            }
+            else
+            { 
+                @Html.HiddenFor(x => x.ReplaceList)
+            }
+            <div class="form-group">
+                <label for="Comment">Comments</label>
+                @Html.TextBoxFor(x => x.Comment, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Comment, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary btn-spacer" value="Upload" />
+                <a href="@(User.IsInRole("Admin") ? Url.Action("Vendors", "Admin", new { VendorID = Model.VendorId }) : Url.Action("UploadList", "Vendor"))" class="btn btn-default btn-spacer">Cancel</a>
+            </div>
+            <br/>
+            <div class="well" id="divInfo" runat="server">
+                <h3>CSV & Excel Import Options</h3>
+                1. Upload your standard capability list, or <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Only Part Number & Description are required fields."></span><br /><br />
+                2. Download & populate our <a href="../MROfinderCapabilityUploadTemplate.xlsx" target="_blank">import_example.xlsx</a> <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Only Part Number & Description are required fields. With this template, you can upload workscope icons directly with your capabilities."></span><br /><br />
+                <strong>Questions? Need Help?</strong> <a href="/Contact">Contact Us</a>
+            </div>
+            <br />
+        </div>
+    </div>
+}

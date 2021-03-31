@@ -27,6 +27,24 @@ namespace Findparts.Extensions
             if (d == null) return null;
             return (int)d.Value;
         }
-
+        public static string GetContentType(this string fileType)
+        {
+            if (fileType.EndsWith(".xls"))
+            {
+                return "application/vnd.ms-excel";
+            } else if (fileType.EndsWith(".xlsx"))
+            {
+                return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            } else if (fileType.EndsWith(".csv"))
+            {
+                return "text/csv";
+            } else if (fileType.EndsWith(".pdf"))
+            {
+                return "application/pdf";
+            } else
+            {
+                return "application/octet-stream";
+            }
+        }
     }
 }
