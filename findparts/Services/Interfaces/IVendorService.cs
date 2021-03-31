@@ -28,5 +28,9 @@ namespace Findparts.Services.Interfaces
         List<VendorListItemGetByVendor4_Result> GetMasterVendorList(string vendorID);
         void DeleteVendorList(int vendorListId);
         void DeleteVendorAchievement(int vendorAchievementId);
+        void VendorQuoteUpdateNoQuote(string vendorQuoteId, string vendorId);
+        object GetVendorQuotesPageViewModel(string vendorId);
+        void VendorQuoteUpdateIgnore(string vendorQuoteID, string vendorId);
+        void VendorQuoteUpdate(string vendorQuoteIDInput, string vendorId, string currency, string testPrice, string testTAT, string repairPrice, string repairPriceRangeLow, string repairPriceRangeHigh, string repairTAT, string overhaulPrice, string overhaulPriceRangeLow, string overhaulPriceRangeHigh, string overhaulTAT, string notToExceed, bool repairsFrequently, bool pma, bool der, bool freeEval, bool modified, bool functionTestOnly, bool noOverhaulWorkscope, bool caac, bool extendedWarranty, bool flatRate, bool range, bool nte, string quoteComments);
     }
 }

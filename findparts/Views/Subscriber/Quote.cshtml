@@ -1,0 +1,84 @@
+﻿@using DAL
+@model List<VendorQuoteGetByUserID_Result>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Quotes";
+}
+
+@section featured_content
+{
+    <h1>@ViewBag.Title.</h1>
+}
+
+
+<div id="panList">
+    <h3>Filter:</h3>
+    <div class="checkbox">
+        <input id="newOnly" type="checkbox" />
+        <label for="newOnly">Only Show New Requests</label>
+    </div>
+    <br />
+    <table cellspacing="0" cellpadding="0" class="table table-condensed">
+        <tbody>
+            <tr>
+                <th>RFQ Date</th>
+                <th>Company</th>
+                <th>Part #</th>
+                <th>Test</th>
+                <th>TAT days</th>
+                <th>Repair</th>
+                <th>TAT days</th>
+                <th>OH</th>
+                <th>TAT days</th>
+                <th colspan="2">Achievements</th>
+                <th>Quote Date</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DateCreated.ToString("MMM d, yyyy h:mm tt")</td>
+                    <td>@item.VendorName</td>
+                    <td>@item.PartNumber</td>
+                    <td>@item.TestPrice</td>
+                    <td>@item.TestTAT</td>
+                    <td>@item.RepairPrice</td>
+                    <td>@item.RepairTAT</td>
+                    <td>@item.OverhaulPrice</td>
+                    <td>@item.OverhaulTAT</td>
+                    <td nowrap="1">
+                        <div class="checkbox">
+                            <input type="checkbox" id="WorkHistory" @if (item.WorkHistory == true) { <text> checked</text>} />
+                            <label for="WorkHistory">Work History</label>
+                        </div><br />
+                        <div class="checkbox">
+                            <input type="checkbox" id="PMA" @if (item.PMA == true) { <text> checked</text>} />
+                            <label for="PMA">PMA</label>
+                        </div><br />
+                        <div class="checkbox">
+                            <input type="checkbox" id="DER" @if (item.DER == true) { <text> checked</text>} />
+                            <label for="DER">DER</label>
+                        </div>
+                    </td>
+                    <td nowrap="1">
+                        <div class="checkbox">
+                            <input type="checkbox" id="FreeEval" @if (item.FreeEval == true) { <text> checked</text>} />
+                            <label for="FreeEval">Free Eval</label>
+                        </div><br />
+                        <div class="checkbox">
+                            <input type="checkbox" id="PMA" @if (item.APR == true) { <text> checked</text>} />
+                            <label for="APR">APR</label>
+                        </div><br />
+                        <div class="checkbox">
+                            <input type="checkbox" id="DER" @if (item.FT == true) { <text> checked</text>} />
+                            <label for="FT">FT</label>
+                        </div>
+                    </td>
+                    <td>
+                        @(item.DateResponded.HasValue ? item.DateResponded.Value.ToString("MMM d, yyyy h mm tt") : "")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

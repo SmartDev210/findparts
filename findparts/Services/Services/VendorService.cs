@@ -155,6 +155,25 @@ namespace Findparts.Services.Services
             return "";
         }
 
+        public object GetVendorQuotesPageViewModel(string vendorId)
+        {
+            QuotePageViewModel viewModel = new QuotePageViewModel();
+            var defaultCurrency = "USD";
+            var vendor = _context.VendorGetByID(vendorId.ToNullableInt()).FirstOrDefault();
+            if (vendor != null)
+                defaultCurrency = vendor.DefaultCurrency;
+
+            viewModel.Quotes = _context.VendorQuoteGetByVendorID6(vendorId.ToNullableInt()).ToList();
+            viewModel.DefaultCurrency = defaultCurrency;
+            viewModel.AchievementsSelectList = _context.VendorAchievementTypeGetAllQuoteSelectable().ToList().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.VendorAchievementTypeID.ToString()
+            }).ToList();
+            
+            return viewModel;
+        }
+
         public UploadVendorFileViewModel GetVendorUploadAchievementViewModel(string vendorID, int vendorAchievementId = 0)
         {
             var achievementTypes = _context.VendorAchievementTypeGetAll().ToList();
@@ -297,6 +316,23 @@ namespace Findparts.Services.Services
             }
             
             return true;
+        }
+
+        public void VendorQuoteUpdate(string vendorQuoteIDInput, string vendorId, string currency, string testPrice, string testTAT, string repairPrice, string repairPriceRangeLow, string repairPriceRangeHigh, string repairTAT, string overhaulPrice, string overhaulPriceRangeLow, string overhaulPriceRangeHigh, string overhaulTAT, string notToExceed, bool repairsFrequently, bool pma, bool der, bool freeEval, bool modified, bool functionTestOnly, bool noOverhaulWorkscope, bool caac, bool extendedWarranty, bool flatRate, bool range, bool nte, string quoteComments)
+        {
+            _context.VendorQuoteUpdate4(vendorQuoteIDInput.ToNullableInt(), vendorId.ToNullableInt(), currency, testPrice.ToNullableInt(), testTAT.ToNullableInt(), repairPrice.ToNullableInt(), repairPriceRangeLow.ToNullableInt(), repairPriceRangeHigh.ToNullableInt(), repairTAT.ToNullableInt(), overhaulPrice.ToNullableInt(), overhaulPriceRangeLow.ToNullableInt(), overhaulPriceRangeHigh.ToNullableInt(), overhaulTAT.ToNullableInt(), notToExceed.ToNullableInt(), repairsFrequently, pma, der, freeEval, modified, functionTestOnly, noOverhaulWorkscope, caac, extendedWarranty, flatRate, range, nte, quoteComments);
+
+            _context.VendorListItemUpdateQuoteAchievements(vendorId.ToNullableInt());
+        }
+
+        public void VendorQuoteUpdateIgnore(string vendorQuoteID, string vendorId)
+        {
+            _context.VendorQuoteUpdateIgnore(vendorQuoteID.ToNullableInt(), vendorId.ToNullableInt());
+        }
+
+        public void VendorQuoteUpdateNoQuote(string vendorQuoteId, string vendorId)
+        {
+            _context.VendorQuoteUpdateNoQuote(vendorQuoteId.ToNullableInt(), vendorId.ToNullableInt());
         }
     }
 }

@@ -351,5 +351,93 @@ namespace Findparts.Controllers
             TempData["Success"] = "List Successfullly Deleted";
             return RedirectToAction("UploadList");
         }
+
+        public ActionResult Quote()
+        {
+            string vendorId = string.Empty;
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorId = Request.QueryString["VendorID"];
+            } else
+            {
+                vendorId = SessionVariables.VendorID;
+            }
+
+            if (Request.QueryString["VendorQuoteID"] != null)
+            {
+                string vendorQuoteIDInput = Request.QueryString["VendorQuoteID"];
+                if (Request.QueryString["NoQuote"] != null)
+                {
+                    string[] vendorQuoteIDs;
+                    if (vendorQuoteIDInput.Contains(","))
+                    {
+                        vendorQuoteIDs = vendorQuoteIDInput.Split(',');
+                    } else
+                    {
+                        vendorQuoteIDs = new string[] { vendorQuoteIDInput };
+                    }
+
+                    foreach (var vendorQuoteId in vendorQuoteIDs)
+                    {
+                        _vendorService.VendorQuoteUpdateNoQuote(vendorQuoteId, vendorId);
+                        _mailService.SendSubscriberQuoteEmail(vendorQuoteId);
+                    }
+                } else if (Request.QueryString["Ignore"] != null)
+                {
+                    string[] vendorQuoteIDs;
+                    if (vendorQuoteIDInput.Contains(','))
+                    {
+                        vendorQuoteIDs = vendorQuoteIDInput.Split(',');
+                    }
+                    else
+                    {
+                        vendorQuoteIDs = new string[] { vendorQuoteIDInput };
+                    }
+
+                    foreach (string vendorQuoteID in vendorQuoteIDs)
+                    {
+                        _vendorService.VendorQuoteUpdateIgnore(vendorQuoteID, vendorId);
+                    }
+                } else
+                {
+                    string currency = Request.Form["currency"];
+                    string testPrice = Request.Form["testPrice"];
+                    string testTAT = Request.Form["testTAT"];
+                    string repairPrice = Request.Form["repairPrice"];
+                    string repairPriceRangeLow = Request.Form["repairPriceRangeLow"];
+                    string repairPriceRangeHigh = Request.Form["repairPriceRangeHigh"];
+                    string repairTAT = Request.Form["repairTAT"];
+                    string overhaulPrice = Request.Form["overhaulPrice"];
+                    string overhaulPriceRangeLow = Request.Form["overhaulPriceRangeLow"];
+                    string overhaulPriceRangeHigh = Request.Form["overhaulPriceRangeHigh"];
+                    string overhaulTAT = Request.Form["overhaulTAT"];
+                    string notToExceed = Request.Form["notToExceed"];
+                    bool repairsFrequently = Request.Form["repairsFrequently"] == "true";
+                    bool pma = Request.Form["pma"] == "true";
+                    bool der = Request.Form["der"] == "true";
+                    bool freeEval = Request.Form["freeEval"] == "true";
+                    bool modified = Request.Form["modified"] == "true";
+                    bool functionTestOnly = Request.Form["functionTestOnly"] == "true";
+                    bool noOverhaulWorkscope = Request.Form["noOverhaulWorkscope"] == "true";
+                    bool caac = Request.Form["caac"] == "true";
+                    bool extendedWarranty = Request.Form["extendedWarranty"] == "true";
+                    bool flatRate = Request.Form["flatRate"] == "true";
+                    bool range = !string.IsNullOrEmpty(repairPriceRangeLow) || !string.IsNullOrEmpty(repairPriceRangeHigh) || !string.IsNullOrEmpty(overhaulPriceRangeLow) || !string.IsNullOrEmpty(overhaulPriceRangeHigh);
+                    bool nte = !string.IsNullOrEmpty(notToExceed);
+                    string quoteComments = Request.Form["quoteComments"];
+
+                    if (testPrice != "" || repairPrice != "" || overhaulPrice != "")
+                    {
+                        _vendorService.VendorQuoteUpdate(vendorQuoteIDInput, vendorId, currency, testPrice, testTAT, repairPrice, repairPriceRangeLow, repairPriceRangeHigh, repairTAT, overhaulPrice, overhaulPriceRangeLow, overhaulPriceRangeHigh, overhaulTAT, notToExceed, repairsFrequently, pma, der, freeEval, modified, functionTestOnly, noOverhaulWorkscope, caac, extendedWarranty, flatRate, range, nte, quoteComments);
+                        
+                        _mailService.SendSubscriberQuoteEmail(vendorQuoteIDInput);
+                    }                    
+                }
+                return new EmptyResult();
+            }
+
+            var viewModel = _vendorService.GetVendorQuotesPageViewModel(vendorId);
+            return View(viewModel);
+        }
     }
 }

@@ -11,6 +11,7 @@ using Findparts.Extensions;
 using Findparts.Models;
 using Findparts.Models.Subscriber;
 using Findparts.Services.Interfaces;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace Findparts.Controllers
@@ -421,6 +422,13 @@ namespace Findparts.Controllers
                 return Json(new { success = true });
             }
             return Json(new { success = false });
+        }
+        [HttpGet]
+        public ActionResult Quote()
+        {
+            var viewModel = _service.GetQuotePageViewModel(SessionVariables.UserID);
+
+            return View(viewModel);
         }
     }
 }

@@ -555,5 +555,10 @@ namespace Findparts.Services.Services
 				return _context.VendorSubscriberPreferredDelete(vendorId, subscriberID.ToNullableInt()) > 0;
 			}
         }
+
+        public List<VendorQuoteGetByUserID_Result> GetQuotePageViewModel(string userID)
+        {
+			return _context.VendorQuoteGetByUserID(userID.ToNullableInt()).ToList();
+        }
     }
 }

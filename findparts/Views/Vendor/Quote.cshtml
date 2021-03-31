@@ -1,0 +1,555 @@
+﻿@model Findparts.Models.Vendor.QuotePageViewModel
+@{
+    ViewBag.Title = "RFQ Inbox";
+}
+
+@section featured_content {
+    <h1>@ViewBag.Title.</h1>
+}
+
+@section styles{
+    @Styles.Render("~/Content/dist/css/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/dist/css/fixedHeader.bootstrap.min.css")
+}
+
+<div id="panList" style="width:100%;">
+    <div class="text-center">
+        <div class="btn-group filters" role="group">
+            <button type="button" class="btn btn-primary active">All</button>
+            <button type="button" class="btn btn-primary">Pending</button>
+            <button type="button" class="btn btn-primary">Quoted</button>
+            <button type="button" class="btn btn-primary">No Quoted</button>
+            <button type="button" class="btn btn-primary">Deleted</button>
+        </div>
+    </div>
+    <br />
+    <input type="button" value="No Quote Selected" class="btn btn-primary" onclick="VendorQuoteMassNoQuoteIgnore(true)">
+    <input type="button" value="Delete Selected" class="btn btn-danger" onclick="VendorQuoteMassNoQuoteIgnore(false)">
+    <table id="tblQuotes" cellspacing="0" cellpadding="0" class="table table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th>RFQ Date</th>
+                <th>Part #</th>
+                <th>Company</th>
+                <th></th>
+                <th>Test</th>
+                <th>Repair</th>
+                <th>OH</th>
+                <th>Date Sent</th>
+                <th id="filter-field">Hidden</th>
+                <th>Hidden</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Quotes)
+            {
+                <tr>
+                    <td>
+                        <label class="styled-checkbox" visible='@(!item.DateResponded.HasValue && !item.DateNoQuote.HasValue && !item.DateIgnore.HasValue)'>
+                            <input type="checkbox" class="quote-ids" value="@item.VendorQuoteID" /><span></span>
+                        </label>
+                    </td>
+                    <td>
+                        @item.DateCreated.ToString("MMM d, yyyy h:mm tt")
+                    </td>
+                    <td>
+                        @item.PartNumber
+                    </td>
+                    <td>
+                        @item.SubscriberName - @item.UserName
+                    </td>
+                    <td>
+                    </td>
+                    @if (item.DateResponded.HasValue)
+                    {
+                        <text>
+                            @(item.FlatRate == true ? "Flat Rate" : ((item.RepairPriceRangeLow.HasValue || item.OverhaulPriceRangeLow.HasValue) ? "Range" : "Average"))
+                            @(item.NotToExceed.HasValue ? "<br>NTE" + Currency.GetSymbol(item.Currency) + item.NotToExceed : "")
+                        </text>
+                    }
+                    <td>
+                        @if (item.TestPrice.HasValue)
+                        {
+                            <text>
+                                @(Currency.GetSymbol(item.Currency) + item.TestPrice)<br />
+                                @item.TestTAT days
+                            </text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.RepairPrice.HasValue)
+                        {
+                            <text>
+                                @(Currency.GetSymbol(item.Currency) + item.RepairPrice)<br />
+                                @(item.RepairPriceRangeLow.HasValue ? "Range: " + Currency.GetSymbol(item.Currency) + item.RepairPriceRangeLow + " - " + Currency.GetSymbol(item.Currency) + item.RepairPriceRangeHigh : "")<br />
+                                @item.RepairTAT days
+                            </text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.OverhaulPrice.HasValue)
+                        {
+                            <text>
+                                @(Currency.GetSymbol(item.Currency) + item.OverhaulPrice)<br />
+                                @(item.OverhaulPriceRangeLow.HasValue ? "Range: " + Currency.GetSymbol(item.Currency) + item.OverhaulPriceRangeLow + " - " + Currency.GetSymbol(item.Currency) + item.OverhaulPriceRangeHigh : "")<br />
+                                @item.OverhaulTAT days
+                            </text>
+                        }
+                    </td>
+                    <td class="@(item.DateResponded.HasValue ? "bg-success" : (item.DateNoQuote.HasValue ? "bg-danger" : (item.DateIgnore.HasValue ? "bg-warning" : "")))">
+                        @(item.DateResponded.HasValue ? item.DateResponded.Value.ToString("MMM d, yyyy h:mm tt") : (item.DateNoQuote.HasValue ? item.DateNoQuote.Value.ToString("MMM d, yyyy h:mm tt") + " (No Quote)" : (item.DateIgnore.HasValue ? item.DateIgnore.Value.ToString("MMM d, yyyy h:mm tt") + " (Deleted)" : "")))
+                        @if (!item.DateResponded.HasValue && !item.DateNoQuote.HasValue && !item.DateIgnore.HasValue)
+                        {
+                            <div class="btn-group" style="display:flex;">
+                                <button type="button" class="btn btn-primary" onclick="javascript:VendorQuoteOptions(@item.VendorQuoteID">Quote</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" onclick="javascript:VendorQuoteOptions(@item.VendorQuoteID)">Quote</a></li>
+                                    <li><a href="#" onclick="javascript:VendorQuoteNoQuoteIgnore(@item.VendorQuoteID, true)">No Quote</a></li>
+                                    <li><a href="#" onclick="javascript:VendorQuoteNoQuoteIgnore(@item.VendorQuoteID, false)">Delete</a></li>
+                                    <li><a href="#" onclick="javascript:alert('not implemented yet');">Block User</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @(item.DateResponded.HasValue ? "Quoted" : (item.DateNoQuote.HasValue ? "No Quoted" : (item.DateIgnore.HasValue ? "Deleted" : "Pending")))
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Comments) || !string.IsNullOrEmpty(item.RFQID))
+                        {
+                            if (!string.IsNullOrEmpty(item.RFQID))
+                            {<text>RFQID: @item.RFQID</text>}
+                        if (!string.IsNullOrEmpty(item.Comments))
+                        {<text>RFQ Comments: @item.Comments</text>}
+                    if (!string.IsNullOrEmpty(item.QuoteComments))
+                    {<text>Quote Comments: @item.QuoteComments</text>}
+            }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="divVendorQuote" style="display:none;">
+    <div class="form-group">
+        <label>Workscope Icons: <span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-placement="bottom" data-content="You may select any applicable workscope icons. Quoting with Workscope Icons automatically adds Workscope Icons into your Master Capability List; your Repair Station will appear with your Workscope Icons in Search Results"></span></label>
+        @Html.DropDownList("Achievements", Model.AchievementsSelectList, new { @class="chosen3 form-control", multiple="true" })
+        
+    </div>
+
+    <div class="form-group">
+        <label>Price Type: <span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-content="Quote with AVERAGE, FLAT RATE, or a RANGE"></span></label>
+        <select ID="ddlQuoteType" onchange="ChangeQuoteType('', this.options[this.selectedIndex].value);" class="form-control">
+            <option value="Avg">Average</option>
+            <option value="FlatRate">Flat Rate</option>
+            <option value="Range">Low & High 'Price Range'</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ddlCurrency">Currency:</label>
+        <select ID="ddlCurrency" onchange="ChangeCurrency(this.options[this.selectedIndex].value);" class="form-control">
+            <option value="USD">$ USD</option>
+            <option value="EUR">€ EUR</option>
+            <option value="GBP">£ GBP</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-xs-3">Test:</label>
+            <div class="col-xs-4">
+                <div class="input-group average-price">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtTest" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-4">
+                <div class="input-group">
+                    <asp:TextBox runat="server" ID="txtTestTAT" CssClass="form-control" TextMode="Number" Min="1" Max="25" Step="1" Text="1"></asp:TextBox>
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-xs-3" id="spanRepairLabel">Repair:</label>
+            <div class="col-xs-4">
+                <div class="input-group average-price">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtRepair" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-4">
+                <div class="input-group">
+                    <asp:TextBox runat="server" ID="txtRepairTAT" CssClass="form-control" TextMode="Number" Min="1" Max="25" Step="1" Text="1"></asp:TextBox>
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" id='divRepair' style="display:none;">
+        <div class="row">
+            <label class="col-xs-3">Repair Range:</label>
+            <div class="col-xs-4">
+                <div class="input-group price-range">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtRepairRangeLow" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="col-xs-1 text-center">
+                -
+            </div>
+            <div class="col-xs-4">
+                <div class="input-group price-range">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtRepairRangeHigh" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-xs-3" id="spanOverhaulLabel">Overhaul:</label>
+            <div class="col-xs-4">
+                <div class="input-group average-price">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtOverhaul" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="col-xs-offset-1 col-xs-4">
+                <div class="input-group">
+                    <asp:TextBox runat="server" ID="txtOverhaulTAT" CssClass="form-control" TextMode="Number" Min="1" Max="25" Step="1" Text="1"></asp:TextBox>
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" id='divOverhaul' style="display:none;">
+        <div class="row">
+            <label class="col-xs-3">Overhaul Range:</label>
+            <div class="col-xs-4">
+                <div class="input-group price-range">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtOverhaulRangeLow" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="col-xs-1 text-center">
+                -
+            </div>
+            <div class="col-xs-4">
+                <div class="input-group price-range">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtOverhaulRangeHigh" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-xs-3 styled-checkbox">
+                <input id="cbNTE" type="checkbox" onchange="document.getElementById('spanNTE').style.display=this.checked ? '' : 'none';" />
+                <span></span>
+                <i>NTE <span class="glyphicon glyphicon-info-sign" data-toggle="popover" data-content="Not To Exceed"></span></i>
+            </label>
+            <div id="spanNTE" class="col-xs-4" style="display:none;">
+                <div class="input-group">
+                    <span class="input-group-addon currency"></span>
+                    <asp:TextBox runat="server" ID="txtNTE" CssClass="form-control"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Quote Comments:</label>
+        <textarea id="txtQuoteComments" placeholder="Optional" class="form-control"></textarea>
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/dataTables.fixedHeader.min.js")
+
+    <script type="text/javascript">
+        var defaultCurrency = '@Model.DefaultCurrency';
+        function ChangeQuoteType(vendorQuoteID, quoteType) {
+            document.getElementById('spanRepairLabel').innerHTML = quoteType == 'Range' ? 'Repair Average:' : 'Repair:';
+            document.getElementById('spanOverhaulLabel').innerHTML = quoteType == 'Range' ? 'Overhaul Average:' : 'Overhaul:';
+            document.getElementById('divRepair' + vendorQuoteID).style.display = quoteType == 'Range' ? '' : 'none';
+            document.getElementById('divOverhaul' + vendorQuoteID).style.display = quoteType == 'Range' ? '' : 'none';
+        }
+        function ChangeCurrency(currency) {
+            $('.input-group-addon.currency').text(GetCurrencySymbol(currency));
+        }
+
+        function VendorQuoteOptions(vendorQuoteID) {
+            var rfqButtonID = '';
+            var $ddlAchievements = $('#ddlAchievements').val('').trigger("chosen:updated"),
+                $ddlCurrency = $('#ddlCurrency').val(defaultCurrency),
+                $ddlQuoteType = $('#ddlQuoteType').val('Avg'),
+                $txtTest = $('#txtTest').val(''),
+                $txtTestTAT = $('#txtTestTAT').val('1'),
+                $txtRepair = $('#txtRepair').val(''),
+                $txtRepairRangeLow = $('#txtRepairRangeLow').val(''),
+                $txtRepairRangeHigh = $('#txtRepairRangeHigh').val(''),
+                $txtRepairTAT = $('#txtRepairTAT').val('1'),
+                $txtOverhaul = $('#txtOverhaul').val(''),
+                $txtOverhaulRangeLow = $('#txtOverhaulRangeLow').val(''),
+                $txtOverhaulRangeHigh = $('#txtOverhaulRangeHigh').val(''),
+                $txtOverhaulTAT = $('#txtOverhaulTAT').val('1'),
+                $cbNTE = $('#cbNTE').prop('checked', false),
+                $txtNTE = $('#txtNTE').val(''),
+                $spanNTE = $('#spanNTE').hide(),
+                $txtQuoteComments = $('#txtQuoteComments').val('');
+            ChangeQuoteType('', '');
+            ChangeCurrency($ddlCurrency.val());
+            ShowModal('Send Quote', '#divVendorQuote', 'Send Quote', function () {
+                var currency = $ddlCurrency.val(),
+                    testPrice = $txtTest.val(),
+                    testTAT = $txtTestTAT.val(),
+                    repairPrice = $txtRepair.val(),
+                    repairPriceRangeLow = $txtRepairRangeLow.val(),
+                    repairPriceRangeHigh = $txtRepairRangeHigh.val(),
+                    repairTAT = $txtRepairTAT.val(),
+                    overhaulPrice = $txtOverhaul.val(),
+                    overhaulPriceRangeLow = $txtOverhaulRangeLow.val(),
+                    overhaulPriceRangeHigh = $txtOverhaulRangeHigh.val(),
+                    overhaulTAT = $txtOverhaulTAT.val(),
+                    notToExceed = $cbNTE.prop('checked') ? $txtNTE.val() : null,
+                    quoteComments = $txtQuoteComments.val(),
+                    achievements = $ddlAchievements.children('option:selected').map(function () { return this.value; }).get(),
+                    repairsFrequently = achievements.indexOf('4') > -1,
+                    pma = achievements.indexOf('1') > -1,
+                    der = achievements.indexOf('2') > -1,
+                    freeEval = achievements.indexOf('5') > -1,
+                    modified = achievements.indexOf('6') > -1,
+                    functionTestOnly = achievements.indexOf('7') > -1,
+                    noOverhaulWorkscope = achievements.indexOf('8') > -1,
+                    caac = achievements.indexOf('9') > -1,
+                    extendedWarranty = achievements.indexOf('10') > -1,
+                    flatRate = $ddlQuoteType.val() == 'FlatRate',
+                    range = $ddlQuoteType.val() == 'Range';
+
+                var $inputGroup = $('.input-group')
+                    .removeClass('has-error');
+                var errorCount = 0;
+                if (range) {
+                    if (repairPriceRangeLow == '' && repairPriceRangeHigh == '' && overhaulPriceRangeLow == '' && overhaulPriceRangeHigh == '') {
+                        $inputGroup.filter('.price-range').addClass('has-error');
+                        errorCount++;
+                    } else {
+                        if (repairPriceRangeLow == '' && repairPriceRangeHigh != '') {
+                            $txtRepairRangeLow.parents('.input-group').addClass('has-error');
+                            errorCount++;
+                        } else if (repairPriceRangeLow != '' && repairPriceRangeHigh == '') {
+                            $txtRepairRangeHigh.parents('.input-group').addClass('has-error');
+                            errorCount++;
+                        }
+                        if (overhaulPriceRangeLow == '' && overhaulPriceRangeHigh != '') {
+                            $txtOverhaulRangeLow.parents('.input-group').addClass('has-error');
+                            errorCount++;
+                        } else if (overhaulPriceRangeLow != '' && overhaulPriceRangeHigh == '') {
+                            $txtOverhaulRangeHigh.parents('.input-group').addClass('has-error');
+                            errorCount++;
+                        }
+                    }
+                }
+                if (notToExceed == '') {
+                    $txtNTE.parents('.input-group').addClass('has-error');
+                    errorCount++;
+                }
+                if (testPrice == '' && repairPrice == '' && overhaulPrice == '' && !range && notToExceed == null) {
+                    $inputGroup.filter('.average-price').addClass('has-error');
+                    errorCount++;
+                }
+                errorCount += $inputGroup
+                    .find('input')
+                    .filter(function () {
+                        if (this.value != '') {
+                            var parsed = parseInt(this.value, 10);
+                            return isNaN(parsed) || parsed <= 0
+                        }
+                        return false;
+                    })
+                    .parents('.input-group')
+                    .addClass('has-error')
+                    .length;
+
+                if (errorCount == 0) {
+                    VendorQuoteSend(vendorQuoteID,
+                        currency,
+                        testPrice,
+                        testTAT,
+                        repairPrice,
+                        repairPriceRangeLow,
+                        repairPriceRangeHigh,
+                        repairTAT,
+                        overhaulPrice,
+                        overhaulPriceRangeLow,
+                        overhaulPriceRangeHigh,
+                        overhaulTAT,
+                        notToExceed,
+                        repairsFrequently,
+                        pma,
+                        der,
+                        freeEval,
+                        modified,
+                        functionTestOnly,
+                        noOverhaulWorkscope,
+                        caac,
+                        extendedWarranty,
+                        flatRate,
+                        quoteComments,
+                        rfqButtonID
+                    );
+                }
+            });
+            $('.chosen3').chosen({ placeholder_text_multiple: 'Select Workscope Icons' });
+            //return false;
+        }
+
+        function VendorQuoteSend(vendorQuoteID, currency, testPrice, testTAT, repairPrice, repairPriceRangeLow, repairPriceRangeHigh, repairTAT, overhaulPrice, overhaulPriceRangeLow, overhaulPriceRangeHigh, overhaulTAT, notToExceed, repairsFrequently, pma, der, freeEval, modified, functionTestOnly, noOverhaulWorkscope, caac, extendedWarranty, flatRate, quoteComments, rfqButtonID) {
+            $.post(
+                'Quote.aspx?VendorQuoteID=' + vendorQuoteID,
+                {
+                    currency: currency,
+                    testPrice: testPrice,
+                    testTAT: testTAT,
+                    repairPrice: repairPrice,
+                    repairPriceRangeLow: repairPriceRangeLow,
+                    repairPriceRangeHigh: repairPriceRangeHigh,
+                    repairTAT: repairTAT,
+                    overhaulPrice: overhaulPrice,
+                    overhaulPriceRangeLow: overhaulPriceRangeLow,
+                    overhaulPriceRangeHigh: overhaulPriceRangeHigh,
+                    overhaulTAT: overhaulTAT,
+                    notToExceed: notToExceed,
+                    repairsFrequently: repairsFrequently,
+                    pma: pma,
+                    der: der,
+                    freeEval: freeEval,
+                    modified: modified,
+                    functionTestOnly: functionTestOnly,
+                    noOverhaulWorkscope: noOverhaulWorkscope,
+                    caac: caac,
+                    extendedWarranty: extendedWarranty,
+                    flatRate: flatRate,
+                    // range and nte calced by looking at range fields and notToExceed int
+                    //range: range,
+                    //nte: nte,
+                    quoteComments: quoteComments
+                },
+                function (data) {
+                    console.log(JSON.stringify(data));
+                    HideModal();
+                    location.href = 'Quote';
+                }
+            );
+        }
+
+        function VendorQuoteMassNoQuoteIgnore(noQuote) {
+            var vendorQuoteIDs = $('.quote-ids:checked').map(function () {
+                return this.value;
+            }).get().join(',');
+            if (vendorQuoteIDs == '') {
+                ShowModal('Error', '<p>Select at least one RFQ to ' + (noQuote ? 'No Quote' : 'Delete') + '</p>');
+            } else {
+                VendorQuoteNoQuoteIgnore(vendorQuoteIDs, noQuote);
+            }
+        }
+
+        function VendorQuoteNoQuoteIgnore(vendorQuoteID, noQuote) {
+            $.get(
+                'Quote.aspx?VendorQuoteID=' + encodeURIComponent(vendorQuoteID) + '&' + (noQuote ? 'NoQuote' : 'Ignore') + '=1',
+                function (data) {
+                    console.log(JSON.stringify(data));
+                    location.href = 'Quote';
+                }
+            );
+        }
+
+        $(function () {
+            var calcOffset = function () {
+                var headerHeight = $('header').outerHeight();
+                var bodyPadding = parseInt($('#body').css('padding-top'), 10);
+                if (bodyPadding == 0) {
+                    return 0;
+                } else {
+                    return headerHeight;
+                }
+            };
+
+            var dtApi = $('#tblQuotes').DataTable({
+                fixedHeader: {
+                  headerOffset: calcOffset()
+                },
+                autoWidth: false,
+                lengthChange: false,
+                pageLength: 20,
+                columns: [
+                    { sorting: false },
+                    {},
+                    {
+                        render: function (data, type, row) {
+                            if (type == 'display') {
+                                return '<a href="#" onclick="return VendorDetails(\'' + data + '\', ' + @Model.VendorID + ')">' + data + '</a>';
+                            }
+                            return data;
+                        }
+                    },
+                    {},
+                    { sorting: false },
+                    { sorting: false },
+                    { sorting: false },
+                    { sorting: false },
+                    {},
+                    { visible: false },
+                    { visible: false }
+                ],
+                order: [1, 'desc']
+            });
+            dtApi.rows().every(function () {
+                var tr = $(this.node());
+                var row = dtApi.row(tr);
+                var data = row.data();
+                if (data && data.length && data[data.length - 1]) {
+                    this.child($('<tr class="' + tr.attr('class') + '"><td></td><td colspan="8">' + data[data.length - 1] + '</td></tr>')).show();
+                }
+            }).columns().every(function () {
+            });
+            window.dtApi = dtApi;
+
+            $('.btn-group.filters .btn').click(function () {
+                $('.btn-group.filters .btn.active').removeClass('active');
+                var val = $(this).addClass('active').text();
+                dtApi.column('#filter-field')
+                    .search(val == 'All' ? '' : '^' + val + '$', true, false)
+                    .draw();
+            });
+
+            var resizeTimer = null;
+            $(window).resize(function () {
+                if (resizeTimer) {
+                    clearTimeout(resizeTimer);
+                }
+                resizeTimer = setTimeout(function () {
+                    dtApi.fixedHeader.headerOffset(calcOffset());
+                }, 500);
+            });
+        });
+    </script>
+}
