@@ -115,5 +115,22 @@ namespace Findparts.Services.Services
                 }).ToList()
             };
         }
+
+        public void SaveVendorStatusAndNotes(VendorDetailViewModel viewModel)
+        {
+            _context.VendorUpdateStatusAndNotes2(viewModel.VendorId, viewModel.VendorName, viewModel.Status, viewModel.MuteWorkscopeIcons, viewModel.Notes);
+            var subscriber = _context.UserGetByVendorID(viewModel.VendorId).FirstOrDefault();
+            if (subscriber != null)
+            {
+                var status = _context.StatusGetByID(viewModel.Status).FirstOrDefault();
+                if (status != null)
+                {
+                    bool canSearch = status.CanSearch;
+
+                    _context.SubscriberUpdateStatus3(subscriber.SubscriberID, viewModel.Status, canSearch);
+                }
+            }
+
+        }
     }
 }

@@ -243,22 +243,13 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StatusGetAll_Result>("StatusGetAll");
         }
     
-        public virtual ObjectResult<Status> StatusGetByID(Nullable<int> statusID)
+        public virtual ObjectResult<StatusGetByID_Result> StatusGetByID(Nullable<int> statusID)
         {
             var statusIDParameter = statusID.HasValue ?
                 new ObjectParameter("StatusID", statusID) :
                 new ObjectParameter("StatusID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Status>("StatusGetByID", statusIDParameter);
-        }
-    
-        public virtual ObjectResult<Status> StatusGetByID(Nullable<int> statusID, MergeOption mergeOption)
-        {
-            var statusIDParameter = statusID.HasValue ?
-                new ObjectParameter("StatusID", statusID) :
-                new ObjectParameter("StatusID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Status>("StatusGetByID", mergeOption, statusIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StatusGetByID_Result>("StatusGetByID", statusIDParameter);
         }
     
         public virtual ObjectResult<SubscriberGetAll_Result> SubscriberGetAll()

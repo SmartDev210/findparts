@@ -1,6 +1,8 @@
 ﻿@model Findparts.Models.Admin.VendorDetailViewModel
 @using (Html.BeginForm("VendorDetail", "Admin", FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.VendorId)
     <div class="row">
         <div class="col-sm-6">
             <a href="@Url.Action("Index", "Vendor", new { VendorID = Model.VendorId })">Vendor Settings</a>
@@ -43,9 +45,10 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <a class="btn btn-primary btn-spacer" href="#">Download Master List</a>
+        <a class="btn btn-primary btn-spacer" href="@Url.Action("DownloadMasterList", "Vendor", new { VendorID = Model.VendorId })">Download Master List</a>
         <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId })">Upload Capability List</a>
         <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId })">upload Workscope Icon List</a>
+
 
         <table class="table table-condensed" style="border-collapse: collapse;">
             <caption>
@@ -63,11 +66,69 @@
                     <th>Deleted</th>
                 </tr>
                 @foreach (var item in Model.VendorList)
-                { 
+                {
                     <tr>
                         <td><a href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId, vendorListId = item.VendorListID})">Edit List</a></td>
                         <td>Preview</td>
                         <td><a href="@Url.Action("DownloadVendorList", "Vendor", new { vendorListId = item.VendorListID })">@item.Filetype</a></td>
+                        <td>@item.DateCreated.ToString("MMM d, yyyy hh:mm tt")</td>
+                        <td>@(item.ReplaceList ? "Replaced existing" : "Added to existing")</td>
+                        <td>@item.Comments</td>
+                        <td>
+                            @if (!item.DateApproved.HasValue)
+                            {
+                                <a href="#" class="btn btn-primary">Approve List</a>
+                            }
+                            else
+                            {
+                                <text>@item.DateApproved.Value.ToString("MMM d, yyyy hh:mm tt")</text>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="#"><span class='glyphicon glyphicon-remove'></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <table class="table table-condensed" style="border-collapse: collapse;">
+            <caption>
+                @Model.VendorList.Count Workscope Icon Lists found
+            </caption>
+            <tbody>
+                <tr>
+                    <th>Edit</th>
+                    <th>Preview List</th>
+                    <th>Download File</th>
+                    <th>Date Created</th>
+                    <th>Listing Type</th>
+                    <th>Comments</th>
+                    <th>Approved</th>
+                    <th>Deleted</th>
+                </tr>
+                @foreach (var item in Model.VendorAchievementList)
+                {
+                    <tr>
+                        <td><a href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId, vendorAchievementId = item.VendorAchievementListID})">Edit List</a></td>
+                        <td>Preview</td>
+                        <td><a href="@Url.Action("DownloadAchievement", "Vendor", new { vendorAchievementId = item.VendorAchievementListID })">@item.Filetype</a></td>
+                        <td>@item.DateCreated.ToString("MMM d, yyyy hh:mm tt")</td>
+                        <td>@(item.ReplaceList ? "Replaced existing" : "Added to existing")</td>
+                        <td>@item.Comments</td>
+                        <td>
+                            @if (!item.DateApproved.HasValue)
+                            {
+                                <a href="#" class="btn btn-primary">Approve List</a>
+                            }
+                            else
+                            {
+                                <text>@item.DateApproved.Value.ToString("MMM d, yyyy hh:mm tt")</text>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="#"><span class='glyphicon glyphicon-remove'></span></a>
+                        </td>
                     </tr>
                 }
             </tbody>

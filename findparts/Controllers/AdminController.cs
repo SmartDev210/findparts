@@ -64,5 +64,21 @@ namespace Findparts.Controllers
 
             return View("VendorDetail", viewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Admin/Vendors/{vendorId}")]
+        public ActionResult VendorDetail(VendorDetailViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel = _service.GetVendorDetailViewModel(viewModel.VendorId);
+                return View("VendorDetail", viewModel);
+            }
+
+            _service.SaveVendorStatusAndNotes(viewModel);
+
+            return RedirectToAction("Vendors", "Admin");
+        }
     }
 }

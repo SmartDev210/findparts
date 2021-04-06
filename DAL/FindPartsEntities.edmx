@@ -1542,7 +1542,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="StatusGetAll" ReturnType="Collection(DomainModel.StatusGetAll_Result)" />
-          <FunctionImport Name="StatusGetByID" EntitySet="Status" ReturnType="Collection(DomainModel.Status)">
+          <FunctionImport Name="StatusGetByID" ReturnType="Collection(DomainModel.StatusGetByID_Result)">
           <Parameter Name="StatusID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SubscriberGetAll" ReturnType="Collection(DomainModel.SubscriberGetAll_Result)" />
@@ -2834,8 +2834,8 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="DomainModel.Status">
               <MappingFragment StoreEntitySet="Status">
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
                 <ScalarProperty Name="Status1" ColumnName="Status" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="CanLogin" ColumnName="CanLogin" />
                 <ScalarProperty Name="CanSearch" ColumnName="CanSearch" />
@@ -3219,6 +3219,17 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="StatusGetByID" FunctionName="DomainModel.Store.StatusGetByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DomainModel.StatusGetByID_Result">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="CanLogin" ColumnName="CanLogin" />
+                <ScalarProperty Name="CanSearch" ColumnName="CanSearch" />
+                <ScalarProperty Name="IsSuspended" ColumnName="IsSuspended" />
+                <ScalarProperty Name="IncludeInStats" ColumnName="IncludeInStats" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SubscriberGetAll" FunctionName="DomainModel.Store.SubscriberGetAll">
             <ResultMapping>

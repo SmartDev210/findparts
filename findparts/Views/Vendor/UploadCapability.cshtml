@@ -47,7 +47,7 @@
             </div>
             <div>
                 <input type="submit" class="btn btn-primary btn-spacer" value="Upload" />
-                <a href="@(User.IsInRole("Admin") ? Url.Action("Vendors", "Admin", new { VendorID = Model.VendorId }) : Url.Action("UploadList", "Vendor"))" class="btn btn-default btn-spacer">Cancel</a>
+                <a href="@(User.IsInRole("Admin") ? Url.Action("VendorDetail", "Admin", new { VendorID = Model.VendorId }) : Url.Action("UploadList", "Vendor"))" class="btn btn-default btn-spacer">Cancel</a>
             </div>
             <br/>
             <div class="well" id="divInfo" runat="server">

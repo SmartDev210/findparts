@@ -12,5 +12,6 @@ namespace Findparts.Services.Interfaces
     {
         VendorPagedListViewModel GetVendors(int start, int length, int draw, string sortParam, string direction, string filter);
         VendorDetailViewModel GetVendorDetailViewModel(int vendorId);
+        void SaveVendorStatusAndNotes(VendorDetailViewModel viewModel);
     }
 }

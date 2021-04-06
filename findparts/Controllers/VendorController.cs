@@ -170,20 +170,50 @@ namespace Findparts.Controllers
         [HttpGet]
         public ActionResult UploadList()
         {
-            VendorUploadListViewModel viewModel = _vendorService.GetVendorUploadListViewModel(SessionVariables.VendorID);
+            string vendorId = "";
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorId = Request.QueryString["VendorID"];
+            } else
+            {
+                vendorId = SessionVariables.VendorID;
+            }
+
+            VendorUploadListViewModel viewModel = _vendorService.GetVendorUploadListViewModel(vendorId);
             return View(viewModel);
         }        
         [HttpGet]
         [Route("Vendor/UploadCapability/{vendorListId?}")]
         public ActionResult UploadCapability(int? vendorListId)
         {
-            UploadVendorFileViewModel viewModel = _vendorService.GetVendorUploadCapabilityViewModel(SessionVariables.VendorID, vendorListId ?? 0);
+            string vendorId = "";
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorId = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorId = SessionVariables.VendorID;
+            }
+
+            UploadVendorFileViewModel viewModel = _vendorService.GetVendorUploadCapabilityViewModel(vendorId, vendorListId ?? 0);
             return View(viewModel);
         }
         [HttpGet]
+        [Route("Vendor/UploadAchievement")]
         public ActionResult UploadAchievement()
         {
-            UploadVendorFileViewModel viewModel = _vendorService.GetVendorUploadAchievementViewModel(SessionVariables.VendorID);
+            string vendorId = "";
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorId = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorId = SessionVariables.VendorID;
+            }
+
+            UploadVendorFileViewModel viewModel = _vendorService.GetVendorUploadAchievementViewModel(vendorId);
             return View(viewModel);
         }
 
@@ -191,7 +221,17 @@ namespace Findparts.Controllers
         [Route("Vendor/UploadAchievement/{vendorAchievementId}")]
         public ActionResult UploadAchievement(int vendorAchievementId)
         {
-            UploadVendorFileViewModel viewModel = _vendorService.GetVendorUploadAchievementViewModel(SessionVariables.VendorID, vendorAchievementId);
+            string vendorId = "";
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorId = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorId = SessionVariables.VendorID;
+            }
+
+            UploadVendorFileViewModel viewModel = _vendorService.GetVendorUploadAchievementViewModel(vendorId, vendorAchievementId);
             return View(viewModel);
         }
 
@@ -220,7 +260,7 @@ namespace Findparts.Controllers
 
                     if (User.IsInRole("Admin"))
                     {
-                        return RedirectToAction("Vendors", "Admin", new { VendorID = viewModel.VendorId });
+                        return RedirectToAction("VendorDetail", "Admin", new { VendorID = viewModel.VendorId });
                     } else
                     {
                         TempData["Success"] = $@"List Successfully Added - <a href=""{Url.Action("Index", "Vendor")}"">View your Repair Station Settings</a>";
@@ -244,7 +284,7 @@ namespace Findparts.Controllers
         [HttpPost]
         [Route("Vendor/UploadAchievement/{id?}")]        
         [ValidateAntiForgeryToken]
-        public ActionResult UploadAchievement(UploadVendorFileViewModel viewModel)
+        public ActionResult PostUploadAchievement(UploadVendorFileViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -266,7 +306,7 @@ namespace Findparts.Controllers
 
                     if (User.IsInRole("Admin"))
                     {
-                        return RedirectToAction("Vendors", "Admin", new { VendorID = viewModel.VendorId });
+                        return RedirectToAction("VendorDetail", "Admin", new { VendorID = viewModel.VendorId });
                     }
                     else
                     {
@@ -310,7 +350,18 @@ namespace Findparts.Controllers
         [HttpGet]
         public ActionResult DownloadMasterList()
         {
-            var vendorList = _vendorService.GetMasterVendorList(SessionVariables.VendorID);
+            string vendorId = "";
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorId = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorId = SessionVariables.VendorID;
+            }
+
+            var vendorList = _vendorService.GetMasterVendorList(vendorId);
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             MemoryStream memoryStream = new MemoryStream();
 
