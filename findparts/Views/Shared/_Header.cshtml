@@ -29,7 +29,7 @@
                                 <li role="separator" class="divider"></li>
                                 <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List & Upload Workscope Icons</span></a></li>
                                 <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
-                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a><asp:LoginStatus ID="LoginStatus3" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggedOut="Unnamed_LoggedOut" CssClass="Logout" /></li>
+                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
                             </ul>
                         }
                         else
@@ -50,7 +50,7 @@
                                     <li role="separator" class="divider"></li>
                                 }
                                 <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
-                                <li><a href="#" onclick="document.getElementsByClassName('Logout')[0].click();"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggedOut="Unnamed_LoggedOut" CssClass="Logout" /></li>
+                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
                             </ul>
                         }
                     </div>

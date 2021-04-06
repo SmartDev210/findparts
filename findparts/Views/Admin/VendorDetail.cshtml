@@ -1,0 +1,76 @@
+﻿@model Findparts.Models.Admin.VendorDetailViewModel
+@using (Html.BeginForm("VendorDetail", "Admin", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-sm-6">
+            <a href="@Url.Action("Index", "Vendor", new { VendorID = Model.VendorId })">Vendor Settings</a>
+            -
+            <a href="@Url.Action("Quote", "Vendor", new { VendorID = Model.VendorId })">Quote Inbox</a>
+            -
+            <a href="@Url.Action("Subscribers", "Admin", new { SubscriberID = Model.SubscriberId })">Linked Subscriber</a>
+            <br />
+
+            <div class="form-group">
+                <label for="VendorName">Vendor</label>
+                @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Status">Status</label>
+                @Html.DropDownListFor(x => x.Status, Model.StatusSelectList, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <div class="checkbox-inline">
+                    @Html.CheckBoxFor(x => x.MuteWorkscopeIcons)
+                    <label for="MuteWorkscopeIcons"><span></span><i>Mute Workscope icons</i></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Date Joined</label>
+                @Html.TextBoxFor(x => x.DateCreated, new {@class="form-control", readOnly=true})
+            </div>
+            <div class="form-group">
+                <label for="Notes">Notes</label>
+                @Html.TextAreaFor(x => x.Notes, new { @class = "form-control", rows = 4 })
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-spacer" value="Save" />
+                <a class="btn btn-default btn-spacer" href="@Url.Action("Vendors", "Admin")">Go Back</a>
+            </div>
+            
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <a class="btn btn-primary btn-spacer" href="#">Download Master List</a>
+        <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId })">Upload Capability List</a>
+        <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId })">upload Workscope Icon List</a>
+
+        <table class="table table-condensed" style="border-collapse: collapse;">
+            <caption>
+                @Model.VendorList.Count Capability Lists found
+            </caption>
+            <tbody>
+                <tr>
+                    <th>Edit</th>
+                    <th>Preview List</th>
+                    <th>Download File</th>
+                    <th>Date Created</th>
+                    <th>Listing Type</th>
+                    <th>Comments</th>
+                    <th>Approved</th>
+                    <th>Deleted</th>
+                </tr>
+                @foreach (var item in Model.VendorList)
+                { 
+                    <tr>
+                        <td><a href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId, vendorListId = item.VendorListID})">Edit List</a></td>
+                        <td>Preview</td>
+                        <td><a href="@Url.Action("DownloadVendorList", "Vendor", new { vendorListId = item.VendorListID })">@item.Filetype</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

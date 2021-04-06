@@ -276,6 +276,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -292,6 +293,8 @@
     </Compile>
     <Compile Include="Helpers\Currency.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Admin\VendorDetailViewModel.cs" />
+    <Compile Include="Models\Admin\VendorViewModel.cs" />
     <Compile Include="Models\BasePageViewModel.cs" />
     <Compile Include="Models\HomePageViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -311,11 +314,13 @@
     <Compile Include="Models\Vendor\VendorIndexPageViewModel.cs" />
     <Compile Include="Models\Vendor\VendorUploadListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Interfaces\IAdminService.cs" />
     <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMembershipService.cs" />
     <Compile Include="Services\Interfaces\IPartsSearchService.cs" />
     <Compile Include="Services\Interfaces\ISubscriberService.cs" />
     <Compile Include="Services\Interfaces\IVendorService.cs" />
+    <Compile Include="Services\Services\AdminService.cs" />
     <Compile Include="Services\Services\EmailService.cs" />
     <Compile Include="Services\Services\MembershipService.cs" />
     <Compile Include="Services\Services\PartsSearchService.cs" />
@@ -758,6 +763,8 @@
     <Content Include="Views\Content\Contact.cshtml" />
     <Content Include="Views\Home\Parts.cshtml" />
     <Content Include="Scripts\jsnlog.js.map" />
+    <Content Include="Views\Admin\Vendors.cshtml" />
+    <Content Include="Views\Admin\VendorDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
