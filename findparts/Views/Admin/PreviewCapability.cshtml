@@ -1,0 +1,84 @@
+﻿@model Findparts.Models.Admin.PreviewCapabilityViewModel
+@{
+    ViewBag.Title = "Preview Capability";
+}
+
+@if (!Model.Preview)
+{
+<div class="row">
+    <div class="col-sm-12">
+        <a class="btn btn-primary" href="@Url.Action("ImportCapability", "Admin", new { vendorListId = Model.VendorListId })">Import</a>
+    </div>
+</div>
+}
+
+<div class="row">
+    <div class="col-sm-12" style="overflow-x: auto;">
+        <table class="table table-condensed" style="border-collapse: collapse;">
+            <caption>
+                @Model.Items.Count List items found
+            </caption>
+            <tbody>
+                <tr>
+                    <th>Part Number</th>
+                    <th>Description</th>
+                    <th>Alternate PartNumber</th>
+                    <th>Alternate PartNumber2</th>
+                    <th>Model Number</th>
+                    <th>Manufacturer</th>
+                    <th>ATAChapter</th>
+                    <th>NSN</th>
+                    <th>Aircraft</th>
+                    <th>Engine</th>
+                    <th>Cage</th>
+                    <th>Notes Remarks</th>
+                    <th>WorkShopSite</th>
+                    <th>Workscope</th>
+                    <th>RepairsFrequently</th>
+                    <th>PMA</th>
+                    <th>DER</th>
+                    <th>FreeEval</th>
+                    <th>Modified</th>
+                    <th>FunctionTestOnly</th>
+                    <th>NoOverhaulWorkscope</th>
+                    <th>CAAC</th>
+                    <th>ExtendedWarranty</th>
+                    <th>FlatRange</th>
+                    <th>Range</th>
+                    <th>NTE</th>
+                </tr>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.PartNumber</td>
+                        <td>@item.Description</td>
+                        <td>@item.AlternatePartNumber</td>
+                        <td>@item.AlternatePartNumber2</td>
+                        <td>@item.ModelNumber</td>
+                        <td>@item.Manufacturer</td>
+                        <td>@item.ATAChapter</td>
+                        <td>@item.NSN</td>
+                        <td>@item.Aircraft</td>
+                        <td>@item.Engine</td>
+                        <td>@item.Cage</td>
+                        <td>@item.NotesRemarks</td>
+                        <td>@item.WorkShopSite</td>
+                        <td>@item.Workscope</td>
+                        <td>@item.RepairsFrequently</td>
+                        <td>@item.PMA</td>
+                        <td>@item.DER</td>
+                        <td>@item.FreeEval</td>
+                        <td>@item.Modified</td>
+                        <td>@item.FunctionTestOnly</td>
+                        <td>@item.NoOverhaulWorkscope</td>
+                        <td>@item.CAAC</td>
+                        <td>@item.ExtendedWarranty</td>
+                        <td>@item.FlatRate</td>
+                        <td>@item.Range</td>
+                        <td>@item.NTE</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

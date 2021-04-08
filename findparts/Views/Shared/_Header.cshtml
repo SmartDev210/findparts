@@ -18,7 +18,19 @@
                             Account
                             <span class="caret"></span>
                         </button>
-                        @if (User.IsInRole("Vendor"))
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">@User.Identity.Name</li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@Url.Action("Vendors", "Admin")">Vendors</a></li>
+                                <li><a href="@Url.Action("Subscribers", "Admin")">Subscribers</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                            </ul>
+                        }
+                        else if (User.IsInRole("Vendor"))
                         {
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="dropdown-header">@User.Identity.Name</li>
@@ -36,13 +48,7 @@
                         {
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li class="dropdown-header">@User.Identity.Name</li>
-                                <li role="separator" class="divider"></li>
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li><a href="@Url.Action("Vendors", "Admin")">Vendors</a></li>
-                                    <li><a href="@Url.Action("Subscribers", "Admin")">Subscribers</a></li>
-                                    <li role="separator" class="divider"></li>
-                                }
+                                <li role="separator" class="divider"></li>                               
                                 @if (Context.User.IsInRole("Subscriber"))
                                 {
                                     <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
@@ -53,6 +59,7 @@
                                 <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
                             </ul>
                         }
+
                     </div>
                 </div>
             }

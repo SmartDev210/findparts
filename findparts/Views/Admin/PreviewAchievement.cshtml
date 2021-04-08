@@ -1,0 +1,34 @@
+﻿@model Findparts.Models.Admin.PreviewAchievementViewModel
+@{
+    ViewBag.Title = "Preview Achievement";
+}
+
+@if (!Model.Preview)
+{
+<div class="row">
+    <div class="col-sm-12">
+        <a class="btn btn-primary" href="@Url.Action("ImportAchievement", "Admin", new { vendorAchievementListId = Model.VendorAchievementListId })">Import</a>
+    </div>
+</div>
+}
+
+<div class="row">
+    <div class="col-sm-12" style="overflow-x: auto;">
+        <table class="table table-condensed" style="border-collapse: collapse;">
+            <caption>
+                @Model.Items.Count List items found
+            </caption>
+            <tbody>
+                <tr>
+                    <th>Part Number</th>                    
+                </tr>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.PartNumber</td>                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

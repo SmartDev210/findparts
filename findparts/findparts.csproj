@@ -293,6 +293,7 @@
     </Compile>
     <Compile Include="Helpers\Currency.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Admin\PreviewCapabilityViewModel.cs" />
     <Compile Include="Models\Admin\VendorDetailViewModel.cs" />
     <Compile Include="Models\Admin\VendorViewModel.cs" />
     <Compile Include="Models\BasePageViewModel.cs" />
@@ -765,6 +766,8 @@
     <Content Include="Scripts\jsnlog.js.map" />
     <Content Include="Views\Admin\Vendors.cshtml" />
     <Content Include="Views\Admin\VendorDetail.cshtml" />
+    <Content Include="Views\Admin\PreviewCapability.cshtml" />
+    <Content Include="Views\Admin\PreviewAchievement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -193,15 +193,13 @@
           <Property Name="ReplaceList" Type="bit" Nullable="false" />
           <Property Name="DateApproved" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'aeroMRO.dbo.VendorAchievementListItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VendorAchievementListItem">
           <Key>
-            <PropertyRef Name="VendorAchievementListID" />
-            <PropertyRef Name="PartNumber" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="VendorAchievementListID" Type="int" Nullable="false" />
           <Property Name="PartNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorAchievementType">
           <Key>
@@ -1000,6 +998,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySet Name="UserSearch" EntityType="Self.UserSearch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorAchievementList" EntityType="Self.VendorAchievementList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorAchievementListItem" EntityType="Self.VendorAchievementListItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorAchievementType" EntityType="Self.VendorAchievementType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorCert" EntityType="Self.VendorCert" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorList" EntityType="Self.VendorList" Schema="dbo" store:Type="Tables" />
@@ -1007,12 +1006,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySet Name="VendorQuote" EntityType="Self.VendorQuote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorSubscriberBlocked" EntityType="Self.VendorSubscriberBlocked" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorSubscriberPreferred" EntityType="Self.VendorSubscriberPreferred" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VendorAchievementListItem" EntityType="Self.VendorAchievementListItem" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [VendorAchievementListItem].[VendorAchievementListID] AS [VendorAchievementListID], 
-    [VendorAchievementListItem].[PartNumber] AS [PartNumber]
-    FROM [dbo].[VendorAchievementListItem] AS [VendorAchievementListItem]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="VendorListItemArchive" EntityType="Self.VendorListItemArchive" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VendorListItemArchive].[VendorListItemID] AS [VendorListItemID], 
@@ -1390,11 +1383,11 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
         </EntityType>
         <EntityType Name="VendorAchievementListItem">
           <Key>
-            <PropertyRef Name="VendorAchievementListID" />
-            <PropertyRef Name="PartNumber" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="VendorAchievementListID" Type="Int32" Nullable="false" />
           <Property Name="PartNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="VendorListItemArchive">
           <Key>
@@ -3159,6 +3152,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySetMapping Name="VendorAchievementListItems">
             <EntityTypeMapping TypeName="DomainModel.VendorAchievementListItem">
               <MappingFragment StoreEntitySet="VendorAchievementListItem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorAchievementListID" ColumnName="VendorAchievementListID" />
                 <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
               </MappingFragment>

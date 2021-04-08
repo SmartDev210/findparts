@@ -1,4 +1,9 @@
 ﻿@model Findparts.Models.Admin.VendorDetailViewModel
+
+@if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
+{
+    <div class="alert alert-warning">@TempData["Message"]</div>
+}
 @using (Html.BeginForm("VendorDetail", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -63,13 +68,13 @@
                     <th>Listing Type</th>
                     <th>Comments</th>
                     <th>Approved</th>
-                    <th>Deleted</th>
+                    <th>Delete</th>
                 </tr>
                 @foreach (var item in Model.VendorList)
                 {
                     <tr>
                         <td><a href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId, vendorListId = item.VendorListID})">Edit List</a></td>
-                        <td>Preview</td>
+                        <td><a href="@Url.Action("PreviewCapability", "Admin", new { vendorListId = item.VendorListID })">@item.Filetype</a></td>
                         <td><a href="@Url.Action("DownloadVendorList", "Vendor", new { vendorListId = item.VendorListID })">@item.Filetype</a></td>
                         <td>@item.DateCreated.ToString("MMM d, yyyy hh:mm tt")</td>
                         <td>@(item.ReplaceList ? "Replaced existing" : "Added to existing")</td>
@@ -77,7 +82,7 @@
                         <td>
                             @if (!item.DateApproved.HasValue)
                             {
-                                <a href="#" class="btn btn-primary">Approve List</a>
+                                <a href="@Url.Action("ApproveCapability", "Admin", new { vendorListId = item.VendorListID })" class="btn btn-primary">Approve List</a>
                             }
                             else
                             {
@@ -85,7 +90,10 @@
                             }
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="#"><span class='glyphicon glyphicon-remove'></span></a>
+                            @if (!item.DateApproved.HasValue)
+                            {
+                                <a class="btn btn-danger" href="@Url.Action("DeleteVendorList", "Admin", new { vendorListId = item.VendorListID })"><span class='glyphicon glyphicon-remove'></span></a>
+                            }
                         </td>
                     </tr>
                 }
@@ -94,10 +102,11 @@
 
         <table class="table table-condensed" style="border-collapse: collapse;">
             <caption>
-                @Model.VendorList.Count Workscope Icon Lists found
+                @Model.VendorAchievementList.Count Workscope Icon Lists found
             </caption>
             <tbody>
                 <tr>
+                    <th>Achievement Type</th>
                     <th>Edit</th>
                     <th>Preview List</th>
                     <th>Download File</th>
@@ -105,13 +114,14 @@
                     <th>Listing Type</th>
                     <th>Comments</th>
                     <th>Approved</th>
-                    <th>Deleted</th>
+                    <th>Delete</th>
                 </tr>
                 @foreach (var item in Model.VendorAchievementList)
                 {
                     <tr>
-                        <td><a href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId, vendorAchievementId = item.VendorAchievementListID})">Edit List</a></td>
-                        <td>Preview</td>
+                        <td>@item.Name</td>
+                        <td><a href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId, vendorAchievementListId = item.VendorAchievementListID})">Edit List</a></td>
+                        <td><a href="@Url.Action("PrevewAchievement", "Admin", new { vendorAchievementListId = item.VendorAchievementListID })">@item.Filetype</a></td>
                         <td><a href="@Url.Action("DownloadAchievement", "Vendor", new { vendorAchievementId = item.VendorAchievementListID })">@item.Filetype</a></td>
                         <td>@item.DateCreated.ToString("MMM d, yyyy hh:mm tt")</td>
                         <td>@(item.ReplaceList ? "Replaced existing" : "Added to existing")</td>
@@ -119,7 +129,7 @@
                         <td>
                             @if (!item.DateApproved.HasValue)
                             {
-                                <a href="#" class="btn btn-primary">Approve List</a>
+                                <a href="@Url.Action("ApproveAchievement", "Admin", new { vendorAchievementListId = item.VendorAchievementListID })" class="btn btn-primary">Approve List</a>
                             }
                             else
                             {
@@ -127,7 +137,10 @@
                             }
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="#"><span class='glyphicon glyphicon-remove'></span></a>
+                            @if (!item.DateApproved.HasValue)
+                            {
+                                <a class="btn btn-danger" href="@Url.Action("DeleteAchievementList", "Admin", new { vendorAchievementListId = item.VendorAchievementListID })"><span class='glyphicon glyphicon-remove'></span></a>
+                            }
                         </td>
                     </tr>
                 }

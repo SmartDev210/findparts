@@ -16,5 +16,6 @@ namespace DAL
     {
         public int VendorAchievementListID { get; set; }
         public string PartNumber { get; set; }
+        public int Id { get; set; }
     }
 }
