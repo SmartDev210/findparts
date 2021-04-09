@@ -1,0 +1,161 @@
+﻿
+@section styles
+{
+    @Styles.Render("~/Content/dist/css/dataTables.bootstrap.min.css")
+    @Styles.Render("~/Content/dist/css/fixedHeader.bootstrap.min.css")
+    @Styles.Render("~/Content/dist/css/rowGroup.bootstrap.css")
+}
+
+<div>
+
+    <table id="subscribers-table" class="table table-condensed">
+        <thead>
+            <tr role="row">
+                <th>Subscriber</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th>Activated Date</th>
+                <th>Profile Fields</th>
+                <th>Member Level</th>
+                <th>Search Count</th>
+                <th>Invoice Count</th>
+                <th>Users</th>
+                <th>List Invoice</th>
+                <th>RFQs Sent</th>
+                <th>Quote Count</th>
+                <th><span class='glyphicon glyphicon-star'></span></th>
+                <th><span class='glyphicon glyphicon-ban-circle'></span></th>
+                <th>Times<span class='glyphicon glyphicon-ban-circle'></span>d</th>
+                <th>MRO</th>
+                <th>Email Domains</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/Scripts/dataTables.fixedHeader.min.js")
+    @Scripts.Render("~/Scripts/dataTables.rowGroup.js")
+<script type="text/javascript">
+        $(function () {
+            var $tbl = $('#subscribers-table');
+
+            // new header and body elements to be inserted
+            var tblHead = document.createElement('thead');
+            var tblBody = document.createElement('tbody');
+            // get the first row and the remainder
+            var headerRow = $tbl.find('tr:first')
+            var bodyRows = $tbl.find('tr:not(:first)');
+
+            // remove the original rows
+            headerRow.remove();
+            bodyRows.remove();
+
+            // SOLUTION HERE:
+            // remove any existing thead/tbody elements
+            $tbl.find('tbody').remove();
+            $tbl.find('thead').remove();
+
+            // add the rows to the header and body respectively
+            $(tblHead).append(headerRow);
+            $(tblBody).append(bodyRows);
+
+            // add the head and body into the table
+            $tbl.append(tblHead);
+            $tbl.append(tblBody);
+
+            var calcOffset = function () {
+                var headerHeight = $('header').outerHeight();
+                var bodyPadding = parseInt($('#body').css('padding-top'), 10);
+                if (bodyPadding == 0) {
+                    return 0;
+                } else {
+                    return headerHeight;
+                }
+            };
+
+            var dtApi = $('#subscribers-table').DataTable({
+                fixedHeader: {
+                    headerOffset: calcOffset()
+                },
+                autoWidth: false,
+                lengthChange: false,
+                pageLength: 100,
+                processing: true,
+                paging: true,
+                serverSide: true,
+                ajax: "@Url.Action("SubscriberList", "Admin")",
+                columns: [
+                    {
+                        data: "SubscriberName",
+                        render: function (data, type, full, meta) {
+                            if (type === "display" && data != null) {
+                                return '<a href="/Admin/Subscribers/' + full["SubscriberID"] + '">' + data + '</a>'
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        data: "Email",
+                        render: function ( data, type, full, meta ) {
+							if(type === 'display' && data != null) {
+								return data.replace(/([@@.])/g, '<wbr>$1');
+							}
+							return data;
+						}
+                    },
+                    {
+                        data: "Status",
+                        render: function (data, type, full, meta) {
+                            if (type === 'display' && data == 'Brand New') {
+                                return '<span class="label label-danger">' + data + '</span>';
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "DateCreated" },
+                    {
+                        data: "DateActivated",
+                        render: function (data, type, full, meta) {
+                            if (type === "display" && data == "") {
+                                return '<a class="btn btn-primary btn-xs" href="javascript:void(0)" onlcick="ResendEmail(' + full["UserID"] + ')">Resend Email</a>';
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "ProfileFieldsCompleted" },
+                    { data: "MembershipLevel" },
+                    { data: "SearchCount" },
+                    { data: "InvoiceCount" },
+                    { data: "UserCount"},
+                    { data: "RecentInvoiceDate" },
+                    { data: "RFQSentCount" },
+                    { data: "QuotesReceivedCount" },
+                    { data: "PreferredCount" },
+                    { data: "BlockedCount" },
+                    { data: "BlockedByVendorCount" },
+                    { data: "MRO" },
+                    { data: "EmailDomains" }
+                ],
+                order: [0, 'asc']
+            });
+
+            var resizeTimer = null;
+            $(window).resize(function () {
+                if (resizeTimer) {
+                    clearTimeout(resizeTimer);
+                }
+                resizeTimer = setTimeout(function () {
+                    dtApi.fixedHeader.headerOffset(calcOffset());
+                }, 500);
+            });
+        });
+</script>
+}

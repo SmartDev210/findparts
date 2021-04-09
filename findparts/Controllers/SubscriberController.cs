@@ -123,7 +123,11 @@ namespace Findparts.Controllers
 
 
             _membershipService.UpdateUser(0, new Guid(applicationUser.Id), subscriberId.ToNullableInt(), vendorId, applicationUser.Email, SessionVariables.UserID.ToNullableInt());
-            return RedirectToAction("Users");
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Users", new { SubscriberID = subscriberId });
+            } else 
+                return RedirectToAction("Users");
         }
 
         

@@ -60,7 +60,7 @@ namespace Findparts.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Vendors", "Admin", new { VendorID = input.VendorId });
+                return RedirectToAction("VendorDetail", "Admin", new { vendorId = input.VendorId });
             } else
             {
                 return RedirectToAction("Index", "Vendor");
@@ -82,7 +82,7 @@ namespace Findparts.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Vendors", "Admin", new { VendorID = input.VendorId });
+                return RedirectToAction("VendorDetail", "Admin", new { vendorId = input.VendorId });
             }
             else
             {   
@@ -106,7 +106,7 @@ namespace Findparts.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Vendors", "Admin", new { VendorID = input.VendorId });
+                return RedirectToAction("VendorDetail", "Admin", new { vendorId = input.VendorId });
             }
             else
             {   
@@ -130,7 +130,7 @@ namespace Findparts.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Vendors", "Admin", new { VendorID = input.VendorId });
+                return RedirectToAction("VendorDetail", "Admin", new { vendorId = input.VendorId });
             }
             else
             {   
@@ -153,7 +153,7 @@ namespace Findparts.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Vendors", "Admin", new { VendorID = input.VendorId });
+                return RedirectToAction("VendorDetail", "Admin", new { vendorId = input.VendorId });
             }
             else
             {   
@@ -260,7 +260,7 @@ namespace Findparts.Controllers
 
                     if (User.IsInRole("Admin"))
                     {
-                        return RedirectToAction("VendorDetail", "Admin", new { VendorID = viewModel.VendorId });
+                        return RedirectToAction("VendorDetail", "Admin", new { vendorId = viewModel.VendorId });
                     } else
                     {
                         TempData["Success"] = $@"List Successfully Added - <a href=""{Url.Action("Index", "Vendor")}"">View your Repair Station Settings</a>";
@@ -306,7 +306,7 @@ namespace Findparts.Controllers
 
                     if (User.IsInRole("Admin"))
                     {
-                        return RedirectToAction("VendorDetail", "Admin", new { VendorID = viewModel.VendorId });
+                        return RedirectToAction("VendorDetail", "Admin", new { vendorId = viewModel.VendorId });
                     }
                     else
                     {

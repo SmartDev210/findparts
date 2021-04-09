@@ -121,6 +121,76 @@ namespace Findparts.Services.Services
             };
         }
 
+        public SubscriberPagedListViewModel GetSubscribers(int start, int length, int draw, string sortParam, string direction, string filter)
+        {
+            var query = _context.SubscriberGetAll2().ToList();
+
+            if (direction == "asc")
+            {
+                query = query.OrderBy(x =>
+                {
+                    var property = x.GetType().GetProperty(sortParam);
+                    if (property != null)
+                    {
+                        return property.GetValue(x);
+                    }
+                    else return x.SubscriberName;
+                })
+                    .ToList();
+            }
+            else
+            {
+                query = query.OrderByDescending(x =>
+                {
+                    var property = x.GetType().GetProperty(sortParam);
+                    if (property != null)
+                    {
+                        return property.GetValue(x);
+                    }
+                    else return x.SubscriberName;
+                })
+                    .ToList();
+            }
+
+            IEnumerable<SubscriberGetAll2_Result> filteredResult = query;
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filteredResult = query.Where(x => x.SubscriberName.Contains(filter) || x.Email.Contains(filter) || x.Status.Contains(filter));
+            }
+
+            return new SubscriberPagedListViewModel
+            {
+                Draw = draw,
+                TotalRecords = query.Count(),
+                FilteredRecords = filteredResult.Count(),
+                Length = length,
+                Start = start,
+                Subscribers = filteredResult.Skip(start).Take(length).Select(x => new SubscriberViewModel
+                {
+                    SubscriberID = x.SubscriberID,
+                    SubscriberName = x.SubscriberName,
+                    Email = x.Email,                    
+                    Status = x.Status,
+                    DateCreated = x.DateCreated.ToString("MMM d, yyyy"),
+                    DateActivated = x.DateActivated.HasValue ? x.DateActivated.Value.ToString("MMM d, yyyy") : "",
+                    UserID = x.UserID,
+                    ProfileFieldsCompleted = x.ProfileFieldsCompleted,
+                    MembershipLevel = x.MembershipLevel,
+                    SearchCount = x.SearchCount ?? 0,
+                    InvoiceCount = x.InvoiceCount ?? 0,
+                    UserCount = x.UserCount ?? 0,
+                    RecentInvoiceDate = x.RecentInvoiceDate.HasValue ? x.RecentInvoiceDate.Value.ToString("MMM d, yyyy") : "",
+                    RFQSentCount = x.RFQSentCount ?? 0,
+                    QuotesReceivedCount = x.QuotesReceivedCount ?? 0,
+                    PreferredCount = x.PreferredCount ?? 0,
+                    BlockedCount = x.BlockedCount ?? 0,
+                    BlockedByVendorCount = x.BlockedByVendorCount,
+                    MRO = x.MRO ?? false,
+                    EmailDomains = x.EmailDomains ?? 0
+                }).ToList()
+            };
+        }
+
         public VendorListGetByID_Result GetVendorList(int vendorListId)
         {
             return _context.VendorListGetByID(vendorListId).FirstOrDefault();
@@ -370,6 +440,71 @@ namespace Findparts.Services.Services
         public void DeleteAchievementList(int vendorAchievementListId)
         {
             _context.VendorAchievementListDeleteByID(vendorAchievementListId);
+        }
+
+        public SubscriberDetailViewModel GetSubscriberDetailViewModel(int subscriberId)
+        {
+            SubscriberDetailViewModel viewModel = new SubscriberDetailViewModel();
+
+            var subscriber = _context.SubscriberGetByID(subscriberId).FirstOrDefault();
+            if (subscriber == null) return null;
+
+            viewModel.SubscriberId = subscriber.SubscriberID;
+            viewModel.SubscriberName = subscriber.SubscriberName;
+            viewModel.StatusId = subscriber.StatusID;
+            viewModel.Notes = subscriber.Notes;
+
+            viewModel.SignupSubscriberTypeId = subscriber.SignupSubscriberTypeID;
+
+            if (viewModel.SignupSubscriberTypeId.HasValue)
+            {
+                if (viewModel.SignupSubscriberTypeId.Value == (int)SubscriberTypeID.NoCreditCard)
+                {
+                    viewModel.SignupSubscriberTypeText = "Pay by Check or Wire";
+                } else
+                {
+                    viewModel.SignupSubscriberTypeText = ((SubscriberTypeID)viewModel.SignupSubscriberTypeId).ToString();
+                }
+            }
+
+            var user = _context.UserGetFirstBySubscriberID(subscriberId).FirstOrDefault();
+            if (user != null)
+            {
+                viewModel.VendorId = user.VendorID;
+            }
+
+            viewModel.StatusSelectList = _context.StatusGetAll().ToList().Select(x => new SelectListItem
+            {
+                Value = x.StatusID.ToString(),
+                Text = x.Status
+            }).ToList();
+
+            return viewModel;
+        }
+
+        public bool UpdateSubscriberDetail(SubscriberDetailViewModel viewModel)
+        {
+            var status = _context.StatusGetByID(viewModel.StatusId).FirstOrDefault();
+
+            if (status != null)
+            {
+                bool canSearch = status.CanSearch;
+
+                _context.SubscriberUpdateStatusAndNotes3(viewModel.SubscriberId, viewModel.SubscriberName, viewModel.StatusId, canSearch, viewModel.Notes);
+
+                // update vendor status if joint account
+                var user = _context.UserGetFirstBySubscriberID(viewModel.SubscriberId).FirstOrDefault();
+                if (user != null)
+                {
+                    if (user.VendorID != null)
+                    {
+                        _context.VendorUpdateStatus3(user.VendorID, viewModel.StatusId);
+                    }
+                }
+
+                return true;
+            }
+            return false;
         }
     }
     

@@ -255,28 +255,76 @@ namespace Findparts.Controllers
             }
             return RedirectToAction("VendorDetail", "Admin", new { vendorId = vendorList.VendorID });
         }
-        [HttpGet]
-        [Route("Admin/DeleteAchievementList/{vendorAchievementListId}")]
-        public ActionResult DeleteAchievementList(int vendorAchievementListId)
+        
+        public ActionResult Subscribers()
         {
-            var vendorAchievementList = _service.GetVendorAchievementList(vendorAchievementListId);
+            return View();
+        }
 
-            if (vendorAchievementList == null)
-                TempData["Error"] = "Failed to delete vendor list";
-            else
+        public ActionResult SubscriberList(int start = 0, int length = 100, int draw = 1)
+        {
+            if (!Request.IsAjaxRequest())
             {
-                try
-                {
-                    _service.DeleteAchievementList(vendorAchievementListId);
-                    TempData["Success"] = "Vendor achievement list deleted";
-                }
-                catch (Exception ex)
-                {
-                    TempData["Error"] = "Faield to delete vendor list <br/>" + ex.Message + "<br/>" + ex.StackTrace;
-                }
-
+                return HttpNotFound();
             }
-            return RedirectToAction("VendorDetail", "Admin", new { vendorId = vendorAchievementList.VendorID });
+            int colNum = 0;
+            string sortData = "SubscriberName";
+            string direction = "asc";
+            string filter = "";
+            if (Request.QueryString["order[0][column]"] != null)
+            {
+                colNum = Request.QueryString["order[0][column]"].ToNullableInt() ?? 0;
+            }
+            if (Request.QueryString["order[0][dir]"] != null)
+            {
+                direction = Request.QueryString["order[0][dir]"];
+            }
+
+            if (Request.QueryString[$"columns[{colNum}][data]"] != null)
+            {
+                sortData = Request.QueryString[$"columns[{colNum}][data]"];
+            }
+
+            if (Request.QueryString["search[value]"] != null)
+            {
+                filter = Request.QueryString["search[value]"];
+            }
+
+
+            var result = _service.GetSubscribers(start, length, draw, sortData, direction, filter);
+            return Json(new { data = result.Subscribers, draw = result.Draw, recordsTotal = result.TotalRecords, recordsFiltered = result.FilteredRecords }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        [Route("Admin/Subscribers/{subscriberId}")]
+        public ActionResult SubscriberDetail(int subscriberId)
+        {
+            SubscriberDetailViewModel viewModel = _service.GetSubscriberDetailViewModel(subscriberId);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Admin/Subscribers/UpdateSubscriberDetail")]
+        public ActionResult UpdateSubscriberDetail(SubscriberDetailViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var vm = _service.GetSubscriberDetailViewModel(viewModel.SubscriberId);
+                return View("~/Views/Admin/SubscriberDetail.cshtml", vm);
+            }
+
+            if (_service.UpdateSubscriberDetail(viewModel))
+            {
+                TempData["Success"] = "Subscriber updated";
+                return RedirectToAction("Subscribers");
+            } else
+            {
+                TempData["Error"] = "Failed to update subscriber";
+            }
+            return RedirectToAction("SubscriberDetail", new { subscriberId = viewModel.SubscriberId });
         }
     }
 }

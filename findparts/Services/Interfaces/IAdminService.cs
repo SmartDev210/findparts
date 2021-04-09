@@ -20,5 +20,8 @@ namespace Findparts.Services.Interfaces
         void ImportVendorAchievementList(VendorAchievementList vendorAchievementList, out string message);
         void DeleteVendorList(int vendorListId);
         void DeleteAchievementList(int vendorAchievementListId);
+        SubscriberPagedListViewModel GetSubscribers(int start, int length, int draw, string sortParam, string direction, string filter);
+        SubscriberDetailViewModel GetSubscriberDetailViewModel(int subscriberId);
+        bool UpdateSubscriberDetail(SubscriberDetailViewModel viewModel);
     }
 }

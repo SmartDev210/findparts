@@ -1,0 +1,45 @@
+﻿
+@model Findparts.Models.Admin.SubscriberDetailViewModel
+
+<br/>
+@using (Html.BeginForm("UpdateSubscriberDetail", "Admin", FormMethod.Post))
+{ 
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.SubscriberId)
+    <div class="row">
+        <div class="col-sm-6">
+            <a href="@Url.Action("Index", "Subscriber", new { SubscriberID = Model.SubscriberId })">Subscriber Settings</a>
+            @if (Model.VendorId.HasValue)
+            {
+                <text>-</text>
+                <a href="@Url.Action("VendorDetail", "Admin", new { vendorId = Model.VendorId.Value })">Linked Vendor</a>
+            }
+
+            <br /><br />
+
+            <div class="form-group">
+                <label for="SubscriberName">Subscriber</label>
+                @Html.TextBoxFor(x => x.SubscriberName, new { @class="form-control" })
+                @Html.ValidationMessageFor(x => x.SubscriberName, "", new { @class="text-danger" })
+            </div>
+            <div class="form-group">
+                <label>Initially Signed up as</label>
+                <p class="form-control" readonly>
+                    @Model.SignupSubscriberTypeText
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="StatusId">Status</label>
+                @Html.DropDownListFor(x => x.StatusId, Model.StatusSelectList, new { @class="form-control" })
+            </div>
+            <div class="form-group" >
+                <label for="Notes">Notes</label>
+                @Html.TextAreaFor(x => x.Notes, new { @class = "form-control", rows = 4 })
+            </div>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Save"/>
+                <a class="btn btn-default" href="@Url.Action("Subscribers", "Admin")">Go Back</a>
+            </div>
+        </div>
+    </div>
+}
