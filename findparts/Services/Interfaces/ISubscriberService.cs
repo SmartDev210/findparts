@@ -23,5 +23,6 @@ namespace Findparts.Services.Interfaces
         SubscriberVendorsPageViewModel GetSubscriberVendorsPageViewModel(string subscriberID, bool blocked);
         bool UndoPreferBlock(VendorsPageMode mode, int vendorId, string v);
         List<VendorQuoteGetByUserID_Result> GetQuotePageViewModel(string userID);
+        void CreateInvoice(string stripeInvoiceID, string subscriberID, bool saveHtml = false);
     }
 }

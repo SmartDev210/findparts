@@ -635,7 +635,7 @@ namespace Findparts.Services.Services
 
 		public void SendWebhookEmail(string eventType, string json)
 		{
-			string email = "dontrobme+webhook@gmail.com";
+			string email = Config.DevEmail;
 			string message = json;
 
 			SendEmail(Config.FromEmail, email, "MRO FINDER Webhook: " + eventType, message);

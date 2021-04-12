@@ -280,6 +280,7 @@
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StripeWebhooksController.cs" />
     <Compile Include="Controllers\SubscriberController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Core\AppCache.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Global.cs" />
     <Compile Include="Core\SessionVariables.cs" />
+    <Compile Include="Extensions\DateTimeExtension.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -776,6 +778,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\DataTables\extensions\FixedHeader\js\" />
+    <Folder Include="Views\StripeWebhooks\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config" />

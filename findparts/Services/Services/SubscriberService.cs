@@ -79,7 +79,7 @@ namespace Findparts.Services.Services
 			}
             return filepath;
         }
-        private void CreateInvoice(string stripeInvoiceID, string subscriberID, bool saveHtml = false)
+        public void CreateInvoice(string stripeInvoiceID, string subscriberID, bool saveHtml = false)
         {
 			// defaults
 			string name = "Jim Bob";

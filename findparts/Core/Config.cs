@@ -21,5 +21,7 @@ namespace Findparts.Core
         public static string StripePublishableApiKey => ConfigurationManager.AppSettings["StripePublishableApiKey"];
         public static string BccEmail => ConfigurationManager.AppSettings["BccEmail"];
         public static string FromEmail => ConfigurationManager.AppSettings["FromEmail"];
+        public static string DevEmail => ConfigurationManager.AppSettings["DevEmail"];
+        public static string StripeSecret => ConfigurationManager.AppSettings["StripeSecret"];
     }
 }

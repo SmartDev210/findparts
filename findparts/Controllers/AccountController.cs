@@ -219,12 +219,24 @@ namespace Findparts.Controllers
         [Authorize]
         public async Task<ActionResult> SendVerificationEmail()
         {
-            if (User.Identity.IsVerified())
+            ApplicationUser user = null;
+            if (User.IsInRole("Admin") && Request.Form["userId"] != null)
+            {
+                var appUser = _membershipService.GetUserById(Request.Form["userId"]);
+                if (appUser != null)
+                    user = _userManager.FindById(appUser.ProviderUserKey.ToString());
+            } else
+            {
+                user = _userManager.FindById(User.Identity.GetUserId());
+            }
+            if (user == null)
+            {
+                return Json(new { success = false, errorMessage = "Unable to find user" });
+            }
+            if (user.EmailConfirmed)
             {
                 return Json(new { success = false, errorMessage = "Already verified" });
             }
-
-            var user = _userManager.FindById(User.Identity.GetUserId());
 
             string code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
