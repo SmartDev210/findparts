@@ -24,25 +24,12 @@ namespace Findparts
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
+            
             if (!roleManager.RoleExists("Admin"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Admin";
                 roleManager.Create(role);
-
-                var user = new ApplicationUser();
-                user.UserName = "smartdev210@outlook.com";
-                user.Email = "smartdev210@outlook.com";
-
-                string userPWD = "A@Z20210310";
-
-                var chkUser = UserManager.Create(user, userPWD);
-
-                //Add default User to Role Admin    
-                if (chkUser.Succeeded)
-                {
-                    var result1 = UserManager.AddToRole(user.Id, "Admin");
-                }
             }
             if (!roleManager.RoleExists("Subscriber"))
             {
@@ -55,6 +42,24 @@ namespace Findparts
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
                 role.Name = "Vendor";
                 roleManager.Create(role);
+            }
+
+            if (UserManager.FindByEmail("smartdev210@outlook.com") == null)
+            {
+                var user = new ApplicationUser();
+                user.UserName = "smartdev210@outlook.com";
+                user.Email = "smartdev210@outlook.com";
+                user.EmailConfirmed = true;
+
+                string userPWD = "A@Z20210310";
+
+                var chkUser = UserManager.Create(user, userPWD);
+
+                //Add default User to Role Admin    
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(user.Id, "Admin");
+                }
             }
         }
     }

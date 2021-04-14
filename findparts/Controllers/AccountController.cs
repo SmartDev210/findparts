@@ -315,10 +315,10 @@ namespace Findparts.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
+                    // Don't reveal that the user does not exist or is not confirmed                    
                     return View("ForgotPasswordConfirmation");
                 }
 
@@ -327,8 +327,8 @@ namespace Findparts.Controllers
                  string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
                  var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                  _mailService.SendPasswordResetEmail(user.Email, callbackUrl);
-                 
-                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -362,7 +362,7 @@ namespace Findparts.Controllers
             {
                 return View(model);
             }
-            var user = await _userManager.FindByNameAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist

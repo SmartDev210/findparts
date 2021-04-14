@@ -37,7 +37,7 @@ namespace Findparts.Services.Services
         }
 
         private bool SendEmail(string from, string to, string subject, string body, string bcc = null)
-        {
+        {	
 			MailMessage message = new MailMessage(from, to, subject, body);
 			if (!string.IsNullOrEmpty(bcc))
 			{
@@ -66,7 +66,13 @@ namespace Findparts.Services.Services
 					}
 					catch (Exception ex)
 					{
-						//Console.WriteLine("Error message: " + ex.Message);
+						var debugLogger = LogManager.GetLogger("errorLogger");
+						debugLogger.Log(LogLevel.Error, $"==============================================================================================================================");						
+						debugLogger.Log(LogLevel.Error, $"Exception while sending email");
+						debugLogger.Log(LogLevel.Error, $"{ex.Message}");
+						debugLogger.Log(LogLevel.Error, $"{ex.StackTrace}");
+						debugLogger.Log(LogLevel.Error, JsonConvert.SerializeObject(ex));
+						debugLogger.Log(LogLevel.Error, $"");
 						return false;
 					}
 				}

@@ -47,6 +47,9 @@
         }
     }
 </div>
+<div id="divVendorDetails" style="display:none;">
+    <span id="spanVendorDetails"></span>
+</div>
 <div id="divAlternateDetails" style="display:none;">
     <span id="spanAlternateDetails"></span>
 </div>
@@ -54,7 +57,7 @@
 {
     <script type="text/javascript">
         var viewRepairStationGuestHref = '@(SessionVariables.SubscriberID != "" ? "/Subscriber/Charge" : "/Account/Signup")';
-        
+
         var rfqButtonNumber = 0;
         function ExpandDetails(index) {
             var element = document.getElementById('link_' + index);
@@ -240,12 +243,12 @@
                         </text>
 
                     } else
-                    { 
+                    {
                         <text>
                             builder.push('<li><a href="' + viewRepairStationGuestHref + '">Add Subscription</a></li>');
                         </text>
                     }
-                        
+
                 } else if (vendorItem.DateResponded) {
                     date = new Date(vendorItem.DateResponded.replace('T', ' '));
                     builder.push('<li><a>Quoted ' + monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</a></li>');
