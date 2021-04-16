@@ -52,6 +52,8 @@ namespace Findparts.Services.Services
             {
 				using (SmtpClient client = new SmtpClient(Config.SMTPHost, Config.SMTPPort.ToInt()))
 				{
+					client.UseDefaultCredentials = false;
+
 					// Create a network credential with your SMTP user name and password.
 					client.Credentials = new NetworkCredential(Config.SMTPUsername, Config.SMTPPassword);
 
@@ -59,9 +61,12 @@ namespace Findparts.Services.Services
 					// the client will issue a STARTTLS command to upgrade to an encrypted connection using SSL.
 					client.EnableSsl = true;
 
+					client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+
 					// Send the email. 
 					try
-					{
+					{	
 						client.Send(message);
 					}
 					catch (Exception ex)
