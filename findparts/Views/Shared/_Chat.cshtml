@@ -1,0 +1,83 @@
+﻿@using Findparts.Core
+
+@if (User.Identity.IsAuthenticated)
+{   
+    <button id="toggle-messenger" class="toggle-messenger text-center">Chat<span class="badge" id="messenger-badge"></span></button>
+    <div id="messenger-container"></div>
+    <script src="@Config.WeavyUrl/javascript/weavy.jquery.min.js"></script>
+    
+    <script>
+
+        function OpenChat(vendorId) {
+            $.ajax({
+                url: "@Url.Action("GetMemberId", "Chat")",
+                type: "POST",
+                data: { vendorId: vendorId },
+                success: function (res) {
+                    if (res.id == 0) {
+                        alert("Can't open chat with him");
+                        return;
+                    }
+                    weavy.ajax(`/api/conversations`, {
+                        //members are user ids in an array
+                        members: [res.id],
+                    }, "POST").then(function (result) {
+                        console.log(result, result);
+                        window.messenger.open("e/messenger/" + result.id);
+                        $("#messenger-container").addClass("open");
+                    });
+                }
+            })
+        }
+
+        function InitializeChat(token) {
+
+            var getToken = function () {
+                // Using jQuery ajax for example
+                return $.ajax({
+                    url: "@Url.Action("GetToken", "Chat")",
+                    type: "POST",
+                    xhrFields: {
+                        // Make sure to enable cookies if needed
+                        withCredentials: true
+                    }
+                });
+            }
+
+            window.weavy = new Weavy({ jwt: getToken });                      
+            var space = weavy.space({ key: "global" });
+            window.messenger = space.app({ key: "messenger", type: "messenger", container: "#messenger-container", open: false });
+            /*
+            weavy.on("badge", function (e, badge) {
+                if (badge.total == 0) {
+                    $("#messenger-badge").text("");
+                } else 
+                    $("#messenger-badge").text(badge.conversations);                
+            });
+
+            weavy.ajax("api/conversations/unread").then(function (result) {
+                if (result != 0)
+                    $("#messenger-badge").text(result);
+            })*/
+            
+        }
+
+        $(function () {
+            InitializeChat();
+
+            $(document).on("click", "#toggle-messenger", function () {
+                messenger.toggle()
+                $("#messenger-container").toggleClass("open");
+            });
+
+            $(document).on("click", function (event) {
+                if (document.getElementById("messenger-container").contains(event.target) || document.getElementById("toggle-messenger").contains(event.target)) {
+
+                } else {
+                    messenger.close();
+                    $("#messenger-container").removeClass("open");
+                }
+            });
+        })
+    </script>
+}

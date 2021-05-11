@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "author": "Elliot",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "stream-chat": "^3.7.0"
+  }
+}

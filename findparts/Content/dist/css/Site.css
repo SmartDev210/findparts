@@ -72,6 +72,38 @@ body {
 		padding-top: 15px;
 	}
 
+#messenger-container {
+	position: fixed;
+	right: 30px;
+	bottom: 90px;
+	z-index: 1000;
+	transition: transform, opacity;
+	transition-duration: 0.2s;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	
+	width: 35rem;
+	transform: translateX(35rem);
+	pointer-events: none;
+	height: 500px;
+}
+
+#messenger-container.open {
+	transform: none;	
+}
+.toggle-messenger {
+	position: fixed;
+	bottom: 35px;
+	right: 30px;
+	height: 50px;
+	width: 100px;
+	border-radius: 20px;
+	background: red;
+	border: none;
+	color: white;
+}
+.toggle-messenger:focus {
+	outline: none;
+}
 
 footer {
 	position: absolute;
@@ -158,16 +190,16 @@ h1,h2,h3,h4,h5,h6 {
 	float: left;
 }
 
-	.site-title a {
-		background: url(/Content/dist/images/logo_335x50.png);
-		color: #c8c8c8;
-		outline: none;
-		text-decoration: none;
-		background-size: 100% 100%;
-		width: 335px;
-		display: block;
-		height: 50px;
-	}
+.site-title a {
+	background: url(/Content/dist/images/logo_335x50.png);
+	color: #c8c8c8;
+	outline: none;
+	text-decoration: none;
+	background-size: 100% 100%;
+	width: 335px;
+	display: block;
+	height: 50px;
+}
 
 .home-page .site-title {
 	float: none;

@@ -172,6 +172,12 @@
                                 + (data[i].Fax ? '<span class="glyphicon glyphicon-print" aria-hidden="true" data-toggle="popover" data-content="Fax"></span> ' + (data[i].Fax == '***' ? '<a href="' + viewRepairStationGuestHref + '">View Fax</a>' : '<span style="display:inline-block; text-overflow:ellipsis; max-width:27ch; overflow:hidden; white-space:nowrap;">' + data[i].Fax + '</span>') : '');
                             templateRow.appendChild(templateCell);
 
+                            if (data[i].VendorID != 0) {
+                                templateCell = document.createElement('div');
+                                templateCell.style = "position: absolute;right:200px;top:16px;"
+                                templateCell.innerHTML = '<a class="btn btn-primary" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Chat</a>';
+                                templateRow.appendChild(templateCell);
+                            }
                             templateCell = document.createElement('div');
                             templateCell.className = 'vendorQuote';
                             templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;

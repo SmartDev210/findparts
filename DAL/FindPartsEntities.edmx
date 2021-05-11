@@ -5,22 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DomainModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ELMAH_Error">
-          <Key>
-            <PropertyRef Name="ErrorId" />
-          </Key>
-          <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
-          <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
-          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="StatusCode" Type="int" Nullable="false" />
-          <Property Name="TimeUtc" Type="datetime" Nullable="false" />
-          <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AllXml" Type="ntext" Nullable="false" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -401,28 +385,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="ELMAH_GetErrorsXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Application" Type="nvarchar" Mode="In" />
-          <Parameter Name="PageIndex" Type="int" Mode="In" />
-          <Parameter Name="PageSize" Type="int" Mode="In" />
-          <Parameter Name="TotalCount" Type="int" Mode="InOut" />
-        </Function>
-        <Function Name="ELMAH_GetErrorXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Application" Type="nvarchar" Mode="In" />
-          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
-        </Function>
-        <Function Name="ELMAH_LogError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="Application" Type="nvarchar" Mode="In" />
-          <Parameter Name="Host" Type="nvarchar" Mode="In" />
-          <Parameter Name="Type" Type="nvarchar" Mode="In" />
-          <Parameter Name="Source" Type="nvarchar" Mode="In" />
-          <Parameter Name="Message" Type="nvarchar" Mode="In" />
-          <Parameter Name="User" Type="nvarchar" Mode="In" />
-          <Parameter Name="AllXml" Type="ntext" Mode="In" />
-          <Parameter Name="StatusCode" Type="int" Mode="In" />
-          <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
-        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="fn_StripNonAlphaNumericCharacters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="String" Type="nvarchar(max)" Mode="In" />
@@ -988,7 +950,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Parameter Name="Notes" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="DomainModelStoreContainer">
-          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subscriber" EntityType="Self.Subscriber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubscriberInvoice" EntityType="Self.SubscriberInvoice" Schema="dbo" store:Type="Tables" />
@@ -1052,22 +1013,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DomainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ELMAH_Error">
-          <Key>
-            <PropertyRef Name="ErrorId" />
-          </Key>
-          <Property Name="ErrorId" Type="Guid" Nullable="false" />
-          <Property Name="Application" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Source" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StatusCode" Type="Int32" Nullable="false" />
-          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AllXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -1451,7 +1396,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FindPartsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Subscribers" EntityType="Self.Subscriber" />
           <EntitySet Name="SubscriberInvoices" EntityType="Self.SubscriberInvoice" />
@@ -2807,23 +2751,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DomainModelStoreContainer" CdmEntityContainer="FindPartsEntities">
-          <EntitySetMapping Name="ELMAH_Error">
-            <EntityTypeMapping TypeName="DomainModel.ELMAH_Error">
-              <MappingFragment StoreEntitySet="ELMAH_Error">
-                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
-                <ScalarProperty Name="Application" ColumnName="Application" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="User" ColumnName="User" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
-                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="DomainModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -3193,9 +3120,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="DomainModel.Store.ELMAH_GetErrorsXml" />
-          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="DomainModel.Store.ELMAH_GetErrorXml" />
-          <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="DomainModel.Store.ELMAH_LogError" />
           <FunctionImportMapping FunctionImportName="ImportExcel" FunctionName="DomainModel.Store.ImportExcel" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="DomainModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="DomainModel.Store.sp_creatediagram" />

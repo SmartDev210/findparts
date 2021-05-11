@@ -27,7 +27,6 @@ namespace DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Subscriber> Subscribers { get; set; }
         public virtual DbSet<SubscriberInvoice> SubscriberInvoices { get; set; }

@@ -65,6 +65,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/PluginsJs")
 
+    @Html.Partial("_Chat")
     <script type="text/javascript">
         function SuccessMessage(text, useHtml) {
             var $divAlert = $('#divAlert').removeClass('alert-danger').addClass('alert-success');

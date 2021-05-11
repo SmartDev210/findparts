@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Findparts.Models;
+using Owin.Security.Providers.LinkedIn;
 
 namespace Findparts
 {
@@ -65,6 +66,12 @@ namespace Findparts
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            app.UseLinkedInAuthentication(new LinkedInAuthenticationOptions()
+            {
+                ClientId = "77j88xpcspk4vf",
+                ClientSecret = "kyo6RK0IzsrA3XdW"
+            });
         }
     }
 }

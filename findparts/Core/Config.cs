@@ -23,5 +23,12 @@ namespace Findparts.Core
         public static string FromEmail => ConfigurationManager.AppSettings["FromEmail"];
         public static string DevEmail => ConfigurationManager.AppSettings["DevEmail"];
         public static string StripeSecret => ConfigurationManager.AppSettings["StripeSecret"];
+
+        public static string StreamChatKey => ConfigurationManager.AppSettings["StreamChatKey"];
+        public static string StreamSecretKey => ConfigurationManager.AppSettings["StreamSecretKey"];
+
+        public static string WeavyUrl => ConfigurationManager.AppSettings["WeavyUrl"];
+        public static string WeavyClientId => ConfigurationManager.AppSettings["WeavyClientId"];
+        public static string WeavyClientSecret => ConfigurationManager.AppSettings["ClientSecret"];
     }
 }
