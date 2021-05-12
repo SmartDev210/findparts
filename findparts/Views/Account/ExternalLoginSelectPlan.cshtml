@@ -1,0 +1,48 @@
+﻿@using DAL;
+@{ 
+    ViewBag.Title = "Sign Up";
+}
+
+<div class="sign-up">
+    <div class="main-block">
+        <div class="title">Repair Station</div>
+        <div class="pre-price">Always Free to List Capabilities</div>
+        <div class="price">$0.00</div>
+        <div class="button"><a href="@Url.Action("ExternalRegister", "Account", new { Vendor = 1, ReturnUrl = ViewBag.ReturnUrl })" class="btn btn-default">Register</a></div>
+        <div class="block-footer">
+            <div>5 users</div>
+            <div>Unlimited listing of capabilities</div>
+            <div>Unlimited listing of workscope icons</div>
+        </div>
+    </div>
+    <h3 class="text-center">Pay to Search</h3>
+    <div class="minor-block b2">
+        <div class="title">Starter <span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="2 Week Free Trial" data-content="Converts to Starter afer 2 weeks"></span></div>
+        <div class="pre-price">&nbsp;</div>
+        <div class="price">$75<span>/mo</span></div>
+        <div class="sep">Paid Annually</div>
+        <div class="sub-price">or $100 month-to-month</div>
+        <div class="button"><a href="@Url.Action("ExternalRegister", "Account", new { SubscriberTypeId = (int)SubscriberTypeID.StarterMonthly, ReturnUrl = ViewBag.ReturnUrl })" class="btn btn-default">Free Trial</a></div>
+        <div class="block-footer"><div>5 Users</div><div>250 searches monthly</div></div>
+    </div>
+    <div class="minor-block b3">
+        <div class="title">Standard</div>
+        <div class="pre-price">&nbsp;</div>
+        <div class="price">$125<span>/mo</span></div>
+        <div class="sep">Paid Annually</div>
+        <div class="sub-price">or $150 month-to-month</div>
+        <div class="button"><a href="@Url.Action("ExternalRegister", "Account", new { SubscriberTypeId = (int)SubscriberTypeID.StandardAnnual, ReturnUrl = ViewBag.ReturnUrl })" class="btn btn-default">Subscribe</a></div>
+        <div class="block-footer"><div>5 Users</div><div>Unlimited Searches</div></div>
+    </div>
+    <div class="minor-block b4">
+        <div class="title">Enterprise</div>
+        <div class="pre-price">&nbsp;</div>
+        <div class="price">$850<span>/mo</span></div>
+        <div class="sep">Paid Annually</div>
+        <div class="sub-price">or $900 month-to-month</div>
+        <div class="button"><a href="@Url.Action("ExternalRegister", "Account", new { SubscriberTypeId = (int)SubscriberTypeID.EnterpriseAnnual, ReturnUrl = ViewBag.ReturnUrl })" class="btn btn-default">Subscribe</a></div>
+        <div class="block-footer"><div>Unlimited Users</div><div>Unlimited Searches</div></div>
+    </div>
+    <br /><br />
+    <a href="@Url.Action("ExternalRegister", "Account", new { SubscriberTypeId = (int)SubscriberTypeID.NoCreditCard, ReturnUrl = ViewBag.ReturnUrl })">Pay by Check or Wire</a>
+</div>

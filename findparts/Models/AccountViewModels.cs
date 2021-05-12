@@ -7,9 +7,30 @@ namespace Findparts.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
+        public ExternalLoginConfirmationViewModel()
+        {
+            CountryList = new List<SelectListItem>();
+        }
+
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        public bool VendorSignup { get; set; }
+        public int? SubscriberTypeId { get; set; }
+
+        [Required]
+        public string CompanyName { get; set; }
+
+        [Required]
+        [Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
+
+        public List<SelectListItem> CountryList { get; set; }
+        public string Country { get; set; }
+
+        [Required]
+        public bool AcceptTerm { get; set; }
     }
 
     public class ExternalLoginListViewModel

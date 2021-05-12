@@ -144,7 +144,14 @@ namespace Findparts.Controllers
         {   
             return View();
         }
-
+        //
+        // GET: /Account/Register
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult SignUpWithEmail()
+        {  
+            return View();
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -162,7 +169,7 @@ namespace Findparts.Controllers
 
             return View(viewModel);
         }
-
+        
         //
         // POST: /Account/Register
         [HttpPost]
@@ -441,7 +448,7 @@ namespace Findparts.Controllers
             {
                 return RedirectToAction("Login");
             }
-
+            
             // Sign in the user with this external login provider if the user already has a login
             var result = await _signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
@@ -457,10 +464,36 @@ namespace Findparts.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginSelectPlan");
+                    //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalRegister(string Vendor, string SubscriberTypeID, string ReturnUrl)
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
 
+            ExternalLoginConfirmationViewModel viewModel = new ExternalLoginConfirmationViewModel
+            {
+                Email = loginInfo.Email
+            };
+
+            _membershipService.PopulateRegisterViewModel(viewModel);
+
+            if (Vendor.ToNullableInt() == null && SubscriberTypeID.ToNullableInt() == null)
+                return RedirectToAction("Signup");
+
+            if (Vendor == "1") viewModel.VendorSignup = true;
+            viewModel.SubscriberTypeId = SubscriberTypeID.ToNullableInt();
+
+            ViewBag.ReturnUrl = ReturnUrl;
+            ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+            return View("ExternalLoginConfirmation", viewModel);
+        }
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
@@ -485,6 +518,27 @@ namespace Findparts.Controllers
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    // create default Register view model
+                    RegisterViewModel viewModel = new RegisterViewModel()
+                    {
+                        Email = model.Email,
+                        Country = model.Country,
+                        PhoneNumber = model.PhoneNumber,                        
+                        VendorSignup = model.VendorSignup,
+                        AcceptTerm = true,
+                        CompanyName = model.Email,
+
+                    };
+                    Session.Abandon();
+
+                    _userManager.AddToRole(user.Id, "Subscriber");
+                    if (viewModel.VendorSignup)
+                        _userManager.AddToRole(user.Id, "Vendor");
+
+                    var vendorId = _membershipService.RegisterNewUser(viewModel, user);
+
+                    Session["RegisterVendorID"] = vendorId;
+
                     result = await _userManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

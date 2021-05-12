@@ -13,6 +13,7 @@ namespace Findparts.Services.Interfaces
         Subscriber GetSubscriberById(string subscriberId);
         string RegisterNewUser(RegisterViewModel model, ApplicationUser user);
         void PopulateRegisterViewModel(RegisterViewModel viewModel);
+        void PopulateRegisterViewModel(ExternalLoginConfirmationViewModel viewModel);
         void ApproveUser(ApplicationUser user, bool primaryUser);
         void UpdateUser(Nullable<int> userID, Nullable<System.Guid> providerUserKey, Nullable<int> subscriberID, Nullable<int> vendorID, string email, Nullable<int> createdByUserID);
         Task<int> DeleteUser(string userId);

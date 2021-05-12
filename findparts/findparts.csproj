@@ -544,6 +544,7 @@
     <Content Include="Content\dist\images\FREE_EVAL-sm.png" />
     <Content Include="Content\dist\images\FREE_EVAL.png" />
     <Content Include="Content\dist\images\glyphicons-620-industrial-zone.png" />
+    <Content Include="Content\dist\images\icons\linkedin.png" />
     <Content Include="Content\dist\images\ListCapabilities.jpg" />
     <Content Include="Content\dist\images\literature\HowtoUpload-HighlightCapabilities-horz.jpg" />
     <Content Include="Content\dist\images\literature\HowtoUpload-HighlightCapabilities.jpg" />
@@ -786,6 +787,8 @@
     <Content Include="Views\Admin\Subscribers.cshtml" />
     <Content Include="Views\Admin\SubscriberDetail.cshtml" />
     <Content Include="Views\Shared\_Chat.cshtml" />
+    <Content Include="Views\Account\Signup.cshtml" />
+    <Content Include="Views\Account\ExternalLoginSelectPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -796,7 +799,7 @@
   <ItemGroup>
     <Content Include="NLog.config" />
     <None Include="packages.config" />
-    <Content Include="Views\Account\Signup.cshtml" />
+    <Content Include="Views\Account\SignupWithEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmailSent.cshtml" />
     <Content Include="Views\Subscriber\Shared\_SubscriberLayout.cshtml" />
     <Content Include="Views\Subscriber\_ViewStart.cshtml" />

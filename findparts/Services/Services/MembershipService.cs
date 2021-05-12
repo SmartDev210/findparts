@@ -355,5 +355,14 @@ namespace Findparts.Services.Services
             // wait for webhooks to do the rest
             return true;
         }
+
+        public void PopulateRegisterViewModel(ExternalLoginConfirmationViewModel viewModel)
+        {
+            viewModel.CountryList = Constants.Countries.Select(x => new SelectListItem
+            {
+                Value = x,
+                Text = x
+            }).ToList();
+        }
     }
 }

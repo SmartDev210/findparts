@@ -47,8 +47,8 @@
         </section>
     </div>
     @{
-          <div class="col-md-4">
-              <section id="socialLoginForm">
+          <div class="col-xs-6 col-xs-offset-3">
+              <section id="socialLoginForm" class="text-center">
                   @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
               </section>
           </div>
