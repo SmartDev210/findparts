@@ -448,7 +448,7 @@ namespace Findparts.Controllers
             {
                 return RedirectToAction("Login");
             }
-            
+
             // Sign in the user with this external login provider if the user already has a login
             var result = await _signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
@@ -462,10 +462,40 @@ namespace Findparts.Controllers
                 case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginSelectPlan");
-                    //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    
+                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
+                    var createResult = await _userManager.CreateAsync(user);
+                    if (createResult.Succeeded)
+                    {
+                        // create default Register view model
+                        RegisterViewModel viewModel = new RegisterViewModel()
+                        {
+                            Email = loginInfo.Email,
+                            VendorSignup = false,
+                            AcceptTerm = true,
+                            SubscriberTypeId = 8,
+                            CompanyName = loginInfo.ExternalIdentity.Name,
+                            Country = "United States"
+                        };
+                        Session.Abandon();
+
+                        _userManager.AddToRole(user.Id, "Subscriber");
+
+                        var vendorId = _membershipService.RegisterNewUser(viewModel, user);
+
+                        Session["RegisterVendorID"] = vendorId;
+
+                        var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
+                        if (loginResult.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        //return View("ExternalLoginConfirmation");
+                        //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    }
+                    TempData["Error"] = "Failed to register linkedin user";
+                    return RedirectToAction("Login");
             }
         }
         [AllowAnonymous]
