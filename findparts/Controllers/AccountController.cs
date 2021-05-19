@@ -65,24 +65,26 @@ namespace Findparts.Controllers
                 case SignInStatus.Success:
                     
                     SessionVariables.Populate(model.Email);
-
-                    if (!User.Identity.IsVerified())
+                    var user = _userManager.FindByEmail(model.Email);
+                    if (!user.EmailConfirmed)
                     {
-                        return RedirectToAction("VerifyEmail");
+                        return RedirectToAction("VerifyEmail", new { returnUrl });
                     }
 
-                    if (SessionVariables.VendorID == "" && SessionVariables.SubscriberID != "")
+                    if (string.IsNullOrEmpty(returnUrl))
                     {
-                        var subscriber = _membershipService.GetSubscriberById(SessionVariables.SubscriberID);
-                        if (subscriber != null)
+                        if (SessionVariables.VendorID == "" && SessionVariables.SubscriberID != "")
                         {
-                            if (subscriber.SignupSubscriberTypeID != (int)(SubscriberTypeID.NoCreditCard) && subscriber.SubscriberTypeID == (int)(SubscriberTypeID.NoCreditCard))
+                            var subscriber = _membershipService.GetSubscriberById(SessionVariables.SubscriberID);
+                            if (subscriber != null)
                             {
-                                return RedirectToAction("Charge", "Subscriber");
+                                if (subscriber.SignupSubscriberTypeID != (int)(SubscriberTypeID.NoCreditCard) && subscriber.SubscriberTypeID == (int)(SubscriberTypeID.NoCreditCard))
+                                {
+                                    return RedirectToAction("Charge", "Subscriber");
+                                }
                             }
                         }
                     }
-                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -213,11 +215,11 @@ namespace Findparts.Controllers
         }
         [HttpGet]
         [Authorize]
-        public ActionResult VerifyEmail()
+        public ActionResult VerifyEmail(string returnUrl)
         {
             if (User.Identity.IsVerified())
             {
-                return Redirect("~/");
+                return Redirect(returnUrl);
             }
             return View("ConfirmEmailSent");
         }
@@ -442,10 +444,12 @@ namespace Findparts.Controllers
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
+        {   
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
+                if (returnUrl.Contains("mobile-api"))
+                    return RedirectToAction("MobileAuth", "WebApi");
                 return RedirectToAction("Login");
             }
 
@@ -495,6 +499,8 @@ namespace Findparts.Controllers
                         //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
                     }
                     TempData["Error"] = "Failed to register linkedin user";
+                    if (returnUrl.Contains("mobile-api"))
+                        return RedirectToAction("MobileAuth", "WebApi");
                     return RedirectToAction("Login");
             }
         }
