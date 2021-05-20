@@ -477,7 +477,7 @@ namespace Findparts.Controllers
                             Email = loginInfo.Email,
                             VendorSignup = false,
                             AcceptTerm = true,
-                            SubscriberTypeId = 8,
+                            SubscriberTypeId = (int)SubscriberTypeID.NoCreditCard,
                             CompanyName = loginInfo.ExternalIdentity.Name,
                             Country = "United States"
                         };

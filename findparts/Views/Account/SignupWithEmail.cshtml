@@ -10,11 +10,19 @@
         <div class="price">$0.00</div>
         <div class="button"><a href="@Url.Action("Register", "Account", new { Vendor = 1 })" class="btn btn-default">Register</a></div>
         <div class="block-footer">
-            <div>5 users</div>
             <div>Unlimited listing of capabilities</div>
             <div>Unlimited listing of workscope icons</div>
         </div>
     </div>
+    <br /><br />
+    <div class="main-block b2">
+        <div class="title">User Registration</div>
+        <div class="pre-price" style="text-decoration: none;">Free Forever Social Network</div>        
+        <div class="price">$0.00</div>
+        <div class="button"><a href="@Url.Action("Register", "Account", new { SubscriberTypeId = (int)SubscriberTypeID.NoCreditCard })" class="btn btn-default">Register</a></div>
+        <div class="block-footer"><div>Free Industry Collaboration</div><div>Free Marketplace</div></div>
+    </div>
+    <!--
     <h3 class="text-center">Pay to Search</h3>
     <div class="minor-block b2">
         <div class="title">Starter <span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="2 Week Free Trial" data-content="Converts to Starter afer 2 weeks"></span></div>
@@ -44,5 +52,7 @@
         <div class="block-footer"><div>Unlimited Users</div><div>Unlimited Searches</div></div>
     </div>
     <br /><br />
+
     <a href="@Url.Action("Register", "Account", new { SubscriberTypeId = (int)SubscriberTypeID.NoCreditCard })">Pay by Check or Wire</a>
+        -->
 </div>
