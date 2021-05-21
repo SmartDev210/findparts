@@ -214,8 +214,6 @@ namespace Findparts.Services.Services
                         + "https://" + HttpContext.Current.Request.Url.Host + Environment.NewLine
                         + Environment.NewLine
                         + Environment.NewLine
-                        + "A credit card is required for 14 day trial access." + Environment.NewLine
-                        + Environment.NewLine
                         + "For Support:" + Environment.NewLine
                         + "support@MROFINDER.aero"
                     )

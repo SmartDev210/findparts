@@ -4,6 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@(string.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ")MRO FINDER @ViewBag.ExtraTitle</title>
+    @if (!string.IsNullOrEmpty(ViewBag.Description))
+    {
+        <meta name="description" content="@ViewBag.Description" />
+    }
+    else
+    {
+        <meta name="description" content="Aviation Social Network" />
+    }
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     @Styles.Render("~/Content/theme/css")
