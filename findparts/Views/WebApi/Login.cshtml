@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aviation Social Network"/>
+    <meta name="description" content="Aviation Social Network" />
     <title>@(string.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ")Elena's List @ViewBag.ExtraTitle</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,16 +31,30 @@
 </head>
 
 <body class="@ViewBag.BodyClass">
-   
+
     <div id="body">
         <h1>@ViewBag.Title</h1>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success" role="alert">@Html.Raw(TempData["Success"])</div>
+        }
+        @if (TempData["Warn"] != null)
+        {
+            <div class="alert alert-warning" role="alert">@Html.Raw(TempData["Warn"])</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">@Html.Raw(TempData["Error"])</div>
+        }
+
         @if (User.Identity.IsAuthenticated)
         {
             <section class="main-content clear-fix">
                 <div class="row">
                     <div class="col-xs-8 col-xs-offset-2">
                         <section id="loginForm" class="login-form">
-                           
+
                             @Html.AntiForgeryToken()
 
                             <p>You are authorized as @User.Identity.Name</p>
@@ -106,18 +120,40 @@
 
 
     </div>
-    
+
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.12.4.js" type="text/javascript"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.0/jquery-ui.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+    <script type="text/javascript">
+        AppleID.auth.init({
+            clientId: 'com.elenaslist.elenasmobile.applesign',
+            scope: 'name email',
+            redirectURI: 'https://findparts.conveyor.cloud/apple-signin',
+            state: 'elenaslist',
+            nonce: 'nonce',
+            usePopup: false //or false defaults to false
+        });
+        //Listen for authorization success
+        document.addEventListener('AppleIDSignInOnSuccess', (data) => {
+            console.log(data);
+            //handle successful response
+        });
+        //Listen for authorization failures
+        document.addEventListener('AppleIDSignInOnFailure', (error) => {
+            console.log(error);
+            //handle error.
+        });
+    </script>
 
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/PluginsJs")
 
-    
+
 </body>
 </html>
 
 @section Scripts {
+    
     @Scripts.Render("~/bundles/jqueryval")
 }

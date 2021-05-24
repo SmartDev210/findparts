@@ -3,11 +3,17 @@
 
 <h4>Or</h4>
 <hr />
-@using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
-{
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
-}
+<div class="row">
+    <div class="col-sm-12">
+        @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
+        }
+        <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" style="height: 46px; width: 220px; margin: auto;"></div>
+    </div>
+</div>
+
 @{ /*
      var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
      if (loginProviders.Count() == 0) {

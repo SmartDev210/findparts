@@ -13,6 +13,10 @@ using Findparts.Core;
 using Findparts.Services.Interfaces;
 using DAL;
 using Findparts.Extensions;
+using JWT;
+using JWT.Builder;
+using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace Findparts.Controllers
 {
@@ -439,7 +443,89 @@ namespace Findparts.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
+        [Route("apple-signin")]
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> AppleSigninCallback()
+        {
+            var token = Request.Form["id_token"];
+            try
+            {
+                JwtBase64UrlEncoder encoder = new JwtBase64UrlEncoder();
+                var utfString =  Encoding.UTF8.GetString(encoder.Decode(token.Split('.')[1]));
+                var jobj = JObject.Parse(utfString);
+                if (jobj["iss"].ToString() == "https://appleid.apple.com" 
+                    && jobj["aud"].ToString() == "com.elenaslist.elenasmobile.applesign"
+                    && jobj["email_verified"].ToObject<bool>() == true)
+                {
+                    var email = jobj["email"].ToString();
 
+
+                    var user = _userManager.FindByEmail(email);
+                    
+                    var sub = jobj["sub"].ToString();
+                    var loginInfo = new UserLoginInfo("apple", sub);
+
+                    if (user != null)
+                    {
+                        var logins = _userManager.GetLogins(user.Id);
+                        if (!logins.Any(x => x.LoginProvider == "apple"))
+                        {
+                            TempData["Error"] = "Email already exist!";
+                        }
+                        else
+                        {
+                            var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo);
+                            if (loginResult.Succeeded)
+                            {
+                                await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("MobileAuthCallback", "WebApi");
+                            }
+                            TempData["Error"] = "Failed to register.";
+                        }
+                    }
+                    else
+                    {
+                        user = new ApplicationUser { UserName = email, Email = email, EmailConfirmed = true };
+                        var createResult = await _userManager.CreateAsync(user);
+                        if (createResult.Succeeded)
+                        {
+                            // create default Register view model
+                            RegisterViewModel viewModel = new RegisterViewModel()
+                            {
+                                Email = email,
+                                VendorSignup = false,
+                                AcceptTerm = true,
+                                SubscriberTypeId = (int)SubscriberTypeID.NoCreditCard,
+                                CompanyName = email,
+                                Country = "United States"
+                            };
+                            Session.Abandon();
+
+                            _userManager.AddToRole(user.Id, "Subscriber");
+
+                            var vendorId = _membershipService.RegisterNewUser(viewModel, user);
+
+                            Session["RegisterVendorID"] = vendorId;
+
+                            var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo);
+                            if (loginResult.Succeeded)
+                            {
+                                await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("MobileAuthCallback", "WebApi");
+                            }
+                            TempData["Error"] = "Failed to sign in.";
+                        }
+
+                    }
+                }
+            } catch (Exception ex)
+            {
+                TempData["Error"] = "Failed to sign in using apple";
+            }
+            
+            return RedirectToAction("MobileAuth", "WebApi");
+        }
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -488,7 +574,7 @@ namespace Findparts.Controllers
                         var vendorId = _membershipService.RegisterNewUser(viewModel, user);
 
                         Session["RegisterVendorID"] = vendorId;
-
+                       
                         var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
                         if (loginResult.Succeeded)
                         {
