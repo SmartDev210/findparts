@@ -58,6 +58,11 @@ namespace Findparts.Controllers
         {
             if (!ModelState.IsValid)
             {
+                if (returnUrl.Contains("mobile-auth"))
+                {
+                    TempData["Error"] = "Invalid login attempt.";
+                    return RedirectToAction("MobileAuth", "WebApi");
+                }
                 return View(model);
             }
 
@@ -96,6 +101,12 @@ namespace Findparts.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
+                    if (returnUrl.Contains("mobile-auth"))
+                    {
+                        TempData["Error"] = "Invalid login attempt.";
+                        return RedirectToAction("MobileAuth", "WebApi");
+                    }
+                    
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
@@ -474,14 +485,9 @@ namespace Findparts.Controllers
                             TempData["Error"] = "Email already exist!";
                         }
                         else
-                        {
-                            var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo);
-                            if (loginResult.Succeeded)
-                            {
-                                await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                                return RedirectToAction("MobileAuthCallback", "WebApi");
-                            }
-                            TempData["Error"] = "Failed to register.";
+                        {   
+                            await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("MobileAuthCallback", "WebApi");
                         }
                     }
                     else
