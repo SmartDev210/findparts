@@ -578,6 +578,7 @@ namespace Findparts.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
+                TempData["Error"] = "Failed to login";
                 if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-api"))
                     return RedirectToAction("MobileAuth", "WebApi");
                 return RedirectToAction("Login");
