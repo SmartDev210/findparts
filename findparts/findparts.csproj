@@ -555,6 +555,7 @@
     <Content Include="Content\dist\images\literature\Meritocratic Repair Capability Search Engine.jpg" />
     <Content Include="Content\dist\images\literature\MROfinder.aero Letter to MROs 145 Repair Stations.jpg" />
     <Content Include="Content\dist\images\literature\MROfinder.aero Merits.jpg" />
+    <Content Include="Content\dist\images\logo.png" />
     <Content Include="Content\dist\images\logo_333x50_old.png" />
     <Content Include="Content\dist\images\logo_335x50.png" />
     <Content Include="Content\dist\images\logo_588x72.png" />
@@ -614,6 +615,7 @@
     <Content Include="Content\dist\images\TEST-sm.old.png" />
     <Content Include="Content\dist\images\TEST-sm.png" />
     <Content Include="Content\dist\images\TEST.png" />
+    <Content Include="Content\dist\images\twoline-logo.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -791,7 +793,6 @@
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Account\ExternalLoginSelectPlan.cshtml" />
     <Content Include="Views\WebApi\Login.cshtml" />
-    <Content Include="Views\WebApi\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

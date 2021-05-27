@@ -30,5 +30,8 @@ namespace Findparts.Core
         public static string WeavyUrl => ConfigurationManager.AppSettings["WeavyUrl"];
         public static string WeavyClientId => ConfigurationManager.AppSettings["WeavyClientId"];
         public static string WeavyClientSecret => ConfigurationManager.AppSettings["ClientSecret"];
+
+        public static string AppleAppId => ConfigurationManager.AppSettings["AppleAppId"];
+        public static string AppleAuthRedirectUri => ConfigurationManager.AppSettings["AppleAuthRedirectUri"];
     }
 }

@@ -1,30 +1,45 @@
 ﻿@using DAL;
-@{ 
-    ViewBag.Title = "Sign Up";
+@using Findparts.Core;
+@{
+    ViewBag.Title = "Login";
 }
 
 <div class="sign-up">
-    <div class="main-block" style="padding: 10px;">
-        
-        @using (Html.BeginForm("ExternalLogin", "Account"))
+    <div class="main-block" style="padding: 20px;">
+        <img src="~/Content/dist/images/twoline-logo.svg" style="margin-bottom: 50px;"/>
+        @*
+            @using (Html.BeginForm("ExternalLogin", "Account"))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
+            }
+
+
+            <div class="pre-price">Free Marketplace</div>
+            <div class="price">$0.00</div>
+            <div class="pre-price">Social Collab - 15 Users</div>
+            <div class="price">$0.00</div>
+        *@
+        <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" style="height: 46px; width: 220px; margin: auto; margin-bottom: 20px;"></div>
+        @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
         {
             @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
+            <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px; width: 220px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
         }
-        
-        
-        <div class="pre-price">Free Marketplace</div>
-        <div class="price">$0.00</div>
-        <div class="pre-price">Social Collab - 15 Users</div>
-        <div class="price">$0.00</div>
-        @using (Html.BeginForm("ExternalLogin", "Account"))
-        {
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
-        }
-        <div class="block-footer">
-            <div>or</div>
-            <div><a href="@Url.Action("SignUpWithEmail", "Account")">Sign up with Email</a></div>
+        <div class="block-footer" style="font-size: 32px; font-weight: bold; margin-top: 20px;">
+            <div>Free</div>
+            <div>Aviation</div>
+            <div>Social Network</div>
         </div>
+        @*
+            <div class="block-footer">
+                <div>or</div>
+                <div><a href="@Url.Action("SignUpWithEmail", "Account")">Sign up with Email</a></div>
+            </div>
+        *@
     </div>
 </div>
+
+@section scripts {
+    
+}

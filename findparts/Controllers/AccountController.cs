@@ -46,9 +46,10 @@ namespace Findparts.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View("~/Views/Account/Signup.cshtml");
         }
 
+        
         //
         // POST: /Account/Login
         [HttpPost]
@@ -58,7 +59,7 @@ namespace Findparts.Controllers
         {
             if (!ModelState.IsValid)
             {
-                if (returnUrl.Contains("mobile-auth"))
+                if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-auth"))
                 {
                     TempData["Error"] = "Invalid login attempt.";
                     return RedirectToAction("MobileAuth", "WebApi");
@@ -75,6 +76,11 @@ namespace Findparts.Controllers
                     
                     SessionVariables.Populate(model.Email);
                     var user = _userManager.FindByEmail(model.Email);
+                    if (!_userManager.IsInRole(user.Id, "Admin"))
+                    {
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        RedirectToAction("Login");
+                    }
                     if (!user.EmailConfirmed)
                     {
                         return RedirectToAction("VerifyEmail", new { returnUrl });
@@ -101,7 +107,7 @@ namespace Findparts.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    if (returnUrl.Contains("mobile-auth"))
+                    if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-auth"))
                     {
                         TempData["Error"] = "Invalid login attempt.";
                         return RedirectToAction("MobileAuth", "WebApi");
@@ -154,13 +160,21 @@ namespace Findparts.Controllers
                     return View(model);
             }
         }
-
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult AdminLogin()
+        {
+            return View("~/Views/Account/Login.cshtml");
+        }
+        /*
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Signup()
         {   
             return View();
         }
+        */
+        /*
         //
         // GET: /Account/Register
         [HttpGet]
@@ -169,6 +183,8 @@ namespace Findparts.Controllers
         {  
             return View();
         }
+        */
+        /*
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -186,7 +202,8 @@ namespace Findparts.Controllers
 
             return View(viewModel);
         }
-        
+        */
+        /*
         //
         // POST: /Account/Register
         [HttpPost]
@@ -228,6 +245,7 @@ namespace Findparts.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        */
         [HttpGet]
         [Authorize]
         public ActionResult VerifyEmail(string returnUrl)
@@ -459,6 +477,7 @@ namespace Findparts.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> AppleSigninCallback()
         {
+            string state = Request.Form["state"];
             var token = Request.Form["id_token"];
             try
             {
@@ -469,9 +488,8 @@ namespace Findparts.Controllers
                     && jobj["aud"].ToString() == "com.elenaslist.elenasmobile.applesign"
                     && jobj["email_verified"].ToObject<bool>() == true)
                 {
+                    
                     var email = jobj["email"].ToString();
-
-
                     var user = _userManager.FindByEmail(email);
                     
                     var sub = jobj["sub"].ToString();
@@ -485,9 +503,15 @@ namespace Findparts.Controllers
                             TempData["Error"] = "Email already exist!";
                         }
                         else
-                        {   
+                        {
                             await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("MobileAuthCallback", "WebApi");
+                            if (state == "mobile")
+                            {
+                                return RedirectToAction("MobileAuthCallback", "WebApi");
+                            } else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                     }
                     else
@@ -518,7 +542,14 @@ namespace Findparts.Controllers
                             if (loginResult.Succeeded)
                             {
                                 await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                                return RedirectToAction("MobileAuthCallback", "WebApi");
+                                if (state == "mobile")
+                                {
+                                    return RedirectToAction("MobileAuthCallback", "WebApi");
+                                }
+                                else
+                                {
+                                    return RedirectToAction("Index", "Home");
+                                }
                             }
                             TempData["Error"] = "Failed to sign in.";
                         }
@@ -529,8 +560,15 @@ namespace Findparts.Controllers
             {
                 TempData["Error"] = "Failed to sign in using apple";
             }
-            
-            return RedirectToAction("MobileAuth", "WebApi");
+
+            if (state == "mobile")
+            {
+                return RedirectToAction("MobileAuth", "WebApi");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
         //
         // GET: /Account/ExternalLoginCallback
@@ -540,7 +578,7 @@ namespace Findparts.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                if (returnUrl.Contains("mobile-api"))
+                if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-api"))
                     return RedirectToAction("MobileAuth", "WebApi");
                 return RedirectToAction("Login");
             }
@@ -591,7 +629,7 @@ namespace Findparts.Controllers
                         //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
                     }
                     TempData["Error"] = "Failed to register linkedin user";
-                    if (returnUrl.Contains("mobile-api"))
+                    if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-api"))
                         return RedirectToAction("MobileAuth", "WebApi");
                     return RedirectToAction("Login");
             }

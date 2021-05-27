@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Findparts.Core
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -302,6 +303,29 @@
 
 				</text>
 			}
+
+
+        });
+    </script>
+    <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+    <script type="text/javascript">
+        AppleID.auth.init({
+            clientId: '@Config.AppleAppId',
+            scope: 'name email',
+            redirectURI: '@Config.AppleAuthRedirectUri',
+            state: 'web',
+            nonce: 'nonce',
+            usePopup: false //or false defaults to false
+        });
+        //Listen for authorization success
+        document.addEventListener('AppleIDSignInOnSuccess', (data) => {
+            console.log(data);
+            //handle successful response
+        });
+        //Listen for authorization failures
+        document.addEventListener('AppleIDSignInOnFailure', (error) => {
+            console.log(error);
+            //handle error.
         });
     </script>
     @RenderSection("scripts", required: false)
