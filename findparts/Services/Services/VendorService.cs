@@ -305,14 +305,14 @@ namespace Findparts.Services.Services
             
             if (viewModel.Upload != null && viewModel.Upload.ContentLength > 0)
             {
-                var vendorListId = _context.VendorListUpdate2(viewModel.Id, SessionVariables.UserID.ToNullableInt(), viewModel.VendorId, viewModel.Comment, filetype, viewModel.ReplaceList).FirstOrDefault();
+                var vendorListId = _context.VendorListUpdate2(viewModel.Id, SessionVariables.UserID.ToNullableInt(), viewModel.VendorId, viewModel.Comment, filetype, viewModel.ReplaceList, Config.PortalCode).FirstOrDefault();
                 string fileName = $"{vendorListId}{filetype}";
 
                 var path = Config.UploadPath;
                 viewModel.Upload.SaveAs(Path.Combine(path, fileName));
             } else if (viewModel.Id > 0)
             {
-                _context.VendorListUpdate2(viewModel.Id, SessionVariables.UserID.ToNullableInt(), viewModel.VendorId, viewModel.Comment, filetype, viewModel.ReplaceList);
+                _context.VendorListUpdate2(viewModel.Id, SessionVariables.UserID.ToNullableInt(), viewModel.VendorId, viewModel.Comment, filetype, viewModel.ReplaceList, Config.PortalCode);
             }
             
             return true;

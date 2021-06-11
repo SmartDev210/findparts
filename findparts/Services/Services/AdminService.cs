@@ -191,7 +191,7 @@ namespace Findparts.Services.Services
             };
         }
 
-        public VendorListGetByID_Result GetVendorList(int vendorListId)
+        public VendorList GetVendorList(int vendorListId)
         {
             return _context.VendorListGetByID(vendorListId).FirstOrDefault();
         }
@@ -287,7 +287,7 @@ namespace Findparts.Services.Services
 
         }
 
-        public bool ImportVendorList(VendorListGetByID_Result vendorList, out string message)
+        public bool ImportVendorList(VendorList vendorList, out string message)
         {
             message = "";
             var filePath = Path.Combine(Config.UploadPath, $"{vendorList.VendorListID}{vendorList.Filetype}");
@@ -299,6 +299,7 @@ namespace Findparts.Services.Services
             {
                 item.VendorID = vendorList.VendorID;
                 item.VendorListID = vendorList.VendorListID;
+                item.PortalCode = vendorList.PortalCode;
             }
             var distinctItems = items.Distinct(new VendorListComparer()).ToList();
 

@@ -28,6 +28,8 @@ namespace DAL
         public bool ReplaceList { get; set; }
         public string Filetype { get; set; }
         public Nullable<System.DateTime> DateApproved { get; set; }
+        public Nullable<int> CategoryID { get; set; }
+        public int PortalCode { get; set; }
     
         public virtual Vendor Vendor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

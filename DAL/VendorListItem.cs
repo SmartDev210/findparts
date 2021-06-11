@@ -50,6 +50,7 @@ namespace DAL
         public string NSNClean { get; set; }
         public Nullable<bool> WorkHistory { get; set; }
         public Nullable<int> Achievements { get; set; }
+        public int PortalCode { get; set; }
     
         public virtual VendorList VendorList { get; set; }
     }

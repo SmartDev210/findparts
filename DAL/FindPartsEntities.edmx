@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DomainModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -216,6 +223,8 @@
           <Property Name="ReplaceList" Type="bit" Nullable="false" />
           <Property Name="Filetype" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="DateApproved" Type="datetime" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="PortalCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorListItem">
           <Key>
@@ -257,6 +266,7 @@
           <Property Name="NSNClean" Type="varchar" MaxLength="50" />
           <Property Name="WorkHistory" Type="bit" />
           <Property Name="Achievements" Type="int" />
+          <Property Name="PortalCode" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -677,7 +687,9 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
         <Function Name="VendorListItemGetByVendor4" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorID" Type="int" Mode="In" />
         </Function>
-        <Function Name="VendorListItemGetStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VendorListItemGetStats" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
+        </Function>
         <Function Name="VendorListItemGetTopWithAchievements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="VendorListItemQuoteGetByVendorQuoteID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorQuoteID" Type="int" Mode="In" />
@@ -690,6 +702,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Parameter Name="SearchTerm" Type="varchar" Mode="In" />
           <Parameter Name="SubscriberID" Type="int" Mode="In" />
           <Parameter Name="ExactMatch" Type="bit" Mode="In" />
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="VendorListItemSearchAlternateDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PartNumber" Type="varchar" Mode="In" />
@@ -710,10 +723,12 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
         <Function Name="VendorListItemSearchDetail9" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PartNumber" Type="varchar" Mode="In" />
           <Parameter Name="SubscriberID" Type="int" Mode="In" />
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="VendorListItemSearchSimilar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchTerm" Type="varchar" Mode="In" />
           <Parameter Name="SubscriberID" Type="int" Mode="In" />
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="VendorListItemUpdateAchievements2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorID" Type="int" Mode="In" />
@@ -738,6 +753,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Parameter Name="Comments" Type="varchar" Mode="In" />
           <Parameter Name="Filetype" Type="varchar" Mode="In" />
           <Parameter Name="ReplaceList" Type="bit" Mode="In" />
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="VendorListUpdateDateApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorListID" Type="int" Mode="In" />
@@ -950,6 +966,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Parameter Name="Notes" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="DomainModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subscriber" EntityType="Self.Subscriber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubscriberInvoice" EntityType="Self.SubscriberInvoice" Schema="dbo" store:Type="Tables" />
@@ -1219,6 +1236,8 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="DateApproved" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK_VendorList_Vendor" FromRole="VendorList" ToRole="Vendor" />
           <NavigationProperty Name="VendorListItems" Relationship="Self.FK_VendorListItem_VendorList" FromRole="VendorList" ToRole="VendorListItem" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="PortalCode" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorListItem">
           <Key>
@@ -1261,6 +1280,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="WorkHistory" Type="Boolean" />
           <Property Name="Achievements" Type="Int32" />
           <NavigationProperty Name="VendorList" Relationship="Self.FK_VendorListItem_VendorList" FromRole="VendorListItem" ToRole="VendorList" />
+          <Property Name="PortalCode" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorQuote">
           <Key>
@@ -1695,7 +1715,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="VendorListDeleteByID">
           <Parameter Name="VendorListID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="VendorListGetByID" ReturnType="Collection(DomainModel.VendorListGetByID_Result)">
+          <FunctionImport Name="VendorListGetByID" EntitySet="VendorLists" ReturnType="Collection(DomainModel.VendorList)">
           <Parameter Name="VendorListID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListGetByVendorID" ReturnType="Collection(DomainModel.VendorListGetByVendorID_Result)">
@@ -1732,7 +1752,9 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="VendorListItemGetByVendor4" ReturnType="Collection(DomainModel.VendorListItemGetByVendor4_Result)">
           <Parameter Name="VendorID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="VendorListItemGetStats" ReturnType="Collection(DomainModel.VendorListItemGetStats_Result)" />
+          <FunctionImport Name="VendorListItemGetStats" ReturnType="Collection(DomainModel.VendorListItemGetStats_Result)" >
+          <Parameter Name="PortalCode" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="VendorListItemGetTopWithAchievements" ReturnType="Collection(String)" />
           <FunctionImport Name="VendorListItemQuoteGetByVendorQuoteID">
           <Parameter Name="VendorQuoteID" Mode="In" Type="Int32" />
@@ -1745,6 +1767,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="SearchTerm" Mode="In" Type="String" />
             <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
             <Parameter Name="ExactMatch" Mode="In" Type="Boolean" />
+            <Parameter Name="PortalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListItemSearchAlternateDetail" ReturnType="Collection(DomainModel.VendorListItemSearchAlternateDetail_Result)">
             <Parameter Name="PartNumber" Mode="In" Type="String" />
@@ -1765,10 +1788,12 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImport Name="VendorListItemSearchDetail9" ReturnType="Collection(DomainModel.VendorListItemSearchDetail9_Result)">
             <Parameter Name="PartNumber" Mode="In" Type="String" />
             <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
+            <Parameter Name="PortalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListItemSearchSimilar" ReturnType="Collection(DomainModel.VendorListItemSearchSimilar_Result)">
             <Parameter Name="SearchTerm" Mode="In" Type="String" />
             <Parameter Name="SubscriberID" Mode="In" Type="Int32" />
+            <Parameter Name="PortalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListItemUpdateAchievements2">
           <Parameter Name="VendorID" Mode="In" Type="Int32" />
@@ -1793,6 +1818,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="Comments" Mode="In" Type="String" />
             <Parameter Name="Filetype" Mode="In" Type="String" />
             <Parameter Name="ReplaceList" Mode="In" Type="Boolean" />
+            <Parameter Name="PortalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListUpdateDateApproved">
           <Parameter Name="VendorListID" Mode="In" Type="Int32" />
@@ -2004,6 +2030,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="Muted" Mode="In" Type="Boolean" />
             <Parameter Name="Notes" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Categories" EntityType="DomainModel.Category" />
         </EntityContainer>
         <ComplexType Name="StatusGetAll_Result">
           <Property Type="Int32" Name="StatusID" Nullable="false" />
@@ -2745,6 +2772,13 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Type="String" Name="VendorName" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2956,6 +2990,8 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySetMapping Name="VendorLists">
             <EntityTypeMapping TypeName="DomainModel.VendorList">
               <MappingFragment StoreEntitySet="VendorList">
+                <ScalarProperty Name="PortalCode" ColumnName="PortalCode" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="VendorListID" ColumnName="VendorListID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="VendorID" ColumnName="VendorID" />
@@ -2970,6 +3006,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySetMapping Name="VendorListItems">
             <EntityTypeMapping TypeName="DomainModel.VendorListItem">
               <MappingFragment StoreEntitySet="VendorListItem">
+                <ScalarProperty Name="PortalCode" ColumnName="PortalCode" />
                 <ScalarProperty Name="VendorListItemID" ColumnName="VendorListItemID" />
                 <ScalarProperty Name="VendorListID" ColumnName="VendorListID" />
                 <ScalarProperty Name="VendorID" ColumnName="VendorID" />
@@ -3431,18 +3468,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="VendorInsert4" FunctionName="DomainModel.Store.VendorInsert4" />
           <FunctionImportMapping FunctionImportName="VendorListDeleteByID" FunctionName="DomainModel.Store.VendorListDeleteByID" />
           <FunctionImportMapping FunctionImportName="VendorListGetByID" FunctionName="DomainModel.Store.VendorListGetByID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DomainModel.VendorListGetByID_Result">
-                <ScalarProperty Name="VendorListID" ColumnName="VendorListID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="ReplaceList" ColumnName="ReplaceList" />
-                <ScalarProperty Name="Filetype" ColumnName="Filetype" />
-                <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="VendorListGetByVendorID" FunctionName="DomainModel.Store.VendorListGetByVendorID">
             <ResultMapping>
@@ -3758,6 +3783,14 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="VendorUpdateStatus3" FunctionName="DomainModel.Store.VendorUpdateStatus3" />
           <FunctionImportMapping FunctionImportName="VendorUpdateStatusAndNotes" FunctionName="DomainModel.Store.VendorUpdateStatusAndNotes" />
           <FunctionImportMapping FunctionImportName="VendorUpdateStatusAndNotes2" FunctionName="DomainModel.Store.VendorUpdateStatusAndNotes2" />
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DomainModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

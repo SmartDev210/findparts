@@ -62,6 +62,9 @@
     <Compile Include="AspNetUserLogin.cs">
       <DependentUpon>IdentityEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>findPartsEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="findPartsEntities.Context.cs">
       <AutoGen>True</AutoGen>

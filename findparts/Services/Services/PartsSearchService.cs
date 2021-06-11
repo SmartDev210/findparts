@@ -54,7 +54,7 @@ namespace Findparts.Services.Services
                 viewAsVendorID = SessionVariables.VendorID;
             }
 
-            var list = _context.VendorListItemSearchDetail9(queryParams.PartNumberDetail, SessionVariables.SubscriberID.ToNullableInt()).ToList();
+            var list = _context.VendorListItemSearchDetail9(queryParams.PartNumberDetail, SessionVariables.SubscriberID.ToNullableInt(), Config.PortalCode).ToList();
 
             if ((SessionVariables.SubscriberID == "" || !SessionVariables.CanSearch) && !isAdmin)
             {
@@ -104,9 +104,9 @@ namespace Findparts.Services.Services
             return list;
         }
 
-        public void PopulatePartsPageViewModel(PartsPageViewModel viewModel, string text, bool partPage)
+        public void PopulatePartsPageViewModel(PartsPageViewModel viewModel, string text, bool exactMatch)
         {
-            var result = _context.VendorListItemSearch7(text, SessionVariables.SubscriberID.ToNullableInt(), partPage).Take(Constants.MAX_RECORDS_RETURNED).ToList();
+            var result = _context.VendorListItemSearch7(text, SessionVariables.SubscriberID.ToNullableInt(), exactMatch, Config.PortalCode).Take(Constants.MAX_RECORDS_RETURNED).ToList();
             viewModel.RealCount = result.Count();
             if (viewModel.RealCount >= Constants.MAX_RECORDS_RETURNED)
             {
@@ -115,14 +115,14 @@ namespace Findparts.Services.Services
             
             viewModel.SearchResults = result;
 
-            viewModel.SimiliarSearches = _context.VendorListItemSearchSimilar(text, SessionVariables.SubscriberID.ToNullableInt()).ToList();
+            viewModel.SimiliarSearches = _context.VendorListItemSearchSimilar(text, SessionVariables.SubscriberID.ToNullableInt(), Config.PortalCode).ToList();
             viewModel.Merit = Constants.MERITS;
 
             bool exactMatchFound = false;
 
             if (viewModel.RealCount > 0)
             {
-                if (!partPage)
+                if (!exactMatch)
                 {
                     exactMatchFound = viewModel.SearchResults.First().ExactMatchFirst == 0;
                     if (exactMatchFound)
@@ -131,7 +131,7 @@ namespace Findparts.Services.Services
                     }
                    
                 }
-                _context.UserSearchInsert3(SessionVariables.UserID.ToNullableInt() ?? 0, text, partPage, viewModel.RealCount, exactMatchFound);
+                _context.UserSearchInsert3(SessionVariables.UserID.ToNullableInt() ?? 0, text, exactMatch, viewModel.RealCount, exactMatchFound);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Findparts.Services.Services
             if (cleanText.Length < Constants.MIN_SEARCH_LENGTH)
                 return new List<PartAutoComplete>();
 
-            return _context.VendorListItemSearch7(text, SessionVariables.SubscriberID.ToNullableInt(), false)                
+            return _context.VendorListItemSearch7(text, SessionVariables.SubscriberID.ToNullableInt(), false, Config.PortalCode)                
                 .Select(x => new PartAutoComplete {
                     value = x.PartNumber,
                     label = string.IsNullOrEmpty(x.Match) ? x.PartNumber : $"{x.PartNumber} ({x.Match})"

@@ -45,6 +45,7 @@ namespace DAL
         public virtual DbSet<VendorSubscriberPreferred> VendorSubscriberPreferreds { get; set; }
         public virtual DbSet<VendorAchievementListItem> VendorAchievementListItems { get; set; }
         public virtual DbSet<VendorListItemArchive> VendorListItemArchives { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {
@@ -1125,13 +1126,22 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorListDeleteByID", vendorListIDParameter);
         }
     
-        public virtual ObjectResult<VendorListGetByID_Result> VendorListGetByID(Nullable<int> vendorListID)
+        public virtual ObjectResult<VendorList> VendorListGetByID(Nullable<int> vendorListID)
         {
             var vendorListIDParameter = vendorListID.HasValue ?
                 new ObjectParameter("VendorListID", vendorListID) :
                 new ObjectParameter("VendorListID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListGetByID_Result>("VendorListGetByID", vendorListIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorList>("VendorListGetByID", vendorListIDParameter);
+        }
+    
+        public virtual ObjectResult<VendorList> VendorListGetByID(Nullable<int> vendorListID, MergeOption mergeOption)
+        {
+            var vendorListIDParameter = vendorListID.HasValue ?
+                new ObjectParameter("VendorListID", vendorListID) :
+                new ObjectParameter("VendorListID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorList>("VendorListGetByID", mergeOption, vendorListIDParameter);
         }
     
         public virtual ObjectResult<VendorListGetByVendorID_Result> VendorListGetByVendorID(Nullable<int> vendorID)
@@ -1243,9 +1253,13 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemGetByVendor4_Result>("VendorListItemGetByVendor4", vendorIDParameter);
         }
     
-        public virtual ObjectResult<VendorListItemGetStats_Result> VendorListItemGetStats()
+        public virtual ObjectResult<VendorListItemGetStats_Result> VendorListItemGetStats(Nullable<int> portalCode)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemGetStats_Result>("VendorListItemGetStats");
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemGetStats_Result>("VendorListItemGetStats", portalCodeParameter);
         }
     
         public virtual ObjectResult<string> VendorListItemGetTopWithAchievements()
@@ -1275,7 +1289,7 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorListItemQuoteInsert", vendorQuoteIDParameter, vendorListItemIDParameter);
         }
     
-        public virtual ObjectResult<VendorListItemSearch7_Result> VendorListItemSearch7(string searchTerm, Nullable<int> subscriberID, Nullable<bool> exactMatch)
+        public virtual ObjectResult<VendorListItemSearch7_Result> VendorListItemSearch7(string searchTerm, Nullable<int> subscriberID, Nullable<bool> exactMatch, Nullable<int> portalCode)
         {
             var searchTermParameter = searchTerm != null ?
                 new ObjectParameter("SearchTerm", searchTerm) :
@@ -1289,7 +1303,11 @@ namespace DAL
                 new ObjectParameter("ExactMatch", exactMatch) :
                 new ObjectParameter("ExactMatch", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemSearch7_Result>("VendorListItemSearch7", searchTermParameter, subscriberIDParameter, exactMatchParameter);
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemSearch7_Result>("VendorListItemSearch7", searchTermParameter, subscriberIDParameter, exactMatchParameter, portalCodeParameter);
         }
     
         public virtual ObjectResult<VendorListItemSearchAlternateDetail_Result> VendorListItemSearchAlternateDetail(string partNumber, Nullable<int> subscriberID)
@@ -1344,7 +1362,7 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorListItemSearchDetail8", partNumberParameter, subscriberIDParameter);
         }
     
-        public virtual ObjectResult<VendorListItemSearchDetail9_Result> VendorListItemSearchDetail9(string partNumber, Nullable<int> subscriberID)
+        public virtual ObjectResult<VendorListItemSearchDetail9_Result> VendorListItemSearchDetail9(string partNumber, Nullable<int> subscriberID, Nullable<int> portalCode)
         {
             var partNumberParameter = partNumber != null ?
                 new ObjectParameter("PartNumber", partNumber) :
@@ -1354,10 +1372,14 @@ namespace DAL
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemSearchDetail9_Result>("VendorListItemSearchDetail9", partNumberParameter, subscriberIDParameter);
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemSearchDetail9_Result>("VendorListItemSearchDetail9", partNumberParameter, subscriberIDParameter, portalCodeParameter);
         }
     
-        public virtual ObjectResult<VendorListItemSearchSimilar_Result> VendorListItemSearchSimilar(string searchTerm, Nullable<int> subscriberID)
+        public virtual ObjectResult<VendorListItemSearchSimilar_Result> VendorListItemSearchSimilar(string searchTerm, Nullable<int> subscriberID, Nullable<int> portalCode)
         {
             var searchTermParameter = searchTerm != null ?
                 new ObjectParameter("SearchTerm", searchTerm) :
@@ -1367,7 +1389,11 @@ namespace DAL
                 new ObjectParameter("SubscriberID", subscriberID) :
                 new ObjectParameter("SubscriberID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemSearchSimilar_Result>("VendorListItemSearchSimilar", searchTermParameter, subscriberIDParameter);
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListItemSearchSimilar_Result>("VendorListItemSearchSimilar", searchTermParameter, subscriberIDParameter, portalCodeParameter);
         }
     
         public virtual int VendorListItemUpdateAchievements2(Nullable<int> vendorID)
@@ -1420,7 +1446,7 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VendorListItemUpdateQuoteAchievements2", vendorIDParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> VendorListUpdate2(Nullable<int> vendorListID, Nullable<int> userID, Nullable<int> vendorID, string comments, string filetype, Nullable<bool> replaceList)
+        public virtual ObjectResult<Nullable<decimal>> VendorListUpdate2(Nullable<int> vendorListID, Nullable<int> userID, Nullable<int> vendorID, string comments, string filetype, Nullable<bool> replaceList, Nullable<int> portalCode)
         {
             var vendorListIDParameter = vendorListID.HasValue ?
                 new ObjectParameter("VendorListID", vendorListID) :
@@ -1446,7 +1472,11 @@ namespace DAL
                 new ObjectParameter("ReplaceList", replaceList) :
                 new ObjectParameter("ReplaceList", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("VendorListUpdate2", vendorListIDParameter, userIDParameter, vendorIDParameter, commentsParameter, filetypeParameter, replaceListParameter);
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("VendorListUpdate2", vendorListIDParameter, userIDParameter, vendorIDParameter, commentsParameter, filetypeParameter, replaceListParameter, portalCodeParameter);
         }
     
         public virtual int VendorListUpdateDateApproved(Nullable<int> vendorListID)

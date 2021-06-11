@@ -34,7 +34,7 @@ namespace Findparts.Core
 					if (counts == null)
 					{
 						var context = new FindPartsEntities();
-						var result = context.VendorListItemGetStats().ToList();
+						var result = context.VendorListItemGetStats(Config.PortalCode).ToList();
 						if (result.Count > 0)
                         {
 							counts = new int[]

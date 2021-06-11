@@ -33,5 +33,7 @@ namespace Findparts.Core
 
         public static string AppleAppId => ConfigurationManager.AppSettings["AppleAppId"];
         public static string AppleAuthRedirectUri => ConfigurationManager.AppSettings["AppleAuthRedirectUri"];
+
+        public static int PortalCode => Int32.Parse(ConfigurationManager.AppSettings["PortalCode"]);
     }
 }
