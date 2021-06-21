@@ -20,7 +20,7 @@ namespace Findparts.Core
             new[] {"Flat Rate","FLAT_RATE","Flat Rate Repair or Overhaul"},
             new[] {"Range","RANGE","Low & High 'Price Range' is available"},
             new[] {"NTE","NTE","NTE 'Not To Exceed' price is available"},
-            new[] {"Elena's List Quotable","QUOTED","Repair Station has previously quoted using Elena's List"},
+            new[] {$"{Config.PortalName} Quotable","QUOTED",$"Repair Station has previously quoted using {Config.PortalName}"},
             new[] {"Function Test","TEST","Function Test Only - No Repair or Overhaul workscope"},
             new[] {"No Overhaul Workscope","NO_OH","Unit will be released Serviceable, Repaired, or Tested"},
             new[] {"OEM","OEM","Repair Station is a OEM (original equipment manufacturer)"},

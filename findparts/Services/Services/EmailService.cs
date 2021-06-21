@@ -134,7 +134,7 @@ namespace Findparts.Services.Services
 
         public void SendAdminAccountActivatedEmail(string name, bool vendor)
         {
-            string message = VendorSubscriber(vendor) + " has Activated their Account" + (vendor ? ", Pending Elena's List Approval" : "") + Environment.NewLine
+            string message = VendorSubscriber(vendor) + " has Activated their Account" + (vendor ? $", Pending {Config.PortalName} Approval" : "") + Environment.NewLine
                 + Environment.NewLine
                 + name;
 
@@ -174,23 +174,23 @@ namespace Findparts.Services.Services
         public bool SendConfirmationEmail(string email, string userName, string callbackUrl, bool passwordSet = true, string createdBy = "The Admin")
         {
             string message = (passwordSet ? userName + "," + Environment.NewLine + Environment.NewLine : "")
-                + "Welcome to Elena's List!" + Environment.NewLine
+                + $"Welcome to {Config.PortalName}!" + Environment.NewLine
                 + Environment.NewLine
-                + (passwordSet ? "" : createdBy + " just created your Elena's List user account." + Environment.NewLine + Environment.NewLine)
+                + (passwordSet ? "" : createdBy + $" just created your {Config.PortalName} user account." + Environment.NewLine + Environment.NewLine)
                 + "Click below to verify your account:" + Environment.NewLine
                 + callbackUrl + Environment.NewLine
                 + Environment.NewLine
                 + (passwordSet ? "" : "Your Username is " + email + Environment.NewLine + Environment.NewLine)
-                + (passwordSet ? "Thank you for creating an account with Elena's List" : "Elena's List");
+                + (passwordSet ? $"Thank you for creating an account with {Config.PortalName}" : Config.PortalName);
 
-            return SendEmail(Config.FromEmail, email, "Elena's List " + (passwordSet ? "Account" : "New User") + " Confirmation", message);
+            return SendEmail(Config.FromEmail, email, $"{Config.PortalName} " + (passwordSet ? "Account" : "New User") + " Confirmation", message);
         }
 
         public void SendAccountActivated(string email, string name, bool vendor)
         {
             string message = name + "," + Environment.NewLine
                 + Environment.NewLine
-                + "Thank You for confirming your Elena's List account." + Environment.NewLine
+                + $"Thank You for confirming your {Config.PortalName} account." + Environment.NewLine
                 + Environment.NewLine
                 + (vendor
                     //? "As a Repair Station, you may now upload your capabilities and workscope icons into the Elena's List platform." + Environment.NewLine + Environment.NewLine +
@@ -220,9 +220,9 @@ namespace Findparts.Services.Services
                 //"You may now search for Component Repair Station Providers on the Elena's List platform."
                 ) + Environment.NewLine
                 + Environment.NewLine
-                + "Elena's List";
+                + Config.PortalName;
 
-            SendEmail(Config.FromEmail, email, "Elena's List Account Activated", message);
+            SendEmail(Config.FromEmail, email, $"{Config.PortalName} Account Activated", message);
         }
 
         public void SendFreeTrialActivated(string email, string name)
@@ -231,37 +231,37 @@ namespace Findparts.Services.Services
                 + Environment.NewLine
                 + "Your 2 Week Trial has started." + Environment.NewLine
                 + Environment.NewLine
-                + "You may now search for Component Repair Stations on Elena's List" + Environment.NewLine
+                + $"You may now search for Component Repair Stations on {Config.PortalName}" + Environment.NewLine
                 + Environment.NewLine
                 + "Your subscription will begin in 2 weeks" + Environment.NewLine
                 + Environment.NewLine
                 + "View or Change Subscription: https://" + HttpContext.Current.Request.Url.Host + "/Subscriber/Charge" + Environment.NewLine
                 + Environment.NewLine
-                + "Elena's List";
+                + Config.PortalName;
 
-            SendEmail(Config.FromEmail, email, "Elena's List Free Trial Activated", message);
+            SendEmail(Config.FromEmail, email, $"{Config.PortalName} Free Trial Activated", message);
         }
 
         public void SendAccountApproved(string email, string vendorName, string vendorID)
         {
             string message = vendorName + "," + Environment.NewLine
                 + Environment.NewLine
-                + "Elena's List has approved your FREE Repair Station account for 25 monthly searches." + Environment.NewLine
+                + $"{Config.PortalName} has approved your FREE Repair Station account for 25 monthly searches." + Environment.NewLine
                 + Environment.NewLine
                 + "You may now search for component Repair Stations on our platform." + Environment.NewLine
                 + Environment.NewLine
                 + "Remember, unlimited listing of Capabilities & Workscope icons is always free." + Environment.NewLine
                 + Environment.NewLine
-                + "Elena's List";
+                + Config.PortalName;
 
-            SendEmail(Config.FromEmail, email, "Elena's List Account Approved for Searched", message);
+            SendEmail(Config.FromEmail, email, $"{Config.PortalName} Account Approved for Searched", message);
         }
 
         public void SendPasswordResetEmail(string email, string callbackUrl)
         {
 			string message = "A password reset has been requested. To reset your password, click below:" + Environment.NewLine
 			 + callbackUrl;
-			SendEmail(Config.FromEmail, email, "Elena's List Password Reset", message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Password Reset", message);
 		}
         #endregion
 
@@ -297,10 +297,10 @@ namespace Findparts.Services.Services
 					+ Environment.NewLine
 					+ Environment.NewLine
 					+ GetAlternatePartsLine(partNumber, subscriberID)
-					+ "Generated @ Elena's List";
+					+ $"Generated @ {Config.PortalName}";
 
 				// TODO: change "to" to vendor's RFQ email
-				SendEmail(Config.FromEmail, Config.AdminEmail, "Elena's List RFQ for " + partNumber + " from " + subscriberName, message);
+				SendEmail(Config.FromEmail, Config.AdminEmail, $"{Config.PortalName} RFQ for " + partNumber + " from " + subscriberName, message);
 			}
 		}
 
@@ -308,16 +308,16 @@ namespace Findparts.Services.Services
 		{
 			string message = vendorName + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ "You have uploaded a " + CapabilityMerit(capabilityList) + " list to the Elena's List platform." + Environment.NewLine
+				+ "You have uploaded a " + CapabilityMerit(capabilityList) + $" list to the {Config.PortalName} platform." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List will approve your list shortly, and make it active throughout the platform." + Environment.NewLine
+				+ $"{Config.PortalName} will approve your list shortly, and make it active throughout the platform." + Environment.NewLine
 				+ Environment.NewLine
 				//"Elena's List will approve and activate your list throughout the platform within 24 hours." + Environment.NewLine + Environment.NewLine +
 				+ "You will receive a confirmation when your " + CapabilitiesMerits(capabilityList) + " are live." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, vendorEmail, "Elena's List " + CapabilityMerit(capabilityList) + " List Uploaded", message);
+			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList) + " List Uploaded", message);
 		}
 
 		// TODO: ask bryan why not in use
@@ -325,23 +325,23 @@ namespace Findparts.Services.Services
 		{
 			string message = vendorName + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ "An Admin at Elena's List has uploaded your " + CapabilityMerit(capabilityList) + " list." + Environment.NewLine
+				+ $"An Admin at {Config.PortalName} has uploaded your " + CapabilityMerit(capabilityList) + " list." + Environment.NewLine
 				+ Environment.NewLine
 				+ "This happened because:" + Environment.NewLine
 				+ Environment.NewLine
-				+ "You recently uploaded a " + CapabilityMerit(capabilityList) + " list that Elena's List has re-formatted for optimal functionality on our platform." + Environment.NewLine
+				+ "You recently uploaded a " + CapabilityMerit(capabilityList) + $" list that {Config.PortalName} has re-formatted for optimal functionality on our platform." + Environment.NewLine
 				+ Environment.NewLine
 				+ "OR" + Environment.NewLine
 				+ Environment.NewLine
-				+ "You recently spoke with an Elena's List representative and they have uploaded your " + CapabilityMerit(capabilityList) + " list on your behalf." + Environment.NewLine
+				+ $"You recently spoke with an {Config.PortalName} representative and they have uploaded your " + CapabilityMerit(capabilityList) + " list on your behalf." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List will approve your list shortly, and make your " + CapabilitiesMerits(capabilityList) + " active throughout the platform." + Environment.NewLine
+				+ $"{Config.PortalName} will approve your list shortly, and make your " + CapabilitiesMerits(capabilityList) + " active throughout the platform." + Environment.NewLine
 				+ Environment.NewLine
 				+ "You will receive a confirmation once your " + CapabilitiesMerits(capabilityList) + " are live." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, vendorEmail, "Elena's List " + CapabilityMerit(capabilityList) + " List Uploaded by Elena's List", message);
+			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList) + " List Uploaded by Elena's List", message);
 		}
 
 		public void SendVendorListApprovedEmail(string vendorEmail, string vendorName, bool capabilityList, string capabilities, string merits)
@@ -350,7 +350,7 @@ namespace Findparts.Services.Services
 				+ Environment.NewLine
 				+ "Your " + CapabilityMerit(capabilityList) + " list has been approved." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Your " + CapabilitiesMerits(capabilityList) + " are now active throughout Elena's List." + Environment.NewLine
+				+ "Your " + CapabilitiesMerits(capabilityList) + $" are now active throughout {Config.PortalName}." + Environment.NewLine
 				+ Environment.NewLine
 				+ "Your Capability Stats:" + Environment.NewLine
 				+ "MRO CAPABILITIES - " + capabilities + Environment.NewLine
@@ -360,9 +360,9 @@ namespace Findparts.Services.Services
 				+ "https://" + HttpContext.Current.Request.Url.Host + "/Vendor/UploadList" + Environment.NewLine
 				+ Environment.NewLine
 				//+ "Remember, you can always upload " + (capabilityList ? "" : "more ") + "Workscope icons to highlight your specific capabilities for FREE," + Environment.NewLine + Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, vendorEmail, "Elena's List " + CapabilityMerit(capabilityList) + " List Approved & Active", message);
+			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList) + " List Approved & Active", message);
 		}
 
 		#endregion
@@ -377,25 +377,25 @@ namespace Findparts.Services.Services
 				+ Environment.NewLine
 				+ "The new user in your organization is: " + newEmail + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, email, "Elena's List New User Created - " + subscriberName, message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} New User Created - " + subscriberName, message);
 		}
 
 		public void SendSubscriberCancelledEmail(string email, string subscriberName)
 		{
 			string message = subscriberName + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ "You have cancelled your Elena's List search subscription." + Environment.NewLine
+				+ $"You have cancelled your {Config.PortalName} search subscription." + Environment.NewLine
 				+ Environment.NewLine
 				+ "Your login information is still active and you may re-add a subscription anytime." + Environment.NewLine
 				+ Environment.NewLine
 				+ "View or Change Subscription:" + Environment.NewLine
 				+ "https://" + HttpContext.Current.Request.Url.Host + "/Subscriber/Charge" + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, email, "Elena's List Subscription Cancelled", message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Subscription Cancelled", message);
 		}
 
 		public void SendSubscriberQuoteEmail(string vendorQuoteID)
@@ -448,9 +448,9 @@ namespace Findparts.Services.Services
 						+ "No Quote Date: " + dateNoQuote + Environment.NewLine
 						+ Environment.NewLine
 						+ GetAlternatePartsLine(partNumber, subscriberID)
-						+ "Generated @ Elena's List";
+						+ $"Generated @ {Config.PortalName}";
 
-					SendEmail("robot@MROfinder.aero", userEmail, "Elena's List No Quote for " + partNumber + " from " + vendorName, message);
+					SendEmail("robot@MROfinder.aero", userEmail, $"{Config.PortalName} No Quote for " + partNumber + " from " + vendorName, message);
 				}
 				else
 				{
@@ -483,10 +483,10 @@ namespace Findparts.Services.Services
 						+ "https://" + HttpContext.Current.Request.Url.Host + "/Subscriber/Quote" + Environment.NewLine
 						+ Environment.NewLine
 						+ GetAlternatePartsLine(partNumber, subscriberID)
-						+ "Generated @ Elena's List";
+						+ $"Generated @ {Config.PortalName}";
 					;
 
-					SendEmail(Config.FromEmail, userEmail, "Elena's List Quote for " + partNumber + " from " + vendorName, message);
+					SendEmail(Config.FromEmail, userEmail, $"{Config.PortalName} Quote for " + partNumber + " from " + vendorName, message);
 				}
 			}
 		}
@@ -557,48 +557,48 @@ namespace Findparts.Services.Services
 			 */
 			string message = name + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ "We have received payment for your Elena's List subscription. " + Environment.NewLine
+				+ $"We have received payment for your {Config.PortalName} subscription. " + Environment.NewLine
 				+ Environment.NewLine
 				+ "Total Paid: " + amount + Environment.NewLine
 				+ Environment.NewLine
 				+ "Please view payment history and invoices here:" + Environment.NewLine
 				+ "https://" + HttpContext.Current.Request.Url.Host + "/Subscriber/Charge" + Environment.NewLine
 				+ Environment.NewLine
-				+ "This charge will appear on your card as \"Elena's List - SEARCH SUBSCRIPTION - P. +1-949-335-3555\"" + Environment.NewLine
+				+ $"This charge will appear on your card as \"{Config.PortalName} - SEARCH SUBSCRIPTION - P. +1-949-335-3555\"" + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 			string bcc = "alerts@mrofinder.aero";
 
-			SendEmail(Config.FromEmail, email, "Elena's List Subscription payment receipt", message, bcc);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Subscription payment receipt", message, bcc);
 		}
 
 		public void SendFailedTransactionEmail(string name, string email)
 		{
 			string message = name + Environment.NewLine
 				+ Environment.NewLine
-				+ "Recently, Elena's List merchant processor STRIPE attempted to run membership charge on your credit card payment method." + Environment.NewLine
+				+ $"Recently, {Config.PortalName} merchant processor STRIPE attempted to run membership charge on your credit card payment method." + Environment.NewLine
 				+ Environment.NewLine
 				+ "This charge was declined. We will re-attempt to process this charge in the next few days." + Environment.NewLine
 				+ Environment.NewLine
 				+ "Please contact us if you prefer to make other arrangements." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, email, "Elena's List Failed STRIPE transactional charge " + name, message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Failed STRIPE transactional charge " + name, message);
 		}
 
 		public void SendUpDowngradeEmail(string name, string email, bool upgrade)
 		{
 			string message = name + Environment.NewLine
 				+ Environment.NewLine
-				+ "This is an auto generated email that confirms you have successfully " + (upgrade ? "upgraded" : "downgraded") + " your Elena's List membership." + Environment.NewLine
+				+ "This is an auto generated email that confirms you have successfully " + (upgrade ? "upgraded" : "downgraded") + $" your {Config.PortalName} membership." + Environment.NewLine
 				+ Environment.NewLine
 				+ "Please view payment history and invoices here:" + Environment.NewLine
 				+ "https://" + HttpContext.Current.Request.Url.Host + "/Subscriber/Charge" + Environment.NewLine
 				+ Environment.NewLine
-				+ "Elena's List";
+				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, email, "Elena's List Membership " + (upgrade ? "Upgraded" : "Downgraded"), message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Membership " + (upgrade ? "Upgraded" : "Downgraded"), message);
 		}
 
 		#endregion
@@ -647,7 +647,7 @@ namespace Findparts.Services.Services
 			string email = Config.DevEmail;
 			string message = json;
 
-			SendEmail(Config.FromEmail, email, "Elena's List Webhook: " + eventType, message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Webhook: " + eventType, message);
 		}
 	}
 }

@@ -89,7 +89,7 @@ namespace Findparts
             container.RegisterType<ISubscriberService, SubscriberService>();
             container.RegisterType<IVendorService, VendorService>();
             container.RegisterType<IAdminService, AdminService>();
-            container.RegisterType<IChatService, ChatService>();
+            container.RegisterType<IWeavyService, WeavyService>();
         }
     }
 }

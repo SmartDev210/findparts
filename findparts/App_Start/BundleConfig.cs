@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using Findparts.Core;
 
 namespace Findparts
 {
@@ -31,7 +32,8 @@ namespace Findparts
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/dist/css/site.css",
+                $"~/Content/dist/css/site.css",
+                $"~/Content/dist/css/POrtal{Config.PortalCode}.css",
                 "~/Content/dist/css/css3-counter.css",
                 "~/Content/dist/css/bootstrap-chosen.css",
                 "~/Content/dist/css/jquery.tagsinput.css"

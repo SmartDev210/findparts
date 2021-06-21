@@ -2,7 +2,7 @@
 @model Findparts.Models.PartsPageViewModel
 
 @section header {
-    <meta name="keywords" content="Elena's List @ViewBag.ExtraMetaKeywords" />
+    <meta name="keywords" content="@Config.PortalName @ViewBag.ExtraMetaKeywords" />
 }
 
 <div id="divSearchResultsBlock">
@@ -172,17 +172,21 @@
                                 + (data[i].Fax ? '<span class="glyphicon glyphicon-print" aria-hidden="true" data-toggle="popover" data-content="Fax"></span> ' + (data[i].Fax == '***' ? '<a href="' + viewRepairStationGuestHref + '">View Fax</a>' : '<span style="display:inline-block; text-overflow:ellipsis; max-width:27ch; overflow:hidden; white-space:nowrap;">' + data[i].Fax + '</span>') : '');
                             templateRow.appendChild(templateCell);
 
-                            if (data[i].VendorID != 0) {
-                                templateCell = document.createElement('div');
-                                templateCell.style = "position: absolute;right:200px;top:16px;"
-                                templateCell.innerHTML = '<a class="btn btn-primary" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Chat</a>';
-                                templateRow.appendChild(templateCell);
+                            buttonGroupCell = document.createElement('div');
+                            buttonGroupCell.className = "button-list";
+
+                            if (data[i].VendorID != 0) { // add chat button add
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenVideoCall(' + data[i].VendorID + ')">Video Call</a>';
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Send Message</a>';
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Collab Channel</a>';
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="StartServiceRequest(' + data[i].VendorID + ')">Start Service Request</a>';
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="StartBiddingWar(' + data[i].VendorID + ')">Start Binding War</a>';
                             }
-                            templateCell = document.createElement('div');
-                            templateCell.className = 'vendorQuote';
-                            templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;
-                            templateCell.innerHTML = data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
-                            templateRow.appendChild(templateCell);
+
+                            // add Send RFQ button
+                            //buttonGroupCell.innerHTML += data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
+
+                            templateRow.appendChild(buttonGroupCell);
 
                             nextDivRow.appendChild(templateRow);
                         }

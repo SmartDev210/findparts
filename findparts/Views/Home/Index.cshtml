@@ -1,11 +1,11 @@
-﻿
+﻿@using Findparts.Core
 @model Findparts.Models.HomePageViewModel
 @{ 
-    ViewBag.Description = "Search any aircraft part in seconds. Search millions of MRO capabilities by aircraft part number. Find component MROs to Test, Repair & Overhaul aircraft parts. | Elena's List | @MROFINDER.aero | #MROFINDER | MROFINDER.aero";
+    ViewBag.Description = $"Search any aircraft part in seconds. Search millions of MRO capabilities by aircraft part number. Find component MROs to Test, Repair & Overhaul aircraft parts. | {Config.PortalName} | @MROFINDER.aero | #MROFINDER | MROFINDER.aero";
 }
 
 @section header {    
-    <meta name="keywords" content="MROfinder, Elena's List, MRO-finder">
+    <meta name="keywords" content="MROfinder, FindParts">
 
 }
 

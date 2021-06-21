@@ -18,7 +18,7 @@ namespace Findparts.Areas.WebApi.Controllers
     public class WebApiController : Controller
     {
         private ApplicationSignInManager _signInManager;
-        private readonly IChatService _chatService;
+        private readonly IWeavyService _chatService;
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -26,7 +26,7 @@ namespace Findparts.Areas.WebApi.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        public WebApiController(IChatService chatService)
+        public WebApiController(IWeavyService chatService)
         {
             _signInManager = System.Web.HttpContext.Current.Request.GetOwinContext()
                                 .GetUserManager<ApplicationSignInManager>();

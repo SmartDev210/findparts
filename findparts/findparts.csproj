@@ -76,6 +76,15 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.11.1\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.11.1\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.11.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
@@ -104,6 +113,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.11.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.11.1\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
@@ -284,7 +296,7 @@
     <Compile Include="Controllers\WebApiController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\WeavyController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -328,14 +340,14 @@
     <Compile Include="Models\Vendor\VendorUploadListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\IAdminService.cs" />
-    <Compile Include="Services\Interfaces\IChatService.cs" />
+    <Compile Include="Services\Interfaces\IWeavyService.cs" />
     <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMembershipService.cs" />
     <Compile Include="Services\Interfaces\IPartsSearchService.cs" />
     <Compile Include="Services\Interfaces\ISubscriberService.cs" />
     <Compile Include="Services\Interfaces\IVendorService.cs" />
     <Compile Include="Services\Services\AdminService.cs" />
-    <Compile Include="Services\Services\ChatService.cs" />
+    <Compile Include="Services\Services\WeavyService.cs" />
     <Compile Include="Services\Services\EmailService.cs" />
     <Compile Include="Services\Services\MembershipService.cs" />
     <Compile Include="Services\Services\PartsSearchService.cs" />
@@ -481,6 +493,8 @@
     <Content Include="Content\dist\css\jquery.tagsinput.min.css" />
     <Content Include="Content\dist\css\rowGroup.bootstrap.css" />
     <Content Include="Content\dist\css\Site.css" />
+    <Content Include="Content\dist\css\Portal1.css" />
+    <Content Include="Content\dist\css\Portal0.css" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\dist\css\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -504,6 +518,14 @@
     <Content Include="Content\dist\css\themes\base\jquery-ui.min.css" />
     <Content Include="Content\dist\css\themes\base\theme.css" />
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\dist\images\0\logo.svg" />
+    <Content Include="Content\dist\images\0\logo_367x50.png" />
+    <Content Include="Content\dist\images\0\logo_529x72.png" />
+    <Content Include="Content\dist\images\0\logo_signup.png" />
+    <Content Include="Content\dist\images\1\logo_335x50.png" />
+    <Content Include="Content\dist\images\1\logo_588x72.png" />
+    <Content Include="Content\dist\images\1\logo_680x79.png" />
+    <Content Include="Content\dist\images\1\logo_signup.png" />
     <Content Include="Content\dist\images\about\email-btn.jpg" />
     <Content Include="Content\dist\images\about\facebook.jpg" />
     <Content Include="Content\dist\images\about\header.jpg" />
@@ -555,7 +577,6 @@
     <Content Include="Content\dist\images\literature\Meritocratic Repair Capability Search Engine.jpg" />
     <Content Include="Content\dist\images\literature\MROfinder.aero Letter to MROs 145 Repair Stations.jpg" />
     <Content Include="Content\dist\images\literature\MROfinder.aero Merits.jpg" />
-    <Content Include="Content\dist\images\logo.png" />
     <Content Include="Content\dist\images\logo_333x50_old.png" />
     <Content Include="Content\dist\images\logo_335x50.png" />
     <Content Include="Content\dist\images\logo_588x72.png" />
@@ -615,7 +636,6 @@
     <Content Include="Content\dist\images\TEST-sm.old.png" />
     <Content Include="Content\dist\images\TEST-sm.png" />
     <Content Include="Content\dist\images\TEST.png" />
-    <Content Include="Content\dist\images\twoline-logo.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />

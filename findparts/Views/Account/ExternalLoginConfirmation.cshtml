@@ -1,4 +1,6 @@
-﻿@model Findparts.Models.ExternalLoginConfirmationViewModel
+﻿@using Findparts.Core
+@model Findparts.Models.ExternalLoginConfirmationViewModel
+
 @{
     ViewBag.Title = Model.VendorSignup ? "Repair Station Registration" : "Customer Registration";
 }
@@ -55,7 +57,7 @@
             <div>
                 <div class="checkbox">
                     @Html.CheckBoxFor(m => m.AcceptTerm)
-                    <label for="AcceptTerm"><i>I have read, understand, and agree to Elena's List Terms of Service and Privacy Policy.</i></label>
+                    <label for="AcceptTerm"><i>I have read, understand, and agree to @Config.PortalName Terms of Service and Privacy Policy.</i></label>
                 </div>
                 @Html.ValidationMessageFor(m => m.AcceptTerm, "", new { @class = "text-danger" })
             </div>

@@ -1,4 +1,5 @@
-﻿@model Findparts.Models.Vendor.RFQPreferencesViewModel
+﻿@using Findparts.Core
+@model Findparts.Models.Vendor.RFQPreferencesViewModel
 
 <h2>Preferred Method to Receive RFQs <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="The info entered below will be displayed in search results only to paid members & operators. Leave any field blank to not display that option."></span></h2>
 @using (Html.BeginForm("RFQUpdate", "Vendor", FormMethod.Post, new { role = "form" }))
@@ -23,7 +24,7 @@
             </div>
             <div class="form-group">
                 <div>
-                    <label>Send RFQ button <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Enter 1 or multiple email addresses to be notified each time a Elena's List RFQ is received. If left blank, the 'Send RFQ' button will not appear at your listings. **Email addresses listed here are not displayed to search users."></span></label>
+                    <label>Send RFQ button <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Enter 1 or multiple email addresses to be notified each time a @Config.PortalName RFQ is received. If left blank, the 'Send RFQ' button will not appear at your listings. **Email addresses listed here are not displayed to search users."></span></label>
                     @Html.TextBoxFor(x => x.RFQWebEmails, new { @class = "form-control" })
                     @Html.ValidationMessageFor(x => x.RFQWebEmails, "", new { @class = "text-danger" })
                 </div>

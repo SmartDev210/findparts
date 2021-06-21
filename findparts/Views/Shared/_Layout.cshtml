@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@(string.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ")Elena's List @ViewBag.ExtraTitle</title>
+    <title>@(string.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ")@Config.PortalName @ViewBag.ExtraTitle</title>
     @if (!string.IsNullOrEmpty(ViewBag.Description))
     {
         <meta name="description" content="@ViewBag.Description" />
@@ -67,9 +67,11 @@
     <footer>
         @Html.Partial("_Footer")
     </footer>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.12.4.js" type="text/javascript"></script>
+	<script src="@Config.WeavyUrl/javascript/weavy.jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.12.4.js" type="text/javascript"></script>    
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.0/jquery-ui.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" type="text/javascript"></script>
+
 
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/PluginsJs")
@@ -92,7 +94,7 @@
     </script>
 
     <div id="divDisabledFeature" style="display:none;">
-        Elena's List Opens for Paid Search Subscribers Q4 2018<br /><br />
+        @Config.PortalName Opens for Paid Search Subscribers Q4 2018<br /><br />
         <input class="form-control input-lg" placeholder="Enter Email" type="email" id="txtDisabledFeatureEmail" />
     </div>
     <script type="text/javascript">

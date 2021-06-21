@@ -1,10 +1,11 @@
-﻿@{  
+﻿@using Findparts.Core
+@{  
     ViewBag.Title = "About";
 }
 
 @section featured_content {
 
-    <h1>About Elena's List</h1>
+    <h1>About @Config.PortalName</h1>
 }
 
 <div class="about-page">
@@ -29,9 +30,9 @@
                 Component MROs don’t advertise capabilities on every marketplace platform.<br /><br />
                 Existing platforms charge MROs to list capabilities; component MROs have to decide which platforms to pay for.<br /><br />
 
-                <h3><u>Solution - Elena's List</u></h3><br />
+                <h3><u>Solution - @Config.PortalName</u></h3><br />
                 A desktop & mobile friendly platform where all component MROs can meritocratically list component MRO capabilities.<br /><br />
-                Elena's List is the world’s first meritocratic searchable database of component MRO capabilities.<br /><br />
+                @Config.PortalName is the world’s first meritocratic searchable database of component MRO capabilities.<br /><br />
                 ~ Free to List & Pay to Search ~<br /><br />
             </div>
             <div class="col-sm-10 col-sm-offset-1">

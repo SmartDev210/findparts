@@ -4,18 +4,17 @@
 {   
     <button id="toggle-messenger" class="toggle-messenger text-center">Chat<span class="badge" id="messenger-badge"></span></button>
     <div id="messenger-container"></div>
-    <script src="@Config.WeavyUrl/javascript/weavy.jquery.min.js"></script>
     
     <script>
 
         function OpenChat(vendorId) {
             $.ajax({
-                url: "@Url.Action("GetMemberId", "Chat")",
+                url: "@Url.Action("GetMemberId", "Weavy")",
                 type: "POST",
                 data: { vendorId: vendorId },
                 success: function (res) {
                     if (res.id == 0) {
-                        alert("Can't open chat with him");
+                        alert("Can't open chat with that vendor");
                         return;
                     }
                     weavy.ajax(`/api/conversations`, {
@@ -30,12 +29,12 @@
             })
         }
 
-        function InitializeChat(token) {
+        function InitializeChat() {
 
             var getToken = function () {
                 // Using jQuery ajax for example
                 return $.ajax({
-                    url: "@Url.Action("GetToken", "Chat")",
+                    url: "@Url.Action("GetToken", "Weavy")",
                     type: "POST",
                     xhrFields: {
                         // Make sure to enable cookies if needed
@@ -44,22 +43,22 @@
                 });
             }
 
-            window.weavy = new Weavy({ jwt: getToken });                      
+            window.weavy = new Weavy({ jwt: getToken });
             var space = weavy.space({ key: "global" });
             window.messenger = space.app({ key: "messenger", type: "messenger", container: "#messenger-container", open: false });
-            /*
+
             weavy.on("badge", function (e, badge) {
                 if (badge.total == 0) {
                     $("#messenger-badge").text("");
-                } else 
-                    $("#messenger-badge").text(badge.conversations);                
+                } else
+                    $("#messenger-badge").text(badge.conversations);
             });
 
             weavy.ajax("api/conversations/unread").then(function (result) {
                 if (result != 0)
                     $("#messenger-badge").text(result);
-            })*/
-            
+            });
+
         }
 
         $(function () {
@@ -79,5 +78,35 @@
                 }
             });
         })
+
+
+        function SartCollabChannel(vendorId) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCollabChannel", "Weavy")',
+                data: { vendorId: vendorId },
+                success: function (res) {
+                    if (res.error == false) {
+                        window.open("@Config.WeavyUrl/spaces/" + res.id, "_blank");
+                    } else {
+                        alert(res.errorMessage);
+                    }
+                }
+            });
+        }
+        function StartServiceRequest(vendorId) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetServiceRequestChannel", "Weavy")',
+                data: { vendorId: vendorId },
+                success: function (res) {
+                    if (res.error == false) {
+                        window.open("@Config.WeavyUrl/spaces/" + res.id, "_blank");
+                    } else {
+                        alert(res.errorMessage);
+                    }
+                }
+            });
+        }
     </script>
 }

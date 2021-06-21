@@ -1,10 +1,11 @@
-﻿@{  
+﻿@using Findparts.Core
+@{  
     ViewBag.Title = "Contact";
 }
 
 @section featured_content {
 
-    <h1>Contact Elena's List</h1>
+    <h1>Contact @Config.PortalName</h1>
 }
 <div class="contact-page">
     <div class="container">
@@ -142,7 +143,7 @@
     @if (false)
     {
     <address>
-        <strong>Elena's List</strong><br />
+        <strong>@Config.PortalName</strong><br />
         234 East 17th Street, STE 117<br />
         Costa Mesa, CA 92627
     </address>

@@ -298,7 +298,7 @@ namespace Findparts.Controllers
                 {
                     SessionVariables.Populate();
                 }
-                TempData["Success"] = "Subscription Successfully Added.<br><br>Welcome to Elena's List. Your Search Subscription is now active.";
+                TempData["Success"] = $"Subscription Successfully Added.<br><br>Welcome to {Config.PortalName}. Your Search Subscription is now active.";
             } else if (!string.IsNullOrEmpty(subscriber.StripeCustomerID))
             {
                 // update/new card
