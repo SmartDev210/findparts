@@ -281,12 +281,14 @@ namespace Findparts.Helpers
         /// <returns></returns>
         public String Encode()
         {
-            var certFile = new X509Certificate2(Config.JitsiPrivateKeyPath);
+            var certFile = new X509Certificate2(Config.JitsiPrivateKeyPath, "", X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
             
             var context = new Dictionary<String, Object>();
             context.Add("user", userClaims);
             context.Add("features", featureClaims);
             payload.Add("context", context);
+
+            
 
             var token = new JwtBuilder()
                .WithAlgorithm(new RS256Algorithm(certFile.GetRSAPublicKey(), certFile.GetRSAPrivateKey()))
