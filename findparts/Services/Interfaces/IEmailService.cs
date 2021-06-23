@@ -35,5 +35,6 @@ namespace Findparts.Services.Interfaces
         void SendMessageUsEmail(string name, string contact, string body);
         void SendWebhookEmail(string eventType, string json);
         void SendPasswordResetEmail(string email, string callbackUrl);
+        void SendJitsiMeetingInvitationEmail(string sender, string email, string meetingUrl);
     }
 }

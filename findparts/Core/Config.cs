@@ -36,5 +36,9 @@ namespace Findparts.Core
 
         public static int PortalCode => Int32.Parse(ConfigurationManager.AppSettings["PortalCode"]);
         public static string PortalName => ConfigurationManager.AppSettings["PortalName"];
+
+        public static string JitsiPrivateKeyPath => ConfigurationManager.AppSettings["JitsiPrivateKeyPath"];
+        public static string JitsiAppId => ConfigurationManager.AppSettings["JitsiAppId"];
+        public static string JitsiApiKey => ConfigurationManager.AppSettings["JitsiApiKey"];
     }
 }

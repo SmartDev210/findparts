@@ -90,6 +90,7 @@ namespace Findparts
             container.RegisterType<IVendorService, VendorService>();
             container.RegisterType<IAdminService, AdminService>();
             container.RegisterType<IWeavyService, WeavyService>();
+            container.RegisterType<IJitsiService, JitsiService>();
         }
     }
 }

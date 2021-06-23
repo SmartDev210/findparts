@@ -293,6 +293,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\VideoCallController.cs" />
     <Compile Include="Controllers\WebApiController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -314,6 +315,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Currency.cs" />
+    <Compile Include="Helpers\JaaSJwtBuilder.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin\PreviewCapabilityViewModel.cs" />
     <Compile Include="Models\Admin\SubscriberDetailViewModel.cs" />
@@ -338,8 +340,10 @@
     <Compile Include="Models\Vendor\VendorGeneralTabViewModel.cs" />
     <Compile Include="Models\Vendor\VendorIndexPageViewModel.cs" />
     <Compile Include="Models\Vendor\VendorUploadListViewModel.cs" />
+    <Compile Include="Models\VideoCallViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\IAdminService.cs" />
+    <Compile Include="Services\Interfaces\IJitsiService.cs" />
     <Compile Include="Services\Interfaces\IWeavyService.cs" />
     <Compile Include="Services\Interfaces\IEmailService.cs" />
     <Compile Include="Services\Interfaces\IMembershipService.cs" />
@@ -347,6 +351,7 @@
     <Compile Include="Services\Interfaces\ISubscriberService.cs" />
     <Compile Include="Services\Interfaces\IVendorService.cs" />
     <Compile Include="Services\Services\AdminService.cs" />
+    <Compile Include="Services\Services\JitsiService.cs" />
     <Compile Include="Services\Services\WeavyService.cs" />
     <Compile Include="Services\Services\EmailService.cs" />
     <Compile Include="Services\Services\MembershipService.cs" />
@@ -813,6 +818,7 @@
     <Content Include="Views\Account\Signup.cshtml" />
     <Content Include="Views\Account\ExternalLoginSelectPlan.cshtml" />
     <Content Include="Views\WebApi\Login.cshtml" />
+    <Content Include="Views\VideoCall\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

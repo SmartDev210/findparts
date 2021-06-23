@@ -176,7 +176,7 @@
                             buttonGroupCell.className = "button-list";
 
                             if (data[i].VendorID != 0) { // add chat button add
-                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenVideoCall(' + data[i].VendorID + ')">Video Call</a>';
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank">Video Call</a>';
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Send Message</a>';
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Collab Channel</a>';
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="StartServiceRequest(' + data[i].VendorID + ')">Start Service Request</a>';

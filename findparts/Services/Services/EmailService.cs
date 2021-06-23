@@ -649,5 +649,18 @@ namespace Findparts.Services.Services
 
 			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Webhook: " + eventType, message);
 		}
-	}
+
+        public void SendJitsiMeetingInvitationEmail(string sender, string email, string meetingUrl)
+        {
+			string message = $"{sender} is inviting you to a meeting."
+				+ Environment.NewLine
+				+ Environment.NewLine
+				+ "Join the meeting:"
+				+ Environment.NewLine
+				+ meetingUrl
+				+ Environment.NewLine;
+
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Meet Invite", message);
+		}
+    }
 }
