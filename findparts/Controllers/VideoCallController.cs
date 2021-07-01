@@ -81,8 +81,28 @@ namespace Findparts.Controllers
                 UserEmail = User.Identity.GetEmail(),
                 RoomName = $"room-{vendorId}-{userId}"
             };
+            return View("Index", viewModel);            
+        }
+        [HttpGet]
+        [Authorize(Roles = "Subscriber, Vendor, Admin")]
+        [Route("video-call/global-room")]
+        // GET: VideoCall
+        public ActionResult GlobalVideoCall()
+        {   
+            var token = JaaSJwtBuilder.Builder()
+               .WithDefaults()
+               .WithApiKey(Config.JitsiApiKey)
+               //.WithUserName(User.Identity.Name)
+               //.WithUserEmail(User.Identity.GetEmail())
+               .WithAppID(Config.JitsiAppId)
+               .Encode();
+            VideoCallViewModel viewModel = new VideoCallViewModel
+            {   
+                Token = token,
+                UserEmail = User.Identity.GetEmail(),
+                RoomName = $"global-room"
+            };
             return View("Index", viewModel);
-            
         }
     }
 }

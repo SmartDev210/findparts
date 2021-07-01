@@ -17,7 +17,7 @@
     </style>
 }
 <div style="height: 100%; width: 100%; display: flex; flex-direction: column">
-    <div class="message-success text-center">
+    <div class="message-success text-center" style="display: @(Model.VendorId == 0 ? "none" : "block");">
         Invitation emails are sent to vendor. Please wait.
     </div>
     <div id="meet-container" style="flex-grow: 1;"></div>
