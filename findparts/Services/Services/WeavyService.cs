@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using JWT.Builder;
 using JWT.Algorithms;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Findparts.Services.Services
 {
@@ -215,6 +216,15 @@ namespace Findparts.Services.Services
         }
         public string GetWeavyToken(string userId, string email)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                var userManager = System.Web.HttpContext.Current.Request.GetOwinContext()
+                                .GetUserManager<ApplicationUserManager>();
+                var userTask = userManager.FindByEmailAsync(email);
+                Task.WaitAll(userTask);
+                userId = userTask.Result.Id;
+            }
+
             return new JwtBuilder()
                .WithAlgorithm(new HMACSHA256Algorithm())
                .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeSeconds())

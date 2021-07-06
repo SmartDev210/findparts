@@ -13,7 +13,7 @@ namespace Findparts.Controllers
 {
     public class WeavyController : Controller
     {
-        private readonly IWeavyService _weavyService;
+        private readonly IWeavyService _weavyService;        
         public WeavyController(IWeavyService chatService)
         {
             _weavyService = chatService;

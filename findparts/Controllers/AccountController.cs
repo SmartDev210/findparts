@@ -27,9 +27,9 @@ namespace Findparts.Controllers
         private ApplicationUserManager _userManager;
         private readonly IMembershipService _membershipService;
         private readonly IMailService _mailService;
+        private readonly IWeavyService _weavyService;
 
-       
-        public AccountController(IMembershipService membershipService, IMailService mailService )
+        public AccountController(IMembershipService membershipService, IMailService mailService, IWeavyService weavyService )
         {
             _userManager = System.Web.HttpContext.Current.Request.GetOwinContext()
                                 .GetUserManager<ApplicationUserManager>(); ;
@@ -38,6 +38,7 @@ namespace Findparts.Controllers
 
             _membershipService = membershipService;
             _mailService = mailService;
+            _weavyService = weavyService;
         }
 
         //
@@ -323,7 +324,7 @@ namespace Findparts.Controllers
                         if (subscriber.SignupSubscriberTypeID == (int)SubscriberTypeID.NoCreditCard)
                         {
                             // Check or wire, dont bug them
-                            return Redirect("/");
+                            return RedirectToLocal("/");
                         }
                         if (subscriber.SubscriberTypeID == (int)SubscriberTypeID.NoCreditCard)
                         {
@@ -333,7 +334,7 @@ namespace Findparts.Controllers
                     }
                 }
 
-                return Redirect("~/");
+                return RedirectToLocal("~/");
             } else
             {
                 return View("Error");
@@ -428,6 +429,78 @@ namespace Findparts.Controllers
         }
 
         //
+        // POST: /Account/ExternalLoginFromBackChannel
+        [HttpPost]
+        [AllowAnonymous]       
+        public ActionResult ExternalLoginFromBackChannel(string provider, string path)
+        {
+            // Request a redirect to the external login provider
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallbackFromWeavy", "Account", new { Path = path }));
+        }
+
+        //
+        // GET: /Account/ExternalLoginCallbackFromWeavy
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalLoginCallbackFromWeavy(string path)
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {  
+                return Redirect($"{Config.WeavyUrl}/sign-in?path={path}");
+            }
+
+            // Sign in the user with this external login provider if the user already has a login
+            var result = await _signInManager.ExternalSignInAsync(loginInfo, isPersistent: true);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={_weavyService.GetWeavyToken(null, loginInfo.Email)}");
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = $"{Config.WeavyUrl}?path={path}", RememberMe = false });
+                case SignInStatus.Failure:
+                default:
+                    // If the user does not have an account, then prompt the user to create an account
+
+                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
+                    var createResult = await _userManager.CreateAsync(user);
+                    if (createResult.Succeeded)
+                    {
+                        // create default Register view model
+                        RegisterViewModel viewModel = new RegisterViewModel()
+                        {
+                            Email = loginInfo.Email,
+                            VendorSignup = false,
+                            AcceptTerm = true,
+                            SubscriberTypeId = (int)SubscriberTypeID.NoCreditCard,
+                            CompanyName = loginInfo.ExternalIdentity.Name,
+                            Country = "United States"
+                        };
+                        Session.Abandon();
+
+                        _userManager.AddToRole(user.Id, "Subscriber");
+
+                        var vendorId = _membershipService.RegisterNewUser(viewModel, user);
+
+                        Session["RegisterVendorID"] = vendorId;
+
+                        var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
+                        if (loginResult.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={_weavyService.GetWeavyToken(null, loginInfo.Email)}");
+                        }
+                        //return View("ExternalLoginConfirmation");
+                        //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    }
+                    TempData["Error"] = "Failed to register linkedin user";                   
+                    return Redirect($"{Config.WeavyUrl}/sign-in?path={path}");
+            }
+        }
+
+
+        //
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -452,7 +525,7 @@ namespace Findparts.Controllers
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
-
+        
         //
         // POST: /Account/SendCode
         [HttpPost]
@@ -475,7 +548,7 @@ namespace Findparts.Controllers
         [Route("apple-signin")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> AppleSigninCallback()
+        public async Task<ActionResult> AppleSigninCallback(string path)
         {
             string state = Request.Form["state"];
             var token = Request.Form["id_token"];
@@ -508,7 +581,12 @@ namespace Findparts.Controllers
                             if (state == "mobile")
                             {
                                 return RedirectToAction("MobileAuthCallback", "WebApi");
-                            } else
+                            } else if (state == "backchannel")
+                            {
+                                var jwtToken = _weavyService.GetWeavyToken(user.Id, user.Email);
+                                return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={jwtToken}");
+                            }
+                            else
                             {
                                 return RedirectToAction("Index", "Home");
                             }
@@ -541,10 +619,15 @@ namespace Findparts.Controllers
                             var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo);
                             if (loginResult.Succeeded)
                             {
-                                await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                await _signInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
                                 if (state == "mobile")
-                                {
+                                {   
                                     return RedirectToAction("MobileAuthCallback", "WebApi");
+                                }
+                                else if (state == "backchannel")
+                                {
+                                    var jwtToken = _weavyService.GetWeavyToken(user.Id, user.Email);
+                                    return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={jwtToken}");
                                 }
                                 else
                                 {
@@ -564,6 +647,9 @@ namespace Findparts.Controllers
             if (state == "mobile")
             {
                 return RedirectToAction("MobileAuth", "WebApi");
+            } else if(state == "backchannel")
+            {
+                return Redirect($"{Config.WeavyUrl}/sign-in?path={path}");
             }
             else
             {
@@ -585,7 +671,7 @@ namespace Findparts.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await _signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            var result = await _signInManager.ExternalSignInAsync(loginInfo, isPersistent: true);
             switch (result)
             {
                 case SignInStatus.Success:
