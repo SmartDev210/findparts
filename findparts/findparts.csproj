@@ -543,6 +543,7 @@
     <Content Include="Content\dist\images\about\planeheader.jpg" />
     <Content Include="Content\dist\images\about\turbine.png" />
     <Content Include="Content\dist\images\about\twitter.png" />
+    <Content Include="Content\dist\images\back-channel.png" />
     <Content Include="Content\dist\images\CAAC-sm.old.png" />
     <Content Include="Content\dist\images\CAAC-sm.png" />
     <Content Include="Content\dist\images\CAAC.png" />
