@@ -20,11 +20,13 @@
             <div class="pre-price">Social Collab - 15 Users</div>
             <div class="price">$0.00</div>
         *@
-        <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in" style="height: 46px; width: 220px; margin: auto; margin-bottom: 20px;"></div>
+        <p>By continuing, you agree to our <a href="/terms" target="_blank">User Agreement</a> and <a href="/privacy" target="_blank">Privacy Policy</a>.</p>
+        <br/>
+        <div id="appleid-signin" data-color="black" data-border="true" data-type="continue" style="height: 46px; width: 220px; margin: auto; margin-bottom: 20px;"></div>
         @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }))
         {
             @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Sign in with LinkedIn" style="margin: 10px; width: 220px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Sign In with LinkedIn</button>
+            <button type="submit" class="btn btn-primary" id="LinkedIn" name="provider" value="LinkedIn" title="Continue with LinkedIn" style="margin: 10px; width: 220px;"><img src="~/Content/dist/images/icons/linkedin.png" style="width: 30px; height:30px; border-radius: 4px;" />&nbsp;&nbsp; Continue with LinkedIn</button>
         }
         <div class="block-footer" style="font-size: 32px; font-weight: bold; margin-top: 20px;">
             <div>Free</div>
