@@ -1,21 +1,22 @@
 ﻿.site-title a {
-    background: url(/Content/dist/images/1/logo_335x50.png);
+    background: url(/Content/dist/images/1/logo_367x50.png);
     color: #c8c8c8;
     outline: none;
     text-decoration: none;
     background-size: 100% 100%;
-    width: 335px;
+    width: 367px;
     display: block;
     height: 50px;
 }
+
 .home-page .site-title a {
-    background: url(/Content/dist/images/1/logo_588x72.png);
+    background: url(/Content/dist/images/1/logo_529x72.png);
     color: #c8c8c8;
     outline: none;
     text-decoration: none;
     background-size: 100% 100%;
     display: block;
     margin: 0 auto;
-    width: 588px;
+    width: 529px;
     height: 72px;
 }
