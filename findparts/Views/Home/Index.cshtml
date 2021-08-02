@@ -10,14 +10,22 @@
 }
 
 <div id="divMerits" class="merits">
-    <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount</span> MROs Are Listing <span style="font-size:34px;">@string.Format("{0}", Model.SpanPartCount)</span> Capabilities</h3>
+    @if (Config.PortalCode == 1)
+    {
+        <h3 style="color:#0091b2"><span style="font-size:34px;">5127</span> Vendors Uploaded <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
+    }
+    else
+    {
+        <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount.ToString("N0")</span> MROs Are Listing <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Capabilities</h3>
+    }
+
     <br /><br />
     <div class="wrapper">
         @foreach (var item in Model.Merits)
         {
             <div class="merit">
                 <img src="~/Content/dist/images/@(item.Icon).png" style="width:100px;height:100px;" />
-                <span class="name">@item.Name</span>            
+                <span class="name">@item.Name</span>
                 @{/* <span class="desc">@item.Description</span> */}
             </div>
         }
@@ -39,7 +47,7 @@
             </div>
         </div>
     </div>
-    <br/>
+    <br />
 </div>
 <div style="background-color:#efefef">
     <div class="recent-search">
