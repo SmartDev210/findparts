@@ -57,6 +57,7 @@ namespace DAL
         public string Notes { get; set; }
         public Nullable<int> PartsCount { get; set; }
         public Nullable<int> AchievementsCount { get; set; }
+        public Nullable<int> WeavyCompanyId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VendorList> VendorLists { get; set; }

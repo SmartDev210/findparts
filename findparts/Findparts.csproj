@@ -333,6 +333,7 @@
     <Compile Include="Models\Subscriber\SubscriberIndexPageViewModel.cs" />
     <Compile Include="Models\Subscriber\SubscriberNewUserViewModel.cs" />
     <Compile Include="Models\Subscriber\SubscriberVendorsPageViewModel.cs" />
+    <Compile Include="Models\Subscriber\UsersViewModel.cs" />
     <Compile Include="Models\Vendor\CertsViewModel.cs" />
     <Compile Include="Models\Vendor\OEMsViewModel.cs" />
     <Compile Include="Models\Vendor\QuotePageViewModel.cs" />
@@ -341,6 +342,8 @@
     <Compile Include="Models\Vendor\VendorIndexPageViewModel.cs" />
     <Compile Include="Models\Vendor\VendorUploadListViewModel.cs" />
     <Compile Include="Models\VideoCallViewModel.cs" />
+    <Compile Include="Models\WebApi\AddVendorUserRequest.cs" />
+    <Compile Include="Models\WebApi\UpdateVendorFromWeavyRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\IAdminService.cs" />
     <Compile Include="Services\Interfaces\IJitsiService.cs" />
@@ -350,6 +353,7 @@
     <Compile Include="Services\Interfaces\IPartsSearchService.cs" />
     <Compile Include="Services\Interfaces\ISubscriberService.cs" />
     <Compile Include="Services\Interfaces\IVendorService.cs" />
+    <Compile Include="Services\Interfaces\IWebApiService.cs" />
     <Compile Include="Services\Services\AdminService.cs" />
     <Compile Include="Services\Services\JitsiService.cs" />
     <Compile Include="Services\Services\WeavyService.cs" />
@@ -358,6 +362,7 @@
     <Compile Include="Services\Services\PartsSearchService.cs" />
     <Compile Include="Services\Services\SubscriberService.cs" />
     <Compile Include="Services\Services\VendorService.cs" />
+    <Compile Include="Services\Services\WebApiService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -54,17 +54,14 @@ namespace Findparts.Services.Services
             }
         }
 
-        public async Task<int> DeleteUser(string userId)
+        public async Task<int> DeleteUser(int userId)
         {
-            var user = _context.UserGetByID(userId.ToNullableInt()).FirstOrDefault();
-            if (user != null)
-            {
-                var appUser = await _userManager.FindByEmailAsync(user.Email);
-                await _userManager.DeleteAsync(appUser);
+            var user = _context.Users.Find(userId);
+            user.SubscriberID = null;
+            user.VendorID = null;
+            user.CreatedByUserID = null;
 
-                return _context.UserDelete(user.UserID);
-            }
-            return 0;
+            return await _context.SaveChangesAsync();
         }
 
         public Subscriber GetSubscriberById(string subscriberId)

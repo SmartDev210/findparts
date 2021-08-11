@@ -170,6 +170,7 @@
           <Property Name="Notes" Type="varchar" MaxLength="1000" />
           <Property Name="PartsCount" Type="int" />
           <Property Name="AchievementsCount" Type="int" />
+          <Property Name="WeavyCompanyId" Type="int" />
         </EntityType>
         <EntityType Name="VendorAchievementList">
           <Key>
@@ -1189,6 +1190,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="PartsCount" Type="Int32" />
           <Property Name="AchievementsCount" Type="Int32" />
           <NavigationProperty Name="VendorLists" Relationship="Self.FK_VendorList_Vendor" FromRole="Vendor" ToRole="VendorList" />
+          <Property Name="WeavyCompanyId" Type="Int32" />
         </EntityType>
         <EntityType Name="VendorAchievementList">
           <Key>
@@ -2660,6 +2662,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Type="Int32" Name="RepairTAT" Nullable="true" />
           <Property Type="Int32" Name="OverhaulPrice" Nullable="true" />
           <Property Type="Int32" Name="OverhaulTAT" Nullable="true" />
+          <Property Type="Int32" Name="WeavyCompanyId" Nullable="true" />
         </ComplexType>
         <ComplexType Name="VendorListItemSearchSimilar_Result">
           <Property Type="String" Name="Similar" Nullable="true" MaxLength="50" />
@@ -2912,6 +2915,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySetMapping Name="Vendors">
             <EntityTypeMapping TypeName="DomainModel.Vendor">
               <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="WeavyCompanyId" ColumnName="WeavyCompanyId" />
                 <ScalarProperty Name="VendorID" ColumnName="VendorID" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
@@ -3612,6 +3616,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
                 <ScalarProperty Name="RepairTAT" ColumnName="RepairTAT" />
                 <ScalarProperty Name="OverhaulPrice" ColumnName="OverhaulPrice" />
                 <ScalarProperty Name="OverhaulTAT" ColumnName="OverhaulTAT" />
+                <ScalarProperty Name="WeavyCompanyId" ColumnName="WeavyCompanyId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

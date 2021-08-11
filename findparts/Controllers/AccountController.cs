@@ -454,6 +454,7 @@ namespace Findparts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session.Abandon();
                     return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={_weavyService.GetWeavyToken(null, loginInfo.Email)}");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -577,6 +578,7 @@ namespace Findparts.Controllers
                         }
                         else
                         {
+                            Session.Abandon();
                             await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                             if (state == "mobile")
                             {
@@ -675,6 +677,7 @@ namespace Findparts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    Session.Abandon();
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -906,7 +909,7 @@ namespace Findparts.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> DeleteUser(string userId)
+        public async Task<ActionResult> DeleteUser(int userId)
         {
             var cnt = await _membershipService.DeleteUser(userId);
 

@@ -1,4 +1,5 @@
-﻿using Findparts.Services.Interfaces;
+﻿using Findparts.Models.WebApi;
+using Findparts.Services.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +19,7 @@ namespace Findparts.Areas.WebApi.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private readonly IWeavyService _chatService;
+        private readonly IWebApiService _apiService;
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -26,12 +27,13 @@ namespace Findparts.Areas.WebApi.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        public WebApiController(IWeavyService chatService)
+        public WebApiController(IWeavyService chatService, IWebApiService webApiService)
         {
             _signInManager = System.Web.HttpContext.Current.Request.GetOwinContext()
                                 .GetUserManager<ApplicationSignInManager>();
 
             _chatService = chatService;
+            _apiService = webApiService;
         }
         
         [Route("mobile-api/auth")]
@@ -73,7 +75,8 @@ namespace Findparts.Areas.WebApi.Controllers
         [AllowAnonymous]
         public ActionResult MobileAuthAnother()
         {
-            AuthenticationManager.SignOut();
+            Session.Abandon();
+            AuthenticationManager.SignOut();            
             return RedirectToAction("MobileAuth");
         }
         [Route("mobile-api/weavy-jwt")]
@@ -106,6 +109,42 @@ namespace Findparts.Areas.WebApi.Controllers
                 token = token
             });
         }
+        [Route("web-api/update-vendor")]
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult UpdateVendorFromWeavy(UpdateVendorFromWeavyRequest request)
+        {   
+            var user = _signInManager.UserManager.FindByEmail(request.UserEmail);
+            if (user == null)
+                return HttpNotFound();
+            
+            if (!_signInManager.UserManager.IsInRole(user.Id, "Vendor"))
+            {
+                _signInManager.UserManager.AddToRole(user.Id, "Vendor");
+            }
 
+            var result = _apiService.UpdateVendorFromWeavy(user, request);
+            return Json(new { success = result });
+        }
+        [Route("web-api/add-vendor-user")]
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AddVendorUser(AddVendorUserRequest request)
+        {
+            var user = _signInManager.UserManager.FindByEmail(request.CreatorEmail);
+            if (user == null)
+                return HttpNotFound();
+            var added = _signInManager.UserManager.FindByEmail(request.Email);
+
+            if (added == null)
+                return HttpNotFound();
+            if (_signInManager.UserManager.IsInRole(added.Id, "Vendor"))
+            {
+                _signInManager.UserManager.AddToRole(user.Id, "Vendor");
+            }
+
+            var result = _apiService.AddVendorUser(user, added);
+            return Json(new { success = result });
+        }
     }
 }

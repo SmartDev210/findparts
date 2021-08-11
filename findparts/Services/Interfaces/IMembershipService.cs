@@ -16,7 +16,7 @@ namespace Findparts.Services.Interfaces
         void PopulateRegisterViewModel(ExternalLoginConfirmationViewModel viewModel);
         void ApproveUser(ApplicationUser user, bool primaryUser);
         void UpdateUser(Nullable<int> userID, Nullable<System.Guid> providerUserKey, Nullable<int> subscriberID, Nullable<int> vendorID, string email, Nullable<int> createdByUserID);
-        Task<int> DeleteUser(string userId);
+        Task<int> DeleteUser(int userId);
         User GetUserById(string userId);
         bool SubscribeWithStripe(int subscriberTypeId, string stripeToken, Subscriber subscriber);
         bool UpdateSubscribeWithStripe(string stripeToken, Subscriber subscriber);

@@ -64,10 +64,20 @@ namespace Findparts.Services.Services
             return null;
         }
 
-        public List<UserGetBySubscriberID_Result> GetUsersViewModel(string subscriberId)
+        public UsersViewModel GetUsersViewModel(string subscriberId)
         {
-            var list = _context.UserGetBySubscriberID(subscriberId.ToNullableInt()).ToList();
-            return list;
+			UsersViewModel viewModel = new UsersViewModel();
+			
+			viewModel.Users = _context.UserGetBySubscriberID(subscriberId.ToNullableInt()).ToList();
+			int subscriber = subscriberId.ToInt();
+			var user = _context.Users.FirstOrDefault(x => x.SubscriberID == subscriber);
+
+			if (user.VendorID != null)
+            {
+				viewModel.WeavyCompanyId = _context.Vendors.Find(user.VendorID)?.WeavyCompanyId;
+            }
+
+            return viewModel;
         }
 
         public string GetInvoice(string stripeInvoiceID, string subscriberID)

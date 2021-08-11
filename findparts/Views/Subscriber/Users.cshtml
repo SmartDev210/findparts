@@ -1,16 +1,21 @@
 ﻿@using Findparts.Models.Subscriber
-@model List<DAL.UserGetBySubscriberID_Result>
+@using Findparts.Core
+@model UsersViewModel
 
 @{ 
     ViewBag.Title = "Users";
     ViewBag.ActiveTab = SubscriberActiveTab.UsersTab;
 }
 
-<a id="btnUsersAdd" class="btn btn-primary" href="@Url.Action("NewUser")"><span class="glyphicon glyphicon-plus"></span> Add New User</a>
+@if (Model.WeavyCompanyId.HasValue && Model.WeavyCompanyId != 0)
+{
+    <a href="@Config.WeavyUrl/spaces/@Model.WeavyCompanyId/members" class="btn btn-primary" target="_blank"><span class="glyphicon glyphicon-plus"></span> Add New User</a>
+}
+
 <br/>
 <table class="table table-condensed" style="border-collapse: collapse;">
     <caption>
-        @Model.Count Users found
+        @Model.Users.Count Users found
     </caption>
     <tbody>
         <tr>
@@ -20,17 +25,13 @@
             <th scope="col">&nbsp;</th>
 
         </tr>
-        @foreach (var user in Model)
+        @foreach (var user in Model.Users)
         {
             <tr>
                 <td>@if (user.DateDeleted != null) {<text><s>@user.Email</s></text> } else { <text>@user.Email</text> }</td>
                 <td>@user.SearchCount</td>
                 <td>@if (user.VendorID != null) { <text><span class="glyphicon glyphicon-ok"></span></text> }</td>
                 <td>
-                    @if (user.DateDeleted == null)
-                    {
-                        <a class="btn btn-primary" href="javascript:void(0);" onclick="ResetPassword(@user.UserID)"><span class='glyphicon glyphicon-lock'></span> Reset Password</a>
-                    }
                     @if (user.DateDeleted == null && user.CreatedByUserID != null)
                     {
                         <a class="btn btn-danger" href="javascript:void(0);" onclick="DeleteUser(@user.UserID)"><span class='glyphicon glyphicon-ban-circle'></span> Delete User</a>

@@ -64,5 +64,6 @@ namespace DAL
         public Nullable<int> RepairTAT { get; set; }
         public Nullable<int> OverhaulPrice { get; set; }
         public Nullable<int> OverhaulTAT { get; set; }
+        public Nullable<int> WeavyCompanyId { get; set; }
     }
 }

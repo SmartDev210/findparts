@@ -12,7 +12,7 @@ namespace Findparts.Services.Interfaces
     public interface ISubscriberService
     {
         SubscriberIndexPageViewModel GetSubscriberIndexPageViewModel(int? subscriberId);
-        List<UserGetBySubscriberID_Result> GetUsersViewModel(string subscriberId);
+        UsersViewModel GetUsersViewModel(string subscriberId);
         SubscriberNewUserViewModel GetSubscriberNewUserViewModel(string subscriberId);
         int? GetVendorIdFromSubscriberId(string subscriberId);
         string GetInvoice(string stripeInvoiceID, string subscriberID);

@@ -152,7 +152,7 @@
                                 innerHTML += '<img src="/Content/dist/Images/OEM_EX-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="OEM Authorized" />';
                             }
                             if (data[i].OEMRequiresRMA) {
-                                innerHTML += '<img src="/Content/dist/Images/OEM_RMA-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="OEM RMA" />';
+                                innerHTML = '<img src="/Content/dist/Images/OEM_RMA-sm.png" style="width:30px;height:30px;" data-toggle="popover-merit" title="OEM RMA" />';
                             }
 
                             templateCell.innerHTML = innerHTML;
@@ -178,7 +178,11 @@
                             if (data[i].VendorID != 0) { // add chat button add
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank">Video Call</a>';
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Send Message</a>';
-                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Private Channel</a>';                                
+                                if (!data[i].WeavyCompanyId || data[i].WeavyCompanyId == 0) {
+                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Private Channel</a>';
+                                } else {
+                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies' + data[i].WeavyCompanyId + '/private-channel">Start Private Channel</a>';
+                                }
                             }
 
                             // add Send RFQ button

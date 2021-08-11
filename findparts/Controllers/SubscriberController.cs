@@ -62,9 +62,9 @@ namespace Findparts.Controllers
             }
             Session["subscriberID"] = subscriberId;
 
-            var userList = _service.GetUsersViewModel(subscriberId);
+            var viewModel = _service.GetUsersViewModel(subscriberId);
 
-            return View(userList);
+            return View(viewModel);
         }
 
         
@@ -86,43 +86,33 @@ namespace Findparts.Controllers
             {
                 return View(viewModel);
             }
+            var user = _userManager.FindByEmail(viewModel.Email);
 
-            var applicationUser = new Models.ApplicationUser
+            if (user == null)
             {
-                UserName = viewModel.Email,
-                Email = viewModel.Email
-            };
-
-            var result = await _userManager.CreateAsync(applicationUser);
+                ModelState.AddModelError("Email", "Please let user sign up first");
+                return View(viewModel);
+            }
 
             var subscriberId = (string)Session["subscriberID"];
             int? vendorId = null;
-            if (result.Succeeded)
+          
+            if (viewModel.VendorAdmin)
             {
-                if (viewModel.VendorAdmin)
-                {
-                    vendorId = _service.GetVendorIdFromSubscriberId(subscriberId);
-                }
+                vendorId = _service.GetVendorIdFromSubscriberId(subscriberId);
             }
-            if (vendorId == null)
+          
+            if (vendorId != null)
             {
-                await _userManager.AddToRoleAsync(applicationUser.Id, "Subscriber");
-            } else
-            {
-                await _userManager.AddToRolesAsync(applicationUser.Id, "Subscriber", "Vendor");
+                await _userManager.AddToRolesAsync(user.Id, "Vendor");
             }
 
             
-            string code = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser.Id);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = applicationUser.Id, code = code }, protocol: Request.Url.Scheme);
-
-            _mailService.SendConfirmationEmail(applicationUser.Email, applicationUser.Email, callbackUrl, false, SessionVariables.Email);
-
-            _mailService.SendAdminNewUserEmail(applicationUser.Email, SessionVariables.CompanyName, SessionVariables.Email);
-            _mailService.SendSubscriberAdminNewUserEmail(SessionVariables.Email, applicationUser.Email, SessionVariables.CompanyName, SessionVariables.Email);
+            _mailService.SendAdminNewUserEmail(user.Email, SessionVariables.CompanyName, SessionVariables.Email);
+            _mailService.SendSubscriberAdminNewUserEmail(SessionVariables.Email, user.Email, SessionVariables.CompanyName, SessionVariables.Email);
 
 
-            _membershipService.UpdateUser(0, new Guid(applicationUser.Id), subscriberId.ToNullableInt(), vendorId, applicationUser.Email, SessionVariables.UserID.ToNullableInt());
+            _membershipService.UpdateUser(0, new Guid(user.Id), subscriberId.ToNullableInt(), vendorId, user.Email, SessionVariables.UserID.ToNullableInt());
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("Users", new { SubscriberID = subscriberId });
