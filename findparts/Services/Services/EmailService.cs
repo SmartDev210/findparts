@@ -193,10 +193,10 @@ namespace Findparts.Services.Services
                 + $"Thank You for confirming your {Config.PortalName} account." + Environment.NewLine
                 + Environment.NewLine
                 + (vendor
-                    //? "As a Repair Station, you may now upload your capabilities and workscope icons into the Elena's List platform." + Environment.NewLine + Environment.NewLine +
+                    //? "As a Vendor, you may now upload your capabilities and workscope icons into the Elena's List platform." + Environment.NewLine + Environment.NewLine +
                     //"There is no cost to list capabilities & highlight any capabilities based on workscope icon."
                     ? (
-                        "Repair Stations use our level playing field to list & highlight capabilities." + Environment.NewLine
+                        "Vendors use our level playing field to list & highlight capabilities." + Environment.NewLine
                         + Environment.NewLine
                         + "View/Upload Capabilities " + Environment.NewLine
                         + "https://" + HttpContext.Current.Request.Url.Host + "/Vendor/UploadList" + Environment.NewLine
@@ -217,7 +217,7 @@ namespace Findparts.Services.Services
                         + "For Support:" + Environment.NewLine
                         + "support@MROFINDER.aero"
                     )
-                //"You may now search for Component Repair Station Providers on the Elena's List platform."
+                //"You may now search for Component Vendor Providers on the Elena's List platform."
                 ) + Environment.NewLine
                 + Environment.NewLine
                 + Config.PortalName;
@@ -231,7 +231,7 @@ namespace Findparts.Services.Services
                 + Environment.NewLine
                 + "Your 2 Week Trial has started." + Environment.NewLine
                 + Environment.NewLine
-                + $"You may now search for Component Repair Stations on {Config.PortalName}" + Environment.NewLine
+                + $"You may now search for Component Vendors on {Config.PortalName}" + Environment.NewLine
                 + Environment.NewLine
                 + "Your subscription will begin in 2 weeks" + Environment.NewLine
                 + Environment.NewLine
@@ -246,9 +246,9 @@ namespace Findparts.Services.Services
         {
             string message = vendorName + "," + Environment.NewLine
                 + Environment.NewLine
-                + $"{Config.PortalName} has approved your FREE Repair Station account for 25 monthly searches." + Environment.NewLine
+                + $"{Config.PortalName} has approved your FREE Vendor account for 25 monthly searches." + Environment.NewLine
                 + Environment.NewLine
-                + "You may now search for component Repair Stations on our platform." + Environment.NewLine
+                + "You may now search for component Vendors on our platform." + Environment.NewLine
                 + Environment.NewLine
                 + "Remember, unlimited listing of Capabilities & Workscope icons is always free." + Environment.NewLine
                 + Environment.NewLine

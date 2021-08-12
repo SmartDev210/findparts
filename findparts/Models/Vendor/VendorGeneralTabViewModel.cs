@@ -9,7 +9,7 @@ namespace Findparts.Models.Vendor
     public class VendorGeneralTabViewModel
     {
         public string VendorId { get; set; }
-        [Display(Name = "Repair Station Name")]
+        [Display(Name = "Vendor Name")]
         public string VendorName { get; set; }
         [Display(Name = "Country")]
         public string Country { get; set; }

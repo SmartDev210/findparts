@@ -10,7 +10,7 @@ namespace Findparts.Core
         public const int MIN_SEARCH_LENGTH = 3;
         public const int MAX_RECORDS_RETURNED = 1000;
         public static string[][] MERITS = new[] {
-            new[] {"DER","DER","Repair Station has developed a DER 'Designated Engineering Approval'"},
+            new[] {"DER","DER","Vendor has developed a DER 'Designated Engineering Approval'"},
             new[] {"CAAC","CAAC","CAAC ARC 'Aircraft Release Certificate' is available"},
             new[] {"Modified","MODIFIED","Modified ARC 'Aircraft Release Certificate' is available"},
             new[] {"Repairs Frequently", "REPAIRS_FREQUENTLY", "Greater than 20 units serviced."},
@@ -20,12 +20,12 @@ namespace Findparts.Core
             new[] {"Flat Rate","FLAT_RATE","Flat Rate Repair or Overhaul"},
             new[] {"Range","RANGE","Low & High 'Price Range' is available"},
             new[] {"NTE","NTE","NTE 'Not To Exceed' price is available"},
-            new[] {$"{Config.PortalName} Quotable","QUOTED",$"Repair Station has previously quoted using {Config.PortalName}"},
+            new[] {$"{Config.PortalName} Quotable","QUOTED",$"Vendor has previously quoted using {Config.PortalName}"},
             new[] {"Function Test","TEST","Function Test Only - No Repair or Overhaul workscope"},
             new[] {"No Overhaul Workscope","NO_OH","Unit will be released Serviceable, Repaired, or Tested"},
-            new[] {"OEM","OEM","Repair Station is a OEM (original equipment manufacturer)"},
-            new[] {"OEM Authorized","OEM_EX","Repair Station has OEM Approval(s)"},
-            new[] {"OEM RMA","OEM_RMA","Repair Station is a OEM & requires a RMA authorization"}
+            new[] {"OEM","OEM","Vendor is a OEM (original equipment manufacturer)"},
+            new[] {"OEM Authorized","OEM_EX","Vendor has OEM Approval(s)"},
+            new[] {"OEM RMA","OEM_RMA","Vendor is a OEM & requires a RMA authorization"}
         };
 		public static string[] Countries = new[] {
 			"United States",

@@ -9,7 +9,7 @@
     Your account has been created, but before you can login you must first verify your email address. A message has been sent to the email address you specified. Please check your email inbox and follow the instructions in that email to verify your account
     -->
     <p>
-        Congratulations, your @(User.IsInRole("Vendor") ? "Repair Station " : "")Account has been created.<br /><br />
+        Congratulations, your @(User.IsInRole("Vendor") ? "Vendor " : "")Account has been created.<br /><br />
         To ACTIVATE your account, please click the 'activation link' in the email just sent to you.<br /><br />
         We sent your confirm email to @User.Identity.GetEmail()
     </p>

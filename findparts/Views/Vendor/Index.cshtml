@@ -2,7 +2,7 @@
 @model Findparts.Models.Vendor.VendorIndexPageViewModel
 
 @{
-    ViewBag.Title = "Repair Station Setting";
+    ViewBag.Title = "Vendor Setting";
     VendorActiveTab activeTab = VendorActiveTab.GeneralTab;
     if (TempData["VendorActiveTab"] != null && TempData["VendorActiveTab"] is VendorActiveTab)
     {
@@ -12,7 +12,7 @@
 }
 @section featured_content
 {
-    <h1>Repair Station Settings.</h1>
+    <h1>Vendor Settings.</h1>
 }
 
 <div>
