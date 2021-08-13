@@ -1,7 +1,9 @@
-﻿using Findparts.ActionFilters;
+﻿using DAL;
+using Findparts.ActionFilters;
 using Findparts.Core;
 using Findparts.Extensions;
 using Findparts.Models;
+using Findparts.Models.Subscriber;
 using Findparts.Models.Vendor;
 using Findparts.Services.Interfaces;
 using OfficeOpenXml;
@@ -22,10 +24,14 @@ namespace Findparts.Controllers
     {
         private readonly IVendorService _vendorService;
         private readonly IMailService _mailService;
-        public VendorController(IVendorService vendorService, IMailService mailService)
+        private readonly IMembershipService _membershipService;
+        private readonly ISubscriberService _subscriberService;
+        public VendorController(IVendorService vendorService, IMailService mailService, IMembershipService membershipService, ISubscriberService subscriberService)
         {
             _vendorService = vendorService;
             _mailService = mailService;
+            _membershipService = membershipService;
+            _subscriberService = subscriberService;
         }
 
         // GET: Vendor
@@ -41,10 +47,334 @@ namespace Findparts.Controllers
             }
             Session["vendorID"] = vendorID;
 
-            var viewModel = _vendorService.GetVendorIndexPageViewModel(vendorID);
+            VendorGeneralTabViewModel viewModel = _vendorService.GetVendorGeneralTabViewModel(vendorID);
+            
+            return View("~/Views/Vendor/GeneralTab.cshtml", viewModel);
+        }
+        public ActionResult RFQ()
+        {
+            string vendorID;
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorID = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorID = SessionVariables.VendorID;
+            }
+            Session["vendorID"] = vendorID;
+
+            RFQPreferencesViewModel viewModel = _vendorService.GetRFQPreferencesViewModel(vendorID);
+
+            return View("~/Views/Vendor/RFQ.cshtml", viewModel);
+        }
+        public ActionResult Invoices()
+        {
+            if (Request.QueryString["Invoice"] != null && Request.QueryString["Id"] != null)
+            {
+                var filePath = _subscriberService.GetInvoice(Request.QueryString["Id"], (string)Session["subscriberID"]);
+                return File(filePath, "application/pdf", "MROFINDER-Invoice.pdf");
+            }
+
+            string subscriberID;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberID = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberID = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberID;
+
+
+            var subscriber = _membershipService.GetSubscriberById(subscriberID);
+            var stripeCustomerId = subscriber.StripeCustomerID;
+            var signupSubscriberTypeId = subscriber.SignupSubscriberTypeID;
+
+
+            if (string.IsNullOrEmpty(stripeCustomerId))
+            {
+                SubscriberChargeViewModel viewModel = new SubscriberChargeViewModel
+                {
+                    SubscriptionUpdateMode = SubscriptionUpdateMode.Create
+                };
+
+                _subscriberService.PopulatePlanSelectList(viewModel);
+
+                // new customer, show option to select plan and enter CC info
+
+                if (signupSubscriberTypeId.HasValue)
+                {
+                    viewModel.SubscriberTypeId = signupSubscriberTypeId.Value;
+                }
+
+                return View(viewModel);
+            }
+            else
+            {
+                SubscriberChargeInfoViewModel viewModel = new SubscriberChargeInfoViewModel
+                {
+                    CardLastFour = "No card found",
+                    PlanText = "No active plan",
+                    SubscriptionStatus = "Not active",
+                    SubscriptionPeriod = "Not active"
+                };
+                _subscriberService.PopulateSubscriberChargeInfoViewModel(viewModel, subscriber);
+
+                return View("~/Views/Vendor/ChargeInfo.cshtml", viewModel);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Invoices(int? SubscriberTypeId, string stripeToken)
+        {
+            if (string.IsNullOrEmpty(stripeToken))
+            {
+                return HttpNotFound();
+            }
+
+            if (string.IsNullOrEmpty((string)Session["subscriberID"]))
+            {
+                TempData["Error"] = "Something went wrong! Please try again";
+                return RedirectToAction("Invoices");
+            }
+            var subscriber = _membershipService.GetSubscriberById((string)Session["subscriberID"]);
+
+            if (string.IsNullOrEmpty(subscriber.StripeCustomerID) && SubscriberTypeId != null)
+            {
+                if (_membershipService.SubscribeWithStripe(SubscriberTypeId.Value, stripeToken, subscriber))
+                {
+                    SessionVariables.Populate();
+                }
+                TempData["Success"] = $"Subscription Successfully Added.<br><br>Welcome to {Config.PortalName}. Your Search Subscription is now active.";
+            }
+            else if (!string.IsNullOrEmpty(subscriber.StripeCustomerID))
+            {
+                // update/new card
+                _membershipService.UpdateSubscribeWithStripe(stripeToken, subscriber);
+                TempData["Success"] = "Payment Info Updated";
+            }
+
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Invoices", "Vendor", new { SubscriberID = Request.QueryString["SubscriberID"] });
+            }
+            else
+            {
+                return RedirectToAction("Invoices", "Vendor");
+            }
+        }
+        [HttpPost]
+        public ActionResult CancelCharge(string stripeSubscriptionId)
+        {
+            var subscriberId = (string)Session["subscriberID"];
+
+            if (string.IsNullOrEmpty(subscriberId))
+            {
+                TempData["Error"] = "Someting went wrong! Plese try again";
+                return RedirectToAction("Charge");
+            }
+
+            var subscriber = _membershipService.GetSubscriberById(subscriberId);
+            if (subscriber == null) return Json(new { success = false });
+
+            // check if cancellation is pending already
+            if (subscriber.PendingSubscriberTypeID == ((int)SubscriberTypeID.NoCreditCard))
+            {
+                // already pending
+            }
+            else
+            {
+                // set pending cancellation
+                if (_membershipService.CancelSubscription(subscriber, stripeSubscriptionId))
+                {
+                    TempData["Success"] = "Subscription Cancelled";
+                }
+            }
+            return Json(new { success = true });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Vendor/Invoices/UpdatePlan")]
+        public ActionResult UpdatePlan(int SubscriberTypeId)
+        {
+            var subscriberId = (string)Session["subscriberID"];
+            var subscriber = _membershipService.GetSubscriberById(subscriberId);
+
+            if (_membershipService.UpdateSubscriptionPlan(subscriber, SubscriberTypeId))
+            {
+                SessionVariables.Populate();
+                TempData["Success"] = "Plan Updated";
+            }
+            else
+            {
+                TempData["Error"] = "Failed to update plan";
+            }
+
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Charge", new { SubscriberID = Request.QueryString["SubscriberID"] });
+            }
+
+            return RedirectToAction("Charge");
+        }
+
+
+        [HttpGet]
+        [Route("Vendor/Invoices/UpdatePaymentInfo")]
+        public ActionResult UpdateCharge()
+        {
+            string subscriberID;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberID = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberID = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberID;
+
+            var subscriber = _membershipService.GetSubscriberById(subscriberID);
+            if (string.IsNullOrEmpty(subscriber.StripeCustomerID))
+            {
+                return RedirectToAction("Invoices");
+            }
+
+            SubscriberChargeViewModel viewModel = new SubscriberChargeViewModel
+            {
+                SubscriptionUpdateMode = SubscriptionUpdateMode.UpdatePaymentInfo
+            };
+            return View("~/Views/Vendor/Invoices.cshtml", viewModel);
+        }
+
+        [HttpGet]
+        [Route("Vendor/Invoices/UpdatePlan")]
+        public ActionResult UpdatePlan()
+        {
+            string subscriberID;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberID = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberID = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberID;
+
+            var subscriber = _membershipService.GetSubscriberById(subscriberID);
+            if (string.IsNullOrEmpty(subscriber.StripeCustomerID))
+            {
+                return RedirectToAction("Charge");
+            }
+
+            SubscriberChargeViewModel viewModel = new SubscriberChargeViewModel
+            {
+                SubscriptionUpdateMode = SubscriptionUpdateMode.UpdatePlan
+            };
+            _subscriberService.PopulatePlanSelectList(viewModel);
+
+            var cur = viewModel.PlanSelectList.FirstOrDefault(x => x.Value == subscriber.PendingSubscriberTypeID.ToString());
+            viewModel.PlanSelectList.Remove(cur);
+
+            return View("~/Views/Vendor/Invoices.cshtml", viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Charge()
+        {
+            if (Request.QueryString["Invoice"] != null && Request.QueryString["Id"] != null)
+            {
+                var filePath = _subscriberService.GetInvoice(Request.QueryString["Id"], (string)Session["subscriberID"]);
+                return File(filePath, "application/pdf", "MROFINDER-Invoice.pdf");
+            }
+
+            string subscriberID;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberID = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberID = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberID;
+
+
+            var subscriber = _membershipService.GetSubscriberById(subscriberID);
+            var stripeCustomerId = subscriber.StripeCustomerID;
+            var signupSubscriberTypeId = subscriber.SignupSubscriberTypeID;
+
+
+            if (string.IsNullOrEmpty(stripeCustomerId))
+            {
+                SubscriberChargeViewModel viewModel = new SubscriberChargeViewModel
+                {
+                    SubscriptionUpdateMode = SubscriptionUpdateMode.Create
+                };
+
+                _subscriberService.PopulatePlanSelectList(viewModel);
+
+                // new customer, show option to select plan and enter CC info
+
+                if (signupSubscriberTypeId.HasValue)
+                {
+                    viewModel.SubscriberTypeId = signupSubscriberTypeId.Value;
+                }
+
+                return View(viewModel);
+            }
+            else
+            {
+                SubscriberChargeInfoViewModel viewModel = new SubscriberChargeInfoViewModel
+                {
+                    CardLastFour = "No card found",
+                    PlanText = "No active plan",
+                    SubscriptionStatus = "Not active",
+                    SubscriptionPeriod = "Not active"
+                };
+                _subscriberService.PopulateSubscriberChargeInfoViewModel(viewModel, subscriber);
+
+                return View("~/Views/Vendor/ChargeInfo.cshtml", viewModel);
+            }
+        }
+        public ActionResult Users()
+        {
+            string subscriberId;
+            if (Request.QueryString["SubscriberID"] != null && User.IsInRole("Admin"))
+            {
+                subscriberId = Request.QueryString["SubscriberID"];
+            }
+            else
+            {
+                subscriberId = SessionVariables.SubscriberID;
+            }
+            Session["subscriberID"] = subscriberId;
+
+            var viewModel = _subscriberService.GetUsersViewModel(subscriberId);
+
             return View(viewModel);
         }
 
+        public ActionResult Oem()
+        {
+            string vendorID;
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorID = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorID = SessionVariables.VendorID;
+            }
+            Session["vendorID"] = vendorID;
+
+            OEMsViewModel viewModel = _vendorService.GetOEMsViewModel(vendorID);
+
+            return View("~/Views/Vendor/OEMsOnly.cshtml", viewModel);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult General(VendorGeneralTabViewModel input)
@@ -52,8 +382,8 @@ namespace Findparts.Controllers
             TempData["VendorActiveTab"] = VendorActiveTab.GeneralTab;
             if (!ModelState.IsValid)
             {
-                var viewModel = _vendorService.GetVendorIndexPageViewModel(input.VendorId);
-                return View("~/Views/Vendor/Index.cshtml", viewModel);
+                var viewModel = _vendorService.GetVendorGeneralTabViewModel(input.VendorId);
+                return View("~/Views/Vendor/GeneralTab.cshtml", viewModel);
             }
 
             _vendorService.UpdateVendorGeneral(input);
@@ -74,8 +404,8 @@ namespace Findparts.Controllers
             TempData["VendorActiveTab"] = VendorActiveTab.RFQTab;
             if (!ModelState.IsValid)
             {
-                var viewModel = _vendorService.GetVendorIndexPageViewModel(input.VendorId);
-                return View("~/Views/Vendor/Index.cshtml", viewModel);
+                var viewModel = _vendorService.GetRFQPreferencesViewModel(input.VendorId);
+                return View("~/Views/Vendor/RFQ.cshtml", viewModel);
             }
 
             _vendorService.UpdateVendorRFQPrefs(input);
@@ -98,8 +428,8 @@ namespace Findparts.Controllers
 
             if (!ModelState.IsValid)
             {
-                var viewModel = _vendorService.GetVendorIndexPageViewModel(input.VendorId);
-                return View("~/Views/Vendor/Index.cshtml", viewModel);
+                var viewModel = _vendorService.GetCertsViewModel(input.VendorId);
+                return View("~/Views/Vendor/Certs.cshtml", viewModel);
             }
 
             _vendorService.AddVendorCert(input);
@@ -122,8 +452,8 @@ namespace Findparts.Controllers
 
             if (!ModelState.IsValid)
             {
-                var viewModel = _vendorService.GetVendorIndexPageViewModel(input.VendorId);
-                return View("~/Views/Vendor/Index.cshtml", viewModel);
+                var viewModel = _vendorService.GetVendorGeneralTabViewModel(input.VendorId);
+                return View("~/Views/Vendor/GenertalTab.cshtml", viewModel);
             }
 
             _vendorService.UpdateVendorAddress(input);
@@ -145,8 +475,8 @@ namespace Findparts.Controllers
             TempData["VendorActiveTab"] = VendorActiveTab.OEMsOnlyTab;
             if (!ModelState.IsValid)
             {
-                var viewModel = _vendorService.GetVendorIndexPageViewModel(input.VendorId);
-                return View("~/Views/Vendor/Index.cshtml", viewModel);
+                var viewModel = _vendorService.GetOEMsViewModel(input.VendorId);
+                return View("~/Views/Vendor/OEMsOnly.cshtml", viewModel);
             }
 
             _vendorService.UpdateVendorOEM(input);

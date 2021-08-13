@@ -60,72 +60,59 @@ namespace Findparts.Services.Services
             return "";
         }
 
-        public VendorIndexPageViewModel GetVendorIndexPageViewModel(string vendorID)
+        public VendorGeneralTabViewModel GetVendorGeneralTabViewModel(string vendorID)
         {
-
             VendorGeneralTabViewModel generalTabModel = new VendorGeneralTabViewModel() { VendorId = vendorID };
-            AddressViewModel addressModel = new AddressViewModel() { VendorId = vendorID };
-            RFQPreferencesViewModel rfqViewModel = new RFQPreferencesViewModel() { VendorId = vendorID };
-            OEMsViewModel oemViewModel = new OEMsViewModel() { VendorId = vendorID };
-
-            CertsViewModel certsViewModel = new CertsViewModel() { VendorId = vendorID };
-
-            VendorIndexPageViewModel viewModel = new VendorIndexPageViewModel()
-            {
-                VendorId = vendorID,
-                VendorGeneralTabViewModel = generalTabModel,
-                AddressViewModel = addressModel,
-                RFQPreferencesViewModel = rfqViewModel,
-                OEMsViewModel = oemViewModel,
-                CertsViewModel = certsViewModel
-            };
-
-            addressModel.CountryList = Constants.Countries.Select(x => new SelectListItem
-            {
-                Value = x,
-                Text = x
-            }).ToList();
 
             var vendor = _context.VendorGetByID(vendorID.ToNullableInt()).FirstOrDefault();
+
             if (vendor != null)
             {
-                // initialize general model
                 generalTabModel.VendorName = vendor.VendorName;
                 generalTabModel.Country = vendor.Country;
                 generalTabModel.WebsiteUrl = vendor.WebsiteURL;
                 generalTabModel.DefaultCurrency = vendor.DefaultCurrency;
                 if (string.IsNullOrEmpty(generalTabModel.DefaultCurrency))
                     generalTabModel.DefaultCurrency = "USD";
+            }
+            return generalTabModel;
+        }
+        public RFQPreferencesViewModel GetRFQPreferencesViewModel(string vendorID)
+        {
+            RFQPreferencesViewModel rfqViewModel = new RFQPreferencesViewModel() { VendorId = vendorID };
 
-                // initialize address
-                addressModel.Address1 = vendor.Address1;
-                addressModel.Address2 = vendor.Address2;
-                addressModel.Address3 = vendor.Address3;
-                addressModel.City = vendor.City;
-                addressModel.State = vendor.State;
-                addressModel.Zipcode = vendor.Zipcode;
-                addressModel.Country = vendor.Country;
+            var vendor = _context.VendorGetByID(vendorID.ToNullableInt()).FirstOrDefault();
 
-                if (!addressModel.CountryList.Any(x => x.Value == vendor.Country))
-                {
-                    addressModel.CountryList.Insert(1, new SelectListItem { Value = vendor.Country, Text = vendor.Country });
-                }
-
-                addressModel.Phone = vendor.Phone;
-
+            if (vendor != null)
+            {
                 // RFQ
 
                 rfqViewModel.RFQPhone = vendor.RFQPhone;
                 rfqViewModel.RFQEmail = vendor.RFQEmail;
                 rfqViewModel.RFQWebEmails = vendor.RFQWebEmails;
                 rfqViewModel.RFQFax = vendor.RFQFax;
-
+            }
+            return rfqViewModel;
+        }
+        public OEMsViewModel GetOEMsViewModel (string vendorID)
+        {
+            OEMsViewModel oemViewModel = new OEMsViewModel() { VendorId = vendorID };
+            var vendor = _context.VendorGetByID(vendorID.ToNullableInt()).FirstOrDefault();
+            if (vendor != null)
+            {
                 // OEM
                 oemViewModel.IsOEM = vendor.OEM ?? false;
                 oemViewModel.OEMExclusive = vendor.OEMExclusive ?? false;
                 oemViewModel.OEMRequiresRMA = vendor.OEMRequiresRMA ?? false;
             }
+            return oemViewModel;
+        }
+        public CertsViewModel GetCertsViewModel(string vendorID)
+        {
 
+            CertsViewModel certsViewModel = new CertsViewModel() { VendorId = vendorID };
+
+            
             certsViewModel.CertList =  _context.VendorCertGetByVendorID(vendorID.ToNullableInt()).ToList();
             certsViewModel.CertSelectList = new List<SelectListItem>()
             {   
@@ -142,7 +129,7 @@ namespace Findparts.Services.Services
                 new SelectListItem() { Value = "DCAT", Text = "DCAT" },
                 new SelectListItem() { Value = "", Text = "Other" }
             };
-            return viewModel;
+            return certsViewModel;
         }
 
         public string GetVendorListFileName(int vendorListId)
@@ -309,6 +296,10 @@ namespace Findparts.Services.Services
                 string fileName = $"{vendorListId}{filetype}";
 
                 var path = Config.UploadPath;
+                if (!File.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
                 viewModel.Upload.SaveAs(Path.Combine(path, fileName));
             } else if (viewModel.Id > 0)
             {
@@ -334,5 +325,6 @@ namespace Findparts.Services.Services
         {
             _context.VendorQuoteUpdateNoQuote(vendorQuoteId.ToNullableInt(), vendorId.ToNullableInt());
         }
+
     }
 }

@@ -1,6 +1,12 @@
 ﻿@using Findparts.Models.Vendor
 @model OEMsViewModel
 
+@{
+    Layout = "~/Views/Vendor/Shared/_VendorLayout.cshtml";
+    ViewBag.Title = "Vendor Settings";
+    ViewBag.ActiveTab = VendorActiveTab.OEMsOnlyTab;
+}
+
 @using (Html.BeginForm("UpdateOEM", "Vendor", FormMethod.Post, new { role = "form" }))
 {
     @Html.AntiForgeryToken()

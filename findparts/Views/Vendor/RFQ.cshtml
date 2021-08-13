@@ -1,5 +1,12 @@
 ﻿@using Findparts.Core
+@using Findparts.Models.Vendor
 @model Findparts.Models.Vendor.RFQPreferencesViewModel
+
+@{
+    Layout = "~/Views/Vendor/Shared/_VendorLayout.cshtml";
+    ViewBag.Title = "Vendor Settings";
+    ViewBag.ActiveTab = VendorActiveTab.RFQTab;
+}
 
 <h2>Preferred Method to Receive RFQs <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="The info entered below will be displayed in search results only to paid members & operators. Leave any field blank to not display that option."></span></h2>
 @using (Html.BeginForm("RFQUpdate", "Vendor", FormMethod.Post, new { role = "form" }))

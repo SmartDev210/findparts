@@ -681,6 +681,7 @@
     <Content Include="Scripts\DataTables\extensions\Scroller\Readme.md" />
     <Content Include="Scripts\DataTables\extensions\Select\Readme.md" />
     <Content Include="package.json" />
+    <Content Include="Content\dist\files\MROfinderCapabilityUploadTemplate.xlsx" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\extensions\AutoFill\js\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\extensions\AutoFill\js\autoFill.bootstrap.min.js" />
@@ -825,6 +826,10 @@
     <Content Include="Views\Account\ExternalLoginSelectPlan.cshtml" />
     <Content Include="Views\WebApi\Login.cshtml" />
     <Content Include="Views\VideoCall\Index.cshtml" />
+    <Content Include="Views\Vendor\Shared\_VendorLayout.cshtml" />
+    <Content Include="Views\Vendor\Users.cshtml" />
+    <Content Include="Views\Vendor\Invoices.cshtml" />
+    <Content Include="Views\Vendor\ChargeInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -848,10 +853,10 @@
     <Content Include="Views\Subscriber\Address.cshtml" />
     <Content Include="Views\Subscriber\Vendors.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
-    <Content Include="Views\Vendor\Partials\_GeneralTab.cshtml" />
-    <Content Include="Views\Vendor\Partials\_RFQ.cshtml" />
+    <Content Include="Views\Vendor\GeneralTab.cshtml" />
+    <Content Include="Views\Vendor\RFQ.cshtml" />
     <Content Include="Views\Vendor\Partials\_Address.cshtml" />
-    <Content Include="Views\Vendor\Partials\_OEMsOnly.cshtml" />
+    <Content Include="Views\Vendor\OEMsOnly.cshtml" />
     <Content Include="Views\Vendor\Partials\_Certs.cshtml" />
     <Content Include="Views\Vendor\UploadList.cshtml" />
     <Content Include="Views\Vendor\UploadCapability.cshtml" />

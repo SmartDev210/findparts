@@ -208,8 +208,8 @@ namespace Findparts.Services.Services
                         + "https://" + HttpContext.Current.Request.Url.Host + "/Subscriber/Users" + Environment.NewLine
                         + Environment.NewLine
                         + "Use Your Capability List or our Template " + Environment.NewLine
-                        + "https://" + HttpContext.Current.Request.Url.Host + "/MROFINDERCapabilityUploadTemplate.xlsx"
-                    ) : (
+                        + "https://" + HttpContext.Current.Request.Url.Host + "/Content/dist/files/MROfinderCapabilityUploadTemplate.xlsx"
+					) : (
                         "Search any ✈ part in seconds; find component MROs." + Environment.NewLine
                         + "https://" + HttpContext.Current.Request.Url.Host + Environment.NewLine
                         + Environment.NewLine

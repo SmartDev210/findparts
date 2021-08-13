@@ -10,10 +10,6 @@
     }
 
 }
-@section featured_content
-{
-    <h1>Vendor Settings.</h1>
-}
 
 <div>
     <ul class="nav nav-tabs" role="tablist">
@@ -22,7 +18,6 @@
         <li role="presentation" @if (activeTab == VendorActiveTab.CertsTab) { <text> class="active" </text> }><a href="#certs" aria-controls="certs" role="tab" data-toggle="tab">Certs</a></li>
         <li role="presentation" @if (activeTab == VendorActiveTab.AddressTab) { <text> class="active" </text> }><a href="#address" aria-controls="address" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Address</a></li>
         <li role="presentation" @if (activeTab == VendorActiveTab.OEMsOnlyTab) { <text> class="active" </text> }><a href="#oem" aria-controls="oem" role="tab" data-toggle="tab">OEMs Only</a></li>
-        <li role="presentation" @if (activeTab == VendorActiveTab.BlockedSubscribersTab) { <text> class="active" </text> }><a href="#blocked" aria-controls="blocked" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-ban-circle"></span> Manage Blocked Subscribers</a></li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.GeneralTab){ <text>active</text> }" id="general">
@@ -39,8 +34,6 @@
         </div>
         <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.OEMsOnlyTab){ <text>active</text> }" id="oem">
             @Html.Partial("~/Views/Vendor/Partials/_OEMsOnly.cshtml", Model.OEMsViewModel)
-        </div>
-        <div role="tabpanel" class="tab-pane @if(activeTab == VendorActiveTab.BlockedSubscribersTab){ <text>active</text> }" id="blocked">
         </div>
     </div>
 </div>

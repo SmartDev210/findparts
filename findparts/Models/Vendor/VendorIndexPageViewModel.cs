@@ -13,7 +13,9 @@ namespace Findparts.Models.Vendor
         CertsTab = 2,
         AddressTab = 3,
         OEMsOnlyTab = 4,
-        BlockedSubscribersTab = 5
+        BlockedSubscribersTab = 5,
+        InvoicesTab = 6,
+        UsersTab = 7,
     }
    
     public class VendorIndexPageViewModel

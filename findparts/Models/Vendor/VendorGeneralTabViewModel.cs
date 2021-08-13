@@ -16,5 +16,9 @@ namespace Findparts.Models.Vendor
         [Display(Name = "Website URL")]
         public string WebsiteUrl { get; set; }
         public string DefaultCurrency { get; set; }
+
+        public decimal AvDBAdDollarSpent { get; set; }
+        public int LinkedInImpressions { get; set; }
+        public int LinkedInLikes { get; set; }
     }    
 }
