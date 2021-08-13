@@ -48,6 +48,7 @@ namespace Findparts.Services.Services
                     Phone = request.Phone,
                     Notes = request.Description,
                     DateCreated = DateTime.UtcNow,
+                    StatusID = 1
                 });
                 _context.SaveChanges();
                 userProfile.VendorID = vendor.VendorID;
