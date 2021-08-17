@@ -34,7 +34,7 @@ namespace Findparts.Services.Services
             viewModel.DateCreated = vendor.DateCreated;
             viewModel.Notes = vendor.Notes;
 
-            viewModel.VendorList = _context.VendorListGetByVendorID(vendorId).ToList();
+            viewModel.VendorList = _context.VendorListGetByVendorID(vendorId, Config.PortalCode).ToList();
             viewModel.VendorAchievementList = _context.VendorAchievementListGetByVendorID2(vendorId).ToList();
 
             var user = _context.UserGetByVendorID(vendorId).FirstOrDefault();
@@ -209,6 +209,7 @@ namespace Findparts.Services.Services
                     var worksheet = workbook.Worksheets.First();
 
                     var noOfRow = worksheet.Dimension.End.Row;
+                    var noOfColumn = worksheet.Dimension.End.Column;
 
                     var obj = (object[,])worksheet.Cells.Value;
 
@@ -232,7 +233,7 @@ namespace Findparts.Services.Services
                         if (string.IsNullOrEmpty(obj[i, 0]?.ToString()))
                             break;
 
-                        for (var col = 0; col < 23; col ++)
+                        for (var col = 0; col < noOfColumn; col ++)
                         {   
                             var propName = obj[startRow, col]?.ToString();
                             if (propName != null)

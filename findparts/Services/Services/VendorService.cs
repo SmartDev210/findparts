@@ -198,7 +198,7 @@ namespace Findparts.Services.Services
             {
                 Id = vendorListId,
                 VendorId = vendorID.ToNullableInt() ?? 0,
-                IsFirst = vendorListId ==0 && _context.VendorListGetByVendorID(vendorID.ToNullableInt()).Count() == 0,
+                IsFirst = vendorListId ==0 && _context.VendorListGetByVendorID(vendorID.ToNullableInt(), Config.PortalCode).Count() == 0,
                 ReplaceList = true
             };
 
@@ -219,7 +219,7 @@ namespace Findparts.Services.Services
         public VendorUploadListViewModel GetVendorUploadListViewModel(string vendorID)
         {
             var viewModel = new VendorUploadListViewModel();
-            var vendorList = _context.VendorListGetByVendorID(vendorID.ToNullableInt()).ToList();
+            var vendorList = _context.VendorListGetByVendorID(vendorID.ToNullableInt(), Config.PortalCode).ToList();
             foreach (var item in vendorList)
             {
                 viewModel.VendorCapabilityList.Add(new VendorFileViewModel

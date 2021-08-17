@@ -1144,13 +1144,17 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorList>("VendorListGetByID", mergeOption, vendorListIDParameter);
         }
     
-        public virtual ObjectResult<VendorListGetByVendorID_Result> VendorListGetByVendorID(Nullable<int> vendorID)
+        public virtual ObjectResult<VendorListGetByVendorID_Result> VendorListGetByVendorID(Nullable<int> vendorID, Nullable<int> portalCode)
         {
             var vendorIDParameter = vendorID.HasValue ?
                 new ObjectParameter("VendorID", vendorID) :
                 new ObjectParameter("VendorID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListGetByVendorID_Result>("VendorListGetByVendorID", vendorIDParameter);
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorListGetByVendorID_Result>("VendorListGetByVendorID", vendorIDParameter, portalCodeParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> VendorListInsert(Nullable<int> vendorID, string comments, string filetype, Nullable<bool> replaceList)

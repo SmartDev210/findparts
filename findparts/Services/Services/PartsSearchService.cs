@@ -115,7 +115,7 @@ namespace Findparts.Services.Services
             
             viewModel.SearchResults = result;
 
-            viewModel.SimiliarSearches = _context.VendorListItemSearchSimilar(text, SessionVariables.SubscriberID.ToNullableInt(), Config.PortalCode).ToList();
+            //viewModel.SimiliarSearches = _context.VendorListItemSearchSimilar(text, SessionVariables.SubscriberID.ToNullableInt(), Config.PortalCode).ToList();
             viewModel.Merit = Constants.MERITS;
 
             bool exactMatchFound = false;

@@ -179,9 +179,9 @@
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank">Video Call</a>';
                                 buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Send Message</a>';
                                 if (!data[i].WeavyCompanyId || data[i].WeavyCompanyId == 0) {
-                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Private Channel</a>';
+                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Private Space</a>';
                                 } else {
-                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies' + data[i].WeavyCompanyId + '/private-channel">Start Private Channel</a>';
+                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies' + data[i].WeavyCompanyId + '/private-channel">Start Private Space</a>';
                                 }
                             }
 

@@ -656,6 +656,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
         </Function>
         <Function Name="VendorListGetByVendorID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorID" Type="int" Mode="In" />
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="VendorListInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorID" Type="int" Mode="In" />
@@ -1721,7 +1722,8 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Parameter Name="VendorListID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListGetByVendorID" ReturnType="Collection(DomainModel.VendorListGetByVendorID_Result)">
-          <Parameter Name="VendorID" Mode="In" Type="Int32" />
+            <Parameter Name="VendorID" Mode="In" Type="Int32" />
+            <Parameter Name="PortalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorListInsert" ReturnType="Collection(Decimal)">
             <Parameter Name="VendorID" Mode="In" Type="Int32" />
