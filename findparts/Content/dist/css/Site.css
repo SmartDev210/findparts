@@ -94,12 +94,12 @@ body {
 
 .toggle-messenger {
     position: fixed;
-    bottom: 90px;
+    bottom: 25px;
     right: 25px;
     height: 50px;
     width: 100px;
     border-radius: 20px;
-    background: red;
+    background: #DB21B3;
     border: none;
     color: white;
 }
