@@ -15,6 +15,8 @@
     <span>Only the first @Model.SearchResults.Count results were returned. Add more characters to your search term to narrow your search</span>
 }
 
+
+
 <div class="search-results-list">
     @{
         for (var i = 0; i < Model.SearchResults.Count; i++)
@@ -175,13 +177,13 @@
                             buttonGroupCell = document.createElement('div');
                             buttonGroupCell.className = "button-list";
 
-                            if (data[i].VendorID != 0) { // add chat button add
-                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank">Video Call</a>';
-                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')">Send Message</a>';
+                            if (data[i].VendorID != 0 && data[i].Email != 'Expired' && data[i].Phone != 'Expired' ) { // add chat button add
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank"><span class="glyphicon glyphicon-facetime-video"></span> Video</a>';
+                                buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')"><span class="glyphicon glyphicon-comment"></span> Message</a>';
                                 if (!data[i].WeavyCompanyId || data[i].WeavyCompanyId == 0) {
-                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')">Start Private Space</a>';
+                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')"><span class="glyphicon glyphicon-globe"></span> Open Space</a>';
                                 } else {
-                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies' + data[i].WeavyCompanyId + '/private-channel">Start Private Space</a>';
+                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies' + data[i].WeavyCompanyId + '/private-channel"><span class="glyphicon glyphicon-globe"></span> Open Space</a>';
                                 }
                             }
 
