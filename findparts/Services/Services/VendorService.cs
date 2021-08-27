@@ -326,5 +326,15 @@ namespace Findparts.Services.Services
             _context.VendorQuoteUpdateNoQuote(vendorQuoteId.ToNullableInt(), vendorId.ToNullableInt());
         }
 
+        public VendorAdvertiseViewModel GetAdvertiseViewModel(string vendorID)
+        {
+            int vendorId = vendorID.ToInt();
+            var list = _context.VendorPurchases.Where(x => x.VendorId == vendorId).OrderBy(x => x.PurchasedAt).ToList();
+            var viewModel = new VendorAdvertiseViewModel()
+            {
+                VendorPurchases = list
+            };
+            return viewModel;
+        }
     }
 }

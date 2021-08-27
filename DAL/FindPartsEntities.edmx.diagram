@@ -26,6 +26,7 @@
         <AssociationConnector Association="DomainModel.FK_VendorList_Vendor" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModel.FK_VendorListItem_VendorList" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DomainModel.Category" Width="1.5" PointX="3.375" PointY="14.75" />
+        <EntityTypeShape EntityType="DomainModel.VendorPurchase" Width="1.5" PointX="5.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

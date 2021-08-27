@@ -361,5 +361,51 @@ namespace Findparts.Services.Services
                 Text = x
             }).ToList();
         }
+        private bool Charge(int vendorId, string stripeToken, long amount, string email, PurchaseType type, int quantity)
+        {
+            var chargeOptions = new Stripe.ChargeCreateOptions
+            {
+                Amount = amount,
+                Description = $"Purchase for advertise (vendor:{vendorId} - email:{email})",
+                Source = stripeToken,
+                Currency = "usd",
+                ReceiptEmail = email,
+            };
+            var chargeService = new Stripe.ChargeService();
+            var charge = chargeService.Create(chargeOptions);
+
+            _context.VendorPurchases.Add(new VendorPurchase
+            {
+                VendorId = vendorId,
+                Amount = charge.Amount,
+                PurchasedAt = DateTime.UtcNow,
+                PurchaseType = (int)type,
+                Quantity = quantity,
+                StripeChargeId = charge.Id
+            });
+            return _context.SaveChanges() > 0;
+        }
+        public bool PurchaseWithStripe(string vendorID, string stripeToken)
+        {
+            var user = _context.UserGetByVendorID(vendorID.ToNullableInt()).FirstOrDefault();            
+
+            if (user != null)
+            {
+                return Charge(vendorID.ToInt(), stripeToken, 15000, user.Email, PurchaseType.Advertise, 1);
+            }
+
+            return false;
+        }
+        public bool PurchaseImpressionsWithStripe(string vendorID, string stripeToken, int quantity)
+        {
+            var user = _context.UserGetByVendorID(vendorID.ToNullableInt()).FirstOrDefault();
+
+            if (user != null)
+            {
+                return Charge(vendorID.ToInt(), stripeToken, 2500 * quantity / 1000, user.Email, PurchaseType.Impressions, quantity);
+            }
+
+            return false;
+        }
     }
 }

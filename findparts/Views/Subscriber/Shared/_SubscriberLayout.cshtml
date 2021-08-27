@@ -10,8 +10,6 @@
 <div>
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" @if (ViewBag.ActiveTab == SubscriberActiveTab.GeneralTab) {<text>class="active"</text>}><a href="@Url.Action("Index", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-stats"></span> General</a></li>
-        <li role="presentation" @if (ViewBag.ActiveTab == SubscriberActiveTab.UsersTab) {<text>class="active"</text>}><a href="@Url.Action("Users", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-user"></span> Users</a></li>
-        <li role="presentation" @if (ViewBag.ActiveTab == SubscriberActiveTab.InvoicesTab) {<text>class="active"</text>}><a href="@Url.Action("Charge", "Subscriber", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-piggy-bank"></span> Invoices</a></li>
         
         @if (SessionVariables.VendorID == "")
         {

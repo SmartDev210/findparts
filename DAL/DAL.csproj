@@ -256,6 +256,9 @@
     <Compile Include="VendorListItemSearchSimilar_Result.cs">
       <DependentUpon>findPartsEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="VendorPurchase.cs">
+      <DependentUpon>findPartsEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="VendorQuote.cs">
       <DependentUpon>findPartsEntities.tt</DependentUpon>
     </Compile>

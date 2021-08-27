@@ -338,6 +338,7 @@
     <Compile Include="Models\Vendor\OEMsViewModel.cs" />
     <Compile Include="Models\Vendor\QuotePageViewModel.cs" />
     <Compile Include="Models\Vendor\RFQPreferencesViewModel.cs" />
+    <Compile Include="Models\Vendor\VendorAdvertiseViewModel.cs" />
     <Compile Include="Models\Vendor\VendorGeneralTabViewModel.cs" />
     <Compile Include="Models\Vendor\VendorIndexPageViewModel.cs" />
     <Compile Include="Models\Vendor\VendorUploadListViewModel.cs" />
@@ -830,6 +831,9 @@
     <Content Include="Views\Vendor\Users.cshtml" />
     <Content Include="Views\Vendor\Invoices.cshtml" />
     <Content Include="Views\Vendor\ChargeInfo.cshtml" />
+    <Content Include="Views\Vendor\Advertise.cshtml" />
+    <Content Include="Views\Vendor\Purchase.cshtml" />
+    <Content Include="Views\Vendor\PurchaseImpressions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

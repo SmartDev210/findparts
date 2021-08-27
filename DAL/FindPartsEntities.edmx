@@ -308,6 +308,18 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="Range" Type="bit" />
           <Property Name="NTE" Type="bit" />
         </EntityType>
+        <EntityType Name="VendorPurchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="PurchaseType" Type="int" />
+          <Property Name="StripeChargeId" Type="nvarchar(max)" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="bigint" Nullable="false" />
+          <Property Name="PurchasedAt" Type="datetime" />
+        </EntityType>
         <EntityType Name="VendorQuote">
           <Key>
             <PropertyRef Name="VendorQuoteID" />
@@ -983,6 +995,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySet Name="VendorCert" EntityType="Self.VendorCert" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorList" EntityType="Self.VendorList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorListItem" EntityType="Self.VendorListItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorPurchase" EntityType="Self.VendorPurchase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorQuote" EntityType="Self.VendorQuote" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorSubscriberBlocked" EntityType="Self.VendorSubscriberBlocked" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorSubscriberPreferred" EntityType="Self.VendorSubscriberPreferred" Schema="dbo" store:Type="Tables" />
@@ -2035,6 +2048,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="Notes" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Categories" EntityType="DomainModel.Category" />
+          <EntitySet Name="VendorPurchases" EntityType="DomainModel.VendorPurchase" />
         </EntityContainer>
         <ComplexType Name="StatusGetAll_Result">
           <Property Type="Int32" Name="StatusID" Nullable="false" />
@@ -2783,6 +2797,18 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VendorPurchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="PurchaseType" Type="Int32" />
+          <Property Name="StripeChargeId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int64" Nullable="false" />
+          <Property Name="PurchasedAt" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3795,6 +3821,19 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorPurchases">
+            <EntityTypeMapping TypeName="DomainModel.VendorPurchase">
+              <MappingFragment StoreEntitySet="VendorPurchase">
+                <ScalarProperty Name="PurchasedAt" ColumnName="PurchasedAt" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="StripeChargeId" ColumnName="StripeChargeId" />
+                <ScalarProperty Name="PurchaseType" ColumnName="PurchaseType" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

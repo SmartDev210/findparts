@@ -22,5 +22,7 @@ namespace Findparts.Services.Interfaces
         bool UpdateSubscribeWithStripe(string stripeToken, Subscriber subscriber);
         bool UpdateSubscriptionPlan(Subscriber subscriber, int subscriberTypeId);
         bool CancelSubscription(Subscriber subscriber, string stripeSubscriptionId);
+        bool PurchaseWithStripe(string vendorID, string stripeToken);
+        bool PurchaseImpressionsWithStripe(string vendorID, string stripeToken, int quantity);
     }
 }

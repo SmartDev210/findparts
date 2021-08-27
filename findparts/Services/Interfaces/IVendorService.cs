@@ -35,5 +35,6 @@ namespace Findparts.Services.Interfaces
         OEMsViewModel GetOEMsViewModel(string vendorID);
         RFQPreferencesViewModel GetRFQPreferencesViewModel(string vendorID);
         CertsViewModel GetCertsViewModel(string vendorID);
+        VendorAdvertiseViewModel GetAdvertiseViewModel(string vendorID);
     }
 }

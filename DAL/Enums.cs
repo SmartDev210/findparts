@@ -16,6 +16,11 @@ namespace DAL
 		StandardAnnual = 10,
 		EnterpriseAnnual = 11
 	}
+	public enum PurchaseType
+    {
+		Advertise = 0,
+		Impressions = 1
+    }
 	/*
 	public enum StatusID
 	{

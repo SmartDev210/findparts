@@ -16,8 +16,9 @@ namespace Findparts.Models.Vendor
         BlockedSubscribersTab = 5,
         InvoicesTab = 6,
         UsersTab = 7,
+        AdvertiseTab = 8,
     }
-   
+    
     public class VendorIndexPageViewModel
     {   
         public string VendorId { get; set; }

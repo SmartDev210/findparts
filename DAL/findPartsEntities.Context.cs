@@ -46,6 +46,7 @@ namespace DAL
         public virtual DbSet<VendorAchievementListItem> VendorAchievementListItems { get; set; }
         public virtual DbSet<VendorListItemArchive> VendorListItemArchives { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<VendorPurchase> VendorPurchases { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

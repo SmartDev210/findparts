@@ -68,6 +68,76 @@ namespace Findparts.Controllers
 
             return View("~/Views/Vendor/RFQ.cshtml", viewModel);
         }
+        public ActionResult Advertise()
+        {
+            string vendorID;
+            if (Request.QueryString["VendorID"] != null && User.IsInRole("Admin"))
+            {
+                vendorID = Request.QueryString["VendorID"];
+            }
+            else
+            {
+                vendorID = SessionVariables.VendorID;
+            }
+
+            VendorAdvertiseViewModel viewModel = _vendorService.GetAdvertiseViewModel(vendorID);
+            return View(viewModel);
+        }
+        [HttpGet]
+        public ActionResult Purchase()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult PurchaseImpressions()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Purchase(string stripeToken)
+        {
+            if (string.IsNullOrEmpty(stripeToken))
+            {
+                return HttpNotFound();
+            }
+            if (string.IsNullOrEmpty(SessionVariables.VendorID))
+            {
+                TempData["Error"] = "Something went wrong! Please try again";
+                return RedirectToAction("Invoices");
+            }
+
+            
+            if (_membershipService.PurchaseWithStripe(SessionVariables.VendorID, stripeToken))
+            {
+                TempData["Success"] = $"Successfully purchased";
+            }
+            
+            return RedirectToAction("Invoices", "Vendor");
+            
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PurchaseImpressions(string stripeToken, int quantity)
+        {
+            if (string.IsNullOrEmpty(stripeToken))
+            {
+                return HttpNotFound();
+            }
+            if (string.IsNullOrEmpty(SessionVariables.VendorID))
+            {
+                TempData["Error"] = "Something went wrong! Please try again";
+                return RedirectToAction("Invoices");
+            }
+
+            if (_membershipService.PurchaseImpressionsWithStripe(SessionVariables.VendorID, stripeToken, quantity))
+            {
+                TempData["Success"] = $"Successfully purchased";
+            }
+
+            return RedirectToAction("Invoices", "Vendor");
+
+        }
         public ActionResult Invoices()
         {
             if (Request.QueryString["Invoice"] != null && Request.QueryString["Id"] != null)
