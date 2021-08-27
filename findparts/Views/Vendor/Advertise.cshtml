@@ -29,8 +29,8 @@
             {
                 <tr>
                     <td>@((PurchaseType)item.PurchaseType)</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Amount</td>
+                    <td>@item.Quantity.ToString("N0")</td>
+                    <td>@((item.Amount / 100).ToString("C2"))</td>
                     <td>@item.PurchasedAt</td>
                 </tr>
 
