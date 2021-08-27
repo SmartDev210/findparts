@@ -104,7 +104,7 @@ namespace Findparts.Controllers
             if (string.IsNullOrEmpty(SessionVariables.VendorID))
             {
                 TempData["Error"] = "Something went wrong! Please try again";
-                return RedirectToAction("Invoices");
+                return RedirectToAction("Advertise");
             }
 
             
@@ -113,7 +113,7 @@ namespace Findparts.Controllers
                 TempData["Success"] = $"Successfully purchased";
             }
             
-            return RedirectToAction("Invoices", "Vendor");
+            return RedirectToAction("Advertise", "Vendor");
             
         }
         [HttpPost]
@@ -127,7 +127,7 @@ namespace Findparts.Controllers
             if (string.IsNullOrEmpty(SessionVariables.VendorID))
             {
                 TempData["Error"] = "Something went wrong! Please try again";
-                return RedirectToAction("Invoices");
+                return RedirectToAction("Advertise");
             }
 
             if (_membershipService.PurchaseImpressionsWithStripe(SessionVariables.VendorID, stripeToken, quantity))
@@ -135,7 +135,7 @@ namespace Findparts.Controllers
                 TempData["Success"] = $"Successfully purchased";
             }
 
-            return RedirectToAction("Invoices", "Vendor");
+            return RedirectToAction("Advertise", "Vendor");
 
         }
         public ActionResult Invoices()
