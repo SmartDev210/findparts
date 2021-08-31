@@ -24,6 +24,7 @@
                 <th>Quantity</th>
                 <th>Amount</th>
                 <th>Purchased At</th>
+                <th>Invoice</th>
             </tr>
             @foreach (var item in Model.VendorPurchases)
             {
@@ -32,6 +33,7 @@
                     <td>@item.Quantity.ToString("N0")</td>
                     <td>@((item.Amount / 100).ToString("C2"))</td>
                     <td>@item.PurchasedAt</td>
+                    <td><a href="@Url.Action("DownloadInvoice", new { chargeId = item.Id })" target="_blank">Download</a></td>
                 </tr>
 
             }

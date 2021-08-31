@@ -83,6 +83,16 @@ namespace Findparts.Controllers
             VendorAdvertiseViewModel viewModel = _vendorService.GetAdvertiseViewModel(vendorID);
             return View(viewModel);
         }
+
+        public ActionResult DownloadInvoice(int chargeId)
+        {
+            string filepath = string.Format("{0}{1}.pdf", Config.InvoicePath, chargeId);
+            if (!System.IO.File.Exists(filepath))
+            {
+                _vendorService.CreateInvoice(chargeId, true);
+            }
+            return File(filepath, "application/pdf", $"{Config.PortalName}-Invoice-{chargeId}.pdf");
+        }
         [HttpGet]
         public ActionResult Purchase()
         {

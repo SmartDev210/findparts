@@ -26,6 +26,7 @@ namespace Findparts.Controllers
 			_subscriberService = subscriberService;
         }
         // GET: StripeWebhooks
+		[AllowAnonymous]
         public ActionResult Index()
         {
             if (Request.QueryString["secret"] == Config.StripeSecret)
