@@ -1,10 +1,10 @@
 ﻿@using Findparts.Core
 
 @if (User.Identity.IsAuthenticated)
-{   
-    <button id="toggle-messenger" class="toggle-messenger text-center">Chat<span class="badge" id="messenger-badge"></span></button>
+{
+    @*<button id="toggle-messenger" class="toggle-messenger text-center">Chat<span class="badge" id="messenger-badge"></span></button>*@
     <div id="messenger-container"></div>
-    
+
     <script>
 
         function OpenChat(vendorId) {

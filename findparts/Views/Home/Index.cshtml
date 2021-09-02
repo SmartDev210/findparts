@@ -20,6 +20,137 @@
     }
 
     <br /><br />
+    <div class="wrapper parts-search-tabs">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="display: flex; justify-content: center;">
+            @if (Config.PortalCode == 0)
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈Spare Parts</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item active">
+                    <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈Spare Parts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
+                </li>
+            }
+
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-myavdb-tab" data-toggle="pill" href="#pills-myavdb" role="tab" aria-controls="pills-myavdb" aria-selected="true">MyAvDB</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-planes-tab" data-toggle="pill" href="#pills-planes" role="tab" aria-controls="pills-planes" aria-selected="false">Planes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-pilot-supplies-tab" data-toggle="pill" href="#pills-pilot-supplies" role="tab" aria-controls="pills-pilot-supplies" aria-selected="false">Pilot Supplies</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-jobs-tab" data-toggle="pill" href="#pills-jobs" role="tab" aria-controls="pills-jobs" aria-selected="false">Jobs</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+
+            <div class="tab-pane fade @if (Config.PortalCode == 0) { <text>active in</text> } " id="pills-repairs" role="tabpanel" aria-labelledby="pills-repairs-tab">
+                <div class="parts-search-box">
+                    <span class="parts-search-box-title">Repair Capabilities</span>
+                    @if (Config.PortalCode == 0)
+                    {
+                        <div class="input-group">
+                            <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
+                            <span class="input-group-btn">
+                                <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </a>
+                            </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <form action="https://mrofinder.back-channel.com/parts" method="get" class="main-search navbar-search-box" data-turboform>
+                            <div class="input-group" role="search">
+                                <input id="weavy-main-search" class="form-control input-lg" type="search" name="Search" value="" placeholder="Enter Part Number" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </form>
+                    }                    
+                </div>
+            </div>
+            <div class="tab-pane fade @if (Config.PortalCode == 1) { <text>active in</text> } " id="pills-spare-parts" role="tabpanel" aria-labelledby="pills-spare-parts-tab">
+                <div class="parts-search-box">
+                    <span class="parts-search-box-title">Aircraft Spare Parts</span>
+                    @if (Config.PortalCode == 1)
+                    {
+                        <div class="input-group">
+                            <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
+                            <span class="input-group-btn">
+                                <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </a>
+                            </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <form action="https://findparts.back-channel.com/parts" method="get" class="main-search navbar-search-box" data-turboform>
+                            <div class="input-group" role="search">
+                                <input id="weavy-main-search" class="form-control input-lg" type="search" name="Search" value="" placeholder="Enter Part Number" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-myavdb" role="tabpanel" aria-labelledby="pills-myavdb-tab">
+                <div class="parts-search-box">
+                    <form action="@Config.WeavyUrl/search" method="get" class="main-search navbar-search-box" data-turboform>
+                        <div class="input-group" role="search">
+                            <input id="weavy-main-search" class="form-control input-lg" type="search" name="q" value="" placeholder="Search" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-planes" role="tabpanel" aria-labelledby="pills-planes-tab">
+                <div class="parts-search-box">
+                    <span class="parts-search-box-title">Aircraft for Sale</span>
+                    <div class="google-cse-search-group">
+                        <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:8dyrm0inbkf"></script>
+                        <div class="gcse-searchbox-only"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-pilot-supplies" role="tabpanel" aria-labelledby="pills-pilot-supplies-tab">
+                <div class="parts-search-box">
+                    <span class="parts-search-box-title">Pilot Supplies</span>
+                    <div class="google-cse-search-group">
+                        <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:ojacjdzpco3"></script>
+                        <div class="gcse-searchbox-only"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-jobs" role="tabpanel" aria-labelledby="pills-jobs-tab">
+                <div class="parts-search-box">
+                    <span class="parts-search-box-title">Aviation Jobs</span>
+                    <div class="google-cse-search-group">
+                        <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:uqhunc1oxii"></script>
+                        <div class="gcse-searchbox-only"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
         @foreach (var item in Model.Merits)
         {

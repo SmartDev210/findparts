@@ -5,9 +5,22 @@
     <meta name="keywords" content="@Config.PortalName @ViewBag.ExtraMetaKeywords" />
 }
 
+<div style="max-width: 1000px; margin: 0 auto;">
+    <div class="input-group">
+        <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
+        <span class="input-group-btn">
+            <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </a>
+        </span>
+    </div>
+    <h1 class="description">
+    </h1>
+</div>
+
 <div id="divSearchResultsBlock">
     <div id="divSearchResults" class="SearchResults">Search Results: @Model.Text</div>
-    <div id="divSearchResultsCount" class="SearchResultsCount">@Model.SearchResults.Count  Parts found</div>
+    <div id="divSearchResultsCount" class="SearchResultsCount">@Model.SearchResults.Count Parts found</div>
 </div>
 
 @if (Model.HasMoreRow)

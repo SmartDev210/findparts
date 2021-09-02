@@ -1,87 +1,209 @@
 ﻿@using Microsoft.AspNet.Identity
-<div class=" @(ViewBag.BodyClass == "home-page" ? "container" : "container-fluid")">
-    <div class="row">
-        <div class="col-xs-12 text-right @(ViewBag.BodyClass == "home-page" ? "" : "col-md-3 col-md-push-9 col-lg-4 col-lg-push-8")">
-            @if (!User.Identity.IsAuthenticated)
+@using Findparts.Core
+
+<div class="navbar-fixed-top">
+    <nav class="navbar navbar-theme">
+        <div class="navbar-icons">
+            <a class="btn btn-icon" href="/" title="Home"><span class="glyphicon glyphicon-search"></span></a>
+            <a class="btn btn-icon" href="@Config.WeavyUrl/spaces" title="Spaces" target="_blank"><span class="glyphicon glyphicon-th-large"></span></a>
+        </div>
+        <div class="navbar-middle">
+            <div class="navbar-title">
+                <img src="~/Content/dist/images/black-logo.png" />
+                @if (Config.PortalCode == 0)
+                {
+                    <span><strong>MRO</strong>Finder</span>
+                }
+                else
+                {
+                    <span><strong>Find</strong>Parts</span>
+                }
+            </div>
+            <a class="btn btn-icon" href="@Config.WeavyUrl/video-call/global-room" title="Join Room" target="_blank"><span class="glyphicon glyphicon-facetime-video"></span></a>
+        </div>
+        <div class="navbar-icons">
+            @if (User.Identity.IsAuthenticated)
             {
-            <section class="user-links">
-                @*<a class="btn btn-primary" id="registerLink" href="@Url.Action("Signup", "Account")">Sign Up Free</a>*@
-                <a class="btn btn-default" id="loginLink" href="@Url.Action("Login", "Account")"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
-            </section>
-            }
-            else
-            {
-                <div class="user-links">
-                    <div class="btn-group" title="@User.Identity.Name">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user"></span>
-                            Account
-                            <span class="caret"></span>
-                        </button>
-                        @if (User.IsInRole("Admin"))
+                <a class="btn btn-icon" id="toggle-messenger" href="javascrpt:void(0)" title="Messenger"><span class="glyphicon glyphicon-comment"></span><span class="badge" id="messenger-badge"></span></a>
+                <div>
+                    <a class="btn btn-icon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" title="Plus"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        @if (User.IsInRole("Vendor"))
                         {
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-header">@User.Identity.Name</li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="@Url.Action("Vendors", "Admin")">Vendors</a></li>
-                                <li><a href="@Url.Action("Subscribers", "Admin")">Subscribers</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
-                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
-                            </ul>
-                        }
-                        else if (User.IsInRole("Vendor"))
-                        {
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-header">@User.Identity.Name</li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List & Upload Workscope Icons</span></a></li>
-                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
-                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
-                            </ul>
+                            <li><a target="_blank" href="@Config.WeavyUrl/companies/edit"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Edit Company Page</a></li>
                         }
                         else
                         {
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-header">@User.Identity.Name</li>
-                                <li role="separator" class="divider"></li>                               
-                                @if (Context.User.IsInRole("Subscriber"))
-                                {
-                                    <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
-
-                                    <li role="separator" class="divider"></li>
-                                }
-                                <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
-                                <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
-                            </ul>
+                            <li><a target="_blank" href="@Config.WeavyUrl/companies/new"><span class="glyphicon glyphicon-plus"></span>&nbsp; Create Company Page</a></li>
+                            <li><a href="@Config.WeavyUrl/spaces?join-company=true"><span class="glyphicon glyphicon-check"></span>&nbsp; Join Company Page</a></li>
                         }
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-send"></span>&nbsp; Advertise Asset(s)</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-wrench"></span>&nbsp; Advertise Service(s)</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp; Advertise Your Brand</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a target="_blank" href="@Config.WeavyUrl/spaces/new"><span class="glyphicon glyphicon-pencil"></span>&nbsp; Create a Space</a></li>
+                    </ul>
+                </div>
 
-                    </div>
+                <div>
+                    <a class="btn btn-icon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)" title="Home"><span class="glyphicon glyphicon-user"></span></a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-header">@User.Identity.Name</li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("Vendors", "Admin")">Vendors</a></li>
+                            <li><a href="@Url.Action("Subscribers", "Admin")">Subscribers</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
+                            <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                            <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                        </ul>
+                    }
+                    else if (User.IsInRole("Vendor"))
+                    {
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-header">@User.Identity.Name</li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>
+                             <li role="separator" class="divider"></li>
+                            <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
+                            <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List & Upload Workscope Icons</span></a></li>
+                            <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                            <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="dropdown-header">@User.Identity.Name</li>
+                            <li role="separator" class="divider"></li>
+                            @if (Context.User.IsInRole("Subscriber"))
+                            {
+                                <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
+
+                                <li role="separator" class="divider"></li>
+                            }
+                            
+                            <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
+                            <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                             <li role="separator" class="divider"></li>
+                            <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                            <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                        </ul>
+                    }
                 </div>
             }
-        </div>
-        <div class="col-xs-12 @(ViewBag.BodyClass == "home-page" ? "" : "col-md-5 col-md-pull-3 col-lg-4 col-lg-pull-4")">
-            <p class="site-title">
-                <a href="/"></a>
-            </p>
-        </div>
-        <div class="col-xs-12 @(ViewBag.BodyClass == "home-page" ? "col-md-8 col-md-offset-2" : "col-md-4 col-md-pull-3 col-lg-4 col-lg-pull-4")">
-            <div class="input-group">
-                <input type="text" id="txtSearch" class="form-control input-lg" placeholder="@(ViewBag.BodyClass == "home-page" ? "Search by Part Number" : "Enter Part Number")" value="@Request.QueryString["Search"]" />
-                <span class="input-group-btn">
-                    <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;" >
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </a>
-                </span>
-            </div>
-            <h1 class="description">
+            else
+            {
 
-            </h1>
+                <a class="btn btn-icon" href="@Url.Action("Login", "Account")" title="Login"><span class="glyphicon glyphicon-log-in"></span></a>
+            }
+
         </div>
-    </div>
-    
+    </nav>
 </div>
+@*
+    <div class=" @(ViewBag.BodyClass == "home-page" ? "container" : "container-fluid")">
+        <div class="row">
+            <div class="col-xs-12 text-right @(ViewBag.BodyClass == "home-page" ? "" : "col-md-3 col-md-push-9 col-lg-4 col-lg-push-8")">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                <section class="user-links">
+
+                    <a class="btn btn-default" id="loginLink" href="@Url.Action("Login", "Account")"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Login</a>
+                </section>
+                }
+                else
+                {
+                    <div class="user-links">
+                        <div class="btn-group" title="@User.Identity.Name">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Account
+                                <span class="caret"></span>
+                            </button>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-header">@User.Identity.Name</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.Action("Vendors", "Admin")">Vendors</a></li>
+                                    <li><a href="@Url.Action("Subscribers", "Admin")">Subscribers</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                    <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                                </ul>
+                            }
+                            else if (User.IsInRole("Vendor"))
+                            {
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-header">@User.Identity.Name</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List & Upload Workscope Icons</span></a></li>
+                                    <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                    <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-header">@User.Identity.Name</li>
+                                    <li role="separator" class="divider"></li>
+                                    @if (Context.User.IsInRole("Subscriber"))
+                                    {
+                                        <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Settings</span></a></li>
+
+                                        <li role="separator" class="divider"></li>
+                                    }
+                                    <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                                    <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                                </ul>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-xs-12 @(ViewBag.BodyClass == "home-page" ? "" : "col-md-5 col-md-pull-3 col-lg-4 col-lg-pull-4")">
+                <p class="site-title">
+                    <a href="/"></a>
+                </p>
+            </div>
+            <div class="col-xs-12 @(ViewBag.BodyClass == "home-page" ? "col-md-8 col-md-offset-2" : "col-md-4 col-md-pull-3 col-lg-4 col-lg-pull-4")">
+                <div class="input-group">
+                    <input type="text" id="txtSearch" class="form-control input-lg" placeholder="@(ViewBag.BodyClass == "home-page" ? "Search by Part Number" : "Enter Part Number")" value="@Request.QueryString["Search"]" />
+                    <span class="input-group-btn">
+                        <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;" >
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </a>
+                    </span>
+                </div>
+                <h1 class="description">
+
+                </h1>
+            </div>
+        </div>
+
+    </div>
+*@
