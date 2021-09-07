@@ -169,9 +169,9 @@ namespace Findparts.Services.Services
         public void SendRFQ(string vendorID, string vendorListItemID, string comments, string rFQID)
         {
             var userId = SessionVariables.UserID;
-            var vendorQuoteId = _context.VendorQuoteInsert3(vendorID.ToNullableInt(), vendorListItemID.ToNullableInt(), userId.ToNullableInt(), comments, rFQID).FirstOrDefault();
+            var vendorQuoteId = _context.VendorQuoteInsert3(vendorID.ToNullableInt(), vendorListItemID.ToNullableInt(), userId.ToNullableInt(), comments, rFQID, Config.PortalCode).FirstOrDefault();
 
-            _mailService.SendVendorRFQEmail(vendorQuoteId.ToString());
+            _mailService.SendVendorRFQEmail(vendorQuoteId.ToString(), vendorID);
         }
 
         public void SendDisabledFeatureEmail(string disabledFeatureEmail)

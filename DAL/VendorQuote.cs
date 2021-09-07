@@ -55,5 +55,6 @@ namespace DAL
         public Nullable<bool> WorkHistory { get; set; }
         public Nullable<int> RepairPriceRange { get; set; }
         public Nullable<int> OverhaulPriceRange { get; set; }
+        public int PortalCode { get; set; }
     }
 }

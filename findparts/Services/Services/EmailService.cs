@@ -267,7 +267,7 @@ namespace Findparts.Services.Services
 
         #region vendor
 
-        public void SendVendorRFQEmail(string vendorQuoteID)
+        public void SendVendorRFQEmail(string vendorQuoteID, string vendorId)
 		{
 			var result = _context.VendorQuoteGetByID4(vendorQuoteID.ToNullableInt()).FirstOrDefault();
 			
@@ -293,7 +293,7 @@ namespace Findparts.Services.Services
 					//+ Environment.NewLine
 					//+ Environment.NewLine
 					+ "Login & view your RFQs:" + Environment.NewLine
-					+ "https://" + HttpContext.Current.Request.Url.Host + "/Vendor/Quote" + Environment.NewLine
+					+ "https://" + HttpContext.Current.Request.Url.Host + "/Vendor/Quote?VendorID=" + vendorId + Environment.NewLine
 					+ Environment.NewLine
 					+ Environment.NewLine
 					+ GetAlternatePartsLine(partNumber, subscriberID)

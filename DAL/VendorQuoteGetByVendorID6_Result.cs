@@ -46,5 +46,6 @@ namespace DAL
         public string Comments { get; set; }
         public string QuoteComments { get; set; }
         public string RFQID { get; set; }
+        public int PortalCode { get; set; }
     }
 }

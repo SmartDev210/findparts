@@ -365,6 +365,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="WorkHistory" Type="bit" />
           <Property Name="RepairPriceRange" Type="int" />
           <Property Name="OverhaulPriceRange" Type="int" />
+          <Property Name="PortalCode" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorSubscriberBlocked">
           <Key>
@@ -802,6 +803,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="Comments" Type="varchar" Mode="In" />
           <Parameter Name="RFQID" Type="varchar" Mode="In" />
+          <Parameter Name="PortalCode" Type="int" Mode="In" />
         </Function>
         <Function Name="VendorQuoteUpdate2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorQuoteID" Type="int" Mode="In" />
@@ -1343,6 +1345,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="WorkHistory" Type="Boolean" />
           <Property Name="RepairPriceRange" Type="Int32" />
           <Property Name="OverhaulPriceRange" Type="Int32" />
+          <Property Name="PortalCode" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorSubscriberBlocked">
           <Key>
@@ -1870,6 +1873,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Comments" Mode="In" Type="String" />
             <Parameter Name="RFQID" Mode="In" Type="String" />
+            <Parameter Name="PortalCode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorQuoteUpdate2">
             <Parameter Name="VendorQuoteID" Mode="In" Type="Int32" />
@@ -2778,6 +2782,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Type="String" Name="Comments" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="QuoteComments" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="RFQID" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PortalCode" Nullable="false" />
         </ComplexType>
         <ComplexType Name="VendorSubscriberBlockedGetBySubscriberID_Result">
           <Property Type="Int32" Name="VendorID" Nullable="false" />
@@ -3081,6 +3086,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySetMapping Name="VendorQuotes">
             <EntityTypeMapping TypeName="DomainModel.VendorQuote">
               <MappingFragment StoreEntitySet="VendorQuote">
+                <ScalarProperty Name="PortalCode" ColumnName="PortalCode" />
                 <ScalarProperty Name="VendorQuoteID" ColumnName="VendorQuoteID" />
                 <ScalarProperty Name="VendorID" ColumnName="VendorID" />
                 <ScalarProperty Name="VendorListItemID" ColumnName="VendorListItemID" />
@@ -3738,7 +3744,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <FunctionImportMapping FunctionImportName="VendorQuoteGetByVendorID4" FunctionName="DomainModel.Store.VendorQuoteGetByVendorID4" />
           <FunctionImportMapping FunctionImportName="VendorQuoteGetByVendorID5" FunctionName="DomainModel.Store.VendorQuoteGetByVendorID5" />
           <FunctionImportMapping FunctionImportName="VendorQuoteGetByVendorID6" FunctionName="DomainModel.Store.VendorQuoteGetByVendorID6">
-            <ResultMapping>
+          <ResultMapping>
               <ComplexTypeMapping TypeName="DomainModel.VendorQuoteGetByVendorID6_Result">
                 <ScalarProperty Name="SubscriberName" ColumnName="SubscriberName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -3773,6 +3779,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="QuoteComments" ColumnName="QuoteComments" />
                 <ScalarProperty Name="RFQID" ColumnName="RFQID" />
+                <ScalarProperty Name="PortalCode" ColumnName="PortalCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -28,7 +28,7 @@
     <table id="tblQuotes" cellspacing="0" cellpadding="0" class="table table-condensed">
         <thead>
             <tr>
-                <th></th>
+                <th></th>                
                 <th>RFQ Date</th>
                 <th>Part #</th>
                 <th>Company</th>
@@ -49,7 +49,9 @@
                         <label class="styled-checkbox" visible='@(!item.DateResponded.HasValue && !item.DateNoQuote.HasValue && !item.DateIgnore.HasValue)'>
                             <input type="checkbox" class="quote-ids" value="@item.VendorQuoteID" /><span></span>
                         </label>
+                        @(item.PortalCode == 0 ? "Repair Capabilities" : "✈ Spare Parts")
                     </td>
+                    
                     <td>
                         @item.DateCreated.ToString("MMM d, yyyy h:mm tt")
                     </td>
@@ -123,7 +125,7 @@
                         @if (!string.IsNullOrEmpty(item.Comments) || !string.IsNullOrEmpty(item.RFQID))
                         {
                             if (!string.IsNullOrEmpty(item.RFQID))
-                            {<text>RFQID: @item.RFQID</text>}
+                            {<text>RFQID: @item.RFQID, </text>}
                         if (!string.IsNullOrEmpty(item.Comments))
                         {<text>RFQ Comments: @item.Comments</text>}
                     if (!string.IsNullOrEmpty(item.QuoteComments))
@@ -166,12 +168,12 @@
             <div class="col-xs-4">
                 <div class="input-group average-price">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtTest" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtTest" type="text" name="txtTest" class="form-control"/>
                 </div>
             </div>
             <div class="col-xs-offset-1 col-xs-4">
                 <div class="input-group">
-                    <asp:TextBox runat="server" ID="txtTestTAT" CssClass="form-control" TextMode="Number" Min="1" Max="25" Step="1" Text="1"></asp:TextBox>
+                    <input Id="txtTestTAT" name="txtTestTAT" class="form-control" type="number" min="1" max="25" step="1" value="1"/>
                     <span class="input-group-addon">days</span>
                 </div>
             </div>
@@ -184,12 +186,12 @@
             <div class="col-xs-4">
                 <div class="input-group average-price">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtRepair" CssClass="form-control"></asp:TextBox>
+                    <input type="text" Id="txtRepair" name="txtRepair" class="form-control"/>
                 </div>
             </div>
             <div class="col-xs-offset-1 col-xs-4">
                 <div class="input-group">
-                    <asp:TextBox runat="server" ID="txtRepairTAT" CssClass="form-control" TextMode="Number" Min="1" Max="25" Step="1" Text="1"></asp:TextBox>
+                    <input Id="txtRepairTAT" name="txtRepairTAT" class="form-control" type="number" min="1" max="25" step="1" value="1">
                     <span class="input-group-addon">days</span>
                 </div>
             </div>
@@ -202,7 +204,7 @@
             <div class="col-xs-4">
                 <div class="input-group price-range">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtRepairRangeLow" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtRepairRangeLow" name="txtRepairRangeLow" type="text" class="form-control">
                 </div>
             </div>
             <div class="col-xs-1 text-center">
@@ -211,7 +213,7 @@
             <div class="col-xs-4">
                 <div class="input-group price-range">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtRepairRangeHigh" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtRepairRangeHigh" name="txtRepairRangeHigh" type="text" class="form-control">
                 </div>
             </div>
         </div>
@@ -224,12 +226,12 @@
             <div class="col-xs-4">
                 <div class="input-group average-price">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtOverhaul" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtOverhaul" name="txtOverhaul" type="text" class="form-control">
                 </div>
             </div>
             <div class="col-xs-offset-1 col-xs-4">
                 <div class="input-group">
-                    <asp:TextBox runat="server" ID="txtOverhaulTAT" CssClass="form-control" TextMode="Number" Min="1" Max="25" Step="1" Text="1"></asp:TextBox>
+                    <input Id="txtOverhaulTAT" name="txtOverhaulTAT" class="form-control" type="number" min="1" max="25" step="1" value="1">
                     <span class="input-group-addon">days</span>
                 </div>
             </div>
@@ -242,7 +244,7 @@
             <div class="col-xs-4">
                 <div class="input-group price-range">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtOverhaulRangeLow" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtOverhaulRangeLow" name="txtOverhaulRangeLow" type="text" class="form-control">
                 </div>
             </div>
             <div class="col-xs-1 text-center">
@@ -251,7 +253,7 @@
             <div class="col-xs-4">
                 <div class="input-group price-range">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtOverhaulRangeHigh" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtOverhaulRangeHigh" name="txtOverhaulRangeHigh" class="form-control">
                 </div>
             </div>
         </div>
@@ -267,7 +269,7 @@
             <div id="spanNTE" class="col-xs-4" style="display:none;">
                 <div class="input-group">
                     <span class="input-group-addon currency"></span>
-                    <asp:TextBox runat="server" ID="txtNTE" CssClass="form-control"></asp:TextBox>
+                    <input Id="txtNTE" name="txtNTE" class="form-control">
                 </div>
             </div>
         </div>

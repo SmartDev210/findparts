@@ -19,7 +19,7 @@ namespace Findparts.Services.Interfaces
         void SendAccountActivated(string email, string name, bool vendor);
         void SendFreeTrialActivated(string email, string name);
         void SendAccountApproved(string email, string vendorName, string vendorID);
-        void SendVendorRFQEmail(string vendorQuoteID);
+        void SendVendorRFQEmail(string vendorQuoteID, string vendorId);
         void SendVendorUploadEmail(string vendorEmail, string vendorName, bool capabilityList);
         void SendVendorUploadByAdminEmail(string vendorEmail, string vendorName, bool capabilityList);
         void SendVendorListApprovedEmail(string vendorEmail, string vendorName, bool capabilityList, string capabilities, string merits);

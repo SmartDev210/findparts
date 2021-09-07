@@ -1565,7 +1565,7 @@ namespace DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorQuoteGetByVendorID6_Result>("VendorQuoteGetByVendorID6", vendorIDParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> VendorQuoteInsert3(Nullable<int> vendorID, Nullable<int> vendorListItemID, Nullable<int> userID, string comments, string rFQID)
+        public virtual ObjectResult<Nullable<decimal>> VendorQuoteInsert3(Nullable<int> vendorID, Nullable<int> vendorListItemID, Nullable<int> userID, string comments, string rFQID, Nullable<int> portalCode)
         {
             var vendorIDParameter = vendorID.HasValue ?
                 new ObjectParameter("VendorID", vendorID) :
@@ -1587,7 +1587,11 @@ namespace DAL
                 new ObjectParameter("RFQID", rFQID) :
                 new ObjectParameter("RFQID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("VendorQuoteInsert3", vendorIDParameter, vendorListItemIDParameter, userIDParameter, commentsParameter, rFQIDParameter);
+            var portalCodeParameter = portalCode.HasValue ?
+                new ObjectParameter("PortalCode", portalCode) :
+                new ObjectParameter("PortalCode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("VendorQuoteInsert3", vendorIDParameter, vendorListItemIDParameter, userIDParameter, commentsParameter, rFQIDParameter, portalCodeParameter);
         }
     
         public virtual int VendorQuoteUpdate2(Nullable<int> vendorQuoteID, Nullable<int> vendorID, Nullable<bool> flatRate, Nullable<int> testPrice, Nullable<int> testTAT, Nullable<int> repairPrice, Nullable<int> repairPriceRange, Nullable<int> repairTAT, Nullable<int> overhaulPrice, Nullable<int> overhaulPriceRange, Nullable<int> overhaulTAT, Nullable<int> notToExceed, Nullable<bool> partExpert, Nullable<bool> pMA, Nullable<bool> dER, Nullable<bool> freeEval, Nullable<bool> modified, Nullable<bool> functionTestOnly, Nullable<bool> noOverhaulWorkscope, string quoteComments)
