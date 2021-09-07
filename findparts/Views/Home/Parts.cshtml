@@ -68,6 +68,19 @@
 <div id="divAlternateDetails" style="display:none;">
     <span id="spanAlternateDetails"></span>
 </div>
+<div id="divVendorQuoteSoon" style="display:none;">
+    1-click RFQ feature will be available soon.
+</div>
+<div id="divVendorQuote" style="display:none;">
+    <div class="form-group">
+        <label for="txtComments">Comments</label>
+        <textarea id="txtComments" class="form-control" placeholder="Optional"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="txtRFQID">RFQ ID #:</label>
+        <input type="text" id="txtRFQID" class="form-control" placeholder="Optional" />
+    </div>
+</div>
 @section scripts
 {
     <script type="text/javascript">
@@ -200,10 +213,15 @@
                                 }
                             }
 
-                            // add Send RFQ button
-                            buttonGroupCell.innerHTML += data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
-
                             templateRow.appendChild(buttonGroupCell);
+
+                            // add Send RFQ button
+                            templateCell = document.createElement('div');
+                            templateCell.className = 'vendorQuote';
+                            templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;
+                            templateCell.innerHTML = data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
+                            templateRow.appendChild(templateCell);
+
 
                             nextDivRow.appendChild(templateRow);
                         }
@@ -222,8 +240,8 @@
 
                             //document.getElementById('rfqSelected' + index).style.display = '';
                             var rfqSelectedButton = document.createElement('a');
-                            //rfqSelectedButton.href = 'javascript:RfqSelected(' + index + ');';
-                            rfqSelectedButton.href = 'javascript:VendorQuoteSoon(0,0,0);';
+                            rfqSelectedButton.href = 'javascript:RfqSelected(' + index + ');';
+                            //rfqSelectedButton.href = 'javascript:VendorQuoteSoon(0,0,0);';
                             rfqSelectedButton.innerHTML = 'RFQ Selected';
                             //rfqSelectedButton.style.display = 'none';
                             rfqSelectedButton.id = 'rfqSelected' + index;
@@ -255,7 +273,7 @@
                 } else {
                     className = '';
                     dropdown = false;
-                    href = "javascript:VendorQuoteSoon(" + vendorItem.VendorID + "," + vendorItem.VendorListItemID + ", '" + rfqButtonID + "');";
+                    href = "javascript:VendorQuoteOptions(" + vendorItem.VendorID + "," + vendorItem.VendorListItemID + ", '" + rfqButtonID + "');";
                 }
             }
             var builder = ['<a href="' + href + '" class="btn btn-primary ' + className + '"><span class="text">' + text + '</span>' + (dropdown ? '<span class="glyphicon glyphicon-triangle-bottom"></span>' : '') + '</a>'];
@@ -294,7 +312,7 @@
                         date = new Date(date.replace('T', ' '));
                     }
                     builder.push('<li><a>RFQ Sent ' + monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + '</a></li>',
-                        '<li><a href="javascript:VendorQuoteSoon(' + vendorID + ',' + vendorListItemID + ', \'' + rfqButtonID + '\');">Resend RFQ</a></li>');
+                        '<li><a href="javascript:VendorQuoteOptions(' + vendorID + ',' + vendorListItemID + ', \'' + rfqButtonID + '\');">Resend RFQ</a></li>');
                 }
                 builder.push('</ul>');
             }
