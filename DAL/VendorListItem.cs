@@ -51,6 +51,9 @@ namespace DAL
         public Nullable<bool> WorkHistory { get; set; }
         public Nullable<int> Achievements { get; set; }
         public int PortalCode { get; set; }
+        public string Quantity { get; set; }
+        public string Condition { get; set; }
+        public string Serial { get; set; }
     
         public virtual VendorList VendorList { get; set; }
     }

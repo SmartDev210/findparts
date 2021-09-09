@@ -39,7 +39,6 @@ namespace DAL
         public virtual DbSet<VendorAchievementType> VendorAchievementTypes { get; set; }
         public virtual DbSet<VendorCert> VendorCerts { get; set; }
         public virtual DbSet<VendorList> VendorLists { get; set; }
-        public virtual DbSet<VendorListItem> VendorListItems { get; set; }
         public virtual DbSet<VendorQuote> VendorQuotes { get; set; }
         public virtual DbSet<VendorSubscriberBlocked> VendorSubscriberBlockeds { get; set; }
         public virtual DbSet<VendorSubscriberPreferred> VendorSubscriberPreferreds { get; set; }
@@ -47,6 +46,7 @@ namespace DAL
         public virtual DbSet<VendorListItemArchive> VendorListItemArchives { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<VendorPurchase> VendorPurchases { get; set; }
+        public virtual DbSet<VendorListItem> VendorListItems { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

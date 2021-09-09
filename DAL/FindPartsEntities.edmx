@@ -268,6 +268,9 @@
           <Property Name="WorkHistory" Type="bit" />
           <Property Name="Achievements" Type="int" />
           <Property Name="PortalCode" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="varchar" MaxLength="50" />
+          <Property Name="Condition" Type="varchar" MaxLength="50" />
+          <Property Name="Serial" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1253,52 +1256,9 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="Filetype" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateApproved" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK_VendorList_Vendor" FromRole="VendorList" ToRole="Vendor" />
-          <NavigationProperty Name="VendorListItems" Relationship="Self.FK_VendorListItem_VendorList" FromRole="VendorList" ToRole="VendorListItem" />
           <Property Name="CategoryID" Type="Int32" />
           <Property Name="PortalCode" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="VendorListItem">
-          <Key>
-            <PropertyRef Name="VendorListItemID" />
-          </Key>
-          <Property Name="VendorListItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VendorListID" Type="Int32" Nullable="false" />
-          <Property Name="VendorID" Type="Int32" Nullable="false" />
-          <Property Name="PartNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="AlternatePartNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AlternatePartNumber2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModelNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Manufacturer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ATAChapter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NSN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Aircraft" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Engine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NotesRemarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="WorkShopSite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Workscope" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="RepairsFrequently" Type="Boolean" />
-          <Property Name="PMA" Type="Boolean" />
-          <Property Name="DER" Type="Boolean" />
-          <Property Name="FreeEval" Type="Boolean" />
-          <Property Name="Modified" Type="Boolean" />
-          <Property Name="FunctionTestOnly" Type="Boolean" />
-          <Property Name="NoOverhaulWorkscope" Type="Boolean" />
-          <Property Name="CAAC" Type="Boolean" />
-          <Property Name="ExtendedWarranty" Type="Boolean" />
-          <Property Name="FlatRate" Type="Boolean" />
-          <Property Name="Range" Type="Boolean" />
-          <Property Name="NTE" Type="Boolean" />
-          <Property Name="PartNumberClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AlternatePartNumberClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AlternatePartNumber2Clean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ModelNumberClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NSNClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WorkHistory" Type="Boolean" />
-          <Property Name="Achievements" Type="Int32" />
-          <NavigationProperty Name="VendorList" Relationship="Self.FK_VendorListItem_VendorList" FromRole="VendorListItem" ToRole="VendorList" />
-          <Property Name="PortalCode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="VendorListItems" Relationship="DomainModel.FK_VendorListItem_VendorList" FromRole="VendorList" ToRole="VendorListItem" />
         </EntityType>
         <EntityType Name="VendorQuote">
           <Key>
@@ -1422,18 +1382,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VendorListItem_VendorList">
-          <End Role="VendorList" Type="Self.VendorList" Multiplicity="1" />
-          <End Role="VendorListItem" Type="Self.VendorListItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VendorList">
-              <PropertyRef Name="VendorListID" />
-            </Principal>
-            <Dependent Role="VendorListItem">
-              <PropertyRef Name="VendorListID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FindPartsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="Subscribers" EntityType="Self.Subscriber" />
@@ -1447,7 +1395,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <EntitySet Name="VendorAchievementTypes" EntityType="Self.VendorAchievementType" />
           <EntitySet Name="VendorCerts" EntityType="Self.VendorCert" />
           <EntitySet Name="VendorLists" EntityType="Self.VendorList" />
-          <EntitySet Name="VendorListItems" EntityType="Self.VendorListItem" />
           <EntitySet Name="VendorQuotes" EntityType="Self.VendorQuote" />
           <EntitySet Name="VendorSubscriberBlockeds" EntityType="Self.VendorSubscriberBlocked" />
           <EntitySet Name="VendorSubscriberPreferreds" EntityType="Self.VendorSubscriberPreferred" />
@@ -1456,10 +1403,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <AssociationSet Name="FK_VendorList_Vendor" Association="Self.FK_VendorList_Vendor">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="VendorList" EntitySet="VendorLists" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VendorListItem_VendorList" Association="Self.FK_VendorListItem_VendorList">
-            <End Role="VendorList" EntitySet="VendorLists" />
-            <End Role="VendorListItem" EntitySet="VendorListItems" />
           </AssociationSet>
           <FunctionImport Name="ELMAH_GetErrorsXml" ReturnType="Collection(String)">
             <Parameter Name="Application" Mode="In" Type="String" />
@@ -2053,6 +1996,11 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           </FunctionImport>
           <EntitySet Name="Categories" EntityType="DomainModel.Category" />
           <EntitySet Name="VendorPurchases" EntityType="DomainModel.VendorPurchase" />
+          <EntitySet Name="VendorListItems" EntityType="DomainModel.VendorListItem" />
+          <AssociationSet Name="FK_VendorListItem_VendorList" Association="DomainModel.FK_VendorListItem_VendorList">
+            <End Role="VendorList" EntitySet="VendorLists" />
+            <End Role="VendorListItem" EntitySet="VendorListItems" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="StatusGetAll_Result">
           <Property Type="Int32" Name="StatusID" Nullable="false" />
@@ -2815,6 +2763,64 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Name="Amount" Type="Int64" Nullable="false" />
           <Property Name="PurchasedAt" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="VendorListItem">
+          <Key>
+            <PropertyRef Name="VendorListItemID" />
+          </Key>
+          <Property Name="VendorListItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorListID" Type="Int32" Nullable="false" />
+          <Property Name="VendorID" Type="Int32" Nullable="false" />
+          <Property Name="PartNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AlternatePartNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlternatePartNumber2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModelNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ATAChapter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NSN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Aircraft" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Engine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NotesRemarks" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="WorkShopSite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Workscope" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="RepairsFrequently" Type="Boolean" />
+          <Property Name="PMA" Type="Boolean" />
+          <Property Name="DER" Type="Boolean" />
+          <Property Name="FreeEval" Type="Boolean" />
+          <Property Name="Modified" Type="Boolean" />
+          <Property Name="FunctionTestOnly" Type="Boolean" />
+          <Property Name="NoOverhaulWorkscope" Type="Boolean" />
+          <Property Name="CAAC" Type="Boolean" />
+          <Property Name="ExtendedWarranty" Type="Boolean" />
+          <Property Name="FlatRate" Type="Boolean" />
+          <Property Name="Range" Type="Boolean" />
+          <Property Name="NTE" Type="Boolean" />
+          <Property Name="PartNumberClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlternatePartNumberClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AlternatePartNumber2Clean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModelNumberClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NSNClean" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkHistory" Type="Boolean" />
+          <Property Name="Achievements" Type="Int32" />
+          <Property Name="PortalCode" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Condition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VendorList" Relationship="DomainModel.FK_VendorListItem_VendorList" FromRole="VendorListItem" ToRole="VendorList" />
+        </EntityType>
+        <Association Name="FK_VendorListItem_VendorList">
+          <End Type="DomainModel.VendorList" Role="VendorList" Multiplicity="1" />
+          <End Type="DomainModel.VendorListItem" Role="VendorListItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VendorList">
+              <PropertyRef Name="VendorListID" />
+            </Principal>
+            <Dependent Role="VendorListItem">
+              <PropertyRef Name="VendorListID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3037,49 +3043,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
                 <ScalarProperty Name="ReplaceList" ColumnName="ReplaceList" />
                 <ScalarProperty Name="Filetype" ColumnName="Filetype" />
                 <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VendorListItems">
-            <EntityTypeMapping TypeName="DomainModel.VendorListItem">
-              <MappingFragment StoreEntitySet="VendorListItem">
-                <ScalarProperty Name="PortalCode" ColumnName="PortalCode" />
-                <ScalarProperty Name="VendorListItemID" ColumnName="VendorListItemID" />
-                <ScalarProperty Name="VendorListID" ColumnName="VendorListID" />
-                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
-                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="AlternatePartNumber" ColumnName="AlternatePartNumber" />
-                <ScalarProperty Name="AlternatePartNumber2" ColumnName="AlternatePartNumber2" />
-                <ScalarProperty Name="ModelNumber" ColumnName="ModelNumber" />
-                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
-                <ScalarProperty Name="ATAChapter" ColumnName="ATAChapter" />
-                <ScalarProperty Name="NSN" ColumnName="NSN" />
-                <ScalarProperty Name="Aircraft" ColumnName="Aircraft" />
-                <ScalarProperty Name="Engine" ColumnName="Engine" />
-                <ScalarProperty Name="Cage" ColumnName="Cage" />
-                <ScalarProperty Name="NotesRemarks" ColumnName="NotesRemarks" />
-                <ScalarProperty Name="WorkShopSite" ColumnName="WorkShopSite" />
-                <ScalarProperty Name="Workscope" ColumnName="Workscope" />
-                <ScalarProperty Name="RepairsFrequently" ColumnName="RepairsFrequently" />
-                <ScalarProperty Name="PMA" ColumnName="PMA" />
-                <ScalarProperty Name="DER" ColumnName="DER" />
-                <ScalarProperty Name="FreeEval" ColumnName="FreeEval" />
-                <ScalarProperty Name="Modified" ColumnName="Modified" />
-                <ScalarProperty Name="FunctionTestOnly" ColumnName="FunctionTestOnly" />
-                <ScalarProperty Name="NoOverhaulWorkscope" ColumnName="NoOverhaulWorkscope" />
-                <ScalarProperty Name="CAAC" ColumnName="CAAC" />
-                <ScalarProperty Name="ExtendedWarranty" ColumnName="ExtendedWarranty" />
-                <ScalarProperty Name="FlatRate" ColumnName="FlatRate" />
-                <ScalarProperty Name="Range" ColumnName="Range" />
-                <ScalarProperty Name="NTE" ColumnName="NTE" />
-                <ScalarProperty Name="PartNumberClean" ColumnName="PartNumberClean" />
-                <ScalarProperty Name="AlternatePartNumberClean" ColumnName="AlternatePartNumberClean" />
-                <ScalarProperty Name="AlternatePartNumber2Clean" ColumnName="AlternatePartNumber2Clean" />
-                <ScalarProperty Name="ModelNumberClean" ColumnName="ModelNumberClean" />
-                <ScalarProperty Name="NSNClean" ColumnName="NSNClean" />
-                <ScalarProperty Name="WorkHistory" ColumnName="WorkHistory" />
-                <ScalarProperty Name="Achievements" ColumnName="Achievements" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3841,6 +3804,52 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
                 <ScalarProperty Name="PurchaseType" ColumnName="PurchaseType" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorListItems">
+            <EntityTypeMapping TypeName="DomainModel.VendorListItem">
+              <MappingFragment StoreEntitySet="VendorListItem">
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PortalCode" ColumnName="PortalCode" />
+                <ScalarProperty Name="Achievements" ColumnName="Achievements" />
+                <ScalarProperty Name="WorkHistory" ColumnName="WorkHistory" />
+                <ScalarProperty Name="NSNClean" ColumnName="NSNClean" />
+                <ScalarProperty Name="ModelNumberClean" ColumnName="ModelNumberClean" />
+                <ScalarProperty Name="AlternatePartNumber2Clean" ColumnName="AlternatePartNumber2Clean" />
+                <ScalarProperty Name="AlternatePartNumberClean" ColumnName="AlternatePartNumberClean" />
+                <ScalarProperty Name="PartNumberClean" ColumnName="PartNumberClean" />
+                <ScalarProperty Name="NTE" ColumnName="NTE" />
+                <ScalarProperty Name="Range" ColumnName="Range" />
+                <ScalarProperty Name="FlatRate" ColumnName="FlatRate" />
+                <ScalarProperty Name="ExtendedWarranty" ColumnName="ExtendedWarranty" />
+                <ScalarProperty Name="CAAC" ColumnName="CAAC" />
+                <ScalarProperty Name="NoOverhaulWorkscope" ColumnName="NoOverhaulWorkscope" />
+                <ScalarProperty Name="FunctionTestOnly" ColumnName="FunctionTestOnly" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="FreeEval" ColumnName="FreeEval" />
+                <ScalarProperty Name="DER" ColumnName="DER" />
+                <ScalarProperty Name="PMA" ColumnName="PMA" />
+                <ScalarProperty Name="RepairsFrequently" ColumnName="RepairsFrequently" />
+                <ScalarProperty Name="Workscope" ColumnName="Workscope" />
+                <ScalarProperty Name="WorkShopSite" ColumnName="WorkShopSite" />
+                <ScalarProperty Name="NotesRemarks" ColumnName="NotesRemarks" />
+                <ScalarProperty Name="Cage" ColumnName="Cage" />
+                <ScalarProperty Name="Engine" ColumnName="Engine" />
+                <ScalarProperty Name="Aircraft" ColumnName="Aircraft" />
+                <ScalarProperty Name="NSN" ColumnName="NSN" />
+                <ScalarProperty Name="ATAChapter" ColumnName="ATAChapter" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ModelNumber" ColumnName="ModelNumber" />
+                <ScalarProperty Name="AlternatePartNumber2" ColumnName="AlternatePartNumber2" />
+                <ScalarProperty Name="AlternatePartNumber" ColumnName="AlternatePartNumber" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="VendorListID" ColumnName="VendorListID" />
+                <ScalarProperty Name="VendorListItemID" ColumnName="VendorListItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

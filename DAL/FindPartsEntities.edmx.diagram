@@ -17,16 +17,16 @@
         <EntityTypeShape EntityType="DomainModel.VendorAchievementType" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorCert" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorList" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModel.VendorListItem" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorQuote" Width="1.5" PointX="11.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorSubscriberBlocked" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorSubscriberPreferred" Width="1.5" PointX="13.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorAchievementListItem" Width="1.5" PointX="13.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModel.VendorListItemArchive" Width="1.5" PointX="13.75" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="DomainModel.FK_VendorList_Vendor" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModel.FK_VendorListItem_VendorList" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DomainModel.Category" Width="1.5" PointX="3.375" PointY="14.75" />
         <EntityTypeShape EntityType="DomainModel.VendorPurchase" Width="1.5" PointX="5.375" PointY="15.75" />
+        <EntityTypeShape EntityType="DomainModel.VendorListItem" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="DomainModel.FK_VendorListItem_VendorList" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
