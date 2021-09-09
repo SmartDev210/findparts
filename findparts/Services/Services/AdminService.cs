@@ -35,7 +35,7 @@ namespace Findparts.Services.Services
             viewModel.Notes = vendor.Notes;
 
             viewModel.VendorList = _context.VendorListGetByVendorID(vendorId, Config.PortalCode).ToList();
-            viewModel.VendorAchievementList = _context.VendorAchievementListGetByVendorID2(vendorId).ToList();
+            //viewModel.VendorAchievementList = _context.VendorAchievementListGetByVendorID2(vendorId).ToList();
 
             var user = _context.UserGetByVendorID(vendorId).FirstOrDefault();
             if (user != null)

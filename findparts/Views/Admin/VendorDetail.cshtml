@@ -1,4 +1,5 @@
-﻿@model Findparts.Models.Admin.VendorDetailViewModel
+﻿@using Findparts.Core
+@model Findparts.Models.Admin.VendorDetailViewModel
 
 @if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
 {
@@ -51,8 +52,8 @@
 <div class="row">
     <div class="col-sm-12">
         <a class="btn btn-primary btn-spacer" href="@Url.Action("DownloadMasterList", "Vendor", new { VendorID = Model.VendorId })">Download Master List</a>
-        <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId })">Upload Capability List</a>
-        <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId })">upload Workscope Icon List</a>
+        <a class="btn btn-primary btn-spacer" href="@Url.Action("UploadCapability", "Vendor", new { VendorID = Model.VendorId })">Upload @(Config.PortalCode == 0 ? "Capability" : "✈ Spare Part") List</a>
+        @*<a class="btn btn-primary btn-spacer" href="@Url.Action("UploadAchievement", "Vendor", new { VendorID = Model.VendorId })">upload Workscope Icon List</a>*@
 
 
         <table class="table table-condensed" style="border-collapse: collapse;">
@@ -99,7 +100,7 @@
                 }
             </tbody>
         </table>
-
+        @*
         <table class="table table-condensed" style="border-collapse: collapse;">
             <caption>
                 @Model.VendorAchievementList.Count Workscope Icon Lists found
@@ -146,5 +147,6 @@
                 }
             </tbody>
         </table>
+        *@
     </div>
 </div>

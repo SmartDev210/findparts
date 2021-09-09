@@ -12,7 +12,7 @@
 }
 
 <div id="panList">
-    <a href="@Url.Action("UploadCapability", "Vendor")" class="btn btn-primary btn-spacer">Upload ✈ Spare Parts List</a>
+    <a href="@Url.Action("UploadCapability", "Vendor")" class="btn btn-primary btn-spacer">Upload @(Config.PortalCode == 0 ? "Capability" : "✈ Spare Part") List</a>
     @*<a href="@Url.Action("UploadAchievement", "Vendor")" class="btn btn-primary btn-spacer">Upload Workscope Icon List</a>*@
     <a href="@Url.Action("DownloadMasterList", "Vendor")" class="btn btn-primary btn-spacer">Download Master List</a>
     <table class="table table-condensed" cellspacing="0" rules="all" border="1" style="border-collapse: collapse;">

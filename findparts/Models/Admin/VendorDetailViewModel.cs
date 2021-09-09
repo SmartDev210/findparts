@@ -13,7 +13,7 @@ namespace Findparts.Models.Admin
         {
             StatusSelectList = new List<SelectListItem>();
             VendorList = new List<VendorListGetByVendorID_Result>();
-            VendorAchievementList = new List<VendorAchievementListGetByVendorID2_Result>();
+            //VendorAchievementList = new List<VendorAchievementListGetByVendorID2_Result>();
             SubscriberId = null;
         }
         public int VendorId { get; set; }
@@ -26,6 +26,6 @@ namespace Findparts.Models.Admin
         public DateTime DateCreated { get; set; }
 
         public List<VendorListGetByVendorID_Result> VendorList { get; set; }
-        public List<VendorAchievementListGetByVendorID2_Result> VendorAchievementList { get; set; }
+        //public List<VendorAchievementListGetByVendorID2_Result> VendorAchievementList { get; set; }
     }
 }
