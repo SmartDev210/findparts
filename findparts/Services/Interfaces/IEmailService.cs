@@ -22,7 +22,7 @@ namespace Findparts.Services.Interfaces
         void SendVendorRFQEmail(string vendorQuoteID, string vendorId);
         void SendVendorUploadEmail(string vendorEmail, string vendorName, bool capabilityList);
         void SendVendorUploadByAdminEmail(string vendorEmail, string vendorName, bool capabilityList);
-        void SendVendorListApprovedEmail(string vendorEmail, string vendorName, bool capabilityList, string capabilities, string merits);
+        void SendVendorListApprovedEmail(string vendorEmail, string vendorName, bool capabilityList, string capabilities, string merits, int portalCode);
         void SendSubscriberAdminNewUserEmail(string email, string newEmail, string subscriberName, string createdBy);
         void SendSubscriberCancelledEmail(string email, string subscriberName);
         void SendSubscriberQuoteEmail(string vendorQuoteID);

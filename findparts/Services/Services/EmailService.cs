@@ -26,14 +26,14 @@ namespace Findparts.Services.Services
             return vendor ? "Vendor" : "Subscriber";
         }
 
-        private string CapabilityMerit(bool capability)
+        private string CapabilityMerit(bool capability, int portalCode)
         {
-            return capability ? "Capability" : "Workscope Icon";
+            return capability ? (portalCode == 0 ? "Repair Capability" : "✈ Spare Parts") : "Workscope Icon";
         }
 
-        private string CapabilitiesMerits(bool capability)
+        private string CapabilitiesMerits(bool capability, int portalCode)
         {
-            return capability ? "Capabilities" : "Workscope Icons";
+			return capability ? (portalCode == 0 ? "Repair Capabilities" : "✈ Spare Parts") : "Workscope Icons";
         }
 
         private bool SendEmail(string from, string to, string subject, string body, string bcc = null)
@@ -97,14 +97,14 @@ namespace Findparts.Services.Services
         #region admin
         public void SendAdminUploadEmail(string vendorName, string vendorID, bool capabilityList)
         {
-            string message = "A new " + CapabilityMerit(capabilityList) + " list has been uploaded," + Environment.NewLine
+            string message = "A new " + CapabilityMerit(capabilityList, Config.PortalCode) + " list has been uploaded," + Environment.NewLine
                 + Environment.NewLine
                 + vendorName + Environment.NewLine
                 + Environment.NewLine
                 + "Click below to view Vendors:" + Environment.NewLine +
                 "https://" + HttpContext.Current.Request.Url.Host + "/Admin/Vendors" + Environment.NewLine;
 
-            SendEmail(Config.FromEmail, Config.AdminEmail, CapabilityMerit(capabilityList) + " List Uploaded" + vendorName, message);
+            SendEmail(Config.FromEmail, Config.AdminEmail, CapabilityMerit(capabilityList, Config.PortalCode) + " List Uploaded" + vendorName, message);
         }
 
 
@@ -308,16 +308,16 @@ namespace Findparts.Services.Services
 		{
 			string message = vendorName + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ "You have uploaded a " + CapabilityMerit(capabilityList) + $" list to the {Config.PortalName} platform." + Environment.NewLine
+				+ "You have uploaded a " + CapabilityMerit(capabilityList, Config.PortalCode) + $" list to the {Config.PortalName} platform." + Environment.NewLine
 				+ Environment.NewLine
 				+ $"{Config.PortalName} will approve your list shortly, and make it active throughout the platform." + Environment.NewLine
 				+ Environment.NewLine
 				//"Elena's List will approve and activate your list throughout the platform within 24 hours." + Environment.NewLine + Environment.NewLine +
-				+ "You will receive a confirmation when your " + CapabilitiesMerits(capabilityList) + " are live." + Environment.NewLine
+				+ "You will receive a confirmation when your " + CapabilitiesMerits(capabilityList, Config.PortalCode) + " are live." + Environment.NewLine
 				+ Environment.NewLine
 				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList) + " List Uploaded", message);
+			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList, Config.PortalCode) + " List Uploaded", message);
 		}
 
 		// TODO: ask bryan why not in use
@@ -325,44 +325,43 @@ namespace Findparts.Services.Services
 		{
 			string message = vendorName + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ $"An Admin at {Config.PortalName} has uploaded your " + CapabilityMerit(capabilityList) + " list." + Environment.NewLine
+				+ $"An Admin at {Config.PortalName} has uploaded your " + CapabilityMerit(capabilityList, Config.PortalCode) + " list." + Environment.NewLine
 				+ Environment.NewLine
 				+ "This happened because:" + Environment.NewLine
 				+ Environment.NewLine
-				+ "You recently uploaded a " + CapabilityMerit(capabilityList) + $" list that {Config.PortalName} has re-formatted for optimal functionality on our platform." + Environment.NewLine
+				+ "You recently uploaded a " + CapabilityMerit(capabilityList, Config.PortalCode) + $" list that {Config.PortalName} has re-formatted for optimal functionality on our platform." + Environment.NewLine
 				+ Environment.NewLine
 				+ "OR" + Environment.NewLine
 				+ Environment.NewLine
-				+ $"You recently spoke with an {Config.PortalName} representative and they have uploaded your " + CapabilityMerit(capabilityList) + " list on your behalf." + Environment.NewLine
+				+ $"You recently spoke with an {Config.PortalName} representative and they have uploaded your " + CapabilityMerit(capabilityList, Config.PortalCode) + " list on your behalf." + Environment.NewLine
 				+ Environment.NewLine
-				+ $"{Config.PortalName} will approve your list shortly, and make your " + CapabilitiesMerits(capabilityList) + " active throughout the platform." + Environment.NewLine
+				+ $"{Config.PortalName} will approve your list shortly, and make your " + CapabilitiesMerits(capabilityList, Config.PortalCode) + " active throughout the platform." + Environment.NewLine
 				+ Environment.NewLine
-				+ "You will receive a confirmation once your " + CapabilitiesMerits(capabilityList) + " are live." + Environment.NewLine
+				+ "You will receive a confirmation once your " + CapabilitiesMerits(capabilityList, Config.PortalCode) + " are live." + Environment.NewLine
 				+ Environment.NewLine
 				+ Config.PortalName;
 
-			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList) + " List Uploaded by Elena's List", message);
+			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList, Config.PortalCode) + " List Uploaded by Elena's List", message);
 		}
 
-		public void SendVendorListApprovedEmail(string vendorEmail, string vendorName, bool capabilityList, string capabilities, string merits)
+		public void SendVendorListApprovedEmail(string vendorEmail, string vendorName, bool capabilityList, string capabilities, string merits, int portalCode)
 		{
 			string message = vendorName + "," + Environment.NewLine
 				+ Environment.NewLine
-				+ "Your " + CapabilityMerit(capabilityList) + " list has been approved." + Environment.NewLine
+				+ "Your " + CapabilityMerit(capabilityList, portalCode) + " list has been approved." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Your " + CapabilitiesMerits(capabilityList) + $" are now active throughout {Config.PortalName}." + Environment.NewLine
+				+ "Your " + CapabilitiesMerits(capabilityList, portalCode) + " are now active throughout " + (portalCode == 0 ? "MROFinder.AvDB.aero" : "FindParts.AvDB.aero") + Environment.NewLine
 				+ Environment.NewLine
 				+ "Your Capability Stats:" + Environment.NewLine
-				+ "MRO CAPABILITIES - " + capabilities + Environment.NewLine
-				+ "WORKSCOPE ICONS - " + merits + Environment.NewLine
+				+ "# of " + CapabilitiesMerits(capabilityList, portalCode) + " listed - " + capabilities + Environment.NewLine
 				+ Environment.NewLine
 				+ "Click to view your Lists:" + Environment.NewLine
 				+ "https://" + HttpContext.Current.Request.Url.Host + "/Vendor/UploadList" + Environment.NewLine
 				+ Environment.NewLine
 				//+ "Remember, you can always upload " + (capabilityList ? "" : "more ") + "Workscope icons to highlight your specific capabilities for FREE," + Environment.NewLine + Environment.NewLine
-				+ Config.PortalName;
+				+ "AvDB.aero";
 
-			SendEmail(Config.FromEmail, vendorEmail, $"{Config.PortalName} " + CapabilityMerit(capabilityList) + " List Approved & Active", message);
+			SendEmail(Config.FromEmail, vendorEmail, (Config.PortalCode == 0 ? "MROFinder" : "FindParts") + " " + CapabilityMerit(capabilityList, portalCode) + " List Approved & Active", message);
 		}
 
 		#endregion
