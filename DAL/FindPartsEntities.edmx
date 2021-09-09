@@ -2532,34 +2532,6 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Type="String" Name="Filetype" Nullable="false" MaxLength="5" />
           <Property Type="DateTime" Name="DateApproved" Nullable="true" Precision="23" />
         </ComplexType>
-        <ComplexType Name="VendorListItemGetByVendor4_Result">
-          <Property Type="String" Name="PartNumber" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="AlternatePartNumber" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="AlternatePartNumber2" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="ModelNumber" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Manufacturer" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ATAChapter" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="NSN" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Aircraft" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Engine" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Cage" Nullable="true" MaxLength="50" />
-          <Property Type="Boolean" Name="PMA" Nullable="true" />
-          <Property Type="Boolean" Name="DER" Nullable="true" />
-          <Property Type="Boolean" Name="RepairsFrequently" Nullable="true" />
-          <Property Type="Boolean" Name="FreeEval" Nullable="true" />
-          <Property Type="Boolean" Name="Modified" Nullable="true" />
-          <Property Type="Boolean" Name="FunctionTestOnly" Nullable="true" />
-          <Property Type="Boolean" Name="NoOverhaulWorkscope" Nullable="true" />
-          <Property Type="Boolean" Name="CAAC" Nullable="true" />
-          <Property Type="Boolean" Name="ExtendedWarranty" Nullable="true" />
-          <Property Type="Boolean" Name="FlatRate" Nullable="true" />
-          <Property Type="Boolean" Name="Range" Nullable="true" />
-          <Property Type="Boolean" Name="NTE" Nullable="true" />
-          <Property Type="String" Name="NotesRemarks" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="WorkShopSite" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Workscope" Nullable="true" MaxLength="500" />
-        </ComplexType>
         <ComplexType Name="VendorListItemGetStats_Result">
           <Property Type="Int32" Name="VendorCount" Nullable="true" />
           <Property Type="Int32" Name="PartCount" Nullable="true" />
@@ -2821,6 +2793,37 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="VendorListItemGetByVendor4_Result">
+          <Property Type="String" Name="PartNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="AlternatePartNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AlternatePartNumber2" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ModelNumber" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Manufacturer" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ATAChapter" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NSN" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Aircraft" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Engine" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Cage" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="PMA" Nullable="true" />
+          <Property Type="Boolean" Name="DER" Nullable="true" />
+          <Property Type="Boolean" Name="RepairsFrequently" Nullable="true" />
+          <Property Type="Boolean" Name="FreeEval" Nullable="true" />
+          <Property Type="Boolean" Name="Modified" Nullable="true" />
+          <Property Type="Boolean" Name="FunctionTestOnly" Nullable="true" />
+          <Property Type="Boolean" Name="NoOverhaulWorkscope" Nullable="true" />
+          <Property Type="Boolean" Name="CAAC" Nullable="true" />
+          <Property Type="Boolean" Name="ExtendedWarranty" Nullable="true" />
+          <Property Type="Boolean" Name="FlatRate" Nullable="true" />
+          <Property Type="Boolean" Name="Range" Nullable="true" />
+          <Property Type="Boolean" Name="NTE" Nullable="true" />
+          <Property Type="String" Name="NotesRemarks" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="WorkShopSite" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Workscope" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Quantity" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Condition" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Serial" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3520,6 +3523,9 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
                 <ScalarProperty Name="NotesRemarks" ColumnName="NotesRemarks" />
                 <ScalarProperty Name="WorkShopSite" ColumnName="WorkShopSite" />
                 <ScalarProperty Name="Workscope" ColumnName="Workscope" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

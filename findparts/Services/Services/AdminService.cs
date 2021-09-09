@@ -378,7 +378,7 @@ namespace Findparts.Services.Services
                 foreach (var user in users)
                 {
                     string vendorEmail = user.Email;
-                    _mailService.SendVendorListApprovedEmail(vendorEmail, vendor.VendorName, true, partsCount.ToString(), achievementsCount.ToString());
+                    _mailService.SendVendorListApprovedEmail(vendorEmail, vendor.VendorName, true, partsCount.ToString(), achievementsCount.ToString(), vendorList.PortalCode);
                 }
             }
 
@@ -429,7 +429,7 @@ namespace Findparts.Services.Services
                 var users = _context.UserGetByVendorID(vendor.VendorID);
                 foreach (var user in users)
                 {   
-                    _mailService.SendVendorListApprovedEmail(user.Email, vendor.VendorName, false, partsCount.ToString(), achievementsCount.ToString());
+                    _mailService.SendVendorListApprovedEmail(user.Email, vendor.VendorName, false, partsCount.ToString(), achievementsCount.ToString(), Config.PortalCode);
                 }
             }
         }

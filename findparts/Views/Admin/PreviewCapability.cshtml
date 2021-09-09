@@ -46,6 +46,10 @@
                     <th>FlatRange</th>
                     <th>Range</th>
                     <th>NTE</th>
+                    <th>Quantity</th>
+                    <th>Condition</th>
+                    <th>Serial</th>
+                    <th>Type</th>
                 </tr>
                 @foreach (var item in Model.Items)
                 {
@@ -76,6 +80,10 @@
                         <td>@item.FlatRate</td>
                         <td>@item.Range</td>
                         <td>@item.NTE</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Condition</td>
+                        <td>@item.Serial</td>
+                        <td>@(item.PortalCode == 0 ? "MROFinder" : "FindParts")</td>
                     </tr>
                 }
             </tbody>

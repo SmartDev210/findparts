@@ -784,7 +784,7 @@ namespace Findparts.Controllers
                 ws.Cells["A1"].LoadFromCollection(vendorList, true);
 
                 //Format the header for column 1-3
-                using (ExcelRange rng = ws.Cells["A1:Z1"])
+                using (ExcelRange rng = ws.Cells["A1:AC"])
                 {
                     rng.Style.Font.Bold = true;
                     rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid

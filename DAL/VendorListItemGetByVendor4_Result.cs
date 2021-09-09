@@ -39,5 +39,8 @@ namespace DAL
         public string NotesRemarks { get; set; }
         public string WorkShopSite { get; set; }
         public string Workscope { get; set; }
+        public string Quantity { get; set; }
+        public string Condition { get; set; }
+        public string Serial { get; set; }
     }
 }
