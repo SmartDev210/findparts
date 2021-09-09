@@ -41,9 +41,9 @@ namespace Findparts.Models.Vendor
         public VendorUploadListViewModel()
         {
             VendorCapabilityList = new List<VendorFileViewModel>();
-            VendorAchievementList = new List<VendorFileViewModel>();
+            // VendorAchievementList = new List<VendorFileViewModel>();
         }
         public List<VendorFileViewModel> VendorCapabilityList { get; set; }
-        public List<VendorFileViewModel> VendorAchievementList { get; set; }
+        // public List<VendorFileViewModel> VendorAchievementList { get; set; }
     }
 }

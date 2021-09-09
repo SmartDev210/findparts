@@ -12,8 +12,8 @@
 }
 
 <div id="panList">
-    <a href="@Url.Action("UploadCapability", "Vendor")" class="btn btn-primary btn-spacer">Upload Capability List</a>
-    <a href="@Url.Action("UploadAchievement", "Vendor")" class="btn btn-primary btn-spacer">Upload Workscope Icon List</a>
+    <a href="@Url.Action("UploadCapability", "Vendor")" class="btn btn-primary btn-spacer">Upload ✈ Spare Parts List</a>
+    @*<a href="@Url.Action("UploadAchievement", "Vendor")" class="btn btn-primary btn-spacer">Upload Workscope Icon List</a>*@
     <a href="@Url.Action("DownloadMasterList", "Vendor")" class="btn btn-primary btn-spacer">Download Master List</a>
     <table class="table table-condensed" cellspacing="0" rules="all" border="1" style="border-collapse: collapse;">
         <caption>@Model.VendorCapabilityList.Count Capability Lists found</caption>
@@ -49,39 +49,40 @@
             </tr>
         }
     </table>
-
-    <table class="table table-condensed" cellspacing="0" rules="all" border="1" style="border-collapse: collapse;">
-        <caption>@Model.VendorAchievementList.Count Workscope Icon Lists found</caption>
-        <tr>
-            <th>Date Created</th>
-            <th>File Type</th>
-            <th>Workscope Icon Type</th>
-            <th>Approvd by @Config.PortalName</th>
-            <th>Comments</th>
-            <th>Download File</th>
-            <th>Delete</th>
-        </tr>
-        @foreach (var item in Model.VendorAchievementList)
-        {
+    @*
+        <table class="table table-condensed" cellspacing="0" rules="all" border="1" style="border-collapse: collapse;">
+            <caption>@Model.VendorAchievementList.Count Workscope Icon Lists found</caption>
             <tr>
-                <td><a href="@Url.Action("UploadAchievement", "Vendor", new { vendorAchievementId = item.Id })">@item.DateCreated.ToString("MMM d yyyy h:mm tt")</a></td>
-                <td>@item.FileType</td>
-                <td>@item.AchievementType</td>
-                <td>
-                    @if (item.DateApproved.HasValue)
-                    {
-                        <text>@item.DateApproved.Value.ToString("MMM d yyyy h:mm tt")</text>
-                    }
-                </td>
-                <td>@item.Comments</td>
-                <td><a target="_blank" href="@Url.Action("DownloadAchievement", "Vendor", new { vendorAchievementId = item.Id })">@item.FileType</a></td>
-                <td>
-                    @if (!item.DateApproved.HasValue)
-                    {
-                        <a href="@Url.Action("DeleteAchievement", "Vendor", new { vendorAchievementId = item.Id })" class="btn btn-danger"><span class='glyphicon glyphicon-remove'></span></a>
-                    }
-                </td>
+                <th>Date Created</th>
+                <th>File Type</th>
+                <th>Workscope Icon Type</th>
+                <th>Approvd by @Config.PortalName</th>
+                <th>Comments</th>
+                <th>Download File</th>
+                <th>Delete</th>
             </tr>
-        }
-    </table>
+            @foreach (var item in Model.VendorAchievementList)
+            {
+                <tr>
+                    <td><a href="@Url.Action("UploadAchievement", "Vendor", new { vendorAchievementId = item.Id })">@item.DateCreated.ToString("MMM d yyyy h:mm tt")</a></td>
+                    <td>@item.FileType</td>
+                    <td>@item.AchievementType</td>
+                    <td>
+                        @if (item.DateApproved.HasValue)
+                        {
+                            <text>@item.DateApproved.Value.ToString("MMM d yyyy h:mm tt")</text>
+                        }
+                    </td>
+                    <td>@item.Comments</td>
+                    <td><a target="_blank" href="@Url.Action("DownloadAchievement", "Vendor", new { vendorAchievementId = item.Id })">@item.FileType</a></td>
+                    <td>
+                        @if (!item.DateApproved.HasValue)
+                        {
+                            <a href="@Url.Action("DeleteAchievement", "Vendor", new { vendorAchievementId = item.Id })" class="btn btn-danger"><span class='glyphicon glyphicon-remove'></span></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    *@
 </div>

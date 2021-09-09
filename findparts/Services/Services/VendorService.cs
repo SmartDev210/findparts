@@ -234,7 +234,7 @@ namespace Findparts.Services.Services
                     ReplaceList = item.ReplaceList,
                 });
             }
-
+            /*
             var vendorAchievementList = _context.VendorAchievementListGetByVendorID2(vendorID.ToNullableInt());
             foreach (var item in vendorAchievementList)
             {
@@ -248,7 +248,7 @@ namespace Findparts.Services.Services
                     ReplaceList = item.ReplaceList,
                     AchievementType = item.Name
                 });
-            }
+            }*/
             return viewModel;
         }
 
