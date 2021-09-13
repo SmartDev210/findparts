@@ -11,7 +11,7 @@ namespace Findparts.Services.Interfaces
     public interface IPartsSearchService
     {
         void PopulateHomePageViewModel(HomePageViewModel viewModel);
-        List<VendorListItemSearchDetail9_Result> GetDetails(PartsSearchQueryParams queryParams, bool isAdmin);
+        List<VendorListItemSearchDetail9_Result> GetDetails(PartsSearchQueryParams queryParams, bool isAdmin, bool showResult);
         void PopulatePartsPageViewModel(PartsPageViewModel viewModel, string text, bool partPage);
         List<PartAutoComplete> GetPartAutoCompletes(string text);
         void PreferBlockVendor(string vendorId, bool prefer, string state);

@@ -42,7 +42,7 @@ namespace Findparts.Services.Services
             viewModel.RecentSearches = _context.UserSearchGetRecent3().ToList();
         }
 
-        public List<VendorListItemSearchDetail9_Result> GetDetails(PartsSearchQueryParams queryParams, bool isAdmin)
+        public List<VendorListItemSearchDetail9_Result> GetDetails(PartsSearchQueryParams queryParams, bool isAdmin, bool showResult)
         {
             string viewAsVendorID;
             if (!string.IsNullOrEmpty(queryParams.VendorID) && isAdmin)
@@ -56,7 +56,7 @@ namespace Findparts.Services.Services
 
             var list = _context.VendorListItemSearchDetail9(queryParams.PartNumberDetail, SessionVariables.SubscriberID.ToNullableInt(), Config.PortalCode).ToList();
 
-            if ((SessionVariables.SubscriberID == "" || !SessionVariables.CanSearch) && !isAdmin)
+            if (!showResult)
             {
                 list.ForEach(x =>
                 {

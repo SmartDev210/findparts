@@ -38,7 +38,7 @@ namespace Findparts.Controllers
 
             if (!string.IsNullOrEmpty(queryParams.PartNumberDetail))
             {
-                var result = _partsSearchService.GetDetails(queryParams, User.IsInRole("Admin"));
+                var result = _partsSearchService.GetDetails(queryParams, User.IsInRole("Admin"), User.Identity.IsAuthenticated);
                 return Json(result, JsonRequestBehavior.AllowGet);
             } else if (!string.IsNullOrEmpty(queryParams.Search))
             {
