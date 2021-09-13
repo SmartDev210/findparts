@@ -1356,3 +1356,7 @@ nav.navbar {
     margin-left: unset;
 }
 /* END: Mobile Styles */
+.btn-pink {
+    background-color: #DB21B3;
+    color: white;
+}
