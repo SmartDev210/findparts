@@ -102,7 +102,7 @@ namespace Findparts.Services.Services
                 + vendorName + Environment.NewLine
                 + Environment.NewLine
                 + "Click below to view Vendors:" + Environment.NewLine +
-                "https://" + HttpContext.Current.Request.Url.Host + "/Admin/Vendors" + Environment.NewLine;
+                "https://" + HttpContext.Current.Request.Url.Host + "/Admin/Vendors/" + vendorID + Environment.NewLine;
 
             SendEmail(Config.FromEmail, Config.AdminEmail, CapabilityMerit(capabilityList, Config.PortalCode) + " List Uploaded" + vendorName, message);
         }

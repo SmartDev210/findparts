@@ -37,5 +37,6 @@ namespace Findparts.Services.Interfaces
         CertsViewModel GetCertsViewModel(string vendorID);
         VendorAdvertiseViewModel GetAdvertiseViewModel(string vendorID);
         bool CreateInvoice(int chargeId, bool saveHtml);
+        Vendor GetVendorById(int vendorId);
     }
 }

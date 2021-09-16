@@ -662,11 +662,13 @@ namespace Findparts.Controllers
                 {
                     _vendorService.UploadVendorList(viewModel, fileType);
 
+                    var vendor = _vendorService.GetVendorById(viewModel.VendorId);
+
                     if (!User.IsInRole("Admin"))
                     {
-                        _mailService.SendVendorUploadEmail(SessionVariables.Email, SessionVariables.CompanyName, true);
+                        _mailService.SendVendorUploadEmail(SessionVariables.Email, vendor.VendorName, true);
                     }
-                    _mailService.SendAdminUploadEmail(SessionVariables.CompanyName, viewModel.VendorId.ToString(), true);
+                    _mailService.SendAdminUploadEmail(vendor.VendorName, viewModel.VendorId.ToString(), true);
 
                     if (User.IsInRole("Admin"))
                     {

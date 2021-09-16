@@ -544,5 +544,10 @@ namespace Findparts.Services.Services
 
             return true;
 		}
-	}
+
+        public Vendor GetVendorById(int vendorId)
+        {
+            return _context.VendorGetByID(vendorId).FirstOrDefault();
+        }
+    }
 }

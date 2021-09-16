@@ -11,8 +11,8 @@
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.GeneralTab) { <text> class="active" </text> }><a href="@Url.Action("Index", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" aria-controls="general" role="tab"><span class="glyphicon glyphicon-stats"></span> General</a></li>
         <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.RFQTab) { <text> class="active" </text> }><a href="@Url.Action("RFQ", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" aria-controls="prefs" role="tab">RFQ Preferences</a></li>
-        <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.AdvertiseTab) { <text> class="active" </text> }><a href="@Url.Action("Advertise", "Vendor")" role="tab"><span class="glyphicon glyphicon-piggy-bank"></span> Advertising</a></li>
-        <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.UsersTab) { <text> class="active" </text> }><a href="@Url.Action("Users", "Vendor", new { SubscriberID = Request.QueryString["SubscriberID"] })" role="tab"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+        <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.AdvertiseTab) { <text> class="active" </text> }><a href="@Url.Action("Advertise", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" role="tab"><span class="glyphicon glyphicon-piggy-bank"></span> Advertising</a></li>
+        <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.UsersTab) { <text> class="active" </text> }><a href="@Url.Action("Users", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" role="tab"><span class="glyphicon glyphicon-user"></span> Users</a></li>
         <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.OEMsOnlyTab) { <text> class="active" </text> }><a href="@Url.Action("Oem", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" aria-controls="oem" role="tab">OEMs Only</a></li>
     </ul>
     <div class="tab-content">
