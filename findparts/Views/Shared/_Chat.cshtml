@@ -50,7 +50,7 @@
             window.messenger = space.app({ key: "messenger", type: "messenger", container: "#messenger-container", open: false });
 
             weavy.on("badge", function (e, badge) {
-                if (badge.total == 0) {
+                if (badge.conversations == 0) {
                     $("#messenger-badge").text("");
                 } else
                     $("#messenger-badge").text(badge.conversations);
