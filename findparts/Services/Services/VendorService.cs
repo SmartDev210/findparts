@@ -339,7 +339,7 @@ namespace Findparts.Services.Services
             return viewModel;
         }
 
-        public bool CreateInvoice(int chargeId, bool saveHtml)
+        public bool CreateInvoice(int chargeId, bool saveHtml, string bootstrapPath)
         {
             var charge = _context.VendorPurchases.Find(chargeId);
             if (charge == null) return false;
@@ -362,7 +362,7 @@ namespace Findparts.Services.Services
 				paymentMethod = "Credit Card";
 			}
 
-			string bootstrap = File.ReadAllText($"{Config.InvoicePath}css/bootstrap.min.css");
+			string bootstrap = File.ReadAllText(bootstrapPath);
 
 			StringBuilder html = new StringBuilder();
 			

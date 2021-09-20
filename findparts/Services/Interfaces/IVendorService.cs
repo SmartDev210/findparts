@@ -36,7 +36,7 @@ namespace Findparts.Services.Interfaces
         RFQPreferencesViewModel GetRFQPreferencesViewModel(string vendorID);
         CertsViewModel GetCertsViewModel(string vendorID);
         VendorAdvertiseViewModel GetAdvertiseViewModel(string vendorID);
-        bool CreateInvoice(int chargeId, bool saveHtml);
+        bool CreateInvoice(int chargeId, bool saveHtml, string bootstrapPath);
         Vendor GetVendorById(int vendorId);
     }
 }

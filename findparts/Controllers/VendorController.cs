@@ -89,7 +89,7 @@ namespace Findparts.Controllers
             string filepath = string.Format("{0}{1}.pdf", Config.InvoicePath, chargeId);
             if (!System.IO.File.Exists(filepath))
             {
-                _vendorService.CreateInvoice(chargeId, true);
+                _vendorService.CreateInvoice(chargeId, true, ControllerContext.HttpContext.Server.MapPath("~/Content/dist/css/bootstrap.min.css"));
             }
             return File(filepath, "application/pdf", $"{Config.PortalName}-Invoice-{chargeId}.pdf");
         }
@@ -153,7 +153,7 @@ namespace Findparts.Controllers
             if (Request.QueryString["Invoice"] != null && Request.QueryString["Id"] != null)
             {
                 var filePath = _subscriberService.GetInvoice(Request.QueryString["Id"], (string)Session["subscriberID"]);
-                return File(filePath, "application/pdf", "MROFINDER-Invoice.pdf");
+                return File(filePath, "application/pdf", $"{Config.PortalName}-Invoice.pdf");
             }
 
             string subscriberID;
@@ -368,7 +368,7 @@ namespace Findparts.Controllers
             if (Request.QueryString["Invoice"] != null && Request.QueryString["Id"] != null)
             {
                 var filePath = _subscriberService.GetInvoice(Request.QueryString["Id"], (string)Session["subscriberID"]);
-                return File(filePath, "application/pdf", "MROFINDER-Invoice.pdf");
+                return File(filePath, "application/pdf", $"{Config.PortalName}-Invoice.pdf");
             }
 
             string subscriberID;
