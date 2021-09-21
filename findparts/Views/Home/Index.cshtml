@@ -22,27 +22,14 @@
     <br /><br />
     <div class="wrapper parts-search-tabs">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="display: flex; justify-content: center;">
-            @if (Config.PortalCode == 0)
-            {
-                <li class="nav-item active">
-                    <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈ Spare Parts</a>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item active">
-                    <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈ Spare Parts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
-                </li>
-            }
-
             <li class="nav-item">
                 <a class="nav-link active" id="pills-myavdb-tab" data-toggle="pill" href="#pills-myavdb" role="tab" aria-controls="pills-myavdb" aria-selected="true">My Spaces</a>
+            </li>
+            <li class="nav-item @if(Config.PortalCode == 0){<text>active</text>}">
+                <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
+            </li>
+            <li class="nav-item @if(Config.PortalCode != 0){<text>active</text>}">
+                <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈ Spare Parts</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="pills-planes-tab" data-toggle="pill" href="#pills-planes" role="tab" aria-controls="pills-planes" aria-selected="false">Planes</a>
