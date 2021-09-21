@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using Findparts.Models;
 using Owin.Security.Providers.LinkedIn;
+using Findparts.Core;
 
 namespace Findparts
 {
@@ -23,11 +24,12 @@ namespace Findparts
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            var cookieAuthenticiationOptions = new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 ExpireTimeSpan = TimeSpan.FromHours(24 * 7 * 4 * 6),
+
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
@@ -35,8 +37,14 @@ namespace Findparts
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                },
-            });          
+                },            
+                CookieName = "findparts-mrofinder-auth-cookie",
+            };
+            if (Config.Environment != "dev")
+            {
+                cookieAuthenticiationOptions.CookieDomain = ".back-channel.com";
+            }            
+            app.UseCookieAuthentication(cookieAuthenticiationOptions);
             
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -72,6 +80,7 @@ namespace Findparts
                 ClientId = "77j88xpcspk4vf",
                 ClientSecret = "kyo6RK0IzsrA3XdW",
             });
+            
         }
     }
 }
