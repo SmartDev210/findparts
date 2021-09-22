@@ -533,10 +533,12 @@
     <Content Include="Content\dist\images\0\logo_588x72.png" />
     <Content Include="Content\dist\images\0\logo_680x79.png" />
     <Content Include="Content\dist\images\0\logo_signup.png" />
+    <Content Include="Content\dist\images\0\navbar-logo.png" />
     <Content Include="Content\dist\images\1\logo.svg" />
     <Content Include="Content\dist\images\1\logo_367x50.png" />
     <Content Include="Content\dist\images\1\logo_529x72.png" />
     <Content Include="Content\dist\images\1\logo_signup.png" />
+    <Content Include="Content\dist\images\1\navbar-logo.png" />
     <Content Include="Content\dist\images\about\email-btn.jpg" />
     <Content Include="Content\dist\images\about\facebook.jpg" />
     <Content Include="Content\dist\images\about\header.jpg" />

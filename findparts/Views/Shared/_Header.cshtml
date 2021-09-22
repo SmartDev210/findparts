@@ -9,15 +9,7 @@
         </div>
         <div class="navbar-middle">
             <div class="navbar-title">
-                <img src="~/Content/dist/images/black-logo.png" />
-                @if (Config.PortalCode == 0)
-                {
-                    <span><strong>MRO</strong>Finder</span>
-                }
-                else
-                {
-                    <span><strong>Find</strong>Parts</span>
-                }
+                <img src="~/Content/dist/images/@Config.PortalCode/navbar-logo.png" />                
             </div>
             <a class="btn btn-icon" href="@Config.WeavyUrl/video-call/global-room" title="Join Room" target="_blank"><span class="glyphicon glyphicon-facetime-video"></span></a>
         </div>

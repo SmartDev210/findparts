@@ -1291,13 +1291,11 @@ nav.navbar {
 }
 
 .navbar-title img {
-    width: 32px;
     height: 32px;
     margin-right: 8px;
 }
 
 .navbar-title {
-    font-size: 28px;
     letter-spacing: 5px;
     margin-right: 16px;
 }
