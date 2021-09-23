@@ -130,7 +130,12 @@
                             if (data[i].VendorName == '***') {
                                 templateCell.innerHTML = '<a href="' + viewRepairStationGuestHref + '">View Vendor<a>';
                             } else {
-                                templateCell.innerHTML = '<a href="#" onclick="return VendorDetails(\'' + partNumber + '\', ' + data[i].VendorID + ')"> <span class="vendorName"><span style="display:inline-block; text-overflow:ellipsis; max-width:40ch; overflow:hidden; white-space:nowrap;">' + data[i].VendorName + '</span></span><span class="glyphicon glyphicon-info-sign"></span></a>';
+                                if (!data[i].WeavyCompanyId) {
+                                    templateCell.innerHTML = '<a href="#" onclick="return VendorDetails(\'' + partNumber + '\', ' + data[i].VendorID + ')"> <span class="vendorName"><span style="display:inline-block; text-overflow:ellipsis; max-width:40ch; overflow:hidden; white-space:nowrap;">' + data[i].VendorName + '</span></span><span class="glyphicon glyphicon-info-sign"></span></a>';
+                                } else {
+                                    templateCell.innerHTML = '<a target="_blank" href="@Config.WeavyUrl/companies/' + data[i].WeavyCompanyId + '"> <span class="vendorName"><span style="display:inline-block; text-overflow:ellipsis; max-width:40ch; overflow:hidden; white-space:nowrap;">' + data[i].VendorName + '</span></span><span class="glyphicon glyphicon-info-sign"></span></a>';
+                                }
+                                
                             }
                             vendorNameBlock.appendChild(templateCell);
 

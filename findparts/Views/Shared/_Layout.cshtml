@@ -138,7 +138,7 @@
 			});
 		}
 		function VendorDetails(partNumber, vendorID) {
-			var url = "/?PartNumberDetail=" + partNumber + '&VendorCerts=' + vendorID;
+			var url = "parts/?PartNumberDetail=" + partNumber + '&VendorCerts=' + vendorID;
 			@if(User.IsInRole("Admin")) {
 				<text>
 				var vendorMatch = location.search.match(/[?&]VendorID=(\d+)/);
