@@ -63,23 +63,23 @@
                     }
                     else if (User.IsInRole("Vendor"))
                     {
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-header">@User.Identity.Name</li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>
-                             <li role="separator" class="divider"></li>
-                            <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
-                            <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List</span></a></li>
-                            <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
-                            <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
-                        </ul>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li class="dropdown-header">@User.Identity.Name</li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    @*<li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>*@
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
+                    <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("UploadList", "Vendor")"><span class="glyphicon glyphicon-cloud-upload"></span> <span class="text">Upload Capability List</span></a></li>
+                    <li><a href="@Url.Action("ChangePassword", "Manage")"><span class="glyphicon glyphicon-lock"></span> <span class="text">Change Password</span></a></li>
+                    <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                </ul>
                     }
                     else
                     {

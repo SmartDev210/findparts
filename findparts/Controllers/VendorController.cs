@@ -47,6 +47,8 @@ namespace Findparts.Controllers
             }
             Session["vendorID"] = vendorID;
 
+            return RedirectToAction("Users", new { VendorID = Request.QueryString["VendorID"] });
+
             VendorGeneralTabViewModel viewModel = _vendorService.GetVendorGeneralTabViewModel(vendorID);
             
             return View("~/Views/Vendor/GeneralTab.cshtml", viewModel);
