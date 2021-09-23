@@ -8,12 +8,14 @@ namespace Findparts.Controllers
 {
     public class ContentController : Controller
     {   
+        /*
         [HttpGet]
         [Route("about")]
         public ActionResult About()
         {
             return View("~/Views/Content/About.cshtml");
         }
+        */
 
         [HttpGet]
         [Route("terms")]
@@ -28,12 +30,13 @@ namespace Findparts.Controllers
         {
             return View("~/Views/Content/Privacy.cshtml");
         }
-
+        /*
         [HttpGet]
         [Route("contact")]
         public ActionResult Contact()
         {
             return View("~/Views/Content/Contact.cshtml");
         }
+        */
     }
 }
