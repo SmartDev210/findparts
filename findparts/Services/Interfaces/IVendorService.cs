@@ -24,7 +24,7 @@ namespace Findparts.Services.Interfaces
         UploadVendorFileViewModel GetVendorUploadAchievementViewModel(string vendorID, int vendorAchievementId = 0);
         bool UploadVendorAchievement(UploadVendorFileViewModel viewModel, string fileType);
         string GetVendorAchievementFileName(int vendorAchievementId);
-        List<VendorListItemGetByVendor4_Result> GetMasterVendorList(string vendorID);
+        List<MasterListItemModel> GetMasterVendorList(int vendorID);
         VendorGeneralTabViewModel GetVendorGeneralTabViewModel(string vendorID);
         void DeleteVendorList(int vendorListId);
         void DeleteVendorAchievement(int vendorAchievementId);

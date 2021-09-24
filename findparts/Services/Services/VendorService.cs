@@ -46,10 +46,46 @@ namespace Findparts.Services.Services
             _context.VendorListDeleteByID(vendorListId);
         }
 
-        public List<VendorListItemGetByVendor4_Result> GetMasterVendorList(string vendorID)
+        public List<MasterListItemModel> GetMasterVendorList(int vendorID)
         {
+            return _context.VendorListItems
+                .Where(x => x.VendorID == vendorID && x.PortalCode == Config.PortalCode)
+                .Select(x => new MasterListItemModel()
+                {
+                    PartNumber = x.PartNumber,
+                    Aircraft = x.Aircraft,
+                    AlternatePartNumber = x.AlternatePartNumber,
+                    AlternatePartNumber2 = x.AlternatePartNumber2,
+                    ATAChapter = x.ATAChapter,
+                    CAAC = x.CAAC,
+                    PMA = x.PMA,
+                    Cage = x.Cage,
+                    Condition = x.Condition,
+                    DER = x.DER,
+                    Description = x.Description,
+                    Engine = x.Engine,
+                    ExtendedWarranty = x.ExtendedWarranty,
+                    FlatRate = x.FlatRate,
+                    FreeEval = x.FreeEval,
+                    FunctionTestOnly = x.FunctionTestOnly,
+                    Manufacturer = x.Manufacturer,
+                    ModelNumber = x.ModelNumber,
+                    Modified = x.Modified,
+                    NoOverhaulWorkscope = x.NoOverhaulWorkscope,
+                    NotesRemarks = x.NotesRemarks,
+                    NSN = x.NSN,
+                    NTE = x.NTE,
+                    Quantity = x.Quantity,
+                    Range = x.Range,
+                    WorkShopSite = x.WorkShopSite,
+                    RepairsFrequently = x.RepairsFrequently,
+                    Serial = x.Serial,
+                    Workscope = x.Workscope
+                })
+                .ToList();
+            /*
             return _context.VendorListItemGetByVendor4(vendorID.ToNullableInt()).ToList();
-            
+            */
         }
 
         public string GetVendorAchievementFileName(int vendorAchievementId)

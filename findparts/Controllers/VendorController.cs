@@ -774,7 +774,7 @@ namespace Findparts.Controllers
                 vendorId = SessionVariables.VendorID;
             }
 
-            var vendorList = _vendorService.GetMasterVendorList(vendorId);
+            var vendorList = _vendorService.GetMasterVendorList(vendorId.ToInt());
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             MemoryStream memoryStream = new MemoryStream();

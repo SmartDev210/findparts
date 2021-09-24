@@ -316,7 +316,46 @@ namespace Findparts.Services.Services
             {
                 // import to Live (or error)
                 // copy old Live to Archive, delete old from Live
+                var existingItems = _context.VendorListItems.Where(x => x.VendorID == vendorList.VendorID && x.VendorListID != vendorList.VendorListID && x.PortalCode == Config.PortalCode).ToList();
+
+                var archiveItems = existingItems.Select(x => new VendorListItemArchive
+                    {
+                        PartNumber = x.PartNumber,
+                        PMA = x.PMA,
+                        DER = x.DER,
+                        Description = x.Description,
+                        Aircraft = x.Aircraft,
+                        AlternatePartNumber = x.AlternatePartNumber,
+                        AlternatePartNumber2 = x.AlternatePartNumber2,
+                        ATAChapter = x.ATAChapter,
+                        CAAC = x.CAAC,
+                        Cage = x.Cage,
+                        NSN = x.NSN,
+                        WorkShopSite = x.WorkShopSite,
+                        Engine = x.Engine,
+                        ExtendedWarranty = x.ExtendedWarranty,
+                        FlatRate = x.FlatRate,
+                        FreeEval = x.FreeEval,
+                        FunctionTestOnly = x.FunctionTestOnly,
+                        RepairsFrequently = x.RepairsFrequently,
+                        Manufacturer = x.Manufacturer,
+                        ModelNumber = x.ModelNumber,
+                        Modified = x.Modified,
+                        NoOverhaulWorkscope = x.NoOverhaulWorkscope,
+                        NotesRemarks = x.NotesRemarks,
+                        NTE = x.NTE,
+                        Range = x.Range,
+                        VendorID = x.VendorID,
+                        VendorListID = x.VendorListID,
+                        VendorListItemID = x.VendorListItemID,
+                        Workscope = x.Workscope,
+                    });
+                _context.VendorListItemArchives.AddRange(archiveItems);
+                _context.VendorListItems.RemoveRange(existingItems);
+                _context.SaveChanges();
+                /*
                 _context.VendorListItemArchiveByVendorIDAndNotEqualVendorListID2(vendorList.VendorID, vendorList.VendorListID);
+                */
                 /*
                  INSERT INTO VendorListItemArchive(*)
                  SELECT *
@@ -515,7 +554,7 @@ namespace Findparts.Services.Services
         
         public bool Equals(VendorListItem x, VendorListItem y)
         {
-            return x.PartNumber == y.PartNumber;
+            return x.PartNumber == y.PartNumber && x.PortalCode == y.PortalCode;
         }
 
         public int GetHashCode(VendorListItem obj)
