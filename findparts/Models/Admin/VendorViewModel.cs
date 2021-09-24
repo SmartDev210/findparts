@@ -29,6 +29,7 @@ namespace Findparts.Models.Admin
         public int ListsApproved { get; set; }
         public int AchievementsApprovalNeeded { get; set; }
         public int AchievementsApproved { get; set; }
+        public Nullable<int> WeavyCompanyId { get; set; }
     }
 
     public class VendorPagedListViewModel

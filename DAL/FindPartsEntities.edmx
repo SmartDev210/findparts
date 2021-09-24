@@ -2433,6 +2433,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
           <Property Type="Int32" Name="ListsApproved" Nullable="false" />
           <Property Type="Int32" Name="AchievementsApprovalNeeded" Nullable="false" />
           <Property Type="Int32" Name="AchievementsApproved" Nullable="false" />
+          <Property Type="Int32" Name="WeavyCompanyId" Nullable="true" />
         </ComplexType>
         <ComplexType Name="VendorGetByID_Result">
           <Property Type="Int32" Name="VendorID" Nullable="false" />
@@ -3462,6 +3463,7 @@ warning 6002: The table/view 'aeroMRO.dbo.VendorListItemArchive' does not have a
                 <ScalarProperty Name="ListsApproved" ColumnName="ListsApproved" />
                 <ScalarProperty Name="AchievementsApprovalNeeded" ColumnName="AchievementsApprovalNeeded" />
                 <ScalarProperty Name="AchievementsApproved" ColumnName="AchievementsApproved" />
+                <ScalarProperty Name="WeavyCompanyId" ColumnName="WeavyCompanyId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -200,6 +200,15 @@ function InitializeAdminVendorsTable() {
                 }
             },
             {
+                data: "WeavyCompanyId",
+                render: function (data, type, full, meta) {
+                    if (type === 'display' && data != null) {
+                        return '<a target="_blank" href="https://back-channel.com/companies/' + full["WeavyCompanyId"] + '">Company Link</a>'
+                    }
+                    return data;
+                }
+            },
+            {
                 data: "Status",
                 render: function (data, type, full, meta) {
                     if (type === 'display' && data == 'Brand New') {
@@ -220,15 +229,17 @@ function InitializeAdminVendorsTable() {
             },
             { data: "ProfileFieldsCompleted" },
             { data: "MuteStatus" },
-            { data: "ListsApprovalNeeded" },
             {
-                data: "ListsApproved",
+                data: "ListsApprovalNeeded",
                 render: function (data, type, full, meta) {
                     if (type === 'display' && data != '0') {
                         return '<span class="label label-danger">' + data + '</span>';
                     }
                     return data;
                 }
+            },
+            {
+                data: "ListsApproved"
             },
             { data: "AchievementsApprovalNeeded" },
             {

@@ -116,7 +116,8 @@ namespace Findparts.Services.Services
                     ListsApprovalNeeded = x.ListsApprovalNeeded,
                     ListsApproved = x.ListsApproved,
                     AchievementsApprovalNeeded = x.AchievementsApprovalNeeded,
-                    AchievementsApproved = x.AchievementsApproved
+                    AchievementsApproved = x.AchievementsApproved,
+                    WeavyCompanyId = x.WeavyCompanyId
                 }).ToList()
             };
         }
