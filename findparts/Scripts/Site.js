@@ -241,15 +241,17 @@ function InitializeAdminVendorsTable() {
             {
                 data: "ListsApproved"
             },
-            { data: "AchievementsApprovalNeeded" },
             {
-                data: "AchievementsApproved",
+                data: "AchievementsApprovalNeeded",
                 render: function (data, type, full, meta) {
                     if (type === 'display' && data != '0') {
                         return '<span class="label label-danger">' + data + '</span>';
                     }
                     return data;
                 }
+            },
+            {
+                data: "AchievementsApproved"
             },
             { data: "RecentListApprovalDate" },
             { data: "RFQReceivedCount" },

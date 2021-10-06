@@ -1,189 +1,254 @@
 ﻿@using Findparts.Core
 @model Findparts.Models.HomePageViewModel
-@{ 
+@{
     ViewBag.Description = $"Search any aircraft part in seconds. Search millions of MRO capabilities by aircraft part number. Find component MROs to Test, Repair & Overhaul aircraft parts. | {Config.PortalName} | @MROFINDER.aero | #MROFINDER | MROFINDER.aero";
 }
 
-@section header {    
+@section header {
     <meta name="keywords" content="MROfinder, FindParts">
 
 }
 
-<div id="divMerits" class="merits">
+
+<div class="container">
+
+
+    <div id="divMerits" class="merits">
+        @if (Config.PortalCode == 1)
+        {
+            <h3 style="color:#0091b2"><span style="font-size:34px;">5127</span> Vendors Uploaded <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
+        }
+        else
+        {
+            <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount.ToString("N0")</span> MROs Are Listing <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Capabilities</h3>
+        }
+
+        <br /><br />
+        <div class="wrapper parts-search-tabs">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="display: flex; justify-content: center;">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-myavdb-tab" data-toggle="pill" href="#pills-myavdb" role="tab" aria-controls="pills-myavdb" aria-selected="true">My Spaces</a>
+                </li>
+                <li class="nav-item @if(Config.PortalCode == 0){<text>active</text>}">
+                    <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
+                </li>
+                <li class="nav-item @if(Config.PortalCode != 0){<text>active</text>}">
+                    <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈ Spare Parts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-planes-tab" data-toggle="pill" href="#pills-planes" role="tab" aria-controls="pills-planes" aria-selected="false">Planes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-pilot-supplies-tab" data-toggle="pill" href="#pills-pilot-supplies" role="tab" aria-controls="pills-pilot-supplies" aria-selected="false">Pilot Supplies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-jobs-tab" data-toggle="pill" href="#pills-jobs" role="tab" aria-controls="pills-jobs" aria-selected="false">Jobs</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+
+                <div class="tab-pane fade @if (Config.PortalCode == 0) { <text>active in</text> } " id="pills-repairs" role="tabpanel" aria-labelledby="pills-repairs-tab">
+                    <div class="parts-search-box">
+                        <span class="parts-search-box-title">Repair Capabilities</span>
+                        @if (Config.PortalCode == 0)
+                        {
+                            <div class="input-group">
+                                <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
+                                <span class="input-group-btn">
+                                    <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </a>
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <form action="https://mrofinder.back-channel.com/parts" method="get" class="main-search navbar-search-box" data-turboform>
+                                <div class="input-group" role="search">
+                                    <input id="weavy-main-search" class="form-control input-lg" type="search" name="Search" value="" placeholder="Enter Part Number" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+                                    </span>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade @if (Config.PortalCode == 1) { <text>active in</text> } " id="pills-spare-parts" role="tabpanel" aria-labelledby="pills-spare-parts-tab">
+                    <div class="parts-search-box">
+                        <span class="parts-search-box-title">Aircraft Spare Parts</span>
+                        @if (Config.PortalCode == 1)
+                        {
+                            <div class="input-group">
+                                <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
+                                <span class="input-group-btn">
+                                    <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </a>
+                                </span>
+                            </div>
+                        }
+                        else
+                        {
+                            <form action="https://findparts.back-channel.com/parts" method="get" class="main-search navbar-search-box" data-turboform>
+                                <div class="input-group" role="search">
+                                    <input id="weavy-main-search" class="form-control input-lg" type="search" name="Search" value="" placeholder="Enter Part Number" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+                                    </span>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-myavdb" role="tabpanel" aria-labelledby="pills-myavdb-tab">
+                    <div class="parts-search-box">
+                        <form action="@Config.WeavyUrl/search" method="get" class="main-search navbar-search-box" data-turboform>
+                            <div class="input-group" role="search">
+                                <input id="weavy-main-search" class="form-control input-lg" type="search" name="q" value="" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-planes" role="tabpanel" aria-labelledby="pills-planes-tab">
+                    <div class="parts-search-box">
+                        <span class="parts-search-box-title">Aircraft for Sale</span>
+                        <div class="google-cse-search-group">
+                            <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:8dyrm0inbkf"></script>
+                            <div class="gcse-search"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-pilot-supplies" role="tabpanel" aria-labelledby="pills-pilot-supplies-tab">
+                    <div class="parts-search-box">
+                        <span class="parts-search-box-title">Pilot Supplies</span>
+                        <div class="google-cse-search-group">
+                            <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:ojacjdzpco3"></script>
+                            <div class="gcse-search"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-jobs" role="tabpanel" aria-labelledby="pills-jobs-tab">
+                    <div class="parts-search-box">
+                        <span class="parts-search-box-title">Aviation Jobs</span>
+                        <div class="google-cse-search-group">
+                            <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:uqhunc1oxii"></script>
+                            <div class="gcse-search"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 32px 0;">
+            <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
+            <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
+                <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
+                <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
+            </div>
+        </div>
+        @*<div class="wrapper">
+                @foreach (var item in Model.Merits)
+                {
+                    <div class="merit">
+                        <img src="~/Content/dist/images/@(item.Icon).png" style="width:100px;height:100px;" />
+                        <span class="name">@item.Name</span>
+                        @{/* <span class="desc">@item.Description</span> */}
+                    </div>
+                }
+            </div> *@
+        @if (Config.PortalCode == 0)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <script src="https://fast.wistia.com/embed/medias/xg3o6ut456.jsonp" async></script>
+                        <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+                        <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
+                            <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                                <div class="wistia_embed wistia_async_xg3o6ut456 videoFoam=true" style="height:100%;position:relative;width:100%">
+                                    <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;">
+                                        <img src="https://fast.wistia.com/embed/medias/xg3o6ut456/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <br />
+    </div>
+    <div style="background-color:#efefef">
+        <div class="recent-search">
+            <span class="title">What Other Users are Searching:</span>
+            <ul>
+                @foreach (var searchTerm in Model.RecentSearches)
+                {
+                    <li><a href="parts?search=@HttpUtility.UrlEncode(searchTerm)">@searchTerm</a></li>
+                }
+            </ul>
+        </div>
+        <div class="container" id="divBottomVideo" @if (User.Identity.IsAuthenticated) { <text> style="display:none;" </text> }>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <img src="~/Content/dist/images/MRO-Finder-Brand-Promise.jpg" style="width:100%;" /><br /><br />
+                </div>
+            </div>
+            <h3 style="color:#0091b2">FIND COMPONENT MROs to TEST, REPAIR & OVERHAUL AIRCRAFT PARTS</h3>
+            <br />
+        </div>
+    </div>
     @if (Config.PortalCode == 1)
     {
-        <h3 style="color:#0091b2"><span style="font-size:34px;">5127</span> Vendors Uploaded <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
+        <div>
+            <h3 style="font-size: 24px; margin: 32px 0;">Assets for Sale</h3>
+            <div class="custom-page-categories mb-5">
+                <ul>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Engines">Engines</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:APUs">APUs</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Inventory Lots">Inventory Lots</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Landing Gear">Landing Gear</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Aircraft">Aircraft</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Avionics">Avionics</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:GSE">GSE</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Chemicals">Chemicals</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Teardowns">Teardowns</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Test Equipment">Test Equipment</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Tooling">Tooling</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Hangars">Hangars</a></li>
+                </ul>
+            </div>
+        </div>
     }
     else
     {
-        <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount.ToString("N0")</span> MROs Are Listing <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Capabilities</h3>
+        <div>
+            <h3 style="font-size: 24px; margin: 32px 0;">Aviation Industry Vendors</h3>
+            <div class="custom-page-categories industry-vendors mb-5">
+                <ul>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Machine Shops">Machine Shops</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Composities">Composities</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Paint">Paint</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:NDT">NDT</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Line MROs">Line MROs</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Heavy MROs">Heavy MROs</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Engine MROs">Engine MROs</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Landing Gear MROs">Landing Gear MROs</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Tooling Repair">Tooling Repair</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Sheet Metal Repair">Sheet Metal Repair</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Structural Repair">Structural Repair</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Calibration">Calibration</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Logistics">Logistics</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:3D Printing">3D Printing</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Asset Tagging">Asset Tagging</a></li>
+                    <li><a target="_blank" href="@Config.WeavyUrl/companies?q=tag:Augumented Reality">Augumented Reality</a></li>
+                </ul>
+            </div>
+        </div>
     }
 
-    <br /><br />
-    <div class="wrapper parts-search-tabs">
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="display: flex; justify-content: center;">
-            <li class="nav-item">
-                <a class="nav-link active" id="pills-myavdb-tab" data-toggle="pill" href="#pills-myavdb" role="tab" aria-controls="pills-myavdb" aria-selected="true">My Spaces</a>
-            </li>
-            <li class="nav-item @if(Config.PortalCode == 0){<text>active</text>}">
-                <a class="nav-link" id="pills-repairs-tab" data-toggle="pill" href="#pills-repairs" role="tab" aria-controls="pills-profile" aria-selected="false">Repairs (MRO)</a>
-            </li>
-            <li class="nav-item @if(Config.PortalCode != 0){<text>active</text>}">
-                <a class="nav-link" id="pills-spare-parts-tab" data-toggle="pill" href="#pills-spare-parts" role="tab" aria-controls="pills-spare-parts" aria-selected="false">✈ Spare Parts</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-planes-tab" data-toggle="pill" href="#pills-planes" role="tab" aria-controls="pills-planes" aria-selected="false">Planes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-pilot-supplies-tab" data-toggle="pill" href="#pills-pilot-supplies" role="tab" aria-controls="pills-pilot-supplies" aria-selected="false">Pilot Supplies</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-jobs-tab" data-toggle="pill" href="#pills-jobs" role="tab" aria-controls="pills-jobs" aria-selected="false">Jobs</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="pills-tabContent">
-
-            <div class="tab-pane fade @if (Config.PortalCode == 0) { <text>active in</text> } " id="pills-repairs" role="tabpanel" aria-labelledby="pills-repairs-tab">
-                <div class="parts-search-box">
-                    <span class="parts-search-box-title">Repair Capabilities</span>
-                    @if (Config.PortalCode == 0)
-                    {
-                        <div class="input-group">
-                            <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
-                            <span class="input-group-btn">
-                                <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
-                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                </a>
-                            </span>
-                        </div>
-                    }
-                    else
-                    {
-                        <form action="https://mrofinder.back-channel.com/parts" method="get" class="main-search navbar-search-box" data-turboform>
-                            <div class="input-group" role="search">
-                                <input id="weavy-main-search" class="form-control input-lg" type="search" name="Search" value="" placeholder="Enter Part Number" />
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
-                                </span>
-                            </div>
-                        </form>
-                    }                    
-                </div>
-            </div>
-            <div class="tab-pane fade @if (Config.PortalCode == 1) { <text>active in</text> } " id="pills-spare-parts" role="tabpanel" aria-labelledby="pills-spare-parts-tab">
-                <div class="parts-search-box">
-                    <span class="parts-search-box-title">Aircraft Spare Parts</span>
-                    @if (Config.PortalCode == 1)
-                    {
-                        <div class="input-group">
-                            <input type="text" id="txtSearch" class="form-control input-lg" placeholder="Enter Part Number" value="@Request.QueryString["Search"]" />
-                            <span class="input-group-btn">
-                                <a href="#" id="btnSearch" class="btn btn-primary btn-lg" onclick="location.href = '/parts?Search=' + document.getElementById('txtSearch').value;">
-                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                </a>
-                            </span>
-                        </div>
-                    }
-                    else
-                    {
-                        <form action="https://findparts.back-channel.com/parts" method="get" class="main-search navbar-search-box" data-turboform>
-                            <div class="input-group" role="search">
-                                <input id="weavy-main-search" class="form-control input-lg" type="search" name="Search" value="" placeholder="Enter Part Number" />
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
-                                </span>
-                            </div>
-                        </form>
-                    }
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-myavdb" role="tabpanel" aria-labelledby="pills-myavdb-tab">
-                <div class="parts-search-box">
-                    <form action="@Config.WeavyUrl/search" method="get" class="main-search navbar-search-box" data-turboform>
-                        <div class="input-group" role="search">
-                            <input id="weavy-main-search" class="form-control input-lg" type="search" name="q" value="" placeholder="Search" />
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-search"></span></button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-planes" role="tabpanel" aria-labelledby="pills-planes-tab">
-                <div class="parts-search-box">
-                    <span class="parts-search-box-title">Aircraft for Sale</span>
-                    <div class="google-cse-search-group">
-                        <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:8dyrm0inbkf"></script>
-                        <div class="gcse-search"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-pilot-supplies" role="tabpanel" aria-labelledby="pills-pilot-supplies-tab">
-                <div class="parts-search-box">
-                    <span class="parts-search-box-title">Pilot Supplies</span>
-                    <div class="google-cse-search-group">
-                        <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:ojacjdzpco3"></script>
-                        <div class="gcse-search"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-jobs" role="tabpanel" aria-labelledby="pills-jobs-tab">
-                <div class="parts-search-box">
-                    <span class="parts-search-box-title">Aviation Jobs</span>
-                    <div class="google-cse-search-group">
-                        <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:uqhunc1oxii"></script>
-                        <div class="gcse-search"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="wrapper">
-        @foreach (var item in Model.Merits)
-        {
-            <div class="merit">
-                <img src="~/Content/dist/images/@(item.Icon).png" style="width:100px;height:100px;" />
-                <span class="name">@item.Name</span>
-                @{/* <span class="desc">@item.Description</span> */}
-            </div>
-        }
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <script src="https://fast.wistia.com/embed/medias/xg3o6ut456.jsonp" async></script>
-                <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
-                <div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
-                    <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
-                        <div class="wistia_embed wistia_async_xg3o6ut456 videoFoam=true" style="height:100%;position:relative;width:100%">
-                            <div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;">
-                                <img src="https://fast.wistia.com/embed/medias/xg3o6ut456/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br />
-</div>
-<div style="background-color:#efefef">
-    <div class="recent-search">
-        <span class="title">What Other Users are Searching:</span>
-        <ul>
-            @foreach (var searchTerm in Model.RecentSearches)
-            {
-                <li><a href="parts?search=@HttpUtility.UrlEncode(searchTerm)">@searchTerm</a></li>
-            }
-        </ul>
-    </div>
-    <div class="container" id="divBottomVideo" @if (User.Identity.IsAuthenticated) {<text>style="display:none;"</text>}>
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <img src="~/Content/dist/images/MRO-Finder-Brand-Promise.jpg" style="width:100%;" /><br /><br />
-            </div>
-        </div>
-        <h3 style="color:#0091b2">FIND COMPONENT MROs to TEST, REPAIR & OVERHAUL AIRCRAFT PARTS</h3>
-        <br />
-    </div>
 </div>

@@ -1358,3 +1358,38 @@ nav.navbar {
     background-color: #DB21B3;
     color: white;
 }
+
+.custom-page-categories {
+    align-self: center;
+}
+
+    .custom-page-categories ul {
+        column-count: 3;
+        column-gap: 64px;
+        list-style: none;
+    }
+
+        .custom-page-categories ul li a {
+            color: #2291FF;
+            font-weight: bolder;
+        }
+
+        .custom-page-categories ul li {
+            margin: 4px 0;
+        }
+
+@media(max-width: 767px) {
+    .custom-page-categories ul {
+        column-count: 2;
+    }
+}
+
+.custom-page-categories.industry-vendors ul {
+    column-count: 4;
+}
+
+@media(max-width: 767px) {
+    .custom-page-categories.industry-vendors ul {
+        column-count: 2;
+    }
+}
