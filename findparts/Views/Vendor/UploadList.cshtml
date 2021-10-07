@@ -15,6 +15,15 @@
     <a href="@Url.Action("UploadCapability", "Vendor")" class="btn btn-primary btn-spacer">Upload @(Config.PortalCode == 0 ? "Capability" : "✈ Spare Part") List</a>
     @*<a href="@Url.Action("UploadAchievement", "Vendor")" class="btn btn-primary btn-spacer">Upload Workscope Icon List</a>*@
     <a href="@Url.Action("DownloadMasterList", "Vendor")" class="btn btn-primary btn-spacer">Download Master List</a>
+    @if (Config.PortalCode == 1)
+    {
+        <a target="_blank" href="https://rotabull.com" style="margin-left: 8px; margin-right: 8px;">Rotabull </a><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" title="The easiest way to sell aircraft parts. Rotabull is a fast, simple and connected platform for modern sales teams.<br/><br/>Automate Inventory<br/>Uploads to Marketplaces.<br/>Unified RFQ Inbox."></span>
+        <a target="_blank" href="https://ambryhill.com/vistaquote" style="margin-left: 8px; margin-right: 8px;">Vista-Quote </a><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" title="Cloud-based software designed to automate your RFQ gathering and quote generating workflow.<br/><br/>Automate Inventory<br/>Uploads to Marketplaces."></span>
+    }
+    else
+    {
+        <a target="_blank" href="https://smart145.com" style="margin-left: 8px; margin-right: 8px;">Smart145 </a><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" title="Aviation Maintenance Software.<br/><br/>Cloud based software to manage repairs, labor, real-time status & process steps."></span>
+    }
     <table class="table table-condensed" cellspacing="0" rules="all" border="1" style="border-collapse: collapse;">
         <caption>@Model.VendorCapabilityList.Count Capability Lists found</caption>
         <tr>
