@@ -30,13 +30,13 @@ namespace Findparts.Controllers
         {
             return View("~/Views/Content/Privacy.cshtml");
         }
-        /*
+        
         [HttpGet]
         [Route("contact")]
         public ActionResult Contact()
         {
             return View("~/Views/Content/Contact.cshtml");
         }
-        */
+        
     }
 }
