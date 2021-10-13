@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static Findparts.Core.AppCache;
 
 namespace Findparts.Models
 {  
@@ -13,9 +14,9 @@ namespace Findparts.Models
 			RecentSearches = new LinkedList<string>();
 
 		}
-        public bool ShowMetaDescription { get; set; }
-        public int SpanVendorCount { get; set; }
-        public int SpanPartCount { get; set; }
+		public VendorListItemStats Portal0Stat { get; set; }
+		public VendorListItemStats Portal1Stat { get; set; }
+		public bool ShowMetaDescription { get; set; }
 		public ICollection<Merit> Merits { get; set; }
 		public ICollection<string> RecentSearches { get; set; }
 

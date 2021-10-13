@@ -8,21 +8,22 @@
     <meta name="keywords" content="MROfinder, FindParts">
 
 }
-
+<style>
+    h3.sub-title {
+        margin: 48px 0 64px 0;
+        color: #0091b2;        
+        font-size: 20px;
+    }
+    h3 span.number {
+        font-size: 24px;
+    }
+</style>
 
 <div class="container">
 
 
     <div id="divMerits" class="merits">
-        @if (Config.PortalCode == 1)
-        {
-            <h3 style="color:#0091b2"><span style="font-size:34px;">5127</span> Vendors Uploaded <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
-        }
-        else
-        {
-            <h3 style="color:#0091b2"><span style="font-size:34px;">@Model.SpanVendorCount.ToString("N0")</span> MROs Are Listing <span style="font-size:34px;">@Model.SpanPartCount.ToString("N0")</span> Capabilities</h3>
-        }
-
+       
         <br /><br />
         <div class="wrapper parts-search-tabs">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="display: flex; justify-content: center;">
@@ -48,6 +49,7 @@
             <div class="tab-content" id="pills-tabContent">
 
                 <div class="tab-pane fade @if (Config.PortalCode == 0) { <text>active in</text> } " id="pills-repairs" role="tabpanel" aria-labelledby="pills-repairs-tab">
+                    <h3 class="sub-title"><span class="number">@Model.Portal0Stat.VendorCount.ToString("N0")</span> Vendors Uploaded <span class="number">@Model.Portal0Stat.PartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Repair Capabilities</span>
                         @if (Config.PortalCode == 0)
@@ -59,6 +61,13 @@
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </a>
                                 </span>
+                            </div>
+                            <div style="margin: 32px 0;">
+                                <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
+                                <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
+                                    <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
+                                    <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
+                                </div>
                             </div>
                         }
                         else
@@ -75,6 +84,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade @if (Config.PortalCode == 1) { <text>active in</text> } " id="pills-spare-parts" role="tabpanel" aria-labelledby="pills-spare-parts-tab">
+                    <h3 class="sub-title"><span class="number">@Model.Portal1Stat.VendorCount.ToString("N0")</span> Vendors Uploaded <span class="number">@Model.Portal1Stat.PartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aircraft Spare Parts</span>
                         @if (Config.PortalCode == 1)
@@ -86,6 +96,13 @@
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </a>
                                 </span>
+                            </div>
+                            <div style="margin: 32px 0;">
+                                <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
+                                <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
+                                    <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
+                                    <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
+                                </div>
                             </div>
                         }
                         else
@@ -102,6 +119,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-myavdb" role="tabpanel" aria-labelledby="pills-myavdb-tab">
+                    <h3 class="sub-title">Search my buddy.aero Social Network + Files</h3>
                     <div class="parts-search-box">
                         <form action="@Config.WeavyUrl/search" method="get" class="main-search navbar-search-box" data-turboform>
                             <div class="input-group" role="search">
@@ -114,6 +132,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-planes" role="tabpanel" aria-labelledby="pills-planes-tab">
+                    <h3 class="sub-title">Search 54 'Aircraft for Sale' Sites in One Click</h3>
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aircraft for Sale</span>
                         <div class="google-cse-search-group">
@@ -123,6 +142,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-pilot-supplies" role="tabpanel" aria-labelledby="pills-pilot-supplies-tab">
+                    <h3 class="sub-title">Search 19 Sites for Pilot Suplies in One Click</h3>
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Pilot Supplies</span>
                         <div class="google-cse-search-group">
@@ -132,6 +152,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-jobs" role="tabpanel" aria-labelledby="pills-jobs-tab">
+                    <h3 class="sub-title">Search 21 Aviation Jobs Sites in One Click</h3>
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aviation Jobs</span>
                         <div class="google-cse-search-group">
@@ -141,14 +162,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div style="margin: 32px 0;">
-            <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
-            <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
-                <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
-                <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
-            </div>
-        </div>
+        </div>        
         @*<div class="wrapper">
                 @foreach (var item in Model.Merits)
                 {

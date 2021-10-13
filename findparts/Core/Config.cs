@@ -40,5 +40,6 @@ namespace Findparts.Core
         public static string JitsiPrivateKeyPath => ConfigurationManager.AppSettings["JitsiPrivateKeyPath"];
         public static string JitsiAppId => ConfigurationManager.AppSettings["JitsiAppId"];
         public static string JitsiApiKey => ConfigurationManager.AppSettings["JitsiApiKey"];
+        public static string SharedJsonPath => ConfigurationManager.AppSettings["SharedJsonPath"];
     }
 }

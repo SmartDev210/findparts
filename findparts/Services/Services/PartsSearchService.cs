@@ -35,10 +35,10 @@ namespace Findparts.Services.Services
                 Description = merit[2]
             }).ToList();
             
-            var stats = AppCache.VendorListItemGetStats();
-            viewModel.SpanVendorCount = stats.VendorCount;
-            viewModel.SpanPartCount = stats.PartCount;
-
+            var stats = AppCache.VendorListItemGetStats(Config.PortalCode);
+            viewModel.Portal0Stat = AppCache.VendorListItemGetStats(0);
+            viewModel.Portal1Stat = AppCache.VendorListItemGetStats(1);
+            
             viewModel.RecentSearches = _context.UserSearchGetRecent3().ToList();
         }
 

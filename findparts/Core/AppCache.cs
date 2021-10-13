@@ -1,6 +1,8 @@
 ﻿using DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
@@ -22,9 +24,9 @@ namespace Findparts.Core
 			public int PartCount = 0;
 			public int AchievementCount = 0;
 		}
-		public static VendorListItemStats VendorListItemGetStats()
+		public static VendorListItemStats VendorListItemGetStats(int portalCode)
 		{
-			string cacheKey = _vendorListItemStatsCacheKey;
+			string cacheKey = _vendorListItemStatsCacheKey + portalCode.ToString();
 			int[] counts = (int[])HttpRuntime.Cache[cacheKey];
 			if (counts == null)
 			{
@@ -34,9 +36,12 @@ namespace Findparts.Core
 					if (counts == null)
 					{
 						var context = new FindPartsEntities();
-						var result = context.VendorListItemGetStats(Config.PortalCode).ToList();
+						var result = context.VendorListItemGetStats(portalCode).ToList();
 						if (result.Count > 0)
                         {
+							if (portalCode == 1)
+								result[0].VendorCount = 5127;
+
 							counts = new int[]
 							{
 								result[0].VendorCount ?? 0,
@@ -48,10 +53,17 @@ namespace Findparts.Core
 								counts,
 								null,
 								Cache.NoAbsoluteExpiration,
-								TimeSpan.FromMinutes(30),
+								TimeSpan.FromMinutes(300),
 								CacheItemPriority.NotRemovable,
 								null
 							);
+
+							if (!Directory.Exists(Config.SharedJsonPath))
+                            {
+								Directory.CreateDirectory(Config.SharedJsonPath);
+                            }
+							var content = JsonConvert.SerializeObject(result[0]);
+							File.WriteAllText($"{Config.SharedJsonPath}stats-{portalCode}.json", content);
 						}
 					}
 				}
