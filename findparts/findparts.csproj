@@ -840,6 +840,7 @@
     <Content Include="Views\Vendor\Advertise.cshtml" />
     <Content Include="Views\Vendor\Purchase.cshtml" />
     <Content Include="Views\Vendor\PurchaseImpressions.cshtml" />
+    <Content Include="Views\Vendor\Shared\_VendorSubscribeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

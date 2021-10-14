@@ -20,6 +20,7 @@ namespace Findparts.Controllers
     [RequireEmailConfirmed]
     public class SubscriberController : Controller
     {
+        /*
         private readonly ISubscriberService _service;
         private ApplicationUserManager _userManager;
         private readonly IMailService _mailService;
@@ -424,5 +425,6 @@ namespace Findparts.Controllers
 
             return View(viewModel);
         }
+        */
     }
 }

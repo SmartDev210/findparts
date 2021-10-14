@@ -1,0 +1,25 @@
+﻿@using Findparts.Core
+@using Findparts.Models.Vendor
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.Title</h1>
+<!--< asp: ContentPlaceHolder run at="server" ID="FeaturedContent" /> -->
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        @*<li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.GeneralTab) { <text> class="active" </text> }><a href="@Url.Action("Index", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" aria-controls="general" role="tab"><span class="glyphicon glyphicon-stats"></span> General</a></li>*@        
+        <li role="presentation" @if (ViewBag.ActiveTab == VendorActiveTab.AdvertiseTab) { <text> class="active" </text> }><a href="@Url.Action("Advertise", "Vendor", new { VendorID = Request.QueryString["VendorID"] })" role="tab"><span class="glyphicon glyphicon-piggy-bank"></span> Advertising</a></li>
+    </ul>        
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="general">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @RenderSection("scripts", false)
+}

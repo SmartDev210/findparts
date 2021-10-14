@@ -70,6 +70,7 @@ namespace Findparts.Controllers
 
             return View("~/Views/Vendor/RFQ.cshtml", viewModel);
         }
+        [Route("Subscriber")]
         public ActionResult Advertise()
         {
             string vendorID;
@@ -85,7 +86,7 @@ namespace Findparts.Controllers
             VendorAdvertiseViewModel viewModel = _vendorService.GetAdvertiseViewModel(vendorID);
             return View(viewModel);
         }
-
+        [Route("Subscriber/DownloadInvoice")]
         public ActionResult DownloadInvoice(int chargeId)
         {
             string filepath = string.Format("{0}{1}.pdf", Config.InvoicePath, chargeId);
@@ -95,16 +96,19 @@ namespace Findparts.Controllers
             }
             return File(filepath, "application/pdf", $"{Config.PortalName}-Invoice-{chargeId}.pdf");
         }
+        [Route("Subscriber/Purchase")]
         [HttpGet]
         public ActionResult Purchase()
         {
             return View();
         }
+        [Route("Subscriber/PurchaseImpressions")]
         [HttpGet]
         public ActionResult PurchaseImpressions()
         {
             return View();
         }
+        [Route("Subscriber/Purchase")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Purchase(string stripeToken)
@@ -128,6 +132,7 @@ namespace Findparts.Controllers
             return RedirectToAction("Advertise", "Vendor");
             
         }
+        [Route("Subscriber/PurchaseImpressions")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PurchaseImpressions(string stripeToken, int quantity)
@@ -150,6 +155,7 @@ namespace Findparts.Controllers
             return RedirectToAction("Advertise", "Vendor");
 
         }
+        [Route("Subscriber/Invoices")]
         public ActionResult Invoices()
         {
             if (Request.QueryString["Invoice"] != null && Request.QueryString["Id"] != null)
@@ -207,6 +213,7 @@ namespace Findparts.Controllers
                 return View("~/Views/Vendor/ChargeInfo.cshtml", viewModel);
             }
         }
+        [Route("Subscriber/Invoices")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Invoices(int? SubscriberTypeId, string stripeToken)
@@ -247,6 +254,7 @@ namespace Findparts.Controllers
                 return RedirectToAction("Invoices", "Vendor");
             }
         }
+        [Route("Subscriber/CancelCharge")]
         [HttpPost]
         public ActionResult CancelCharge(string stripeSubscriptionId)
         {
@@ -276,9 +284,10 @@ namespace Findparts.Controllers
             }
             return Json(new { success = true });
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Vendor/Invoices/UpdatePlan")]
+        [Route("Subscriber/Invoices/UpdatePlan")]
         public ActionResult UpdatePlan(int SubscriberTypeId)
         {
             var subscriberId = (string)Session["subscriberID"];
@@ -304,7 +313,7 @@ namespace Findparts.Controllers
 
 
         [HttpGet]
-        [Route("Vendor/Invoices/UpdatePaymentInfo")]
+        [Route("Subscriber/Invoices/UpdatePaymentInfo")]
         public ActionResult UpdateCharge()
         {
             string subscriberID;
@@ -332,7 +341,7 @@ namespace Findparts.Controllers
         }
 
         [HttpGet]
-        [Route("Vendor/Invoices/UpdatePlan")]
+        [Route("Subscriber/Invoices/UpdatePlan")]
         public ActionResult UpdatePlan()
         {
             string subscriberID;
@@ -363,7 +372,7 @@ namespace Findparts.Controllers
 
             return View("~/Views/Vendor/Invoices.cshtml", viewModel);
         }
-
+        [Route("Subscriber/Charge")]
         [HttpGet]
         public ActionResult Charge()
         {
