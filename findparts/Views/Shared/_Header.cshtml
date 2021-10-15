@@ -20,8 +20,12 @@
                 <div>
                     <a class="btn btn-icon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" title="Plus"><span class="glyphicon glyphicon-plus-sign"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right">
-
-                        @if (Config.PortalCode == 0)
+                        @if (!User.IsInRole("Vendor"))
+                        {
+                            <li><a href="javascript:void(0);" onclick="OpenVendorJoinModal();"><span class="glyphicon glyphicon-plus"></span>&nbsp;Upload ✈ Spare Parts</a></li>
+                            <li><a href="javascript:void(0);" onclick="OpenVendorJoinModal();"><span class="glyphicon glyphicon-plus"></span>&nbsp;Upload Repair Capabilities</a></li>
+                        }
+                        else if (Config.PortalCode == 0)
                         {
                             <li><a target="_blank" href="https://findparts.back-channel.com/Vendor/UploadList"><span class="glyphicon glyphicon-plus"></span>&nbsp;Upload ✈ Spare Parts</a></li>
                             <li><a href="/Vendor/UploadList"><span class="glyphicon glyphicon-plus"></span>&nbsp;Upload Repair Capabilities</a></li>
@@ -111,6 +115,7 @@
         </div>
     </nav>
 </div>
+
 @*
     <div class=" @(ViewBag.BodyClass == "home-page" ? "container" : "container-fluid")">
         <div class="row">
