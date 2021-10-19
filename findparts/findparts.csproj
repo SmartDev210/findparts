@@ -554,6 +554,7 @@
     <Content Include="Content\dist\images\about\twitter.png" />
     <Content Include="Content\dist\images\back-channel.png" />
     <Content Include="Content\dist\images\black-logo.png" />
+    <Content Include="Content\dist\images\buddy-logo.png" />
     <Content Include="Content\dist\images\CAAC-sm.old.png" />
     <Content Include="Content\dist\images\CAAC-sm.png" />
     <Content Include="Content\dist\images\CAAC.png" />
@@ -566,6 +567,7 @@
     <Content Include="Content\dist\images\DER-sm.old.png" />
     <Content Include="Content\dist\images\DER-sm.png" />
     <Content Include="Content\dist\images\DER.png" />
+    <Content Include="Content\dist\images\download-on-appstore.svg" />
     <Content Include="Content\dist\images\EX-WAR-sm.old.png" />
     <Content Include="Content\dist\images\EX-WAR-sm.png" />
     <Content Include="Content\dist\images\EX-WAR.png" />
@@ -585,6 +587,7 @@
     <Content Include="Content\dist\images\FREE_EVAL-sm.png" />
     <Content Include="Content\dist\images\FREE_EVAL.png" />
     <Content Include="Content\dist\images\glyphicons-620-industrial-zone.png" />
+    <Content Include="Content\dist\images\google-play-badge.png" />
     <Content Include="Content\dist\images\icons\linkedin.png" />
     <Content Include="Content\dist\images\ListCapabilities.jpg" />
     <Content Include="Content\dist\images\literature\HowtoUpload-HighlightCapabilities-horz.jpg" />
@@ -841,6 +844,7 @@
     <Content Include="Views\Vendor\Purchase.cshtml" />
     <Content Include="Views\Vendor\PurchaseImpressions.cshtml" />
     <Content Include="Views\Vendor\Shared\_VendorSubscribeLayout.cshtml" />
+    <Content Include="Views\Shared\_CTA.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

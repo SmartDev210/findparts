@@ -81,6 +81,7 @@
         <input type="text" id="txtRFQID" class="form-control" placeholder="Optional" />
     </div>
 </div>
+@Html.Partial("~/Views/Shared/_CTA.cshtml")
 @section scripts
 {
     <script type="text/javascript">
@@ -135,7 +136,7 @@
                                 } else {
                                     templateCell.innerHTML = '<a target="_blank" href="@Config.WeavyUrl/companies/' + data[i].WeavyCompanyId + '"> <span class="vendorName"><span style="display:inline-block; text-overflow:ellipsis; max-width:40ch; overflow:hidden; white-space:nowrap;">' + data[i].VendorName + '</span></span><span class="glyphicon glyphicon-info-sign"></span></a>';
                                 }
-                                
+
                             }
                             vendorNameBlock.appendChild(templateCell);
 
@@ -205,7 +206,7 @@
                                 + (data[i].Fax ? '<span class="glyphicon glyphicon-print" aria-hidden="true" data-toggle="popover" data-content="Fax"></span> ' + (data[i].Fax == '***' ? '<a href="' + viewRepairStationGuestHref + '">View Fax</a>' : '<span style="display:inline-block; text-overflow:ellipsis; max-width:27ch; overflow:hidden; white-space:nowrap;">' + data[i].Fax + '</span>') : '');
                             templateRow.appendChild(templateCell);
 
-                           
+
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <text>
@@ -263,7 +264,7 @@
                             }
                             </text>
                         }
-                        
+
                         attachMenuButtonClicks();
                         nextDivRow.className = nextDivRow.className.replace('hidden', '') + ' expandable';
                     });
