@@ -136,8 +136,7 @@
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aircraft for Sale</span>
                         <div class="google-cse-search-group">
-                            <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:8dyrm0inbkf"></script>
-                            <div class="gcse-search"></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -146,8 +145,7 @@
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Pilot Supplies</span>
                         <div class="google-cse-search-group">
-                            <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:ojacjdzpco3"></script>
-                            <div class="gcse-search"></div>
+                           
                         </div>
                     </div>
                 </div>
@@ -156,8 +154,7 @@
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aviation Jobs</span>
                         <div class="google-cse-search-group">
-                            <script async src="https://cse.google.com/cse.js?cx=004286895403006624284:uqhunc1oxii"></script>
-                            <div class="gcse-search"></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -268,3 +265,31 @@
 </div>
 
 @Html.Partial("~/Views/Shared/_CTA.cshtml")
+
+@section scripts {
+    <script>
+        $(function () {
+            $('a[data-toggle="pill"]').on('show.bs.tab', function (e) {
+
+                var hash = e.target.hash;
+                var scriptSrc = '';
+
+                if (hash == '#pills-planes') {
+                    scriptSrc = 'https://cse.google.com/cse.js?cx=004286895403006624284:8dyrm0inbkf';
+                } else if (hash == '#pills-pilot-supplies') {
+                    scriptSrc = 'https://cse.google.com/cse.js?cx=004286895403006624284:ojacjdzpco3';
+                }
+                else if (hash == '#pills-jobs') {
+                    scriptSrc = 'https://cse.google.com/cse.js?cx=004286895403006624284:uqhunc1oxii';
+                }
+
+                if (scriptSrc != '') {
+                    var scriptTag = document.createElement('script');
+                    scriptTag.src = scriptSrc;
+                    $(hash + ' .google-cse-search-group').html('<div class="gcse-search"></div>');
+                    $(hash + ' .google-cse-search-group').prepend(scriptTag);
+                }
+            });
+        })
+    </script>
+}
