@@ -15,35 +15,40 @@
 }
 
 <br/>
-<table class="table table-condensed" style="border-collapse: collapse;">
-    <caption>
-        @Model.Users.Count Users found
-    </caption>
-    <tbody>
-        <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Search Count</th>
-            <th scope="col">Vendor Admin</th>
-            <th scope="col">&nbsp;</th>
-
-        </tr>
-        @foreach (var user in Model.Users)
-        {
+<div class="tablescroll">
+    <table class="table table-condensed" style="border-collapse: collapse;">
+        <caption>
+            @Model.Users.Count Users found
+        </caption>
+        <tbody>
             <tr>
-                <td>@if (user.DateDeleted != null) {<text><s>@user.Email</s></text> } else { <text>@user.Email</text> }</td>
-                <td>@user.SearchCount</td>
-                <td>@if (user.VendorID != null) { <text><span class="glyphicon glyphicon-ok"></span></text> }</td>
-                <td>
-                    @if (user.DateDeleted == null && user.CreatedByUserID != null)
-                    {
-                        <a class="btn btn-danger" href="javascript:void(0);" onclick="DeleteUser(@user.UserID)"><span class='glyphicon glyphicon-ban-circle'></span> Delete User</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                <th scope="col">Email</th>
+                <th scope="col">Search Count</th>
+                <th scope="col">Vendor Admin</th>
+                <th scope="col">&nbsp;</th>
 
+            </tr>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@if (user.DateDeleted != null)
+                    {<text><s>@user.Email</s></text> }
+                else
+                { <text>@user.Email</text>}</td>
+                    <td>@user.SearchCount</td>
+                    <td>@if (user.VendorID != null)
+                    {<text><span class="glyphicon glyphicon-ok"></span></text>}</td>
+                    <td>
+                        @if (user.DateDeleted == null && user.CreatedByUserID != null)
+                        {
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="DeleteUser(@user.UserID)"><span class='glyphicon glyphicon-ban-circle'></span> Delete User</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 @section scripts
 {
     <script>

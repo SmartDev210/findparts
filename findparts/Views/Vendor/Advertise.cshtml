@@ -18,29 +18,31 @@
     <div class="col-lg-6 col-md-6">
 
         <p style="font-size: 16px;">History</p>
-        <table class="table table-striped">
-            <tr>
-                <th>Type</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-                <th>Purchased At</th>
-                <th>Invoice</th>
-            </tr>
-            @foreach (var item in Model.VendorPurchases)
-            {
+        <div class="tablescroll">
+            <table class="table table-striped">
                 <tr>
-                    <td>@((PurchaseType)item.PurchaseType)</td>
-                    <td>@item.Quantity.ToString("N0")</td>
-                    <td>@((item.Amount / 100).ToString("C2"))</td>
-                    <td>@item.PurchasedAt</td>
-                    <td><a href="@Url.Action("DownloadInvoice", new { chargeId = item.Id })" target="_blank">Download</a></td>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Purchased At</th>
+                    <th>Invoice</th>
                 </tr>
+                @foreach (var item in Model.VendorPurchases)
+                {
+                    <tr>
+                        <td>@((PurchaseType)item.PurchaseType)</td>
+                        <td>@item.Quantity.ToString("N0")</td>
+                        <td>@((item.Amount / 100).ToString("C2"))</td>
+                        <td>@item.PurchasedAt</td>
+                        <td><a href="@Url.Action("DownloadInvoice", new { chargeId = item.Id })" target="_blank">Download</a></td>
+                    </tr>
 
-            }
-        </table>
+                }
+            </table>
+        </div>
     </div>
 </div>
-<div style="margin-top: 32px; width: max-content">
+<div style="margin-top: 32px;">
     <p style="font-size: 16px;">Advertise Asset / Service / Brand</p>
     <hr />
     <p>On-Demand Mini Podcast</p>
@@ -52,7 +54,7 @@
     <br/>
     <a target="_blank" href="https://calendly.com/buddyaero/mini-podcast">Schedule your On-Demand Mini Podcast</a>
 </div>
-<div style="margin-top: 64px; width: max-content">
+<div style="margin-top: 64px;">
     <p style="font-size: 16px;">Sharing to LinkedIn Organic Feeds <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="Brands & Vendors: Use our consortium of Aviation Professionals to reach & deliver organic impressions to aviation professionals on LinkedIn including titles:
 
 Director of Maintenance

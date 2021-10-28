@@ -350,7 +350,7 @@ namespace Findparts.Services.Services
 				+ Environment.NewLine
 				+ "Your " + CapabilityMerit(capabilityList, portalCode) + " list has been approved." + Environment.NewLine
 				+ Environment.NewLine
-				+ "Your " + CapabilitiesMerits(capabilityList, portalCode) + " are now active throughout " + (portalCode == 0 ? "MROFinder.AvDB.aero" : "FindParts.AvDB.aero") + Environment.NewLine
+				+ "Your " + CapabilitiesMerits(capabilityList, portalCode) + " are now active throughout " + (portalCode == 0 ? "MROFinder.buddy.aero" : "FindParts.buddy.aero") + Environment.NewLine
 				+ Environment.NewLine
 				+ "Your Capability Stats:" + Environment.NewLine
 				+ "# of " + CapabilitiesMerits(capabilityList, portalCode) + " listed - " + capabilities + Environment.NewLine
@@ -359,7 +359,7 @@ namespace Findparts.Services.Services
 				+ "https://" + HttpContext.Current.Request.Url.Host + "/Vendor/UploadList" + Environment.NewLine
 				+ Environment.NewLine
 				//+ "Remember, you can always upload " + (capabilityList ? "" : "more ") + "Workscope icons to highlight your specific capabilities for FREE," + Environment.NewLine + Environment.NewLine
-				+ "AvDB.aero";
+				+ "buddy.aero";
 
 			SendEmail(Config.FromEmail, vendorEmail, (Config.PortalCode == 0 ? "MROFinder" : "FindParts") + " " + CapabilityMerit(capabilityList, portalCode) + " List Approved & Active", message);
 		}

@@ -496,7 +496,7 @@ namespace Findparts.Services.Services
 						Baltmore, MD 21208<br>
 						USA<br>
 						Tel: +1-949-290-7212<br>
-						support@AvDB.aero
+						support@buddy.aero
 					</div>
 				</div>
 				<div class=""invoice col-xs-6 text-right"">

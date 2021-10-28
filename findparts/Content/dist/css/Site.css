@@ -65,7 +65,7 @@ body {
 
 #body {
     background-color: #fff;
-    padding: 64px 0 32px 0;
+    padding: 32px 0 32px 0;
 }
 
 .main-content {
@@ -1230,7 +1230,6 @@ nav.navbar {
 .navbar-theme {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
     background: linear-gradient(to bottom, #0884A0, rgba(0, 100, 123, 0.85));
     color: #FCFCFC;
@@ -1253,8 +1252,6 @@ nav.navbar {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-flex: 1;
-    -ms-flex: 1 0 2rem;
-    flex: 1 0 2rem;
 }
 
     .navbar-icons:not(:first-child):last-child {
@@ -1276,8 +1273,41 @@ nav.navbar {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    margin: 0 .5rem;
     min-width: 0;
+    margin: auto;
+}
+.cta-logo {
+    width: 40px;
+}
+
+.cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 48px 0px;
+}
+
+.cta-separater {
+    width: 400px;
+    border-top-color: #57B6CC;
+    border-top-width: 2px;
+    margin: 32px 0;
+}
+@media(max-width: 767px) {
+    .navbar-middle {
+        max-width: 50%;
+    }
+    .navbar-middle a img {
+        height: auto;
+        width: 100%;
+    }
+    .navbar-theme .btn {
+        padding: 6px 4px;
+    }
+    .cta-separater {
+        width: 100%;
+    }
 }
 
 #toggle-messenger {
@@ -1392,4 +1422,7 @@ nav.navbar {
     .custom-page-categories.industry-vendors ul {
         column-count: 2;
     }
+}
+.tablescroll {
+    overflow: auto;
 }
