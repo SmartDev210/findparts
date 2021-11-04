@@ -691,7 +691,7 @@
     <Content Include="Scripts\DataTables\extensions\Select\Readme.md" />
     <Content Include="package.json" />
     <Content Include="Content\dist\files\MROfinderCapabilityUploadTemplate.xlsx" />
-    <Content Include="Content\dist\images\favicon\site.webmanifest" />
+    <None Include="Content\dist\images\favicon\site.webmanifest.json" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\extensions\AutoFill\js\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\extensions\AutoFill\js\autoFill.bootstrap.min.js" />
