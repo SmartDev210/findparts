@@ -552,6 +552,8 @@
     <Content Include="Content\dist\images\about\planeheader.jpg" />
     <Content Include="Content\dist\images\about\turbine.png" />
     <Content Include="Content\dist\images\about\twitter.png" />
+    <Content Include="Content\dist\images\aviation-brands-icon-256.png" />
+    <Content Include="Content\dist\images\aviation-creators-icon-256.png" />
     <Content Include="Content\dist\images\back-channel.png" />
     <Content Include="Content\dist\images\black-logo.png" />
     <Content Include="Content\dist\images\buddy-logo.png" />

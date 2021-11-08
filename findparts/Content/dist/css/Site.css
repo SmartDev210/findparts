@@ -1426,3 +1426,17 @@ nav.navbar {
 .tablescroll {
     overflow: auto;
 }
+
+.cta-brands-box {
+    display: flex;
+    justify-content: center;
+    gap: 128px;
+
+   
+}
+@media(max-width: 767px) {
+    .cta-brands-box {
+        flex-direction: column;
+        gap: 32px;
+    }
+}
