@@ -66,30 +66,32 @@
                             <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
                             <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                            <li><a href="@Config.AppStoreLink"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
+                            <li><a href="@Config.GooglePlayStoreLink"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
                         </ul>
                     }
                     else if (User.IsInRole("Vendor"))
                     {
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="dropdown-header">@User.Identity.Name</li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("Advertise", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Buy LinkedIn Impressions</span></a></li>
-                            @*<li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>*@
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
-                            <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
-                        </ul>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li class="dropdown-header">@User.Identity.Name</li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("Index", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Vendor Settings</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("Advertise", "Vendor")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Buy LinkedIn Impressions</span></a></li>
+                    @*<li><a href="@Url.Action("Index", "Subscriber")"><span class="glyphicon glyphicon-cog"></span> <span class="text">Subscriber Settings</span></a></li>*@
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/Privacy"><span class="glyphicon glyphicon-file"></span> Privacy</a></li>
+                    <li><a href="/Terms"><span class="glyphicon glyphicon-file"></span> Terms</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Config.WeavyUrl/spaces/@Config.FeedbackSpaceId" target="_blank"><span class="glyphicon glyphicon-envelope"></span> <span class="text">Feedback</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
+                </ul>
                     }
                     else
                     {
@@ -108,6 +110,8 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><span class="glyphicon glyphicon-download-alt"></span> iOS App</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-download-alt"></span> Android App</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="@Config.WeavyUrl/spaces/@Config.FeedbackSpaceId" target="_blank"><span class="glyphicon glyphicon-envelope"></span> <span class="text">Feedback</span></a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="@Url.Action("LogOff", "Account")"><span class="glyphicon glyphicon-log-out"></span> <span class="text">Log Out</span></a></li>
                         </ul>

@@ -41,5 +41,10 @@ namespace Findparts.Core
         public static string JitsiAppId => ConfigurationManager.AppSettings["JitsiAppId"];
         public static string JitsiApiKey => ConfigurationManager.AppSettings["JitsiApiKey"];
         public static string SharedJsonPath => ConfigurationManager.AppSettings["SharedJsonPath"];
+        public static string FeedbackSpaceId => ConfigurationManager.AppSettings["FeedbackSpaceId"];
+        public static string GooglePlayStoreLink => ConfigurationManager.AppSettings["GooglePlayStoreLink"];
+        public static string AppStoreLink => ConfigurationManager.AppSettings["AppStoreLink"];
+        public static string FindPartsLink => ConfigurationManager.AppSettings["FindPartsLink"];
+        public static string MROFinderLink => ConfigurationManager.AppSettings["MROFinderLink"];
     }
 }
