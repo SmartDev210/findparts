@@ -24,8 +24,7 @@ namespace Findparts.Controllers
         public ActionResult Index()
         {
             ViewBag.BodyClass = "home-page";
-            ViewBag.ExtraTitle = " | search Test, Repair & OH capabilities for aircraft parts";
-
+            
             HomePageViewModel viewModel = new HomePageViewModel();
             _partsSearchService.PopulateHomePageViewModel(viewModel);
             return View(viewModel);
@@ -41,9 +40,15 @@ namespace Findparts.Controllers
                 var result = _partsSearchService.GetDetails(queryParams, User.IsInRole("Admin"), User.Identity.IsAuthenticated);
                 return Json(result, JsonRequestBehavior.AllowGet);
             } else if (!string.IsNullOrEmpty(queryParams.Search))
-            {
-                ViewBag.Title = "Search " + queryParams.Search;
-                ViewBag.ExtraTitle = " | Test, Repair & Overhaul capabilities";
+            {   
+                if (Config.PortalCode == 0)
+                {
+                    ViewBag.Title = "Search " + queryParams.Search + " - buddy.aero Search Repair Overhaul MRO ";
+                }
+                else
+                {
+                    ViewBag.Title = "Search " + queryParams.Search + " – buddy.aero Aircraft Spare Parts Aviation ";
+                }
 
                 PartsPageViewModel viewModel = new PartsPageViewModel { Text = queryParams.Search };
                 string cleanText = new Regex("[^a-zA-Z0-9]").Replace(viewModel.Text, "");
@@ -58,8 +63,14 @@ namespace Findparts.Controllers
                 }
             } else if (!string.IsNullOrEmpty(queryParams.PartNumber))
             {
-                ViewBag.Title = queryParams.PartNumber;
-                ViewBag.ExtraTitle = " | search aircraft component MROs - Part 145s";
+                if (Config.PortalCode == 0)
+                {
+                    ViewBag.Title = queryParams.PartNumber + " - buddy.aero Search Repair Overhaul MRO ";
+                }
+                else
+                {
+                    ViewBag.Title = queryParams.PartNumber + " – buddy.aero Aircraft Spare Parts Aviation ";
+                }
                 ViewBag.ExtraMetaKeywords = "," + Request.QueryString["PartNumber"];
 
                 PartsPageViewModel viewModel = new PartsPageViewModel { Text = queryParams.PartNumber };
