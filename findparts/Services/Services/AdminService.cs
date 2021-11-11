@@ -606,7 +606,7 @@ namespace Findparts.Services.Services
             if (domain.EndsWith("/"))
                 domain = domain.Substring(0, domain.Length - 1);
 
-            int start = 0, limit = 50000;
+            int limit = 50000, last_id = 0;
             int count = 0;
             while (true)
             {
@@ -621,21 +621,23 @@ namespace Findparts.Services.Services
                         var vendorListItems = _context.VendorListItems
                             .AsNoTracking()
                             .Where(x => x.PortalCode == portalCode)
+                            .Where(x => x.VendorListItemID > last_id)
                             .OrderBy(x => x.VendorListItemID)
-                            .Skip(start)
                             .Take(limit).ToList();
                         
                         foreach (var item in vendorListItems)
-                        {
-                            
+                        {   
                             WriteOneUrl(writer, domain, $"parts?PartNumber={item.PartNumber}");
+                            if (last_id < item.VendorListItemID) last_id = item.VendorListItemID;
                         }
                         
                         writer.WriteEndElement();
                         writer.Flush();
 
                         if (vendorListItems.Count == 0 || vendorListItems.Count < limit) break;
+                        
                         vendorListItems.Clear();
+                        
                     }
                     finally
                     {
@@ -643,7 +645,6 @@ namespace Findparts.Services.Services
                     }
                 }
                 count++;
-                start += limit;
             }
 
             using (XmlWriter writer = CreateSitemapFile(portalCode.ToString(), $"sitemap-main.xml"))
