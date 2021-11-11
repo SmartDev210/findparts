@@ -618,7 +618,12 @@ namespace Findparts.Services.Services
                     {
                         WriteStartElement(writer);
 
-                        var vendorListItems = _context.VendorListItems.Where(x => x.PortalCode == portalCode).OrderBy(x => x.VendorListItemID).Skip(start).Take(limit).ToList();
+                        var vendorListItems = _context.VendorListItems
+                            .AsNoTracking()
+                            .Where(x => x.PortalCode == portalCode)
+                            .OrderBy(x => x.VendorListItemID)
+                            .Skip(start)
+                            .Take(limit).ToList();
                         
                         foreach (var item in vendorListItems)
                         {
@@ -630,6 +635,7 @@ namespace Findparts.Services.Services
                         writer.Flush();
 
                         if (vendorListItems.Count == 0 || vendorListItems.Count < limit) break;
+                        vendorListItems.Clear();
                     }
                     finally
                     {
