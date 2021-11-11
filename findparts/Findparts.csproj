@@ -293,6 +293,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SitemapsController.cs" />
     <Compile Include="Controllers\VideoCallController.cs" />
     <Compile Include="Controllers\WebApiController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -852,6 +853,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\dist\js\" />
     <Folder Include="Scripts\DataTables\extensions\FixedHeader\js\" />
+    <Folder Include="Views\Sitemaps\" />
     <Folder Include="Views\StripeWebhooks\" />
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -326,5 +327,16 @@ namespace Findparts.Controllers
             }
             return RedirectToAction("SubscriberDetail", new { subscriberId = viewModel.SubscriberId });
         }
+        [HttpPost]
+        [Route("admin/sitemaps/generate")]
+        public ActionResult GenerateSitemaps()
+        {
+            Task.Run(() =>
+            {
+                _service.GenerateSitemaps(Config.PortalCode);
+            });
+            return Json(new { success = true });
+        }
+        
     }
 }

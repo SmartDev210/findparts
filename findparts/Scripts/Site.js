@@ -292,3 +292,16 @@ function ReSendVerificationEmail() {
         }
     });
 }
+
+function GenerateSitemaps() {
+    $.ajax({
+        type: 'POST',
+        url: 'admin/sitemaps/generate',
+        success: function () {
+            alert("sitemap is generating now");
+        },
+        fail: function () {
+            alert("Failed to generate sitemap");
+        }
+    })
+}

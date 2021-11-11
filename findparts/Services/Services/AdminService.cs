@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 
 namespace Findparts.Services.Services
 {
@@ -547,6 +549,113 @@ namespace Findparts.Services.Services
                 return true;
             }
             return false;
+        }
+        private string CleanInvalidXmlChars(string text)
+        {
+            // From xml spec valid chars: 
+            // #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]     
+            // any Unicode character, excluding the surrogate blocks, FFFE, and FFFF. 
+            string re = @"[^\x09\x0A\x0D\x20-\xD7FF\xE000-\xFFFD\x10000-x10FFFF]";
+            return Regex.Replace(text, re, "");
+        }
+        private void WriteOneUrl(XmlWriter writer, string domain, string urlPath)
+        {
+            urlPath = CleanInvalidXmlChars(urlPath);
+
+            if (!urlPath.StartsWith("/"))
+                urlPath = "/" + urlPath;
+
+            writer.WriteStartElement("url");
+            writer.WriteElementString("loc", $"{domain}{urlPath}");
+            writer.WriteRaw("\n  ");
+
+            writer.WriteEndElement();
+            writer.Flush();
+        }
+        private void WriteStartElement(XmlWriter writer)
+        {
+            writer.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+            writer.WriteAttributeString("xmlns", "xhtml", null, "http://www.w3.org/1999/xhtml");
+            writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+            writer.WriteAttributeString("xsi", "schemaLocation", null, "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd");
+        }
+        private XmlWriter CreateSitemapFile(string portalCode, string filename)
+        {
+            try
+            {
+                if (!Directory.Exists(Path.Combine(Config.SitemapPath, portalCode)))
+                    Directory.CreateDirectory(Path.Combine(Config.SitemapPath, portalCode));
+
+                var path = Path.Combine(Config.SitemapPath, portalCode, filename);
+
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = ("  ");
+
+                return XmlWriter.Create(path, settings);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+        public void GenerateSitemaps(int portalCode)
+        {
+            string domain = Config.PortalCode == 0 ? Config.MROFinderLink : Config.FindPartsLink;
+            if (domain.EndsWith("/"))
+                domain = domain.Substring(0, domain.Length - 1);
+
+            int start = 0, limit = 50000;
+            int count = 0;
+            while (true)
+            {
+                using (XmlWriter writer = CreateSitemapFile(portalCode.ToString(), $"sitemap-{count}.xml"))
+                {
+                    if (writer == null)
+                        continue;
+                    try
+                    {
+                        WriteStartElement(writer);
+
+                        var vendorListItems = _context.VendorListItems.Where(x => x.PortalCode == portalCode).OrderBy(x => x.VendorListItemID).Skip(start).Take(limit).ToList();
+                        
+                        foreach (var item in vendorListItems)
+                        {
+                            
+                            WriteOneUrl(writer, domain, $"parts?PartNumber={item.PartNumber}");
+                        }
+                        
+                        writer.WriteEndElement();
+                        writer.Flush();
+
+                        if (vendorListItems.Count == 0 || vendorListItems.Count < limit) break;
+                    }
+                    finally
+                    {
+                        writer.Close();
+                    }
+                }
+                count++;
+                start += limit;
+            }
+
+            using (XmlWriter writer = CreateSitemapFile(portalCode.ToString(), $"sitemap-main.xml"))
+            {
+                writer.WriteStartElement("sitemapindex", "http://www.sitemaps.org/schemas/sitemap/0.9");
+                for (var i = 0; i <= count; i++)
+                {
+                    writer.WriteStartElement("sitemap");
+                    writer.WriteElementString("loc", $"{domain}/sitemaps/sitemap-{i}.xml");
+                    writer.WriteRaw("\n  ");
+
+                    writer.WriteEndElement();
+
+                }
+                writer.WriteEndElement();
+                writer.Flush();
+                writer.Close();
+            }
         }
     }
     

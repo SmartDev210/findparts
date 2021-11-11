@@ -23,5 +23,6 @@ namespace Findparts.Services.Interfaces
         SubscriberPagedListViewModel GetSubscribers(int start, int length, int draw, string sortParam, string direction, string filter);
         SubscriberDetailViewModel GetSubscriberDetailViewModel(int subscriberId);
         bool UpdateSubscriberDetail(SubscriberDetailViewModel viewModel);
+        void GenerateSitemaps(int portalCode);
     }
 }
