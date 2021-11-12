@@ -47,19 +47,19 @@ body {
 /* need to account for footer text wrapping at really small sizes */
 @media only screen and (max-width: 767px) {
     body {
-        padding-bottom: 83px;
+        padding-bottom: 250px;
     }
 }
 
 @media only screen and (max-width: 520px) {
     body {
-        padding-bottom: 104px;
+        padding-bottom: 250px;
     }
 }
 
 @media only screen and (max-width: 345px) {
     body {
-        padding-bottom: 125px;
+        padding-bottom: 250px;
     }
 }
 
