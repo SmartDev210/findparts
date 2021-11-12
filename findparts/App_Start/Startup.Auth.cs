@@ -77,8 +77,8 @@ namespace Findparts
 
             app.UseLinkedInAuthentication(new LinkedInAuthenticationOptions()
             {
-                ClientId = "77j88xpcspk4vf",
-                ClientSecret = "kyo6RK0IzsrA3XdW",
+                ClientId = "86z6xe7jvdl9yi",
+                ClientSecret = "dzLP1WzbHBSQ8LUh",
             });
             
         }
