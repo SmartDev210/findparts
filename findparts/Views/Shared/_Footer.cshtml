@@ -1,19 +1,23 @@
 ﻿@using Findparts.Core
-<div class="container">
-    <div class="row">
-        @*<div class="col-xs-12 col-sm-4 copy">
-            &copy; @DateTime.Now.Year - @Config.PortalName
-        </div>*@
-        <div class="col-12 links">
-            <ul>
-                <li><a href="@Config.WeavyUrl">Home</a></li>
-                <li><a href="@Config.WeavyUrl/spaces">Spaces</a></li>
-                <li><a href="@Config.WeavyUrl/people">People</a></li>
-                <li><a href="@Config.FindPartsLink">FindParts</a></li>
-                <li><a href="@Config.MROFinderLink">MROfinder</a></li>
-                <li><a href="@Config.WeavyUrl/messenger">Messenger</a></li>
-            </ul>
+
+<footer>
+    <div  style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <img style="max-width: 240px; margin: 16px 0;" src="~/Content/dist/images/buddy-logo.png" />
+
+        <div style="display: flex; gap: 32px; align-items: center; justify-content: center; margin-top: 16px;">
+            <a href="https://apps.apple.com/us/app/aviation-back-channel/id1568332316"><img style="height: 40px;" src="~/Content/dist/images/download-on-appstore.svg" /></a>
+            <a href="#"><img style="height: 60px;" src="~/Content/dist/images/google-play-badge.png" /></a>
         </div>
     </div>
-</div>
+
+    <div class="footer-links">
+        <a href="@Config.WeavyUrl/">Home</a>
+        <a href="@Config.WeavyUrl/spaces">Spaces</a>
+        <a href="@Config.WeavyUrl/people">People</a>
+        <a href="@Config.FindPartsLink">FindParts</a>
+        <a href="@Config.MROFinderLink">MROfinder</a>
+        <a href="@Config.WeavyUrl/messenger">Messenger</a>
+        <a href="@Config.WeavyUrl/spaces/@Config.FeedbackSpaceId">Feedback</a>
+    </div>
+</footer>
 

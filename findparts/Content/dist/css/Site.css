@@ -42,7 +42,7 @@ body {
     margin: 0;
     position: relative;
     min-height: 100%;
-    padding-bottom: 60px;
+    padding-bottom: 200px;
 }
 /* need to account for footer text wrapping at really small sizes */
 @media only screen and (max-width: 767px) {
@@ -115,11 +115,20 @@ footer {
     left: 0;
     height: auto;
     padding: 0;
-    background-color: #DBDBDB;
-    font-size: 15px;
-    text-align: center;
-    clear: both;
+   
 }
+    footer .footer-links {
+        background-color: #DBDBDB;
+        font-size: 15px;
+        text-align: center;
+        clear: both;
+        padding: 16px 0;
+        gap: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
     footer .container {
         padding-top: 20px;
