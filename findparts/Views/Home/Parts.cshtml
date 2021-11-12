@@ -81,6 +81,21 @@
         <input type="text" id="txtRFQID" class="form-control" placeholder="Optional" />
     </div>
 </div>
+<div class="modal" tabindex="-1" role="dialog" id="vendor-not-exist-dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This Vendor has not updated their buddy.aero app to allow this button to function</p>
+            </div>
+        </div>
+    </div>
+</div>
 @Html.Partial("~/Views/Shared/_CTA.cshtml")
 @section scripts
 {
@@ -213,22 +228,27 @@
                                 buttonGroupCell = document.createElement('div');
                                 buttonGroupCell.className = "button-list";
                                 if (data[i].VendorID != 0 && data[i].Email != 'Expired' && data[i].Phone != 'Expired' ) { // add chat button add
-                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank"><span class="glyphicon glyphicon-facetime-video"></span> Video</a>';
-                                    buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')"><span class="glyphicon glyphicon-comment"></span> Message</a>';
+                                    
                                     if (!data[i].WeavyCompanyId || data[i].WeavyCompanyId == 0) {
-                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0)" onclick="SartCollabChannel(' + data[i].VendorID + ')"><span class="glyphicon glyphicon-globe"></span> Open Space</a>';
+                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenVendorNotExistDialog();"><span class="glyphicon glyphicon-facetime-video"></span> Video</a>';
+                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenVendorNotExistDialog();"><span class="glyphicon glyphicon-comment"></span> Message</a>';
+                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenVendorNotExistDialog();"><span class="glyphicon glyphicon-globe"></span> Open Space</a>';
                                     } else {
-                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies' + data[i].WeavyCompanyId + '/private-channel"><span class="glyphicon glyphicon-globe"></span> Open Space</a>';
+                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="/video-call/' + data[i].VendorID + '" target="_blank"><span class="glyphicon glyphicon-facetime-video"></span> Video</a>';
+                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="javascript:void(0);" onclick="OpenChat(' + data[i].VendorID + ')"><span class="glyphicon glyphicon-comment"></span> Message</a>';
+                                        buttonGroupCell.innerHTML += '<a class="btn btn-default" href="@Config.WeavyUrl/companies/' + data[i].WeavyCompanyId + '/private-channel" target="_blank"><span class="glyphicon glyphicon-globe"></span> Open Space</a>';
                                     }
                                 }
                                 templateRow.appendChild(buttonGroupCell);
 
-                                // add Send RFQ button
-                                templateCell = document.createElement('div');
-                                templateCell.className = 'vendorQuote';
-                                templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;
-                                templateCell.innerHTML = data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
-                                templateRow.appendChild(templateCell);
+                                if (!!data[i].WeavyCompanyId) {
+                                    // add Send RFQ button
+                                    templateCell = document.createElement('div');
+                                    templateCell.className = 'vendorQuote';
+                                    templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;
+                                    templateCell.innerHTML = data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
+                                    templateRow.appendChild(templateCell);
+                                }
                                 </text>
                             }
 
@@ -241,7 +261,7 @@
                             <text>
                             var showRfqSelected = false;
                             for (var i = 0; i < data.length; i++) {
-                                if (data[i].WebEmails && data[i].VendorID) {
+                                if (data[i].WebEmails && data[i].VendorID && data[i].WeavyCompanyId) {
                                     showRfqSelected = true;
                                     break;
                                 }
@@ -515,5 +535,8 @@
                 trigger: 'hover focus'
             });
         });
+        function OpenVendorNotExistDialog() {
+            $("#vendor-not-exist-dialog").modal('show');
+        }
     </script>
 }
