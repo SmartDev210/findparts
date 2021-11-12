@@ -203,7 +203,7 @@ function InitializeAdminVendorsTable() {
                 data: "WeavyCompanyId",
                 render: function (data, type, full, meta) {
                     if (type === 'display' && data != null) {
-                        return '<a target="_blank" href="https://back-channel.com/companies/' + full["WeavyCompanyId"] + '">Company Link</a>'
+                        return '<a target="_blank" href="https://buddy.aero/companies/' + full["WeavyCompanyId"] + '">Company Link</a>'
                     }
                     return data;
                 }

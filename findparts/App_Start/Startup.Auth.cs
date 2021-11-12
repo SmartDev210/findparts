@@ -42,7 +42,7 @@ namespace Findparts
             };
             if (Config.Environment != "dev")
             {
-                cookieAuthenticiationOptions.CookieDomain = ".back-channel.com";
+                cookieAuthenticiationOptions.CookieDomain = ".buddy.aero";
             }            
             app.UseCookieAuthentication(cookieAuthenticiationOptions);
             
