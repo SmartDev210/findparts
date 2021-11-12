@@ -43,11 +43,11 @@ namespace Findparts.Controllers
             {   
                 if (Config.PortalCode == 0)
                 {
-                    ViewBag.Title = "Search " + queryParams.Search + " - buddy.aero Search Repair Overhaul MRO ";
+                    ViewBag.Title = "Search " + queryParams.Search + " - buddy.aero Repair Stations Overhaul MRO";
                 }
                 else
                 {
-                    ViewBag.Title = "Search " + queryParams.Search + " – buddy.aero Aircraft Spare Parts Aviation ";
+                    ViewBag.Title = "Search " + queryParams.Search + " – buddy.aero Aircraft Spare Parts Aviation";
                 }
 
                 PartsPageViewModel viewModel = new PartsPageViewModel { Text = queryParams.Search };
@@ -65,11 +65,11 @@ namespace Findparts.Controllers
             {
                 if (Config.PortalCode == 0)
                 {
-                    ViewBag.Title = queryParams.PartNumber + " - buddy.aero Search Repair Overhaul MRO ";
+                    ViewBag.Title = queryParams.PartNumber + " - buddy.aero Repair Stations Overhaul MRO";
                 }
                 else
                 {
-                    ViewBag.Title = queryParams.PartNumber + " – buddy.aero Aircraft Spare Parts Aviation ";
+                    ViewBag.Title = queryParams.PartNumber + " – buddy.aero Aircraft Spare Parts Aviation";
                 }
                 ViewBag.ExtraMetaKeywords = "," + Request.QueryString["PartNumber"];
 
