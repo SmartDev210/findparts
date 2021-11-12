@@ -464,9 +464,18 @@ namespace Findparts.Controllers
                 default:
                     // If the user does not have an account, then prompt the user to create an account
 
-                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
-                    var createResult = await _userManager.CreateAsync(user);
-                    if (createResult.Succeeded)
+                    ApplicationUser user = _userManager.FindByEmail(loginInfo.Email);
+                    if (user == null)
+                    {
+                        user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
+                        var createResult = await _userManager.CreateAsync(user);
+                        if (!createResult.Succeeded)
+                        {
+                            return Redirect($"{Config.WeavyUrl}/sign-in?path={path}");
+                        }
+                    }
+
+                    if (!_userManager.IsInRole(user.Id, "Subscriber"))
                     {
                         // create default Register view model
                         RegisterViewModel viewModel = new RegisterViewModel()
@@ -485,16 +494,14 @@ namespace Findparts.Controllers
                         var vendorId = _membershipService.RegisterNewUser(viewModel, user);
 
                         Session["RegisterVendorID"] = vendorId;
-
-                        var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
-                        if (loginResult.Succeeded)
-                        {
-                            await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={_weavyService.GetWeavyToken(null, loginInfo.Email)}");
-                        }
-                        //return View("ExternalLoginConfirmation");
-                        //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
                     }
+                    var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
+                    if (loginResult.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={_weavyService.GetWeavyToken(null, loginInfo.Email)}");
+                    }
+                  
                     TempData["Error"] = "Failed to register linkedin user";                   
                     return Redirect($"{Config.WeavyUrl}/sign-in?path={path}");
             }
@@ -686,10 +693,21 @@ namespace Findparts.Controllers
                 case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
-                    
-                    var user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
-                    var createResult = await _userManager.CreateAsync(user);
-                    if (createResult.Succeeded)
+
+                    ApplicationUser user = _userManager.FindByEmail(loginInfo.Email);
+                    if (user == null)
+                    {
+                        user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, EmailConfirmed = true };
+                        var createResult = await _userManager.CreateAsync(user);
+                        if (!createResult.Succeeded)
+                        {
+                            if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-api"))
+                                return RedirectToAction("MobileAuth", "WebApi");
+                            return RedirectToAction("Login");
+                        }
+                    }
+
+                    if (!_userManager.IsInRole(user.Id, "Subscriber"))
                     {
                         // create default Register view model
                         RegisterViewModel viewModel = new RegisterViewModel()
@@ -708,17 +726,13 @@ namespace Findparts.Controllers
                         var vendorId = _membershipService.RegisterNewUser(viewModel, user);
 
                         Session["RegisterVendorID"] = vendorId;
-                       
-                        var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
-                        if (loginResult.Succeeded)
-                        {
-                            await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToLocal(returnUrl);
-                        }
-                        //return View("ExternalLoginConfirmation");
-                        //return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
                     }
-                    TempData["Error"] = "Failed to register linkedin user";
+                    var loginResult = await _userManager.AddLoginAsync(user.Id, loginInfo.Login);
+                    if (loginResult.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToLocal(returnUrl);
+                    }
                     if (!string.IsNullOrEmpty(returnUrl) && returnUrl.Contains("mobile-api"))
                         return RedirectToAction("MobileAuth", "WebApi");
                     return RedirectToAction("Login");
