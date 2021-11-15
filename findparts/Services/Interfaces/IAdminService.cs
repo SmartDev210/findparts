@@ -24,5 +24,6 @@ namespace Findparts.Services.Interfaces
         SubscriberDetailViewModel GetSubscriberDetailViewModel(int subscriberId);
         bool UpdateSubscriberDetail(SubscriberDetailViewModel viewModel);
         void GenerateSitemaps(int portalCode);
+        void SendAllTestEmails();
     }
 }

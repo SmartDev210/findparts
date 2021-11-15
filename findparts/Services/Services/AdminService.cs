@@ -664,6 +664,15 @@ namespace Findparts.Services.Services
                 writer.Close();
             }
         }
+
+        public void SendAllTestEmails()
+        {
+            var vendorQuote = _context.VendorQuotes.FirstOrDefault();
+            _mailService.SendVendorRFQEmail(vendorQuote.VendorQuoteID.ToString(), vendorQuote.VendorID.ToString());
+            _mailService.SendVendorUploadEmail(Config.AdminEmail, "Test Vendor", true);
+            _mailService.SendVendorListApprovedEmail(Config.AdminEmail, "Test Vendor", true, "100", "100", Config.PortalCode);
+            _mailService.SendJitsiMeetingInvitationEmail("test user", Config.AdminEmail, "https://meeting-url");
+        }
     }
     
     class VendorListComparer: IEqualityComparer<VendorListItem>

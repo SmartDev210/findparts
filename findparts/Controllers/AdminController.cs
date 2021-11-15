@@ -338,5 +338,14 @@ namespace Findparts.Controllers
             return Json(new { success = true });
         }
         
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("admin/email-test/send-all")]
+        public ActionResult SendEmailTest()
+        {
+         
+             _service.SendAllTestEmails();
+            return Json(new { success = true });
+        }
     }
 }
