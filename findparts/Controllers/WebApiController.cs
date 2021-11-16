@@ -40,7 +40,7 @@ namespace Findparts.Areas.WebApi.Controllers
         [HttpGet]
         [AllowAnonymous]
         public ActionResult MobileAuth()
-        {
+        {  
             ViewBag.ReturnUrl = Url.Action("MobileAuthCallback");
             return View("Login");
         }
@@ -75,7 +75,7 @@ namespace Findparts.Areas.WebApi.Controllers
         [AllowAnonymous]
         public ActionResult MobileAuthAnother()
         {
-            Session.Abandon();
+            Session.Clear();
             AuthenticationManager.SignOut();            
             return RedirectToAction("MobileAuth");
         }

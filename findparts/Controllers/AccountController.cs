@@ -454,7 +454,7 @@ namespace Findparts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Session.Abandon();
+                    Session.Clear();
                     return Redirect($"{Config.WeavyUrl}/signing-in?path={path}&jwt={_weavyService.GetWeavyToken(null, loginInfo.Email)}");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -487,7 +487,7 @@ namespace Findparts.Controllers
                             CompanyName = loginInfo.ExternalIdentity.Name,
                             Country = "United States"
                         };
-                        Session.Abandon();
+                        Session.Clear();
 
                         _userManager.AddToRole(user.Id, "Subscriber");
 
@@ -585,7 +585,7 @@ namespace Findparts.Controllers
                         }
                         else
                         {
-                            Session.Abandon();
+                            Session.Clear();
                             await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                             if (state == "mobile")
                             {
@@ -617,7 +617,7 @@ namespace Findparts.Controllers
                                 CompanyName = email,
                                 Country = "United States"
                             };
-                            Session.Abandon();
+                            Session.Clear();
 
                             _userManager.AddToRole(user.Id, "Subscriber");
 
@@ -684,7 +684,7 @@ namespace Findparts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Session.Abandon();
+                    Session.Clear();
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -719,7 +719,7 @@ namespace Findparts.Controllers
                             CompanyName = loginInfo.ExternalIdentity.Name,
                             Country = "United States"
                         };
-                        Session.Abandon();
+                        Session.Clear();
 
                         _userManager.AddToRole(user.Id, "Subscriber");
 
@@ -799,7 +799,7 @@ namespace Findparts.Controllers
                         CompanyName = model.Email,
 
                     };
-                    Session.Abandon();
+                    Session.Clear();
 
                     _userManager.AddToRole(user.Id, "Subscriber");
                     if (viewModel.VendorSignup)
@@ -829,7 +829,7 @@ namespace Findparts.Controllers
         // [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            Session.Abandon();
+            Session.Clear();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);            
             return RedirectToAction("Index", "Home");
         }
