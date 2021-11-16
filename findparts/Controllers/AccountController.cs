@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 namespace Findparts.Controllers
 {
     [Authorize]
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -46,6 +47,7 @@ namespace Findparts.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            Session["init"] = "0";
             ViewBag.ReturnUrl = returnUrl;
             return View("~/Views/Account/Signup.cshtml");
         }
@@ -434,6 +436,7 @@ namespace Findparts.Controllers
         [AllowAnonymous]       
         public ActionResult ExternalLoginFromBackChannel(string provider, string path)
         {
+            Session["init"] = "0";
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallbackFromWeavy", "Account", new { Path = path }));
         }
@@ -443,6 +446,7 @@ namespace Findparts.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallbackFromWeavy(string path)
         {
+            Session["init"] = "0";
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {  
@@ -515,6 +519,7 @@ namespace Findparts.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
+            Session["init"] = "0";
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
@@ -669,7 +674,8 @@ namespace Findparts.Controllers
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {   
+        {
+            Session["init"] = "0";
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
