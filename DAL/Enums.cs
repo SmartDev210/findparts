@@ -19,7 +19,9 @@ namespace DAL
 	public enum PurchaseType
     {
 		Advertise = 0,
-		Impressions = 1
+		OrganicAllImpressions = 1,
+		OrganicTargetImpressions = 2,
+		SponsoredTargetImpressions = 3
     }
 	/*
 	public enum StatusID

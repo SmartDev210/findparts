@@ -102,11 +102,20 @@ namespace Findparts.Controllers
         {
             return View();
         }
-        [Route("Subscriber/PurchaseImpressions")]
+        [Route("Subscriber/PurchaseImpressions/{type}")]
         [HttpGet]
-        public ActionResult PurchaseImpressions()
+        public ActionResult PurchaseImpressions(PurchaseType type)
         {
-            return View();
+            PurchaseImpressionsViewModel viewModel = new PurchaseImpressionsViewModel { PurchaseType = type };
+            if (type == PurchaseType.OrganicAllImpressions)
+            {
+                viewModel.MoneyPer1000Views = 2;
+            } else if (type == PurchaseType.OrganicTargetImpressions || type == PurchaseType.SponsoredTargetImpressions)
+            {
+                viewModel.MoneyPer1000Views = 50;
+            }
+            
+            return View(viewModel);
         }
         [Route("Subscriber/Purchase")]
         [HttpPost]
@@ -135,7 +144,7 @@ namespace Findparts.Controllers
         [Route("Subscriber/PurchaseImpressions")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PurchaseImpressions(string stripeToken, int quantity)
+        public ActionResult PurchaseImpressions(string stripeToken, int quantity, PurchaseType type)
         {
             if (string.IsNullOrEmpty(stripeToken))
             {
@@ -147,7 +156,7 @@ namespace Findparts.Controllers
                 return RedirectToAction("Advertise");
             }
 
-            if (_membershipService.PurchaseImpressionsWithStripe(SessionVariables.VendorID, stripeToken, quantity))
+            if (_membershipService.PurchaseImpressionsWithStripe(SessionVariables.VendorID, stripeToken, quantity, type))
             {
                 TempData["Success"] = $"Successfully purchased";
             }

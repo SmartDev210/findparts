@@ -338,6 +338,7 @@
     <Compile Include="Models\Vendor\CertsViewModel.cs" />
     <Compile Include="Models\Vendor\MasterListItemModel.cs" />
     <Compile Include="Models\Vendor\OEMsViewModel.cs" />
+    <Compile Include="Models\Vendor\PurchaseImpressionsViewModel.cs" />
     <Compile Include="Models\Vendor\QuotePageViewModel.cs" />
     <Compile Include="Models\Vendor\RFQPreferencesViewModel.cs" />
     <Compile Include="Models\Vendor\VendorAdvertiseViewModel.cs" />

@@ -361,12 +361,12 @@ namespace Findparts.Services.Services
                 Text = x
             }).ToList();
         }
-        private bool Charge(int vendorId, string stripeToken, long amount, string email, PurchaseType type, int quantity)
+        private bool Charge(int vendorId, string stripeToken, string email, PurchaseType type, int quantity, int moneyPer1000Views) // moneyPer1000Views
         {
             var chargeOptions = new Stripe.ChargeCreateOptions
             {
-                Amount = amount,
-                Description = $"Purchase for advertise (vendor:{vendorId} - email:{email})",
+                Amount = moneyPer1000Views * quantity / 1000 * 100, 
+                Description = $"Purchase for {type.ToString()} (vendor:{vendorId} - email:{email})",
                 Source = stripeToken,
                 Currency = "usd",
                 ReceiptEmail = email,
@@ -391,18 +391,21 @@ namespace Findparts.Services.Services
 
             if (user != null)
             {
-                return Charge(vendorID.ToInt(), stripeToken, 15000, user.Email, PurchaseType.Advertise, 1);
+                return Charge(vendorID.ToInt(), stripeToken, user.Email, PurchaseType.Advertise, 1, 150000);
             }
 
             return false;
         }
-        public bool PurchaseImpressionsWithStripe(string vendorID, string stripeToken, int quantity)
+        public bool PurchaseImpressionsWithStripe(string vendorID, string stripeToken, int quantity, PurchaseType type)
         {
             var user = _context.UserGetByVendorID(vendorID.ToNullableInt()).FirstOrDefault();
 
             if (user != null)
             {
-                return Charge(vendorID.ToInt(), stripeToken, 2500 * quantity / 1000, user.Email, PurchaseType.Impressions, quantity);
+                int moneyPer1000Views = 2;
+                if (type == PurchaseType.OrganicTargetImpressions || type == PurchaseType.SponsoredTargetImpressions)
+                    moneyPer1000Views = 50;
+                return Charge(vendorID.ToInt(), stripeToken, user.Email, type, quantity, moneyPer1000Views);
             }
 
             return false;
