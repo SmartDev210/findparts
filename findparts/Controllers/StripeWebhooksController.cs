@@ -196,7 +196,7 @@ namespace Findparts.Controllers
 						*/
 						default:
 							// send email to rob
-							//Emailer.SendWebhookEmail(stripeEvent.Type.ToString(), errorText + json);
+							_mailService.SendWebhookEmail(stripeEvent.Type.ToString(), errorText + json);
 							break;
 					}
 				}
