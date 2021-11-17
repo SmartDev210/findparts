@@ -300,7 +300,7 @@ namespace Findparts.Services.Services
 					+ $"Generated @ {Config.PortalName}";
 
 				// TODO: change "to" to vendor's RFQ email
-				SendEmail(Config.FromEmail, Config.AdminEmail, $"{Config.PortalName} RFQ for " + partNumber + " from " + subscriberName, message);
+				SendEmail(Config.FromEmail, Config.AdminEmail, $"{Config.PortalName} RFQ for " + partNumber + " from " + subscriberName, message, Config.DevEmail);
 			}
 		}
 
@@ -660,6 +660,54 @@ namespace Findparts.Services.Services
 				+ Environment.NewLine;
 
 			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Meet Invite", message);
+		}
+
+        public void SendStripeChargeFailedEmail(string email, string vendorName)
+        {
+			string message = $"({email})"
+                + Environment.NewLine
+				+ $"({vendorName})"
+                + Environment.NewLine
+				+ "Recently STRIPE attempted to run a buddy.aero charge on your credit card."
+				+ Environment.NewLine
+				+ "This charge was declined. We may re-attempt to process this charge in the next few days."
+				+ Environment.NewLine
+				+ "Please contact us if you prefer to make other arrangements."
+				+ Environment.NewLine
+				+ "Please view payment history and invoices here:"
+				+ Environment.NewLine
+				+ "https://findparts.buddy.aero/Subscriber"
+				+ Environment.NewLine
+				+ Environment.NewLine
+				+ Environment.NewLine
+				+ "buddy.aero"
+				+ Environment.NewLine
+				+ "+1-949-290-7212";
+
+			SendEmail(Config.FromEmail, email, $"Payment Transaction Failed", message, Config.DevEmail);
+		}
+
+        public void SendStripeChargeSucceededEmail(string email, string vendorName, long amount)
+        {
+			string message = $"({email})"
+				+ Environment.NewLine
+				+ $"({vendorName})"
+				+ Environment.NewLine
+				+ $"We have processed your payment for LinkedIn Impressions in the amount of {((double)amount / 100).ToString("C2")}"
+				+ Environment.NewLine
+				+ "Please view payment history and invoices here:"
+				+ Environment.NewLine
+				+ "https://findparts.buddy.aero/Subscriber"
+				+ Environment.NewLine
+				+ "This charge will appear on your card as buddy.aero"
+				+ Environment.NewLine
+				+ Environment.NewLine
+				+ Environment.NewLine
+				+ "buddy.aero"
+				+ Environment.NewLine
+				+ "+1-949-290-7212";
+
+			SendEmail(Config.FromEmail, email, $"Payment Receipt", message, Config.DevEmail);
 		}
     }
 }

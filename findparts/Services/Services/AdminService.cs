@@ -672,6 +672,8 @@ namespace Findparts.Services.Services
             _mailService.SendVendorUploadEmail(Config.AdminEmail, "Test Vendor", true);
             _mailService.SendVendorListApprovedEmail(Config.AdminEmail, "Test Vendor", true, "100", "100", Config.PortalCode);
             _mailService.SendJitsiMeetingInvitationEmail("test user", Config.AdminEmail, "https://meeting-url");
+            _mailService.SendStripeChargeSucceededEmail(Config.AdminEmail, "test vendor", 10000);
+            _mailService.SendStripeChargeFailedEmail(Config.AdminEmail, "test vendor");
         }
     }
     

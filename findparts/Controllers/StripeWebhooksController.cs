@@ -178,22 +178,38 @@ namespace Findparts.Controllers
 								}
 							}
 							break;
-						/*
-						case StripeEvents.ChargeFailed:
+						
+						case Events.ChargeFailed:
 							{
-								var stripeCharge = Stripe.Mapper<StripeCharge>.MapFromJson(stripeEvent.Data.Object.ToString());
-								// email subscriber, inform of failed & next attempt time, (give instructions how to update)
-								// email admin
-								// cancel subsciption after X retries?
+								var stripeCharge = stripeEvent.Data.Object as Charge;
+								var charge = _context.VendorPurchases.Where(x => x.StripeChargeId == stripeCharge.Id).FirstOrDefault();
+								if (charge != null)
+                                {
+									var user = _context.Users.FirstOrDefault(x => x.VendorID == charge.VendorId);
+									var vendor = _context.Vendors.Find(charge.VendorId);
+									if (user != null)
+                                    {
+										_mailService.SendStripeChargeFailedEmail(user.Email, vendor.VendorName);
+									}
+                                }
 							}
 							break;
-						case StripeEvents.ChargeSucceeded:
+						case Events.ChargeSucceeded:
 							{
-								var stripeCharge = Stripe.Mapper<StripeCharge>.MapFromJson(stripeEvent.Data.Object.ToString());
-								// send cha-ching email to bryan
+								var stripeCharge = stripeEvent.Data.Object as Charge;
+								var charge = _context.VendorPurchases.Where(x => x.StripeChargeId == stripeCharge.Id).FirstOrDefault();
+								if (charge != null)
+								{
+									var user = _context.Users.FirstOrDefault(x => x.VendorID == charge.VendorId);
+									var vendor = _context.Vendors.Find(charge.VendorId);
+									if (user != null)
+									{
+										_mailService.SendStripeChargeSucceededEmail(user.Email, vendor.VendorName, stripeCharge.Amount);
+									}
+								}
 							}
 							break;
-						*/
+						
 						default:
 							// send email to rob
 							_mailService.SendWebhookEmail(stripeEvent.Type.ToString(), errorText + json);
