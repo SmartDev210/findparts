@@ -241,13 +241,15 @@
                                 }
                                 templateRow.appendChild(buttonGroupCell);
 
-                                if (!!data[i].WeavyCompanyId) {
+                                @if (Config.PortalCode == 0) {
                                     // add Send RFQ button
+                                    <text>
                                     templateCell = document.createElement('div');
                                     templateCell.className = 'vendorQuote';
                                     templateCell.id = 'tdRFQButton_' + rfqButtonNumber++;
                                     templateCell.innerHTML = data[i].WebEmails ? getRFQSentHtml(data[i].VendorID, data[i].VendorListItemID, templateCell.id, data[i].DateCreated, data[i]) : '';
                                     templateRow.appendChild(templateCell);
+                                    </text>
                                 }
                                 </text>
                             }
@@ -256,12 +258,12 @@
                             nextDivRow.appendChild(templateRow);
                         }
 
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated && Config.PortalCode == 0)
                         {
                             <text>
                             var showRfqSelected = false;
                             for (var i = 0; i < data.length; i++) {
-                                if (data[i].WebEmails && data[i].VendorID && data[i].WeavyCompanyId) {
+                                if (data[i].WebEmails && data[i].VendorID) {
                                     showRfqSelected = true;
                                     break;
                                 }
