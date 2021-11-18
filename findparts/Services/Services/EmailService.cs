@@ -668,7 +668,7 @@ namespace Findparts.Services.Services
 				+ meetingUrl
 				+ Environment.NewLine;
 
-			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Meet Invite", message);
+			SendEmail(Config.FromEmail, email, $"{Config.PortalName} Meet Invite", message, Config.AdminEmail);
 		}
 
         public void SendStripeChargeFailedEmail(string email, string vendorName)
