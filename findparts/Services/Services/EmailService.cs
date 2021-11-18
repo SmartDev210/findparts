@@ -279,7 +279,9 @@ namespace Findparts.Services.Services
 				string userEmail = result.UserEmail;
 				string vendorName = result.VendorName;
 				string partNumber = result.PartNumber;
-				
+
+				var vendor = _context.Vendors.Find(vendorId.ToInt());
+
 				string message = "RFQ for Part # " + partNumber + " from " + subscriberName + Environment.NewLine
 					+ Environment.NewLine
 					+ "Contact Direct or Login to Quote." + Environment.NewLine
@@ -300,7 +302,14 @@ namespace Findparts.Services.Services
 					+ $"Generated @ {Config.PortalName}";
 
 				// TODO: change "to" to vendor's RFQ email
-				SendEmail(Config.FromEmail, Config.AdminEmail, $"{Config.PortalName} RFQ for " + partNumber + " from " + subscriberName, message, Config.DevEmail);
+				var email = vendor.RFQEmail;
+				if (string.IsNullOrEmpty(vendor.RFQEmail))
+                {
+					var subscriber = _context.UserGetByVendorID(vendorId.ToInt()).FirstOrDefault();
+					email = subscriber.Email;
+                }
+					
+				SendEmail(Config.FromEmail, email, $"{Config.PortalName} RFQ for " + partNumber + " from " + subscriberName, message, Config.AdminEmail);
 			}
 		}
 
