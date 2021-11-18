@@ -366,7 +366,7 @@ namespace Findparts.Services.Services
             var chargeOptions = new Stripe.ChargeCreateOptions
             {
                 Amount = moneyPer1000Views * quantity / 1000 * 100, 
-                Description = $"Purchase for {type.ToString()} (vendor:{vendorId} - email:{email})",
+                Description = $"Purchase for {type.GetDisplayName()} (vendor:{vendorId} - email:{email})",
                 Source = stripeToken,
                 Currency = "usd",
                 ReceiptEmail = email,
@@ -402,9 +402,18 @@ namespace Findparts.Services.Services
 
             if (user != null)
             {
-                int moneyPer1000Views = 2;
-                if (type == PurchaseType.OrganicTargetImpressions || type == PurchaseType.SponsoredTargetImpressions)
+                int moneyPer1000Views = 50;
+                if (type == PurchaseType.OrganicAllImpressions)
+                {
+                    moneyPer1000Views = 20;
+                } else if (type == PurchaseType.OrganicTargetImpressions)
+                {
+                    moneyPer1000Views = 100;
+                } else if (type == PurchaseType.SponsoredTargetImpressions)
+                {
                     moneyPer1000Views = 50;
+                }
+                
                 return Charge(vendorID.ToInt(), stripeToken, user.Email, type, quantity, moneyPer1000Views);
             }
 

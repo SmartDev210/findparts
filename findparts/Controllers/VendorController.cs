@@ -109,8 +109,11 @@ namespace Findparts.Controllers
             PurchaseImpressionsViewModel viewModel = new PurchaseImpressionsViewModel { PurchaseType = type };
             if (type == PurchaseType.OrganicAllImpressions)
             {
-                viewModel.MoneyPer1000Views = 2;
-            } else if (type == PurchaseType.OrganicTargetImpressions || type == PurchaseType.SponsoredTargetImpressions)
+                viewModel.MoneyPer1000Views = 20;
+            } else if (type == PurchaseType.OrganicTargetImpressions)
+            {
+                viewModel.MoneyPer1000Views = 100;
+            } else if (type == PurchaseType.SponsoredTargetImpressions)
             {
                 viewModel.MoneyPer1000Views = 50;
             }

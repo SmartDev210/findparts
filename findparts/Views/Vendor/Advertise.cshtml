@@ -30,7 +30,7 @@
                 @foreach (var item in Model.VendorPurchases)
                 {
                     <tr>
-                        <td>@((PurchaseType)item.PurchaseType)</td>
+                        <td>@(((PurchaseType)item.PurchaseType).GetDisplayName())</td>
                         <td>@item.Quantity.ToString("N0")</td>
                         <td>@((item.Amount / 100).ToString("C2"))</td>
                         <td>@item.PurchasedAt</td>
@@ -81,11 +81,11 @@ Inventory Controller"></span>
     </p>
     <hr />
     <p>Share your buddy.aero mini podcast video <br />on LinkedIn Organic Feeds of our Consortium of Aviation Professionals</p>
-    <a class="btn btn-primary" href="/Subscriber/PurchaseImpressions/@PurchaseType.OrganicAllImpressions.ToString()">Purchase</a> <span style="margin-left: 16px;">$2 CPM <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="$2 per 1000 Views/Impressions of your buddy.aero mini-podcast to Aviation Professionals on LinkedIn"></span></span>
+    <a class="btn btn-primary" href="/Subscriber/PurchaseImpressions/@PurchaseType.OrganicAllImpressions.ToString()">Purchase</a> <span style="margin-left: 16px;">$20 CPM <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="$20 per 1000 Views/Impressions of your buddy.aero mini-podcast to Aviation Professionals on LinkedIn"></span></span>
     <p>Organic Views of your buddy.aero<br/>mini podcast to All Aviation Professionals</p>
     <br/>
     <br/>
-    <a class="btn btn-primary" href="/Subscriber/PurchaseImpressions/@PurchaseType.OrganicTargetImpressions.ToString()">Purchase</a> <span style="margin-left: 16px;">$50 CPM <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="$50 per 1000 Views/Impressions of your buddy.aero mini-podcast to whom you choose. (People/Organizations)"></span></span>
+    <a class="btn btn-primary" href="/Subscriber/PurchaseImpressions/@PurchaseType.OrganicTargetImpressions.ToString()">Purchase</a> <span style="margin-left: 16px;">$100 CPM <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="$100 per 1000 Views/Impressions of your buddy.aero mini-podcast to whom you choose. (People/Organizations)"></span></span>
     <p>Organic LinkedIn Views of your buddy.aero<br />mini podcast to Targeted Aviation Professionals</p>   
 </div>
 <div style="margin-top: 64px;">
