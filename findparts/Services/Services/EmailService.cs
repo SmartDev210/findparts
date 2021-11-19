@@ -673,9 +673,9 @@ namespace Findparts.Services.Services
 
         public void SendStripeChargeFailedEmail(string email, string vendorName)
         {
-			string message = $"({email})"
+			string message = $"{email}"
                 + Environment.NewLine
-				+ $"({vendorName})"
+				+ $"{vendorName}"
                 + Environment.NewLine
 				+ "Recently STRIPE attempted to run a buddy.aero charge on your credit card."
 				+ Environment.NewLine
@@ -698,9 +698,9 @@ namespace Findparts.Services.Services
 
         public void SendStripeChargeSucceededEmail(string email, string vendorName, long amount)
         {
-			string message = $"({email})"
+			string message = $"{email}"
 				+ Environment.NewLine
-				+ $"({vendorName})"
+				+ $"{vendorName}"
 				+ Environment.NewLine
 				+ $"We have processed your payment for LinkedIn Impressions in the amount of {((double)amount / 100).ToString("C2")}"
 				+ Environment.NewLine
