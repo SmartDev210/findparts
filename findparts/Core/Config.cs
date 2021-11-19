@@ -34,7 +34,7 @@ namespace Findparts.Core
         public static string AppleAppId => ConfigurationManager.AppSettings["AppleAppId"];
         public static string AppleAuthRedirectUri => ConfigurationManager.AppSettings["AppleAuthRedirectUri"];
 
-        public static int PortalCode => Int32.Parse(ConfigurationManager.AppSettings["PortalCode"]);
+        public static int PortalCode => Int32.Parse(ConfigurationManager.AppSettings["PortalCode"]);    // 0: MROFinder, 1: FindParts
         public static string PortalName => ConfigurationManager.AppSettings["PortalName"];
 
         public static string JitsiPrivateKeyPath => ConfigurationManager.AppSettings["JitsiPrivateKeyPath"];

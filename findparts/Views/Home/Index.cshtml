@@ -49,7 +49,7 @@
             <div class="tab-content" id="pills-tabContent">
 
                 <div class="tab-pane fade @if (Config.PortalCode == 0) { <text>active in</text> } " id="pills-repairs" role="tabpanel" aria-labelledby="pills-repairs-tab">
-                    <h3 class="sub-title"><span class="number">@Model.Portal0Stat.VendorCount.ToString("N0")</span> Vendors Uploaded <span class="number">@Model.Portal0Stat.PartCount.ToString("N0")</span> Aircraft Spare Parts for sale</h3>
+                    <h3 class="sub-title"><span class="number">@Model.Portal0Stat.VendorCount.ToString("N0")</span> MROs Uploaded <span class="number">@Model.Portal0Stat.PartCount.ToString("N0")</span> Repair Capabilities</h3>
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Repair Capabilities</span>
                         @if (Config.PortalCode == 0)
@@ -61,13 +61,6 @@
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </a>
                                 </span>
-                            </div>
-                            <div style="margin: 32px 0;">
-                                <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
-                                <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
-                                    <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
-                                    <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
-                                </div>
                             </div>
                         }
                         else
@@ -97,13 +90,6 @@
                                     </a>
                                 </span>
                             </div>
-                            <div style="margin: 32px 0;">
-                                <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
-                                <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
-                                    <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
-                                    <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
-                                </div>
-                            </div>
                         }
                         else
                         {
@@ -116,6 +102,13 @@
                                 </div>
                             </form>
                         }
+                        <div style="margin: 32px 0;">
+                            <h3 style="font-size: 24px;">External Links to Top Aircraft Spare Part Marketplaces</h3>
+                            <div style="display: flex; justify-content: center; gap: 48px; font-size: 20px; margin-top: 32px;">
+                                <a target="_blank" href="https://www.ilsmart.com">ILSmart</a>
+                                <a target="_blank" href="https://www.partsbase.com">Partsbase</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-myavdb" role="tabpanel" aria-labelledby="pills-myavdb-tab">
