@@ -32,7 +32,7 @@
                     <tr>
                         <td>@(((PurchaseType)item.PurchaseType).GetDisplayName())</td>
                         <td>@item.Quantity.ToString("N0")</td>
-                        <td>@((item.Amount / 100).ToString("C2"))</td>
+                        <td>@((item.Amount / 100).ToString("C0"))</td>
                         <td>@item.PurchasedAt</td>
                         <td><a href="@Url.Action("DownloadInvoice", new { chargeId = item.Id })" target="_blank">Download</a></td>
                     </tr>

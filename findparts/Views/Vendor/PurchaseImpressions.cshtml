@@ -21,7 +21,7 @@
                     <select class="form-control" name="quantity">
                         @{
                             for (var i = 1; i <= 10; i ++) {
-                                <option value="@(i * 5 * 1000)">@((i * 5 * 1000).ToString("N0")) Impressions - @((i * 5 * Model.MoneyPer1000Views).ToString("C"))</option>
+                                <option value="@(i * 5 * 1000)">@((i * 5 * 1000).ToString("N0")) Impressions - @((i * 5 * Model.MoneyPer1000Views).ToString("C0"))</option>
                             }
                         }
                     </select>
