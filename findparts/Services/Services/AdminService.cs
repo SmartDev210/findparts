@@ -2,6 +2,7 @@
 using Findparts.Core;
 using Findparts.Models.Admin;
 using Findparts.Services.Interfaces;
+using Microsoft.Ajax.Utilities;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -575,9 +576,11 @@ namespace Findparts.Services.Services
         private void WriteStartElement(XmlWriter writer)
         {
             writer.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+            /*
             writer.WriteAttributeString("xmlns", "xhtml", null, "http://www.w3.org/1999/xhtml");
             writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
             writer.WriteAttributeString("xsi", "schemaLocation", null, "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd");
+            */
         }
         private XmlWriter CreateSitemapFile(string portalCode, string filename)
         {
@@ -623,7 +626,10 @@ namespace Findparts.Services.Services
                             .Where(x => x.PortalCode == portalCode)
                             .Where(x => x.VendorListItemID > last_id)
                             .OrderBy(x => x.VendorListItemID)
-                            .Take(limit).ToList();
+                            .Take(limit)
+                            .ToList()
+                            .DistinctBy(x => x.PartNumber)
+                            .ToList();
                         
                         foreach (var item in vendorListItems)
                         {   
