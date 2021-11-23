@@ -1,6 +1,13 @@
 ﻿@using Findparts.Core
-@{  
+@{
     ViewBag.Title = "Platform Privacy Policy";
+}
+@section header {
+    @if (Config.PortalCode == 0)
+    {
+        <link rel="canonical" href="@Config.FindPartsLink/privacy">
+    }
+
 }
 
 <div class="privacy-page">

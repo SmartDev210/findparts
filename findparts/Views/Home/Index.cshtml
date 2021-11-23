@@ -1,19 +1,23 @@
 ﻿@using Findparts.Core
 @model Findparts.Models.HomePageViewModel
 @{
-    ViewBag.Description = $"Search any aircraft part in seconds. Search millions of MRO capabilities by aircraft part number. Find component MROs to Test, Repair & Overhaul aircraft parts. | {Config.PortalName} | @MROFINDER.aero | #MROFINDER | MROFINDER.aero";
+    ViewBag.Description = $"Find Aircraft Parts. Locate, Source, Sell, Loan, Lease and Exchange Aircraft Spare Parts / Components. Aircraft Parts Search Engine. Send RFQs. Chat with Video. Collaborate on Files.";
 }
 
 @section header {
     <meta name="keywords" content="MROfinder, FindParts">
-
+    @if (Config.PortalCode == 0)
+    {
+        <link rel="canonical" href="@Config.FindPartsLink/terms">
+    }
 }
 <style>
     h3.sub-title {
         margin: 48px 0 64px 0;
-        color: #0091b2;        
+        color: #0091b2;
         font-size: 20px;
     }
+
     h3 span.number {
         font-size: 24px;
     }
@@ -23,7 +27,7 @@
 
 
     <div id="divMerits" class="merits">
-       
+
         <br /><br />
         <div class="wrapper parts-search-tabs">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="display: flex; justify-content: center; flex-wrap: wrap;">
@@ -129,7 +133,7 @@
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aircraft for Sale</span>
                         <div class="google-cse-search-group">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -138,7 +142,7 @@
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Pilot Supplies</span>
                         <div class="google-cse-search-group">
-                           
+
                         </div>
                     </div>
                 </div>
@@ -147,12 +151,12 @@
                     <div class="parts-search-box">
                         <span class="parts-search-box-title">Aviation Jobs</span>
                         <div class="google-cse-search-group">
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
         @*<div class="wrapper">
                 @foreach (var item in Model.Merits)
                 {

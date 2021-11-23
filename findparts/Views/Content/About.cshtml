@@ -1,8 +1,15 @@
 ﻿@using Findparts.Core
-@{  
+@{
     ViewBag.Title = "About";
 }
 
+@section header {
+    @if (Config.PortalCode == 0)
+    {
+        <link rel="canonical" href="@Config.FindPartsLink/about">
+    }
+
+}
 @section featured_content {
 
     <h1>About @Config.PortalName</h1>
