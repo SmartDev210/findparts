@@ -19,10 +19,42 @@
                 <div class="form-group">
                     <label>Select Quantity</label>
                     <select class="form-control" name="quantity">
-                        @{
-                            for (var i = 1; i <= 10; i ++) {
-                                <option value="@(i * 5 * 1000)">@((i * 5 * 1000).ToString("N0")) Impressions - @((i * 5 * Model.MoneyPer1000Views).ToString("C0"))</option>
-                            }
+                        @if (Model.PurchaseType == DAL.PurchaseType.OrganicAllImpressions)
+                        {
+                            <option value="50000">@(50000.ToString("N0")) Impressions - @((50000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="250000">@(250000.ToString("N0")) Impressions - @((250000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="500000">@(500000.ToString("N0")) Impressions - @((500000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="1000000">@(1000000.ToString("N0")) Impressions - @((1000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="2500000">@(2500000.ToString("N0")) Impressions - @((2500000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="5000000">@(5000000.ToString("N0")) Impressions - @((5000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="10000000">@(10000000.ToString("N0")) Impressions - @((10000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="25000000">@(25000000.ToString("N0")) Impressions - @((25000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                        }
+                        else if (Model.PurchaseType == DAL.PurchaseType.OrganicTargetImpressions)
+                        {
+                            <option value="5000">@(5000.ToString("N0")) Impressions - @((5000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="10000">@(10000.ToString("N0")) Impressions - @((10000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="25000">@(25000.ToString("N0")) Impressions - @((25000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="50000">@(50000.ToString("N0")) Impressions - @((50000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="100000">@(100000.ToString("N0")) Impressions - @((100000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="250000">@(250000.ToString("N0")) Impressions - @((250000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="500000">@(500000.ToString("N0")) Impressions - @((500000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="1000000">@(1000000.ToString("N0")) Impressions - @((1000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="2000000">@(2000000.ToString("N0")) Impressions - @((2000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="5000000">@(5000000.ToString("N0")) Impressions - @((5000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                        }
+                        else if (Model.PurchaseType == DAL.PurchaseType.SponsoredTargetImpressions)
+                        {
+                            <option value="5000">@(5000.ToString("N0")) Impressions - @((5000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="10000">@(10000.ToString("N0")) Impressions - @((10000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="25000">@(25000.ToString("N0")) Impressions - @((25000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="50000">@(50000.ToString("N0")) Impressions - @((50000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="100000">@(100000.ToString("N0")) Impressions - @((100000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="250000">@(250000.ToString("N0")) Impressions - @((250000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="500000">@(500000.ToString("N0")) Impressions - @((500000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="1000000">@(1000000.ToString("N0")) Impressions - @((1000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="2000000">@(2000000.ToString("N0")) Impressions - @((2000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
+                            <option value="5000000">@(5000000.ToString("N0")) Impressions - @((5000000 * Model.MoneyPer1000Views / 1000).ToString("C0"))</option>
                         }
                     </select>
                 </div>
