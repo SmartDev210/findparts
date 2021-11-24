@@ -101,6 +101,8 @@ namespace Findparts.Services.Services
 
             UpdateUser(0, new Guid(user.Id), subscriberID.ToNullableInt(), vendorId.ToNullableInt(), user.Email, null);
 
+            _mailService.SendWelcomeEmail(user.UserName, user.Email);
+
             return vendorId.HasValue ? vendorId.ToNullableInt().ToString() : null;
         }
 

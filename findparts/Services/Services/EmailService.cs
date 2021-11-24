@@ -36,9 +36,12 @@ namespace Findparts.Services.Services
 			return capability ? (portalCode == 0 ? "Repair Capabilities" : "✈ Spare Parts") : "Workscope Icons";
         }
 
-        private bool SendEmail(string from, string to, string subject, string body, string bcc = null)
+        private bool SendEmail(string from, string to, string subject, string body, string bcc = null, bool html = false)
         {	
 			MailMessage message = new MailMessage(from, to, subject, body);
+			
+			if (html) message.IsBodyHtml = true;
+
 			if (!string.IsNullOrEmpty(bcc))
 			{
 				message.Bcc.Add(bcc);
@@ -717,6 +720,28 @@ namespace Findparts.Services.Services
 				+ "+1-949-290-7212";
 
 			SendEmail(Config.FromEmail, email, $"Payment Receipt", message, Config.DevEmail);
+		}
+
+        public void SendWelcomeEmail(string userName, string email)
+        {
+			string message = 
+				$"{(!string.IsNullOrEmpty(userName) ? userName : email)}"
+				+ "<br/>"
+				+ $"Thank you for creating an account on buddy.aero. "
+				+ "<br/>"
+				+ $"Where Aviation Professionals Interview Aviation Brands."
+				+ "<br/>"
+				+ @"For ✈️ Brands: <a href=""https://calendly.com/buddyaero"">Book a Mini Podcast</a>"
+				+ "<br/>"
+				+ @"For ✈️ Creators: <a href=""https://docs.google.com/forms/d/e/1FAIpQLSfP-7FfvdhWNFKLd3jeCkwB3OVqxrSh2VjYWoCrlbkbKvuzlQ/viewform"">Get Paid to Share on LinkedIn</a>"
+				+ "<br/>"
+				+ "<br/>"
+				+ "<br/>"
+				+ "buddy.aero"
+				+ "<br/>"
+				+ "+1-949-290-7212";
+
+			SendEmail(Config.FromEmail, email, $"Welcome to buddy.aero", message, Config.AdminEmail, true);
 		}
     }
 }

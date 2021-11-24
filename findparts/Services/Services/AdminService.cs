@@ -627,7 +627,16 @@ namespace Findparts.Services.Services
                             .Where(x => x.VendorListItemID > last_id)
                             .OrderBy(x => x.VendorListItemID)
                             .Take(limit)
-                            .ToList()
+                            .ToList();
+
+                        if (vendorListItems.Count == 0 || vendorListItems.Count < limit)
+                        {
+                            writer.WriteEndElement();
+                            writer.Flush();
+                            break;
+
+                        }
+                        vendorListItems = vendorListItems
                             .DistinctBy(x => x.PartNumber)
                             .ToList();
                         
@@ -639,9 +648,6 @@ namespace Findparts.Services.Services
                         
                         writer.WriteEndElement();
                         writer.Flush();
-
-                        if (vendorListItems.Count == 0 || vendorListItems.Count < limit) break;
-                        
                         vendorListItems.Clear();
                         
                     }

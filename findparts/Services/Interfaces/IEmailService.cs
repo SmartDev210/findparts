@@ -38,5 +38,6 @@ namespace Findparts.Services.Interfaces
         void SendJitsiMeetingInvitationEmail(string sender, string email, string meetingUrl);
         void SendStripeChargeFailedEmail(string email, string vendorName);
         void SendStripeChargeSucceededEmail(string email, string vendorName, long amount);
+        void SendWelcomeEmail(string userName, string email);
     }
 }
