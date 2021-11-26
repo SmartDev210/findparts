@@ -119,7 +119,7 @@ namespace Findparts.Services.Services
             + Environment.NewLine
             + (string.IsNullOrEmpty(planSelected) ? "" : "Plan Selected (" + planSelected + ")");
 
-            SendEmail(Config.FromEmail, Config.AdminEmail, "New " + VendorSubscriber(vendor) + " - " + companyName, message);
+            SendEmail(Config.FromEmail, Config.AdminEmail, "New " + VendorSubscriber(vendor) + " - " + companyName, message, Config.AdminBccEmail);
         }
 
         public void SendAdminNewUserEmail(string email, string subscriberName, string createdBy)

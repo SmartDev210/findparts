@@ -47,5 +47,6 @@ namespace Findparts.Core
         public static string FindPartsLink => ConfigurationManager.AppSettings["FindPartsLink"];
         public static string MROFinderLink => ConfigurationManager.AppSettings["MROFinderLink"];
         public static string SitemapPath => ConfigurationManager.AppSettings["SitemapPath"];
+        public static string AdminBccEmail => ConfigurationManager.AppSettings["AdminBccEmail"];
     }
 }
