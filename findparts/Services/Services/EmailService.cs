@@ -726,11 +726,11 @@ namespace Findparts.Services.Services
         {
 			string message = 
 				$"{(!string.IsNullOrEmpty(userName) ? userName : email)}"
-				+ "<br/>"
+				+ "<br/><br/>"
 				+ $"Thank you for creating an account on buddy.aero. "
-				+ "<br/>"
+				+ "<br/><br/>"
 				+ $"Where Aviation Professionals Interview Aviation Brands."
-				+ "<br/>"
+				+ "<br/><br/>"
 				+ @"For ✈️ Brands: <a href=""https://calendly.com/buddyaero"">Book a Mini Podcast</a>"
 				+ "<br/>"
 				+ @"For ✈️ Creators: <a href=""https://docs.google.com/forms/d/e/1FAIpQLSfP-7FfvdhWNFKLd3jeCkwB3OVqxrSh2VjYWoCrlbkbKvuzlQ/viewform"">Get Paid to Share on LinkedIn</a>"
